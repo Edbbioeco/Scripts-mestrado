@@ -80,11 +80,15 @@ df_ocupacao
 
 df_ocupacao |> glimpse()
 
-df_ocupacao |> dplyr::select(c(5, 6, 8, 10, 12)) |> glimpse()
+df_ocupacao |>
+  dplyr::select(c(5, 6, 8, 10, 12)) |>
+  glimpse()
 
 # Modelos lineares ----
 
-## Pristimantis ramagii ---
+## Pristimantis ramagii ----
+
+### Múltiplos modelos ----
 
 rodando_modelos_pristimantis <- function(id){
 
@@ -117,7 +121,8 @@ rodando_modelos_pristimantis <- function(id){
 
   print(avaliacao)
 
-  r2 <- modelo |> performance::r2() |>
+  r2 <- modelo |>
+    performance::r2() |>
     as.numeric() |>
     round(2)
 
@@ -154,7 +159,37 @@ ls(pattern = "resultados_pristimantis_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
 
+### Modelo múltiplo ----
+
+### Mlticolinearidade ----
+
+df_ocupacao[, c(5, 6, 8, 10, 12)] |>
+  cor(method = "spearman")
+
+#### Criando o modelo ----
+
+glm(`Pristimantis ramagii` ~ .,
+    data = df_ocupacao[, c(2, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  summary()
+
+#### Pressupostos do modelo ----
+
+glm(`Pristimantis ramagii` ~ .,
+    data = df_ocupacao[, c(2, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  DHARMa::simulateResiduals(plot = TRUE)
+
+#### Pseudo-R² ----
+
+glm(`Pristimantis ramagii` ~ .,
+    data = df_ocupacao[, c(2, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  performance::r2_mcfadden()
+
 ## Adenomera Hylaedactyla ----
+
+### Múltiplos modelos ----
 
 rodando_modelos_adenomera <- function(id){
 
@@ -223,6 +258,29 @@ ls(pattern = "modelo_adenomera_") |>
 ls(pattern = "resultados_adenomera_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
+
+### Modelo múltiplo ----
+
+#### Criando o modelo ----
+
+glm(`Adenomera hylaedactyla` ~ .,
+    data = df_ocupacao[, c(3, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  summary()
+
+#### Pressupostos do modelo ----
+
+glm(`Adenomera hylaedactyla` ~ .,
+    data = df_ocupacao[, c(3, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  DHARMa::simulateResiduals(plot = TRUE)
+
+#### Pseudo-R² ----
+
+glm(`Adenomera hylaedactyla` ~ .,
+    data = df_ocupacao[, c(3, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  performance::r2_mcfadden()
 
 ## Rhinella hoogmoedi ----
 
@@ -294,9 +352,34 @@ ls(pattern = "resultados_rhinella_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
 
-## Esatísticas ----
+### Modelo múltiplo ----
 
-### Pristimantis ramagii ----
+#### Criando o modelo ----
+
+glm(`Rhinella hoogmoedi` ~ .,
+    data = df_ocupacao[, c(4, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  summary()
+
+#### Pressupostos do modelo ----
+
+glm(`Rhinella hoogmoedi` ~ .,
+    data = df_ocupacao[, c(4, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  DHARMa::simulateResiduals(plot = TRUE)
+
+#### Pseudo-R² ----
+
+glm(`Rhinella hoogmoedi` ~ .,
+    data = df_ocupacao[, c(4, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  performance::r2_mcfadden()
+
+# Esatísticas ----
+
+## Pristimantis ramagii ----
+
+### Múltiplos modelos ----
 
 estatisticas_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
   mget(envir = globalenv()) |>
@@ -329,7 +412,42 @@ estatisticas_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
 
 estatisticas_pristimantis
 
-### Adenomera hylaedactyla ----
+### Modelo múltiplo ----
+
+pristimantis_stats <- glm(`Pristimantis ramagii` ~ .,
+    data = df_ocupacao[, c(2, 5, 6, 8, 10, 12)],
+    family = poisson(link = "log")) |>
+  summary() %>%
+  .$coefficients |>
+  as.data.frame() |>
+  tibble::rownames_to_column() |>
+  dplyr::slice_tail(n = 5) |>
+  dplyr::mutate(Estimate = Estimate |> round(3),
+                `Std. Error` = `Std. Error` |> round(4),
+                `z value` = `z value` |> round(2),
+                `Pr(>|z|)` = `Pr(>|z|)` |> round(3),
+                `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
+                                              .default = `Pr(>|z|)` |>
+                                                as.character()),
+                `Valor preditor` = c(7.5, 0.155, 5, 350, 91.6),
+                `Pristimantis ramagii` = 28,
+                estatistica = paste0("β1 ± EP = ",
+                                     Estimate,
+                                     " ± ",
+                                     `Std. Error`,
+                                     "<br>z = ",
+                                     `z value`,
+                                     "<sub>6</sub>, p = ",
+                                     `Pr(>|z|)`),
+                rowname = rowname |> stringr::str_remove_all("`")) |>
+  rename("Preditor" = rowname) |>
+  dplyr::select(1, 6:8)
+
+pristimantis_stats
+
+## Adenomera hylaedactyla ----
+
+### Múltiplos modelos ----
 
 estatisticas_adenomera <- ls(pattern = "resultados_adenomera_") |>
   mget(envir = globalenv()) |>
@@ -362,7 +480,42 @@ estatisticas_adenomera <- ls(pattern = "resultados_adenomera_") |>
 
 estatisticas_adenomera
 
-### Rhinella hoogmoedi ----
+### Modelo múltiplo ----
+
+adenomera_stats <- glm(`Adenomera hylaedactyla` ~ .,
+                          data = df_ocupacao[, c(3, 5, 6, 8, 10, 12)],
+                          family = poisson(link = "log")) |>
+  summary() %>%
+  .$coefficients |>
+  as.data.frame() |>
+  tibble::rownames_to_column() |>
+  dplyr::slice_tail(n = 5) |>
+  dplyr::mutate(Estimate = Estimate |> round(3),
+                `Std. Error` = `Std. Error` |> round(4),
+                `z value` = `z value` |> round(2),
+                `Pr(>|z|)` = `Pr(>|z|)` |> round(3),
+                `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
+                                              .default = `Pr(>|z|)` |>
+                                                as.character()),
+                `Valor preditor` = c(7.5, 0.155, 5, 350, 91.6),
+                `Adenomera hylaedactyla` = 17,
+                estatistica = paste0("β1 ± EP = ",
+                                     Estimate,
+                                     " ± ",
+                                     `Std. Error`,
+                                     "<br>z = ",
+                                     `z value`,
+                                     "<sub>6</sub>, p = ",
+                                     `Pr(>|z|)`),
+                rowname = rowname |> stringr::str_remove_all("`")) |>
+  rename("Preditor" = rowname) |>
+  dplyr::select(1, 6:8)
+
+adenomera_stats
+
+## Rhinella hoogmoedi ----
+
+### Múltiplos modelos ----
 
 estatisticas_rhinella <- ls(pattern = "resultados_rhinella_") |>
   mget(envir = globalenv()) |>
@@ -395,9 +548,42 @@ estatisticas_rhinella <- ls(pattern = "resultados_rhinella_") |>
 
 estatisticas_rhinella
 
-## Gráficos ----
+### Modelo múltiplo ----
 
-### Pstimantis ramagii ----
+rhinella_stats <- glm(`Rhinella hoogmoedi` ~ .,
+                       data = df_ocupacao[, c(4, 5, 6, 8, 10, 12)],
+                       family = poisson(link = "log")) |>
+  summary() %>%
+  .$coefficients |>
+  as.data.frame() |>
+  tibble::rownames_to_column() |>
+  dplyr::slice_tail(n = 5) |>
+  dplyr::mutate(Estimate = Estimate |> round(3),
+                `Std. Error` = `Std. Error` |> round(4),
+                `z value` = `z value` |> round(2),
+                `Pr(>|z|)` = `Pr(>|z|)` |> round(3),
+                `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
+                                              .default = `Pr(>|z|)` |>
+                                                as.character()),
+                `Valor preditor` = c(7.5, 0.155, 5, 350, 91.6),
+                `Rhinella hoogmoedi` = 10.5,
+                estatistica = paste0("β1 ± EP = ",
+                                     Estimate,
+                                     " ± ",
+                                     `Std. Error`,
+                                     "<br>z = ",
+                                     `z value`,
+                                     "<sub>6</sub>, p = ",
+                                     `Pr(>|z|)`),
+                rowname = rowname |> stringr::str_remove_all("`")) |>
+  rename("Preditor" = rowname) |>
+  dplyr::select(1, 6:8)
+
+rhinella_stats
+
+# Gráficos ----
+
+## Pstimantis ramagii ----
 
 df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8, 10, 12),
@@ -407,7 +593,7 @@ df_ocupacao |>
              fill = Preditor, color = Preditor)) +
   geom_point(shape = 21, color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = estatisticas_pristimantis,
+  ggtext::geom_richtext(data = pristimantis_stats,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
@@ -417,7 +603,7 @@ df_ocupacao |>
   facet_wrap(~Preditor, scales = "free_x") + ggview::canvas(height = 10,
                                                             width = 12) +
   geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% c("Área das poças",
+                dplyr::filter(Preditor %in% c("Altitude",
                                               "Distância dos corpos hídricos")),
               method = "glm", family = poisson, show.legend = FALSE, se = FALSE) +
   labs(y = "Abundância") +
@@ -426,7 +612,7 @@ df_ocupacao |>
                                "orange2",
                                "royalblue",
                                "skyblue")) +
-  scale_color_manual(values = c("royalblue4",
+  scale_color_manual(values = c("gold4",
                                 "skyblue4")) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
@@ -440,24 +626,31 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_pristimantis.png", height = 10, width = 12)
+ggsave(filename = "modelo_abundancia_pristimantis_multiplo.png",
+       height = 10, width = 12)
 
-### Adenomera hylaedactyla ----
+## Adenomera hylaedactyla ----
 
 df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8, 10, 12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`, fill = Preditor)) +
+  ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`,
+             fill = Preditor, color = Preditor)) +
   geom_point(shape = 21, color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = estatisticas_adenomera,
+  ggtext::geom_richtext(data = adenomera_stats,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
                         size = 4.5) +
+  geom_smooth(data = . %>%
+                dplyr::filter(Preditor %in% c("Abertura do dossel",
+                                              "Distância dos corpos hídricos")),
+              method = "lm",
+              se = FALSE) +
   facet_wrap(~Preditor, scales = "free_x") +
   labs(y = "Abundância") +
   scale_fill_manual(values = c("green2",
@@ -465,6 +658,8 @@ df_ocupacao |>
                                "orange2",
                                "royalblue",
                                "skyblue")) +
+  scale_color_manual(values = c("green4",
+                               "skyblue4")) +
   scale_y_continuous(limits = c(4, 18)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
@@ -478,9 +673,10 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_adenomera.png", height = 10, width = 12)
+ggsave(filename = "modelo_abundancia_adenomera_multiplo.png",
+       height = 10, width = 12)
 
-### Rhinella hoogmoedi ----
+## Rhinella hoogmoedi ----
 
 df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8, 10, 12),
@@ -490,7 +686,7 @@ df_ocupacao |>
              fill = Preditor, color = Preditor)) +
   geom_point(shape = 21, color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = estatisticas_rhinella,
+  ggtext::geom_richtext(data = rhinella_stats,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
@@ -523,56 +719,5 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_rhinella.png", height = 10, width = 12)
-
-# Correlação de abundâncias ----
-
-## Combinações ----
-
-comb <- combn(df_ocupacao[, 2:4] |> names(), m = 2, simplify = FALSE)
-
-comb
-
-## Correlações ----
-
-cor_abu <- function(id){
-
-  sps1 <- comb[[id]][1]
-
-  sps2 <- comb[[id]][2]
-
-  paste0("Correlação para: ", sps1, " e ", sps2) |>
-    crayon::green() |>
-    message()
-
-  cor_test <- cor.test(df_ocupacao[[sps1]],
-                       df_ocupacao[[sps2]],
-                       method = "spearman")
-
-  print(cor_test)
-
-  df <- tibble::tibble(Avaliação = paste0(sps1, " x ", sps2),
-                       r = cor_test$estimate |> round(3),
-                       p = cor_test$p.value |> round(3))
-
-  assign(paste0("test_cor_",
-                sps1 |> stringr::word(1),
-                "_",
-                sps2 |> stringr::word(1)),
-         df,
-         envir = globalenv())
-
-  ggplot(df_ocupacao, aes(df_ocupacao[[sps1]], df_ocupacao[[sps2]])) +
-    geom_point() +
-    labs(x = sps1,
-         y = sps2)
-
-}
-
-purrr::map(1:3, cor_abu)
-
-## Unindo os resultados ----
-
-ls(pattern = "test_cor_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows()
+ggsave(filename = "modelo_abundancia_rhinella_multiplo.png",
+       height = 10, width = 12)
