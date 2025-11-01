@@ -166,42 +166,124 @@ df_beta |> dplyr::glimpse()
 ## Multicolinearidade ----
 
 df_alfa |>
-  dplyr::select(3, 4, 6, 8) |>
+  dplyr::select(3, 4, 6, 8, 10) |>
   cor(method = "spearman")
 
 ## Diversidade alfa ----
 
-### Criando o modelo ----
+### Múltiplos modelos ----
 
-modelo_q1 <- glm(`Q = 1` ~ .,
+modelos_diversidade <- function(id){
+
+  nome <- df_alfa[, id] |> names()
+
+  paste0("Criando o modelo para: ",
+         nome) |>
+    crayon::green() |>
+    message()
+
+  modelo <- lm(`Q = 1` ~ .,
+               data = df_alfa[, c(2, id)])
+
+  nome <- df_alfa[, id] |>
+    names() |>
+    stringr::word(1)
+
+  assign(paste0("modelo_alfa_", nome),
+         modelo |> summary(),
+         envir = globalenv())
+
+  paste0("pressupostos do modelo de: ",
+         nome) |>
+    crayon::green() |>
+    message()
+
+  modelo |>
+    performance::check_heteroscedasticity() |>
+    print()
+
+  modelo |>
+    performance::check_normality() |>
+    print()
+
+  modelo |>
+    performance::check_model(check = c("vif",
+                                       "qq",
+                                       "normality",
+                                       "homogeneity")) |>
+    print()
+
+  r2 <- modelo |>
+    performance::r2() |>
+    as.numeric() |>
+    round(2)
+
+  paste0("R²: ",
+         r2) |>
+    crayon::green() |>
+    message()
+
+  resultados <- modelo |>
+    summary() %>%
+    .$coefficient |>
+    as.data.frame() |>
+    tibble::rownames_to_column() |>
+    dplyr::mutate(rowname = rowname |>
+                    stringr::str_remove_all("`")) |>
+    dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
+    dplyr::mutate(`R²` = r2[2])
+
+  assign(paste0("resultados_alfa_", nome),
+         resultados,
+         envir = globalenv())
+
+}
+
+purrr::walk(c(3, 4, 6, 8, 10), modelos_diversidade)
+
+ls(pattern = "modelo_alfa_") |>
+  mget(envir = globalenv())
+
+ls(pattern = "resultados_alfa_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows()
+
+### Modelo múltiplo ----
+
+#### Criando o modelo ----
+
+modelo_q1 <- lm(`Q = 1` ~ .,
                  data = df_alfa |>
-                   dplyr::select(2:4, 6, 8),
-                 family = Gamma(link = "identity"))
+                   dplyr::select(2:4, 6, 8))
 
-### Pressupostos do modelo ----
+#### Pressupostos do modelo ----
 
-modelo_q1 |> DHARMa::simulateResiduals(plot = TRUE)
+modelo_q1 |> performance::check_heteroscedasticity()
+
+modelo_q1 |> performance::check_normality()
 
 modelo_q1 |> performance::check_model(check = c("vif",
                                                 "qq",
                                                 "normality",
                                                 "homogeneity"))
 
-### Avaliando o modelo ----
+#### Avaliando o modelo ----
 
 modelo_q1 |> summary()
 
 qt(p = 0.05, df = 6, lower.tail = FALSE)
 
-### Pseudo-R² ----
+qf(p = 0.05, df1 = 4, df2 = 6, lower.tail = FALSE)
+
+#### Pseudo-R² ----
 
 modelo_q1 |> rsq::rsq()
 
 modelo_q1 |> rsq::rsq(adj = TRUE)
 
-### Tabela ----
+#### Tabela ----
 
-#### Dataframe da tabelas ----
+##### Dataframe da tabelas ----
 
 df_flex1 <- modelo_q1 |>
   summary() %>%
@@ -234,7 +316,7 @@ df_flex1_trat <- df_flex1 |>
 
 df_flex1_trat
 
-#### Criando a tabela ----
+##### Criando a tabela ----
 
 flex_q1 <- df_flex1_trat |>
   flextable::flextable() |>
@@ -245,16 +327,10 @@ flex_q1 <- df_flex1_trat |>
 
 flex_q1
 
-#### Exportando a tabela ----
+##### Exportando a tabela ----
 
 flex_q1 |>
   flextable::save_as_docx(path = "tabela_q1.docx")
-
-### Multicolinearidade ----
-
-df_beta |>
-  dplyr::select(2:5) |>
-  cor(method = "spearman")
 
 ### Gráfico -----
 
@@ -315,12 +391,19 @@ ggsave(filename = "grafico_pontos_q1.png", height = 10, width = 12)
 
 ## Diversidade beta -----
 
+### Multicolinearidade ----
+
+df_beta |>
+  dplyr::select(2:5, 8) |>
+  cor(method = "spearman")
+
 ### Criando o modelo ----
 
 modelo_beta <- glmmTMB::glmmTMB(Composição ~ `Abertura de dossel` +
                                   `Área de Poças` +
                                   `Altura da Serrapilheira` +
-                                  `Distância dos corpos hidricos`,
+                                  `Distância dos corpos hidricos` +
+                                  Altitude,
                                 data = df_beta,
                                 family = glmmTMB::beta_family())
 
@@ -397,8 +480,8 @@ flex_beta |>
 ### Gráfico ----
 
 df_beta_estatisticas <- df_flexbeta_trat |>
-  dplyr::mutate(`Valor Preditor` = c(0.03, 6, 3, 350),
-                Composição = 0.45,
+  dplyr::mutate(`Valor Preditor` = c(0.03, 7.5, 3.5, 350, 60),
+                Composição = 0.475,
                 df = 6,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
@@ -413,7 +496,11 @@ df_beta_estatisticas <- df_flexbeta_trat |>
 df_beta_estatisticas
 
 df_beta |>
-  tidyr::pivot_longer(cols = `Abertura de dossel`:`Distância dos corpos hidricos`,
+  tidyr::pivot_longer(cols = c(`Abertura de dossel`,
+                               `Área de Poças`,
+                               `Altura da Serrapilheira`,
+                               `Distância dos corpos hidricos`,
+                               Altitude),
                       names_to = "Preditor",
                       values_to = "Valor Preditor") |>
   dplyr::mutate(Preditor = Preditor |>
@@ -425,7 +512,7 @@ df_beta |>
              stroke = 1) +
   geom_smooth(data = . %>%
                 dplyr::filter(Preditor %in% c("Abertura de dossel",
-                                              "Área de Poças")),
+                                              "Altitude")),
               method = "lm",
               se = FALSE) +
   facet_wrap(~Preditor, scales = "free_x") +
@@ -436,12 +523,17 @@ df_beta |>
                         label.colour = "transparent",
                         fill = "transparent",
                         size = 7) +
-  scale_fill_manual(values = c("green4", "orange3", "skyblue", "royalblue")) +
-  scale_color_manual(values = c("darkgreen", "royalblue4")) +
+  scale_fill_manual(values = c("green4",
+                               "gold",
+                               "orange3",
+                               "skyblue",
+                               "royalblue")) +
+  scale_color_manual(values = c("darkgreen",
+                                "gold4")) +
   scale_y_continuous(limits = c(0.1, 0.5)) +
   labs(x = "Distância preditora",
        y = "Distância de composição",
-       title = "z-crítico = 1.96, AIC = -91.2, pseudo-R² ajustado = 0.20") +
+       title = "z-crítico = 1.96, pseudo-R² ajustado = 0.20") +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
