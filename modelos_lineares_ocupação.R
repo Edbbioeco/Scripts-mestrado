@@ -54,7 +54,7 @@ ambientais |> dplyr::glimpse()
 
 # Dataframe do modelo -----
 
-## Riqueza e diversidade alfa -----
+## Abundância -----
 
 ### Criando a matriz ----
 
@@ -81,7 +81,7 @@ df_ocupacao
 df_ocupacao |> glimpse()
 
 df_ocupacao |>
-  dplyr::select(c(5, 6, 8, 10, 12)) |>
+  dplyr::select(c(5, 6, 8:10, 12)) |>
   glimpse()
 
 # Modelos lineares ----
@@ -150,7 +150,7 @@ rodando_modelos_pristimantis <- function(id){
 
 }
 
-purrr::walk(c(5, 6, 8, 10, 12), rodando_modelos_pristimantis)
+purrr::walk(c(5, 6, 8:10, 12), rodando_modelos_pristimantis)
 
 ls(pattern = "modelo_pristimantis_") |>
   mget(envir = globalenv())
@@ -163,27 +163,27 @@ ls(pattern = "resultados_pristimantis_") |>
 
 ### Mlticolinearidade ----
 
-df_ocupacao[, c(5, 6, 8, 10, 12)] |>
+df_ocupacao[, c(5, 6, 8:10, 12)] |>
   cor(method = "spearman")
 
 #### Criando o modelo ----
 
 glm(`Pristimantis ramagii` ~ .,
-    data = df_ocupacao[, c(2, 5, 6, 8, 10, 12)],
+    data = df_ocupacao[, c(2, 5, 6, 8:10, 12)],
     family = poisson(link = "log")) |>
   summary()
 
 #### Pressupostos do modelo ----
 
 glm(`Pristimantis ramagii` ~ .,
-    data = df_ocupacao[, c(2, 5, 6, 8, 10, 12)],
+    data = df_ocupacao[, c(2, 5, 6, 8:10, 12)],
     family = poisson(link = "log")) |>
   DHARMa::simulateResiduals(plot = TRUE)
 
 #### Pseudo-R² ----
 
 glm(`Pristimantis ramagii` ~ .,
-    data = df_ocupacao[, c(2, 5, 6, 8, 10, 12)],
+    data = df_ocupacao[, c(2, 5, 6, 8:10, 12)],
     family = poisson(link = "log")) |>
   performance::r2_mcfadden()
 
@@ -315,7 +315,8 @@ rodando_modelos_rhinella <- function(id){
 
   print(avaliacao)
 
-  r2 <- modelo |> performance::r2() |>
+  r2 <- modelo |>
+    performance::r2() |>
     as.numeric() |>
     round(3)
 
@@ -343,7 +344,7 @@ rodando_modelos_rhinella <- function(id){
 
 }
 
-purrr::walk(c(5, 6, 8, 10, 12), rodando_modelos_rhinella)
+purrr::walk(c(5, 6, 8:10, 12), rodando_modelos_rhinella)
 
 ls(pattern = "modelo_rhinella_") |>
   mget(envir = globalenv())
@@ -357,7 +358,7 @@ ls(pattern = "resultados_rhinella_") |>
 #### Criando o modelo ----
 
 glm(`Rhinella hoogmoedi` ~ .,
-    data = df_ocupacao[, c(4, 5, 6, 8, 10, 12)],
+    data = df_ocupacao[, c(4, 5, 6, 8:10, 12)],
     family = poisson(link = "log")) |>
   summary()
 
@@ -392,7 +393,7 @@ estatisticas_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                 `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
                                               .default = `Pr(>|z|)` |>
                                                 as.character()),
-                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350),
+                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350, 25.75),
                 `Pristimantis ramagii` = 28,
                 estatistica = paste0("β1 ± EP = ",
                                      Estimate,
@@ -528,7 +529,7 @@ estatisticas_rhinella <- ls(pattern = "resultados_rhinella_") |>
                 `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
                                               .default = `Pr(>|z|)` |>
                                                 as.character()),
-                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350),
+                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350, 25.75),
                 `Rhinella hoogmoedi` = 10.5,
                 estatistica = paste0("β1 ± EP = ",
                                      Estimate,
@@ -586,34 +587,36 @@ rhinella_stats
 ## Pstimantis ramagii ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(5, 6, 8, 10, 12),
+  tidyr::pivot_longer(cols = c(5, 6, 8:10, 12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`,
              fill = Preditor, color = Preditor)) +
   geom_point(shape = 21, color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = pristimantis_stats,
+  ggtext::geom_richtext(data = estatisticas_pristimantis,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
                         size = 4.5) +
-  facet_wrap(~Preditor, scales = "free_x") + ggview::canvas(height = 10,
-                                                            width = 12) +
+  facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% c("Altitude",
-                                              "Distância dos corpos hídricos")),
-              method = "glm", family = poisson, show.legend = FALSE, se = FALSE) +
+                dplyr::filter(Preditor %in% c("Área das poças",
+                                              "Distância dos corpos hídricos",
+                                              "Temperatura")),
+              method = "glm", show.legend = FALSE, se = FALSE) +
   labs(y = "Abundância") +
   scale_fill_manual(values = c("green2",
                                "gold",
                                "orange2",
                                "royalblue",
-                               "skyblue")) +
-  scale_color_manual(values = c("gold4",
-                                "skyblue4")) +
+                               "skyblue",
+                               "orangered")) +
+  scale_color_manual(values = c("blue",
+                                "skyblue4",
+                                "darkorange")) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
@@ -639,18 +642,13 @@ df_ocupacao |>
              fill = Preditor, color = Preditor)) +
   geom_point(shape = 21, color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = adenomera_stats,
+  ggtext::geom_richtext(data = estatisticas_adenomera,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
                         size = 4.5) +
-  geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% c("Abertura do dossel",
-                                              "Distância dos corpos hídricos")),
-              method = "lm",
-              se = FALSE) +
   facet_wrap(~Preditor, scales = "free_x") +
   labs(y = "Abundância") +
   scale_fill_manual(values = c("green2",
@@ -679,14 +677,14 @@ ggsave(filename = "modelo_abundancia_adenomera_multiplo.png",
 ## Rhinella hoogmoedi ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(5, 6, 8, 10, 12),
+  tidyr::pivot_longer(cols = c(5, 6, 8:10, 12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`,
              fill = Preditor, color = Preditor)) +
   geom_point(shape = 21, color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = rhinella_stats,
+  ggtext::geom_richtext(data = estatisticas_rhinella,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
@@ -702,8 +700,9 @@ df_ocupacao |>
                                "gold",
                                "orange2",
                                "royalblue",
-                               "skyblue")) +
-  scale_color_manual(values = c("green4",
+                               "skyblue",
+                               "orangered")) +
+  scale_color_manual(values = c("darkgreen",
                                 "gold4")) +
   labs(y = "Abundância") +
   scale_y_continuous(limits = c(1, 12)) +
