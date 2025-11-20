@@ -12,6 +12,10 @@ library(elevatr)
 
 library(tidyterra)
 
+library(ggspatial)
+
+library(ggview)
+
 # Dados ----
 
 ## Dados de abundância de espécies ----
@@ -114,3 +118,25 @@ ggplot() +
   geom_sf(data = saltinho, color = "black", linewidth = 1, fill = "transparent") +
   geom_sf(data = parcelas, color = "black", linewidth = 1) +
   tidyterra::scale_fill_terrain_c()
+
+# Mapa -----
+
+ggplot() +
+  tidyterra::geom_spatraster(data = alt) +
+  geom_sf(data = borda, color = "darkgreen", linewidth = 1, fill = "transparent") +
+  geom_sf(data = saltinho, color = "black", linewidth = 1, fill = "transparent") +
+  geom_sf(data = parcelas, color = "black", linewidth = 1) +
+  tidyterra::scale_fill_whitebox_c(palette = "arid",
+                                   direction = -1,
+                                   name = "Altitude",
+                                   guide = guide_colorbar(title.position = "top",
+                                                           title.hjust = 0.5,
+                                                           barwidth = 20,
+                                                           frame.colour = "black",
+                                                           frame.linewidth = 1,
+                                                           ticks.colour = "black",
+                                                           ticks.linewidth = 1)) +
+  coord_sf(expand = FALSE, label_graticule = "NSWE") +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "mapa_altitude_seminarios2.png", height = 10, width = 12)

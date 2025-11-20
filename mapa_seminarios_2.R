@@ -14,8 +14,6 @@ library(ggspatial)
 
 library(ggview)
 
-library(ggmagnify)
-
 # Dados ----
 
 ## Parcelas ----
