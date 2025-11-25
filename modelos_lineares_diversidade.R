@@ -254,7 +254,7 @@ ls(pattern = "resultados_alfa_") |>
 
 modelo_q1 <- lm(`Q = 1` ~ .,
                  data = df_alfa |>
-                   dplyr::select(2:4, 6, 8))
+                   dplyr::select(2:4, 6, 8, 10))
 
 #### Pressupostos do modelo ----
 
@@ -351,7 +351,7 @@ df_q1_estatisticas <- df_flex1_trat |>
 df_q1_estatisticas
 
 df_alfa |>
-  tidyr::pivot_longer(cols = c(3, 4, 6, 8),
+  tidyr::pivot_longer(cols = c(3, 4, 6, 8, 10),
                       names_to = "Preditor",
                       values_to = "Valor Preditor") |>
   dplyr::mutate(Preditor = Preditor |>
@@ -361,20 +361,8 @@ df_alfa |>
              color = "black",
              size = 3.5,
              stroke = 1) +
-  geom_smooth(data = . %>%
-                dplyr::filter(Preditor == "Distância dos corpos hídricos"),
-              method = "lm",
-              se = FALSE) +
   facet_wrap(~Preditor, scales = "free_x") +
-  ggtext::geom_richtext(data = df_q1_estatisticas,
-                        aes(label = estatistica),
-                        color = "black",
-                        fontface = "bold",
-                        label.colour = "transparent",
-                        fill = "transparent",
-                        size = 7) +
-  scale_fill_manual(values = c("green4", "orange3", "skyblue", "royalblue")) +
-  scale_color_manual(values = "royalblue4") +
+  scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
   labs(title = "t-crítico = 1.94, AIC = 156.95, pseudo-R² ajustado = 0.14") +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
