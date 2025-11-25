@@ -335,7 +335,7 @@ flex_q1 |>
 ### Gráfico -----
 
 df_q1_estatisticas <- df_flex1_trat |>
-  dplyr::mutate(`Valor Preditor` = c(6, 0.155, 5, 350),
+  dplyr::mutate(`Valor Preditor` = c(6, 0.155, 5, 350, 100),
                 `Q = 1` = 3.9,
                 df = 6,
                 estatistica = paste0("β1 ± EP = ",
@@ -362,6 +362,13 @@ df_alfa |>
              size = 3.5,
              stroke = 1) +
   facet_wrap(~Preditor, scales = "free_x") +
+  ggtext::geom_richtext(data = df_q1_estatisticas,
+                        aes(label = estatistica),
+                        color = "black",
+                        fontface = "bold",
+                        label.colour = "transparent",
+                        fill = "transparent",
+                        size = 7) +
   scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
   labs(title = "t-crítico = 1.94, AIC = 156.95, pseudo-R² ajustado = 0.14") +
   theme_bw() +
