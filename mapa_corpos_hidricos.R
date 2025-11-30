@@ -77,7 +77,13 @@ corpos_hid <- sf::st_read("corpos_hidricos_saltinho.gpkg")
 
 corpos_hid
 
+# Carregando o tema ----
+
 source("C:/Users/LENOVO/OneDrive/Documentos/funções/tema.R")
+
+# Shapefile de distância dos corpos hídricos ----
+
+source("distancia_corpos_hidricos_especies.R")
 
 # Mapa ----
 
@@ -85,20 +91,24 @@ ggplot() +
   geom_sf(data = borda, aes(color = "Borda da Mata"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = corpos_hid, aes(color = "Corpos Hídricos"),
-          linewidth = 1, fill = "transparent") +
+          linewidth = 1, fill = "royalblue") +
   geom_sf(data = saltinho, aes(color = "REBio Saltinho"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = parcelas, aes(color = "Parcela de Amostragem"),
           linewidth = 1, fill = "transparent") +
+  geom_sf(data = linhas_conexao, aes(color = "Distância dos corpos hídricos"),
+          linewidth = 1) +
   coord_sf(label_graticule = "NSWE", expand = FALSE) +
-  scale_color_manual(values = c("Borda da Mata" = "gold",
+  scale_color_manual(values = c("Borda da Mata" = "darkgreen",
                                 "Corpos Hídricos" = "royalblue",
                                 "REBio Saltinho" = "red",
-                                "Parcela de Amostragem" = "orange"),
+                                "Parcela de Amostragem" = "darkorange",
+                                "Distância dos corpos hídricos"  = "blue"),
                      breaks = c("REBio Saltinho",
                                 "Borda da Mata",
                                 "Corpos Hídricos",
-                                "Parcela de Amostragem")) +
+                                "Parcela de Amostragem",
+                                "Distância dos corpos hídricos")) +
   labs(colour = NULL) +
   ggspatial::annotation_scale(location = "tr",
                               text_face = "bold",
