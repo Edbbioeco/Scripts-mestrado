@@ -115,6 +115,24 @@ ggplot() +
   geom_sf(data = parcelas, color = "black", linewidth = 1) +
   tidyterra::scale_fill_terrain_c()
 
+## Corpos hídricos ----
+
+### Importando ----
+
+hid <- sf::st_read("corpos_hidricos_saltinho.gpkg")
+
+### Visualizando ----
+
+hid
+
+ggplot() +
+  tidyterra::geom_spatraster(data = alt) +
+  geom_sf(data = borda, color = "red", linewidth = 1, fill = "transparent") +
+  geom_sf(data = saltinho, color = "black", linewidth = 1, fill = "transparent") +
+  geom_sf(data = parcelas, color = "black", linewidth = 1) +
+  geom_sf(data = hid, color = "blue", linewidth = 1) +
+  tidyterra::scale_fill_terrain_c()
+
 # Abundância das espécies ----
 
 abundancia <- especies |>
@@ -226,7 +244,8 @@ abundancia_coord |>
                                "Rhinella hoogmoedi")) |>
   ggplot() +
   tidyterra::geom_spatraster(data = alt) +
-  tidyterra::scale_fill_whitebox_c(palette = "arid", direction = -1,
+  tidyterra::scale_fill_whitebox_c(palette = "arid",
+                                   direction = -1,
                                    name = "Altitude",
                                    guide = guide_colorbar(order = 1,
                                                           title.position = "top",
@@ -240,6 +259,9 @@ abundancia_coord |>
                      breaks = seq(-35.19509, -35.15463, 0.03)) +
   scale_y_continuous(expand = c(0, 0)) +
   ggnewscale::new_scale_fill() +
+  geom_sf(data = hid, aes(color = "Hidric Bodies"),
+          fill = "blue",
+          linewidth = 1) +
   geom_sf(data = borda, aes(color = "Native Vegetation"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = saltinho, aes(color = "REBio Saltinho"),
@@ -248,7 +270,8 @@ abundancia_coord |>
           linewidth = 1) +
   scale_color_manual(values = c("REBio Saltinho" = "black",
                                 "Native Vegetation" = "darkgreen",
-                                "Samples" = "royalblue4")) +
+                                "Samples" = "royalblue4",
+                                "Hidric Bodies" = "blue")) +
   geom_point(aes(Longitude, Latitude, size = Abundância),
              shape = 21, stroke = 1, color = "black", fill = "green4", width = 0.1) +
   scale_size_continuous(breaks = seq(1, 35, 5),
@@ -266,11 +289,12 @@ abundancia_coord |>
         legend.title = element_text(color = "black", size = 15),
         strip.text = element_text(color = "black", size = 15, face = "italic"),
         strip.background = element_rect(color = "black", linewidth = 1),
-        legend.position = c(1, 0.15),
+        legend.position = c(1.05, 0.08),
         legend.direction = "horizontal",
         legend.box = "vertical",
         legend.justification = c("right", "bottom"),
-        legend.background = element_blank())
+        legend.background = element_blank()) +
+  ggview::canvas(height = 10, width = 15)
 
-ggsave(filename = "mapa_especies_abundancia_2.png", height = 10, width = 12)
+ggsave(filename = "mapa_especies_abundancia_2.png", height = 10, width = 15)
 
