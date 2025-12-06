@@ -36,17 +36,6 @@ especies
 
 especies |> dplyr::glimpse()
 
-### Tratando ----
-
-nomes_linhas <- especies$`Unidade Amostral`
-
-especies <- especies |>
-  dplyr::select_if(is.numeric)
-
-row.names(especies) <- nomes_linhas
-
-especies
-
 ## Variáveis ambientais ----
 
 ### Importando ----
@@ -66,9 +55,10 @@ ambientais |> dplyr::glimpse()
 ### ìndices de diversidade ----
 
 div_alfa <- especies |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
   vegan::renyi(scales = 1, hill = TRUE) |>
   dplyr::as_data_frame() |>
-  dplyr::mutate(`Unidade Amostral` = nomes_linhas) |>
+  dplyr::mutate(`Unidade Amostral` = especies$`Unidade Amostral`) |>
   dplyr::relocate(value, .after = `Unidade Amostral`) |>
   dplyr::rename("Q = 1" = value)
 
@@ -89,6 +79,7 @@ df_alfa |> dplyr::glimpse()
 ### Matriz de composição ----
 
 matriz_comp <- especies |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
   vegan::decostand(method = "hellinger") |>
   vegan::vegdist() |>
   as.numeric()
@@ -175,15 +166,20 @@ df_alfa |>
 
 modelos_diversidade <- function(id){
 
-  nome <- df_alfa[, id] |> names()
+  id <- as.integer(id)
+
+  nome <- df_alfa[id] |> names()
 
   paste0("Criando o modelo para: ",
          nome) |>
     crayon::green() |>
     message()
 
+  df_trat <<- df_alfa |> dplyr::select(2, id)
+
   modelo <- lm(`Q = 1` ~ .,
-               data = df_alfa[, c(2, id)])
+               data = df_trat
+               )
 
   nome <- df_alfa[, id] |>
     names() |>
@@ -198,11 +194,11 @@ modelos_diversidade <- function(id){
     crayon::green() |>
     message()
 
-  modelo |>
+  modelo_q1 |>
     performance::check_heteroscedasticity() |>
     print()
 
-  modelo |>
+  modelo_q1 |>
     performance::check_normality() |>
     print()
 
@@ -214,7 +210,7 @@ modelos_diversidade <- function(id){
     print()
 
   r2 <- modelo |>
-    performance::r2() |>
+    rsq::rsq() |>
     as.numeric() |>
     round(2)
 
@@ -231,7 +227,7 @@ modelos_diversidade <- function(id){
     dplyr::mutate(rowname = rowname |>
                     stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`R²` = r2[2])
+    dplyr::mutate(`R²` = r2)
 
   assign(paste0("resultados_alfa_", nome),
          resultados,
@@ -253,7 +249,7 @@ ls(pattern = "resultados_alfa_") |>
 #### Criando o modelo ----
 
 modelo_q1 <- lm(`Q = 1` ~ .,
-                 data = df_alfa |>
+                data = df_alfa |>
                    dplyr::select(2:4, 6, 8, 10))
 
 #### Pressupostos do modelo ----
@@ -285,25 +281,19 @@ modelo_q1 |> rsq::rsq(adj = TRUE)
 
 ##### Dataframe da tabelas ----
 
-df_flex1 <- modelo_q1 |>
-  summary() %>%
-  .$coefficients
+ls(pattern = "resultados_alfa_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows()
 
-df_flex1
-
-nomes_var <- df_flex1 |> rownames()
-
-nomes_var
-
-df_flex1_trat <- df_flex1 |>
-  tibble::as_tibble() |>
-  dplyr::mutate(Preditor = nomes_var |>
-                  stringr::str_remove_all("`") |>
-                  stringr::str_replace("hidrico", "hídrico"),
-                Estimate = Estimate |> round(4),
+df_flex1 <- ls(pattern = "resultados_alfa_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows() |>
+  dplyr::rename("Preditor" = 1) |>
+  dplyr::mutate(Estimate = Estimate |> round(4),
                 `Std. Error` = `Std. Error` |> round(4),
                 `t value` = `t value` |> round(3),
-                `Pr(>|t|)` = `Pr(>|t|)` |> round(2)) |>
+                `Pr(>|t|)` = `Pr(>|t|)` |> round(2),
+                DF = 9) |>
   dplyr::relocate(Preditor, .before = Estimate) |>
   dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
   dplyr::rename("β1" = Estimate,
@@ -312,18 +302,20 @@ df_flex1_trat <- df_flex1 |>
                 "p" = `Pr(>|t|)`) |>
   tidyr::unite(β1:EP,
                sep = " ± ",
-               col = "β1 ± EP")
+               col = "β1 ± EP") |>
+  dplyr::relocate(DF, .before = p)
 
-df_flex1_trat
+df_flex1
 
 ##### Criando a tabela ----
 
-flex_q1 <- df_flex1_trat |>
+flex_q1 <- df_flex1 |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
-  flextable::width(width = 1.5) |>
-  flextable::add_footer_lines("t-crítico = 1.94, AIC = 6.5, pseudo-R² = 0.69, pseudo-R² ajustado = 0.37") |>
-  flextable::fontsize(size = 12, part = "all")
+  flextable::width(width = 1.5, j = 2) |>
+  flextable::add_footer_lines("t-crítico = 1.83") |>
+  flextable::fontsize(size = 12, part = "all") |>
+  flextable::bg(bg = "white", part = "all")
 
 flex_q1
 
@@ -332,12 +324,26 @@ flex_q1
 flex_q1 |>
   flextable::save_as_docx(path = "tabela_q1.docx")
 
-### Gráfico -----
+## Dataframe de estatísticas usadas no gráfico ----
 
-df_q1_estatisticas <- df_flex1_trat |>
-  dplyr::mutate(`Valor Preditor` = c(6, 0.155, 5, 350, 100),
-                `Q = 1` = 3.9,
-                df = 6,
+### Valor medano das variáveis ----
+
+medias_alfa <- df_alfa |>
+  dplyr::select(3:4, 6, 8, 10) |>
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "Preditor",
+                      values_to = "Valor") |>
+  dplyr::arrange(Preditor |> forcats::fct_relevel(df_flex1$Preditor)) |>
+  dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
+                   .by = Preditor)
+
+medias_alfa
+
+### Dataframe ----
+
+df_q1_estatisticas <- df_flex1 |>
+  dplyr::mutate(`Q = 1` = 3.9,
+                df = 9,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
                                      "<br>t = ",
@@ -346,9 +352,13 @@ df_q1_estatisticas <- df_flex1_trat |>
                                      df,
                                      "</sub>, p = ",
                                      p)) |>
-  dplyr::select(-c(2:4))
+  dplyr::select(-c(2:4)) |>
+  dplyr::left_join(medias_alfa,
+                   by = "Preditor")
 
 df_q1_estatisticas
+
+### Gráfico -----
 
 df_alfa |>
   tidyr::pivot_longer(cols = c(3, 4, 6, 8, 10),
@@ -370,15 +380,15 @@ df_alfa |>
                         fill = "transparent",
                         size = 7) +
   scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
-  labs(title = "t-crítico = 1.94, AIC = 156.95, pseudo-R² ajustado = 0.14") +
+  labs(title = "t-crítico = 1.83") +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 15),
-        axis.title = element_text(color = "black", size = 15),
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 25),
         panel.border = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(color = "black", size = 15),
+        strip.text = element_text(color = "black", size = 19),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
-        title = element_text(color = "black", size = 15),
+        title = element_text(color = "black", size = 25),
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
