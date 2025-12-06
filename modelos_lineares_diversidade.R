@@ -453,7 +453,8 @@ df_flexbeta_trat <- df_flexbeta |>
                 Estimate = Estimate |> round(4),
                 `Std. Error` = `Std. Error` |> round(4),
                 `z value` = `z value` |> round(3),
-                `Pr(>|z|)` = `Pr(>|z|)` |> round(5)) |>
+                `Pr(>|z|)` = `Pr(>|z|)` |> round(5),
+                DF = 51) |>
   dplyr::relocate(Preditor, .before = Estimate) |>
   dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
   dplyr::rename("β1" = Estimate,
@@ -462,7 +463,8 @@ df_flexbeta_trat <- df_flexbeta |>
                 "p" = `Pr(>|z|)`) |>
   tidyr::unite(β1:EP,
                sep = " ± ",
-               col = "β1 ± EP")
+               col = "β1 ± EP") |>
+  dplyr::relocate(DF, .before = p)
 
 df_flexbeta_trat
 
@@ -471,8 +473,8 @@ df_flexbeta_trat
 flex_beta <- df_flexbeta_trat |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
-  flextable::width(width = 1.5) |>
-  flextable::add_footer_lines("z-crítico = 1.96, AIC = -91.2, pseudo-R² = 0.13") |>
+  flextable::width(width = 1.5, j = 2) |>
+  flextable::add_footer_lines("z-crítico = 1.96, pseudo-R² = 0.20") |>
   flextable::fontsize(size = 12, part = "all")
 
 flex_beta
@@ -482,23 +484,43 @@ flex_beta
 flex_beta |>
   flextable::save_as_docx(path = "tabela_beta.docx")
 
-### Gráfico ----
+## Dataframe de estatísticas usadas no gráfico ----
+
+### Valor medano das variáveis ----
+
+medias_beta <- df_beta |>
+  dplyr::select(2:5, 8) |>
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "Preditor",
+                      values_to = "Valor") |>
+  dplyr::mutate(Preditor = Preditor |> stringr::str_replace_all("hidricos",
+                                                                "hídricos")) |>
+  dplyr::arrange(Preditor |> forcats::fct_relevel(df_flexbeta_trat$Preditor)) |>
+  dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
+                   .by = Preditor)
+
+medias_beta
+
+### Dataframe ----
 
 df_beta_estatisticas <- df_flexbeta_trat |>
-  dplyr::mutate(`Valor Preditor` = c(0.03, 7.5, 3.5, 350, 60),
-                Composição = 0.475,
-                df = 6,
+  dplyr::mutate(Composição = 0.475,
+                DF = 51,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
-                                     "<br>z = ",
+                                     "<br>t = ",
                                      z,
                                      "<sub>",
-                                     df,
+                                     DF,
                                      "</sub>, p = ",
                                      p)) |>
-  dplyr::select(-c(2:4, 7))
+  dplyr::select(-c(2:5)) |>
+  dplyr::left_join(medias_beta,
+                   by = "Preditor")
 
 df_beta_estatisticas
+
+### Gráfico ----
 
 df_beta |>
   tidyr::pivot_longer(cols = c(`Abertura de dossel`,
