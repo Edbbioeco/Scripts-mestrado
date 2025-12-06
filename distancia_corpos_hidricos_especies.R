@@ -12,6 +12,8 @@ library(tidyterra)
 
 library(vegan)
 
+library(DHARMa)
+
 library(performance)
 
 library(writexl)
