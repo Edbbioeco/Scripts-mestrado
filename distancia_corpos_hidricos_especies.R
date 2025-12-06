@@ -105,6 +105,8 @@ ggplot() +
   geom_sf(data = hidrico, color = "blue", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "black", linewidth = 1)
 
+### Exportando ----
+
 # Extraindo os valores ----
 
 ## Diversidade de espécies
@@ -126,23 +128,14 @@ dados_alfa <- especies |>
 
 dados_alfa
 
-nomes_linhas <- dados_alfa |>
-  dplyr::pull(`Unidade Amostral`)
+dados_alfa_trat <- dados_alfa |>
+  tibble::column_to_rownames(var = "Unidade Amostral")
 
-nomes_linhas
-
-dados_alfa <- dados_alfa |>
-  dplyr::select(-`Unidade Amostral`)
-
-rownames(dados_alfa) <- nomes_linhas
-
-dados_alfa |> names()
-
-dados_alfa
+dados_alfa_trat
 
 ### Valores de diversidade ----
 
-diversidade <- dados_alfa |>
+diversidade <- dados_alfa_trat |>
   vegan::renyi(scales = c(0, 1),
                hill = TRUE) |>
   tibble::as_tibble() |>
@@ -157,14 +150,6 @@ diversidade
 
 ## Distância das parcelas ----
 
-### Centróide ----
-
-centroides <- parcelas |>
-  dplyr::filter(Trlh.Pr != "1-1") |>
-  sf::st_centroid()
-
-centroides
-
 ### Borda ----
 
 borda_hidrico <- hidrico[c(1:2), ] |>
@@ -176,7 +161,9 @@ borda_hidrico
 
 #### Bordas do açude ----
 
-dist_acude <- sf::st_distance(centroides, borda_hidrico) |>
+dist_acude <- sf::st_distance(parcelas |>
+                                dplyr::filter(Trlh.Pr != "1-1"),
+                              borda_hidrico) |>
   tibble::as_tibble() |>
   dplyr::mutate(`Unidade Amostral` = nomes_linhas) |>
   tidyr::pivot_longer(cols = dplyr::contains("V"),
@@ -191,7 +178,9 @@ dist_acude
 
 #### Rios -----
 
-dist_rios <- sf::st_distance(centroides, hidrico[c(3:5), ]) |>
+dist_rios <- sf::st_distance(parcelas |>
+                               dplyr::filter(Trlh.Pr != "1-1"),
+                             hidrico[c(3:5), ]) |>
   tibble::as_tibble() |>
   dplyr::mutate(`Unidade Amostral` = nomes_linhas) |>
   tidyr::pivot_longer(cols = dplyr::contains("V"),
@@ -219,11 +208,15 @@ delt_dist
 
 #### Coordenadas das menores distâncias ----
 
-corpo_proximo_acude <- sf::st_nearest_feature(centroides, borda_hidrico)
+corpo_proximo_acude <- sf::st_nearest_feature(parcelas |>
+                                                dplyr::filter(Trlh.Pr != "1-1"),
+                                              borda_hidrico)
 
 corpo_proximo_acude
 
-corpo_proximo_rios <- sf::st_nearest_feature(centroides, hidrico[c(3:5), ])
+corpo_proximo_rios <- sf::st_nearest_feature(parcelas |>
+                                               dplyr::filter(Trlh.Pr != "1-1"),
+                                             hidrico[c(3:5), ])
 
 corpo_proximo_rios
 
@@ -231,14 +224,18 @@ corpo_proximo <- c(4, 2, 2, 4, 4, 4, 1, 4, 5, 5, 4)
 
 corpo_proximo
 
-linhas_conexao_acude <- sf::st_nearest_points(centroides, borda_hidrico)
+linhas_conexao_acude <- sf::st_nearest_points(parcelas |>
+                                                dplyr::filter(Trlh.Pr != "1-1"),
+                                              borda_hidrico)
 
 linhas_conexao_acude <- linhas_conexao_acude[c(4, 6, 13), ] |>
   sf::st_as_sf()
 
 linhas_conexao_acude
 
-linhas_conexao_rios <- sf::st_nearest_points(centroides, hidrico[c(3:5), ])
+linhas_conexao_rios <- sf::st_nearest_points(parcelas |>
+                                               dplyr::filter(Trlh.Pr != "1-1"),
+                                             hidrico[c(3:5), ])
 
 linhas_conexao_rios <- linhas_conexao_rios[c(2, 11, 14, 17, 23, 27, 30, 32), ] |>
   sf::st_as_sf()
@@ -285,8 +282,11 @@ ggplot() +
 #### Centroides ----
 
 alt_cent <- alt |>
-  terra::extract(centroides) |>
-  dplyr::pull(file7114380c687d)
+  terra::extract(parcelas |>
+                   dplyr::filter(Trlh.Pr != "1-1")) |>
+  dplyr::summarise(Altitude = file7114380c687d |> mean(),
+                   .by = ID) |>
+  dplyr::pull(Altitude)
 
 alt_cent
 
@@ -329,7 +329,7 @@ modelo_q0 <- glm(Q0 ~ Distância,
 
 ### Avaliando o modelo ----
 
-par(mfrow = c(2, 2)); modelo_q0 %>%plot(); par(mfrow = c(1, 1))
+modelo_q0 |> DHARMa::simulateResiduals(plot = TRUE)
 
 ### Estatísticas do modelo ----
 
