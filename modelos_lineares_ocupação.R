@@ -222,7 +222,8 @@ rodando_modelos_adenomera <- function(id){
 
   print(avaliacao)
 
-  r2 <- modelo |> performance::r2() |>
+  r2 <- modelo |>
+    performance::r2() |>
     as.numeric() |>
     round(2)
 
