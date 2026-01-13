@@ -1,0 +1,327 @@
+---
+title: "Mapa - parcelas"
+author: "Edson Nilton de Moura SIlva Júnior"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: yes
+    number_sections: no
+    fig_caption: yes
+    theme: flatly
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+    fig_width: 8
+    fig_height: 6
+---
+
+<style>
+body {
+text-align: justify;
+font-size: 20px}
+blockquote {
+  background-color: #FAEFA6;
+  padding: 10px;
+  font-size: 14.5px
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.height = 8, fig.width = 10)
+```
+
+
+
+# **Pacotes**
+
+```{r}
+library(tidyverse)
+
+library(geobr)
+
+library(sf)
+
+library(terra)
+
+library(tidyterra)
+
+library(ggnewscale)
+
+library(patchwork)
+
+library(cowplot)
+```
+
+# **Dados**
+
+## Shappefiles
+
+### Saltinho
+
+```{r}
+saltinho <- sf::st_read("saltinho.shp")
+
+saltinho
+
+saltinho %>% 
+  ggplot() +
+  geom_sf()
+```
+
+### Estados
+
+```{r}
+estados <- geobr::read_state(showProgress = FALSE) 
+
+estados
+
+estados %>% 
+  ggplot() +
+  geom_sf()
+```
+
+### Continentes 
+
+```{r}
+continentes <- sf::st_read("World_Continents.shp")
+
+continentes
+
+continentes %>% 
+  ggplot() +
+  geom_sf()
+```
+
+### Trilhas
+
+```{r}
+trilhas <- sf::st_read("trilhas horizontais.shp") %>% 
+  sf::st_make_valid()
+
+trilhas
+
+trilhas %>% 
+  ggplot() +
+  geom_sf() +
+  labs(color = NULL)
+```
+
+### Coordenadas
+
+```{r}
+coord <- readxl::read_xlsx("coordenadas_proposta.xlsx", sheet = 2) %>% 
+  dplyr::mutate(Longitude = Longitude %>% parzer::parse_lon(),
+                Latitude = Latitude %>% parzer::parse_lat(),
+                Parcela = dplyr::case_when(Trilha == "Ripária" ~ "Ripária",
+                                                     .default = "De Trilhas")) %>% 
+  sf::st_as_sf(coords = c("Longitude", "Latitude"), crs = saltinho %>% sf::st_crs())
+
+coord
+
+coord %>% 
+  ggplot() +
+  geom_sf(aes(fill = Parcela), shape = 21, color = "black", size = 5)
+```
+
+## Imagem de satélite
+
+```{r}
+saltinho_sat <- terra::rast("Saltinho.tif")
+
+saltinho_sat
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_sat)
+```
+
+# **Mapa**
+
+## Mapa do Brasil-América do Sul
+
+```{r}
+br <- ggplot()+
+  geom_sf(data = continentes, color = "black", fill = "gray40") +
+  geom_sf(data = estados, color = "black", fill = "white") +
+  geom_sf(data = estados %>% dplyr::filter(name_state == "Pernambuco"), fill = "gray", color = "black") +
+  geom_rect(aes(xmin = -41.25, xmax = -34.9, ymin = -9.5, ymax = -7.25, color = "Pernambuco"), fill = "red", alpha = 0.4) +
+  scale_color_manual(values = "red") +
+  coord_sf(xlim = c(-80, -35), ylim = c(-55, 12),
+           label_graticule = "NSWE") +
+  labs(color = NULL,
+       fill = NULL) +
+  theme_classic() +
+  theme(legend.position = "bottom",
+        legend.text = element_text(color = "black", size = 12), 
+        axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        plot.background = element_blank(),
+        panel.background = element_blank(),
+        plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm"))
+
+br
+```
+
+## Mapa de Pernambuco
+
+```{r}
+gg_pe <- ggplot() +
+  geom_sf(data = estados, color = "black", fill = "white") +
+  geom_sf(data = estados %>% dplyr::filter(name_state == "Pernambuco"), aes(fill = "Pernambuco"), color = "black") +
+  tidyterra::geom_spatraster_rgb(data = saltinho_sat) +
+  geom_rect(aes(xmin = -35.20, xmax = -35.16, ymin = -8.7426, ymax = -8.712, color = "REBio Saltinho"), fill = "red", alpha = 0.4) +
+  coord_sf(xlim = c(-41.25, -34.9), ylim = c(-9.5, -7.25),
+           label_graticule = "NSWE") +
+  labs(color = NULL,
+       fill = NULL) +
+  scale_color_manual(values = "red") +
+  scale_fill_manual(values = "gray") +
+  ggspatial::annotation_scale(location = "br", height = unit(0.3,"cm"), bar_cols = c("black", "white")) +
+  theme_classic() +
+  theme(legend.position = "bottom",
+        legend.text = element_text(color = "black", size = 12), 
+        axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        plot.background = element_blank(),
+        panel.background = element_blank(),
+        plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm"))
+
+gg_pe
+```
+
+## Mapa de Saltinho
+
+### Transformando os dados das trilhas e das parcelas em dataframe
+
+```{r}
+trilhas_df <- trilhas %>% 
+  sf::st_coordinates() %>% 
+  as.data.frame() %>% 
+  dplyr::mutate(Trilha = L1 %>% as.character(),
+                Trilha = paste0("Trilha ", Trilha)) %>% 
+  dplyr::select(c(1:2, 5))
+
+parcelas_df <- parcelas %>% sf::st_coordinates() %>% 
+  as.data.frame() %>% 
+  dplyr::mutate(Parcela = L1 %>% as.character())
+
+trilhas_df
+
+parcelas_df
+```
+
+### Mapa
+
+```{r}
+salt <- ggplot() +
+  geom_spatraster_rgb(data = saltinho_sat) +
+  geom_sf(data = saltinho, aes(color = "REBio Saltinho"), fill = "transparent", linewidth = 1.5) +
+  geom_sf(data = trilhas, aes(color = "Trilhas do Módulo RAPELD"), fill = "transparent", linewidth = 1.5) +
+  geom_sf(data = coord, 
+          aes(fill = Parcela), 
+          color = "black", 
+          shape = 21, 
+          size = 5) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_color_manual(values = c("red", "gold4")) +
+  scale_fill_manual(values = c("cyan4", "gold")) +
+  labs(color = NULL,
+       fill = NULL) +
+  coord_sf(label_graticule = "NSWE") +
+  guides(color = guide_legend(order = 2)) +
+  guides(fill = guide_legend(title.position = "top", 
+                             title.hjust = 0.5)) +
+  ggspatial::annotation_scale(location = "br", height = unit(0.3,"cm"), bar_cols = c("black", "white")) +
+  theme_classic() +
+  theme(legend.position = "bottom",
+        legend.text = element_text(color = "black", size = 12), 
+        legend.title = element_text(color = "black", size = 12), 
+        axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        plot.background = element_blank(),
+        panel.background = element_blank(),
+        plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm"))
+
+salt
+```
+
+## Unificando os mapas
+
+### Estado de Pernambuco + Saltinho
+
+```{r}
+mapa_1 <- gg_pe + salt + patchwork::plot_layout(nrow = 2)
+
+mapa_1
+```
+
+### Fundo de para o mapa final
+
+```{r}
+gg <- ggplot() +
+  theme(panel.background = element_rect(color = "white", fill = "white"),
+        plot.background = element_rect(color = "white", fill = "white"),
+        axis.title = element_text(color = "white"),
+        axis.text = element_text(color = "white"))
+
+gg 
+
+ggsave(filename = "vazio.png")
+```
+
+### Mapa final
+
+```{r}
+gg +
+  draw_plot(mapa_1, width = 0.5, height = 1, x = 0, y = 0) +  
+  draw_plot(br, width = 0.5, height = 1, x = 0.48, y = 0) 
+
+ggsave(filename = "saltinho_mapa_trilhas.png", height = 12, widt = 14)
+```
+
+# **Salvando as coordenadas em bases de dados**
+
+## Trilhas
+
+```{r}
+trilhas_xlsx <- trilhas %>% 
+  sf::st_coordinates() %>% 
+  as.data.frame() %>% 
+  dplyr::mutate(Longitude = X,
+                Latitude = Y,
+                Trilha = L1 %>% as.character(),
+                Ponto = c(seq(1:4) %>% sort(decreasing = TRUE),
+                          seq(1:6) %>% sort(decreasing = TRUE),
+                          seq(1:4) %>% sort(decreasing = TRUE),
+                          seq(1:2) %>% sort(decreasing = TRUE))) %>% 
+  dplyr::select(5:8) %>% 
+  dplyr::arrange(Trilha, Ponto) 
+
+trilhas_xlsx
+
+trilhas_xlsx %>% openxlsx::write.xlsx("trilhas.xlsx")
+```
+
+## Parcelas
+
+```{r}
+parcelas_xlsx <- parcelas %>% 
+  sf::st_coordinates() %>% 
+  as.data.frame() %>% 
+  dplyr::mutate(Longitude = X,
+                Latitude = Y,
+                Parcela = L1 %>% as.character(),
+                Trilha = c(rep("1", 103),
+                           rep("2", 156),
+                           rep("3", 103),
+                           rep("4", 52))) %>% 
+  dplyr::select(5:8) 
+
+parcelas_xlsx
+
+parcelas_xlsx %>% openxlsx::write.xlsx("parcelas.xlsx")
+```
+
+`
+
+
