@@ -1,0 +1,186 @@
+---
+title: "trilhas_saltinho_proposta"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 5
+    toc-expand: 1
+    toc-location: left
+    toc-title: Tópicos
+    number-sections: false
+    df-print: paged
+    smooth-scroll: true
+editor: visual
+theme: 
+  light: flatly
+  dark: darkly
+---
+
+<style>
+body {
+text-align: justify;
+font-size: 20px}
+blockquote {
+  background-color: #FAEFA6;
+  padding: 10px;
+  font-size: 14.5px
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.height = 10, fig.width = 12)
+```
+
+# **Pacotes**
+
+```{r}
+library(tidyverse)
+
+library(sf)
+
+library(readxl)
+
+library(parzer)
+
+library(raster)
+
+library(terra)
+
+library(tidyterra)
+```
+
+# **Dados**
+
+## Raster
+
+```{r}
+saltinho_raster <- terra::rast("saltinho.tif")
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_raster) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0))
+```
+
+## Shapefiles
+
+### Saltinho
+
+```{r}
+saltinho_poligono <- sf::st_read("Saltinho.shp")
+
+saltinho_poligono %>% 
+  ggplot() +
+  geom_sf()
+```
+
+### Grade 500m x 500m
+
+```{r}
+nova_ext <- saltinho_raster %>% 
+  terra::ext() %>% 
+  terra::as.polygons(crs = saltinho_poligono %>% terra::crs()) %>% 
+  sf::st_as_sf()
+
+grade <- sf::st_read("modelo_grade_saltinho.shp") %>% 
+  sf::st_transform(crs = saltinho_poligono %>% sf::st_crs()) %>% 
+  sf::st_intersection(nova_ext)
+
+grade %>% 
+  ggplot() +
+  geom_sf()
+```
+
+### Trilhas Horizontais
+
+```{r}
+trilhas <- readxl::read_xlsx("coordenadas_proposta.xlsx") %>%
+  dplyr::filter(Trilha != "Ripária") %>%
+  dplyr::mutate(Longitude = Longitude %>% parzer::parse_lon(),
+                Latitude = Latitude %>% parzer::parse_lat()) %>%
+  sf::st_as_sf(coords = c("Longitude", "Latitude"),
+               crs = saltinho_poligono %>% sf::st_crs()) %>%
+  dplyr::summarise(geometry = sf::st_combine(geometry), .by = Trilha) %>%
+  sf::st_cast("LINESTRING")
+
+trilhas
+
+trilhas %>%
+  ggplot() +
+  geom_sf()
+```
+
+### Coordenadas
+
+```{r}
+coord <- readxl::read_xlsx("coordenadas_proposta.xlsx", sheet = 2) %>% 
+  dplyr::mutate(Longitude = Longitude %>% parzer::parse_lon(),
+                Latitude = Latitude %>% parzer::parse_lat(),
+                Parcela = dplyr::case_when(Trilha == "Ripária" ~ "Ripária",
+                                                     .default = "De Trilhas")) %>% 
+  sf::st_as_sf(coords = c("Longitude", "Latitude"), crs = saltinho_poligono %>% sf::st_crs())
+
+coord
+
+coord %>% 
+  ggplot() +
+  geom_sf(aes(fill = Parcela), shape = 21, color = "black", size = 5)
+```
+
+# **Mapa**
+
+## Com grade
+
+```{r}
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_raster) +
+  geom_sf(data = saltinho_poligono, fill = "transparent", color = "red", linewidth = 2) +
+  geom_sf(data = grade, color = "yellow") +
+  geom_sf(data = trilhas, color = "blue", linewidth = 1.5) +
+  geom_sf(data = coord, aes(fill = Parcela), size = 5, shape = 21, color = "black") +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_fill_manual(values = c("gold", "cyan4")) +
+  guides(fill = guide_legend(title.position = "top",
+                             title.hjust = 0.5)) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 15),
+        legend.text = element_text(color = "black", size = 15),
+        legend.title = element_text(color = "black", size = 15),
+        legend.position = "bottom")
+
+ggsave("mapa_proposta_saltinho_parcelas_com_grade.png", height = 10, width = 12)
+```
+
+## Sem grade
+
+```{r}
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_raster) +
+  geom_sf(data = saltinho_poligono, fill = "transparent", aes(color = "REBio Saltinho"), linewidth = 2) +
+  geom_sf(data = trilhas, aes(color = "Trilhas"), linewidth = 1.5) +
+  geom_sf(data = coord, aes(fill = Parcela), size = 5, shape = 21, color = "black") +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_fill_manual(values = c("gold", "cyan4")) +
+  scale_color_manual(values = c("REBio Saltinho" = "red", 
+                                "Trilhas" = "gold4")) +
+  guides(fill = guide_legend(title.position = "top",
+                             title.hjust = 0.5)) +
+  coord_sf(label_graticule = "WESN") +
+  ggspatial::annotation_scale(location = "bl",
+                              height = unit(0.4, "cm"),
+                              bar_cols = c("black", "yellow"),
+                              text_face = "bold",
+                              text_cex = 1) +
+  labs(fill = NULL,
+       color = NULL) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 15),
+        legend.text = element_text(color = "black", size = 15),
+        legend.title = element_text(color = "black", size = 15),
+        legend.position = "bottom")
+
+ggsave("mapa_proposta_saltinho_parcelas_sem_grade.png", height = 10, width = 12)
+```
