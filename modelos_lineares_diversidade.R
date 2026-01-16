@@ -502,7 +502,7 @@ medias_beta
 ### Dataframe ----
 
 df_beta_estatisticas <- df_flexbeta_trat |>
-  dplyr::mutate(Composição = 0.475,
+  dplyr::mutate(Composição = 0.52,
                 DF = 51,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
@@ -511,7 +511,7 @@ df_beta_estatisticas <- df_flexbeta_trat |>
                                      "<sub>",
                                      DF,
                                      "</sub>, p = ",
-                                     p)) |>
+                                     p |> round(3))) |>
   dplyr::select(-c(2:5)) |>
   dplyr::left_join(medias_beta,
                    by = "Preditor")
@@ -531,8 +531,7 @@ df_beta |>
   dplyr::mutate(Preditor = Preditor |>
                   stringr::str_replace("hidrico", "hídrico")) |>
   ggplot(aes(`Valor Preditor`, Composição, fill = Preditor, color = Preditor)) +
-  geom_point(shape = 21,
-             color = "black",
+  geom_point(color = "black",
              size = 3.5,
              stroke = 1) +
   geom_smooth(data = . %>%
@@ -547,15 +546,10 @@ df_beta |>
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
-                        size = 7) +
-  scale_fill_manual(values = c("green4",
-                               "gold",
-                               "orange3",
-                               "skyblue",
-                               "royalblue")) +
-  scale_color_manual(values = c("darkgreen",
-                                "gold4")) +
-  scale_y_continuous(limits = c(0.1, 0.5)) +
+                        size = 5) +
+  #scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
+  scale_color_manual(values = c("black", "black")) +
+  scale_y_continuous(limits = c(0.1, 0.53)) +
   labs(x = "Distância preditora",
        y = "Distância de composição",
        title = "z-crítico = 1.96, pseudo-R² ajustado = 0.20") +
