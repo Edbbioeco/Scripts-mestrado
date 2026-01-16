@@ -506,7 +506,7 @@ df_beta_estatisticas <- df_flexbeta_trat |>
                 DF = 51,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
-                                     "<br>t = ",
+                                     "<br>z = ",
                                      z,
                                      "<sub>",
                                      DF,
