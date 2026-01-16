@@ -4,16 +4,17 @@ library(gert)
 
 # List de arquivos .R ----
 
-list.files(pattern = "div")
+gert::git_status() |>
+  as.data.frame()
 
 # Adicionando arquivo ----
 
-gert::git_add(list.files(pattern = "div.*\\.R$")) |>
+gert::git_add(list.files(pattern = ".R$")) |>
   as.data.frame()
 
 # Commitando ----
 
-gert::git_commit("Script para a criação do gráfico de vocalização de Dryadobates alagoanus")
+gert::git_commit("Scripts paralelos")
 
 # Pushando ----
 
