@@ -178,8 +178,7 @@ modelos_diversidade <- function(id){
   df_trat <<- df_alfa |> dplyr::select(2, id)
 
   modelo <- lm(`Q = 1` ~ .,
-               data = df_trat
-               )
+               data = df_trat)
 
   nome <- df_alfa[, id] |>
     names() |>
@@ -194,11 +193,11 @@ modelos_diversidade <- function(id){
     crayon::green() |>
     message()
 
-  modelo_q1 |>
+  modelo |>
     performance::check_heteroscedasticity() |>
     print()
 
-  modelo_q1 |>
+  modelo |>
     performance::check_normality() |>
     print()
 
@@ -367,8 +366,7 @@ df_alfa |>
   dplyr::mutate(Preditor = Preditor |>
                   stringr::str_replace("hidrico", "hídrico")) |>
   ggplot(aes(`Valor Preditor`,`Q = 1`,  fill = Preditor)) +
-  geom_point(shape = 21,
-             color = "black",
+  geom_point(color = "black",
              size = 3.5,
              stroke = 1) +
   facet_wrap(~Preditor, scales = "free_x") +
@@ -378,8 +376,8 @@ df_alfa |>
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
-                        size = 7) +
-  scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
+                        size = 5) +
+  #scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
   labs(title = "t-crítico = 1.83") +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 20),
