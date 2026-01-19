@@ -6,6 +6,8 @@ library(tidyverse)
 
 library(vegan)
 
+library(ggview)
+
 library(flextable)
 
 library(betapart)
@@ -173,9 +175,10 @@ dados_curva |>
         panel.border = element_rect(color = "black", linewidth = 1),
         strip.text = element_text(color = "black", size = 19),
         strip.background = element_rect(color = "black", linewidth = 1),
-        legend.position = "none",
+        legend.position = "bottom",
         title = element_text(color = "black", size = 25),
-        panel.background = element_rect(color = "black", linewidth = 1))
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "curva.png", height = 10, width = 12)
 
