@@ -168,11 +168,13 @@ dados_curva |>
   labs(fill = NULL,
        color = NULL) +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 15),
-        axis.title = element_text(color = "black", size = 15),
-        legend.text = element_text(color = "black", size = 15),
-        panel.border = element_rect(color = "black"),
-        legend.position = "bottom",
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 25),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(color = "black", size = 19),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.position = "none",
+        title = element_text(color = "black", size = 25),
         panel.background = element_rect(color = "black", linewidth = 1))
 
 ggsave(filename = "curva.png", height = 10, width = 12)
