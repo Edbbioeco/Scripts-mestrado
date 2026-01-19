@@ -175,6 +175,7 @@ dados_curva |>
         panel.border = element_rect(color = "black", linewidth = 1),
         strip.text = element_text(color = "black", size = 19),
         strip.background = element_rect(color = "black", linewidth = 1),
+        legend.text = element_text(color = "black", size = 20),
         legend.position = "bottom",
         title = element_text(color = "black", size = 25),
         panel.background = element_rect(color = "black", linewidth = 1)) +
