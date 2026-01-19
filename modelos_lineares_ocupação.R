@@ -591,9 +591,8 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8:10, 12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  ggplot(aes(`Valor preditor`, `Pristimantis ramagii`,
-             fill = Preditor, color = Preditor)) +
-  geom_point(shape = 21, color = "black", stroke = 1,
+  ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
+  geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
   ggtext::geom_richtext(data = estatisticas_pristimantis,
                         aes(label = estatistica),
@@ -609,15 +608,8 @@ df_ocupacao |>
                                               "Temperatura")),
               method = "glm", show.legend = FALSE, se = FALSE) +
   labs(y = "Abundância") +
-  scale_fill_manual(values = c("green2",
-                               "gold",
-                               "orange2",
-                               "royalblue",
-                               "skyblue",
-                               "orangered")) +
-  scale_color_manual(values = c("blue",
-                                "skyblue4",
-                                "darkorange")) +
+  #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue", "orangered")) +
+  #scale_color_manual(values = c("blue", "skyblue4", "darkorange")) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
@@ -639,9 +631,8 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8, 10, 12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`,
-             fill = Preditor, color = Preditor)) +
-  geom_point(shape = 21, color = "black", stroke = 1,
+  ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`)) +
+  geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
   ggtext::geom_richtext(data = estatisticas_adenomera,
                         aes(label = estatistica),
@@ -652,13 +643,8 @@ df_ocupacao |>
                         size = 4.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   labs(y = "Abundância") +
-  scale_fill_manual(values = c("green2",
-                               "gold",
-                               "orange2",
-                               "royalblue",
-                               "skyblue")) +
-  scale_color_manual(values = c("green4",
-                               "skyblue4")) +
+  #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue")) +
+  #scale_color_manual(values = c("green4", "skyblue4")) +
   scale_y_continuous(limits = c(4, 18)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
@@ -681,9 +667,8 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8:10, 12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`,
-             fill = Preditor, color = Preditor)) +
-  geom_point(shape = 21, color = "black", stroke = 1,
+  ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`)) +
+  geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
   ggtext::geom_richtext(data = estatisticas_rhinella,
                         aes(label = estatistica),
@@ -697,14 +682,8 @@ df_ocupacao |>
                 dplyr::filter(Preditor %in% c("Abertura do dossel",
                                              "Altitude")),
               method = "glm", family = poisson, show.legend = FALSE, se = FALSE) +
-  scale_fill_manual(values = c("green2",
-                               "gold",
-                               "orange2",
-                               "royalblue",
-                               "skyblue",
-                               "orangered")) +
-  scale_color_manual(values = c("darkgreen",
-                                "gold4")) +
+  #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue", "orangered")) +
+  #scale_color_manual(values = c("darkgreen","gold4")) +
   labs(y = "Abundância") +
   scale_y_continuous(limits = c(1, 12)) +
   theme_bw() +
