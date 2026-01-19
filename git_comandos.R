@@ -10,12 +10,12 @@ gert::git_status() |>
 
 # Adicionando arquivo ----
 
-gert::git_add(list.files(pattern = "README")) |>
+gert::git_add(list.files(pattern = ".R$")) |>
   as.data.frame()
 
 # Commitando ----
 
-gert::git_commit("README")
+gert::git_commit("Scripts .R")
 
 # Pushando ----
 
