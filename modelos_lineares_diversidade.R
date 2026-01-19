@@ -208,16 +208,6 @@ modelos_diversidade <- function(id){
                                        "homogeneity")) |>
     print()
 
-  r2 <- modelo |>
-    rsq::rsq() |>
-    as.numeric() |>
-    round(2)
-
-  paste0("R²: ",
-         r2) |>
-    crayon::green() |>
-    message()
-
   resultados <- modelo |>
     summary() %>%
     .$coefficient |>
@@ -225,8 +215,24 @@ modelos_diversidade <- function(id){
     tibble::rownames_to_column() |>
     dplyr::mutate(rowname = rowname |>
                     stringr::str_remove_all("`")) |>
-    dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`R²` = r2)
+    dplyr::filter(!rowname |> stringr::str_detect("Intercept"))
+
+  summary <- modelo |>
+    summary()
+
+  resultados_summary <- tibble::tibble(`F` = summary$fstatistic[1] |> round(2),
+                                       df1 = summary$fstatistic[2],
+                                       df2 = summary$fstatistic[3],
+                                       `p global` = pf(q = summary$fstatistic[1],
+                                              df1 = summary$fstatistic[2],
+                                              df2 = summary$fstatistic[3],
+                                              lower.tail = FALSE) |>
+                                         round(2),
+                                       `R² ajustado` = summary$adj.r.squared |>
+                                         round(2))
+
+  resultados <- resultados |>
+    dplyr::bind_cols(resultados_summary)
 
   assign(paste0("resultados_alfa_", nome),
          resultados,
@@ -291,8 +297,7 @@ df_flex1 <- ls(pattern = "resultados_alfa_") |>
   dplyr::mutate(Estimate = Estimate |> round(4),
                 `Std. Error` = `Std. Error` |> round(4),
                 `t value` = `t value` |> round(3),
-                `Pr(>|t|)` = `Pr(>|t|)` |> round(2),
-                DF = 9) |>
+                `Pr(>|t|)` = `Pr(>|t|)` |> round(2)) |>
   dplyr::relocate(Preditor, .before = Estimate) |>
   dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
   dplyr::rename("β1" = Estimate,
@@ -341,17 +346,24 @@ medias_alfa
 ### Dataframe ----
 
 df_q1_estatisticas <- df_flex1 |>
-  dplyr::mutate(`Q = 1` = 3.9,
-                df = 9,
+  dplyr::mutate(`Q = 1` = 4.3,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
                                      "<br>t = ",
                                      t,
-                                     "<sub>",
-                                     df,
-                                     "</sub>, p = ",
-                                     p)) |>
-  dplyr::select(-c(2:4)) |>
+                                     ", p = ",
+                                     p,
+                                     "<br>F<sub>",
+                                     df1,
+                                     ", ",
+                                     df2,
+                                     "</sub> = ",
+                                     `F`,
+                                     ", p = ",
+                                     `p global`,
+                                     ", R² aju. = ",
+                                     `R² ajustado`)) |>
+  dplyr::select(-c(2:10)) |>
   dplyr::left_join(medias_alfa,
                    by = "Preditor")
 
@@ -376,9 +388,10 @@ df_alfa |>
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
-                        size = 5) +
+                        size = 4.75) +
   #scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
-  labs(title = "t-crítico = 1.83") +
+  labs(title = "t-crítico = 1.83, F-crítico = 5.12") +
+  scale_y_continuous(limits = c(2.5, 4.45)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 20),
         axis.title = element_text(color = "black", size = 25),
