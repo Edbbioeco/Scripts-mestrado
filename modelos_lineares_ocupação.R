@@ -20,7 +20,7 @@ library(ggtext)
 
 # Dados ----
 
-## Abundância de espécies ----
+## Abundância de espécies -----
 
 ### Importando ----
 
