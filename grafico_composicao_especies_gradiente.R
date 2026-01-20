@@ -81,7 +81,7 @@ design <- c(patchwork::area(1, 1), # A
             patchwork::area(1, 2), # B
             patchwork::area(2, 1), # C
             patchwork::area(2, 2), # D
-            patchwork::area(3, 1)  # E → esquerda
+            patchwork::area(3, 1)  # E
             )
 
 (`gg_Abertura do dossel` +
