@@ -4,6 +4,8 @@ library(readxl)
 
 library(tidyverse)
 
+library(magrittr)
+
 library(vegan)
 
 library(ggview)
@@ -28,7 +30,7 @@ dados |> dplyr::glimpse()
 
 ## Tratando ----
 
-dados <- dados |>
+dados %<>%
   dplyr::mutate(`Segmento da parcelas` = `Segmento da parcelas` |>
                   as.character())
 
@@ -49,21 +51,8 @@ dados_alfa <- dados |>
                    .by = c(`Unidade Amostral`, Espécie)) |>
   tidyr::pivot_wider(names_from = Espécie,
                      values_from = Abundância,
-                     values_fill = 0)
-
-dados_alfa
-
-nomes_linhas <- dados_alfa |>
-  dplyr::pull(`Unidade Amostral`)
-
-nomes_linhas
-
-dados_alfa <- dados_alfa |>
-  dplyr::select(-`Unidade Amostral`)
-
-rownames(dados_alfa) <- nomes_linhas
-
-dados_alfa |> names()
+                     values_fill = 0) |>
+  tibble::column_to_rownames("Unidade Amostral")
 
 dados_alfa
 
