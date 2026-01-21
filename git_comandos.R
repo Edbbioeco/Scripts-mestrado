@@ -10,7 +10,7 @@ gert::git_status() |>
 
 # Adicionando arquivo ----
 
-gert::git_add(list.files(pattern = "git_comandos.R")) |>
+gert::git_add(list.files(pattern = "settando_git.R")) |>
   as.data.frame()
 
 # Commitando ----
@@ -19,7 +19,9 @@ gert::git_commit("Scrip .R")
 
 # Pushando ----
 
-gert::git_push(remote = "origin", force = TRUE)
+gert::git_push(remote = "privado", force = TRUE)
+
+gert::git_push(remote = "publico", force = TRUE)
 
 # Pullando ----
 
