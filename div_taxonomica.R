@@ -66,7 +66,7 @@ div_alfa
 ## Gráfico ----
 
 div_alfa |>
-  dplyr::mutate(Parcela = nomes_linhas) |>
+  dplyr::mutate(Parcela = dados_alfa |> rownames()) |>
   dplyr::rename("q = 0" = `0`,
                 "q = 1" = `1`) |>
   tidyr::pivot_longer(cols = dplyr::contains("q"),
@@ -90,15 +90,11 @@ ggsave(filename = "grafico_diversidades.png", height = 10, width = 12)
 ### Tratando os dados ----
 
 df_flex <- div_alfa |>
-  dplyr::mutate(`Unidade Amostral` = nomes_linhas) |>
-  dplyr::rename("q = 0" = `0`,
-                "q = 1" = `1`) |>
-  tidyr::pivot_longer(cols = dplyr::contains("q"),
-                      values_to = "Diversidade",
-                      names_to = "Tipo de diversidade") |>
-  dplyr::mutate(Diversidade = Diversidade |> round(2)) |>
-  dplyr::arrange(`Unidade Amostral`,
-                 `Tipo de diversidade`)
+  dplyr::mutate(`Unidade Amostral` = dados_alfa |> rownames()) |>
+  dplyr::rename("Diversidade (Q = 1)" = `1`) |>
+  dplyr::select(`Unidade Amostral`, `Diversidade (Q = 1)`)|>
+  dplyr::mutate(`Diversidade (Q = 1)` = `Diversidade (Q = 1)` |> round(2)) |>
+  dplyr::arrange(`Unidade Amostral`)
 
 df_flex
 
