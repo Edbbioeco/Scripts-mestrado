@@ -10,12 +10,12 @@ gert::git_status() |>
 
 # Adicionando arquivo ----
 
-gert::git_add(list.files(pattern = ".$R")) |>
+gert::git_add(list.files(pattern = "git_comandos.R")) |>
   as.data.frame()
 
 # Commitando ----
 
-gert::git_commit("Script")
+gert::git_commit("Scrip .R")
 
 # Pushando ----
 
@@ -35,7 +35,8 @@ gert::git_reset_hard("HEAD~1")
 
 # Removendo arquivos do repositório ----
 
-gert::git_rm(list.files(pattern = ".xlsx$|.shp$|.shx$|.dbf$|.prj$|.docx$|.png$|.kmz$|.cpg$|.tif$|.bib|.zip$")) |>
+gert::git_rm(list.files(pattern = ".xlsx$|.csv$|.shp$|.shx$|.dbf$|.prj$|.docx$|.png$|.kmz$|.cpg$|.tif$|.bib|.zip$")) |>
+  as.data.frame()
 
 gert::git_commit("Removendo arquivos não .R do repositório")
 
