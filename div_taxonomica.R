@@ -331,7 +331,7 @@ df_envfit_flex |>
 dados_nmds <- nmds |>
   vegan::scores() |>
   tibble::as_tibble() |>
-  dplyr::mutate(`Unidade Amostral` = nomes_linhas) |>
+  dplyr::mutate(`Unidade Amostral` = dados_alfa |> rownames()) |>
   dplyr::left_join(dados |>
                      dplyr::select(2, 4) |>
                      dplyr::distinct(`Unidade Amostral`,
