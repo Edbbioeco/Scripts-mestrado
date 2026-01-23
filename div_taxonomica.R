@@ -99,6 +99,16 @@ div_alfa |>
   dplyr::pull(`q = 1`) |>
   sd()
 
+## Comunidades mais diversas ----
+
+div_alfa |>
+  dplyr::mutate(`Unidade Amostral` = dados_alfa |> rownames()) |>
+  dplyr::rename("q = 0" = `0`,
+                "q = 1" = `1`) |>
+  dplyr::summarise(Diversidade = (`q = 0` - `q = 1`) / `q = 0`,
+                   .by = `Unidade Amostral`) |>
+  dplyr::arrange(Diversidade)
+
 ## Tabela ----
 
 ### Tratando os dados ----
