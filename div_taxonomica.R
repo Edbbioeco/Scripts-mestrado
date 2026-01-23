@@ -85,6 +85,14 @@ div_alfa |>
 
 ggsave(filename = "grafico_diversidades.png", height = 10, width = 12)
 
+## Média dos valores de diversidade ----
+
+div_alfa |>
+  dplyr::rename("q = 0" = `0`,
+                "q = 1" = `1`) |>
+  dplyr::pull(`q = 1`) |>
+  mean()
+
 ## Tabela ----
 
 ### Tratando os dados ----
