@@ -105,8 +105,9 @@ div_alfa |>
 
 df_flex <- div_alfa |>
   dplyr::mutate(`Unidade Amostral` = dados_alfa |> rownames()) |>
-  dplyr::rename("Diversidade (Q = 1)" = `1`) |>
-  dplyr::select(`Unidade Amostral`, `Diversidade (Q = 1)`)|>
+  dplyr::rename("Riqueza" = `0`,
+                "Diversidade (Q = 1)" = `1`) |>
+  dplyr::select(`Unidade Amostral`, Riqueza, `Diversidade (Q = 1)`)|>
   dplyr::mutate(`Diversidade (Q = 1)` = `Diversidade (Q = 1)` |> round(2)) |>
   dplyr::arrange(`Unidade Amostral`)
 
