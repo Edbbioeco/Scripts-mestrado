@@ -10,12 +10,12 @@ gert::git_status() |>
 
 # Adicionando arquivo ----
 
-gert::git_add(list.files(pattern = "tabelas_abundancia_especies_cap1.R")) |>
+gert::git_add(list.files(pattern = "git_comandos.R")) |>
   as.data.frame()
 
 # Commitando ----
 
-gert::git_commit("Script para a tabela de abunância das espécies cap1")
+gert::git_commit("Scripts para comandos git")
 
 # Pushando ----
 
