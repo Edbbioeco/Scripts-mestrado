@@ -238,3 +238,15 @@ ggsave(filename = "grafico_pontos_beta_distancia_borda.png",
        height = 10, width = 12)
 
 # Ordenação das espécies ----
+
+especies |>
+  dplyr::left_join(ambientais,
+                   by = "Unidade Amostral") |>
+  ordenaR::order_circle(gradient = "Distância da Borda",
+                        species = 2:11,
+                        direct = TRUE,
+                        range = 15) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "grafico_ordenacao_especies_distancia_borda.png",
+       height = 10, width = 12)
