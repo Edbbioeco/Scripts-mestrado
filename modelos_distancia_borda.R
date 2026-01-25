@@ -198,34 +198,16 @@ sts_modelo_beta
 ## Dataframe das estatísticas do modelo ----
 
 sts_grafico_beta <- tibble::tibble(sts = paste0("β1 ± EP = ",
-                                                sts_modelo_alfa$coefficients[2, 1] |> round(3),
+                                                sts_modelo_beta$coefficients$cond[2, 1] |> round(5),
                                                 " ± ",
-                                                sts_modelo_alfa$coefficients[2, 2] |> round(4),
-                                                "<br>t = ",
-                                                sts_modelo_alfa$coefficients[2, 3] |> round(2),
+                                                sts_modelo_beta$coefficients$cond[2, 2] |> round(4),
+                                                "<br>z = ",
+                                                sts_modelo_beta$coefficients$cond[2, 3] |> round(2),
                                                 ", p = ",
-                                                sts_modelo_alfa$coefficients[2, 4] |> round(3),
-                                                "<br> F<sub>",
-                                                sts_modelo_alfa$fstatistic[2] |>
-                                                  round(1),
-                                                ", ",
-                                                sts_modelo_alfa$fstatistic[3] |>
-                                                  round(1),
-                                                "</sub> = ",
-                                                sts_modelo_alfa$fstatistic[1] |>
-                                                  round(2),
-                                                ", p = ",
-                                                pf(sts_modelo_alfa$fstatistic[1],
-                                                   sts_modelo_alfa$fstatistic[2],
-                                                   sts_modelo_alfa$fstatistic[3],
-                                                   lower.tail = FALSE) |>
-                                                  round(2),
-                                                ", R² = ",
-                                                sts_modelo_alfa$adj.r.squared |>
-                                                  round(2)),
-                                   `Q = 1` = 4,
-                                   `Distância da Borda` = df_alfa |>
-                                     dplyr::pull(`Distância da Borda`) |>
+                                                sts_modelo_beta$coefficients$cond[2, 4] |> round(3)),
+                                   composição = 0.6,
+                                   `Dissimilaridade ambiental` = df_beta |>
+                                     dplyr::pull(`Dissimilaridade ambiental`) |>
                                      mean()) |>
   as.data.frame()
 
