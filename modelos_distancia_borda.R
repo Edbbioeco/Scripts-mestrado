@@ -191,7 +191,45 @@ modelo_beta |> performance::check_model(check = c("homogeneity",
 
 ## Estatísticas o modelo ----
 
+sts_modelo_beta <- modelo_beta |> summary()
+
+sts_modelo_beta
+
 ## Dataframe das estatísticas do modelo ----
+
+sts_grafico_beta <- tibble::tibble(sts = paste0("β1 ± EP = ",
+                                                sts_modelo_alfa$coefficients[2, 1] |> round(3),
+                                                " ± ",
+                                                sts_modelo_alfa$coefficients[2, 2] |> round(4),
+                                                "<br>t = ",
+                                                sts_modelo_alfa$coefficients[2, 3] |> round(2),
+                                                ", p = ",
+                                                sts_modelo_alfa$coefficients[2, 4] |> round(3),
+                                                "<br> F<sub>",
+                                                sts_modelo_alfa$fstatistic[2] |>
+                                                  round(1),
+                                                ", ",
+                                                sts_modelo_alfa$fstatistic[3] |>
+                                                  round(1),
+                                                "</sub> = ",
+                                                sts_modelo_alfa$fstatistic[1] |>
+                                                  round(2),
+                                                ", p = ",
+                                                pf(sts_modelo_alfa$fstatistic[1],
+                                                   sts_modelo_alfa$fstatistic[2],
+                                                   sts_modelo_alfa$fstatistic[3],
+                                                   lower.tail = FALSE) |>
+                                                  round(2),
+                                                ", R² = ",
+                                                sts_modelo_alfa$adj.r.squared |>
+                                                  round(2)),
+                                   `Q = 1` = 4,
+                                   `Distância da Borda` = df_alfa |>
+                                     dplyr::pull(`Distância da Borda`) |>
+                                     mean()) |>
+  as.data.frame()
+
+sts_grafico_beta
 
 ## Gráfico ----
 
