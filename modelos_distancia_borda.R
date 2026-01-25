@@ -42,11 +42,19 @@ ambientais |> dplyr::glimpse()
 
 div_alfa <- especies |>
   tibble::column_to_rownames(var = "Unidade Amostral") |>
-  vegan::renyi(scales = 1, hill = TRUE)
+  vegan::renyi(scales = 1, hill = TRUE) |>
+  as.numeric()
 
 div_alfa
 
 ## Gerando o dataframe para o modelo linear ----
+
+df_alfa <- ambientais |>
+  dplyr::mutate(`Q = 1` = div_alfa)
+
+df_alfa
+
+df_alfa |> dplyr::glimpse()
 
 # Diversidade beta e variação ambiental ----
 
