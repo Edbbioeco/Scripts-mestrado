@@ -6,17 +6,71 @@ library(tidyverse)
 
 library(vegan)
 
+library(performance)
+
+library(glmmTMB)
+
 # Dados ----
 
-## Dados de composição de espécies ----
+## Abundância de espécies ----
 
-## Dados de variáveis ambientais ----
+### Importando ----
+
+especies <- readxl::read_xlsx("matriz_composicao.xlsx")
+
+### Visualizando ----
+
+especies
+
+especies |> dplyr::glimpse()
+
+## Variáveis ambientais ----
+
+### Importando ----
+
+ambientais <-readxl::read_xlsx("matriz_ambientais.xlsx")
+
+### Visualizando ----
+
+ambientais
+
+ambientais |> dplyr::glimpse()
 
 # Diversidade alfa ----
 
+## Calculando a diversidade ---
+
+especies
+
+## Gerando o dataframe para o modelo linear ----
+
 # Diversidade beta e variação ambiental ----
 
-# Modelos lineares ----
+## Calculando a diversidade beta ----
+
+## Calculando a variação ambiental ----
+
+## Gerando o dataframe para o modelo linear ----
+
+# Modelos lineares de diversidade alfa ----
+
+## Criando o modelo ----
+
+## Avaliando o modelo ----
+
+## Dataframe das estatísticas do modelo ----
+
+## Gráfico ----
+
+# Modelos lineares de diversidade beta ----
+
+## Criando o modelo ----
+
+## Avaliando o modelo ----
+
+## Dataframe das estatísticas do modelo ----
+
+## Gráfico ----
 
 
 
