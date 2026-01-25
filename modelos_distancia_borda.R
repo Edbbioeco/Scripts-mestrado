@@ -40,7 +40,11 @@ ambientais |> dplyr::glimpse()
 
 ## Calculando a diversidade ---
 
-especies
+div_alfa <- especies |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
+  vegan::renyi(scales = 1, hill = TRUE)
+
+div_alfa
 
 ## Gerando o dataframe para o modelo linear ----
 
