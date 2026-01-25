@@ -205,7 +205,7 @@ sts_grafico_beta <- tibble::tibble(sts = paste0("β1 ± EP = ",
                                                 sts_modelo_beta$coefficients$cond[2, 3] |> round(2),
                                                 ", p = ",
                                                 sts_modelo_beta$coefficients$cond[2, 4] |> round(3)),
-                                   composição = 0.6,
+                                   Composição = 0.6,
                                    `Dissimilaridade ambiental` = df_beta |>
                                      dplyr::pull(`Dissimilaridade ambiental`) |>
                                      mean()) |>
@@ -214,5 +214,27 @@ sts_grafico_beta <- tibble::tibble(sts = paste0("β1 ± EP = ",
 sts_grafico_beta
 
 ## Gráfico ----
+
+df_beta |>
+  ggplot(aes(`Dissimilaridade ambiental`, Composição)) +
+  geom_point(size = 5) +
+  ggtext::geom_richtext(data = sts_grafico_beta,
+                        aes(`Dissimilaridade ambiental`, Composição, label = sts),
+                        label.colour = NA,
+                        fill = NA,
+                        size = 7.5) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 25),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(color = "black", size = 19),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.position = "none",
+        title = element_text(color = "black", size = 25),
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "grafico_pontos_beta_distancia_borda.png",
+       height = 10, width = 12)
 
 # Ordenação das espécies ----
