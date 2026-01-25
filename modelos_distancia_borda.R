@@ -180,7 +180,14 @@ ggsave(filename = "grafico_pontos_q1_distancia_borda.png",
 
 ## Criando o modelo ----
 
+modelo_beta <- glmmTMB::glmmTMB(Composição ~ `Dissimilaridade ambiental`,
+                                df_beta)
+
 ## Pressupostos do modelo ----
+
+modelo_beta |> performance::check_model(check = c("homogeneity",
+                                                  "qq",
+                                                  "normality"))
 
 ## Estatísticas o modelo ----
 
