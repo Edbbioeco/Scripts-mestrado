@@ -142,7 +142,7 @@ sts_grafico_alfa <- tibble::tibble(sts = paste0("β1 ± EP = ",
                                                 ", R² = ",
                                                 sts_modelo_alfa$adj.r.squared |>
                                                   round(2)),
-                                   `Q = 1` = 5,
+                                   `Q = 1` = 4,
                                    `Distância da Borda` = df_alfa |>
                                      dplyr::pull(`Distância da Borda`) |>
                                      mean()) |>
@@ -151,6 +151,30 @@ sts_grafico_alfa <- tibble::tibble(sts = paste0("β1 ± EP = ",
 sts_grafico_alfa
 
 ## Gráfico ----
+
+df_alfa |>
+  ggplot(aes(`Distância da Borda`, `Q = 1`)) +
+  geom_point(size = 5) +
+  geom_smooth(method = "lm",
+              se = FALSE) +
+  ggtext::geom_richtext(data = sts_grafico_alfa,
+                        aes(`Distância da Borda`, `Q = 1`, label = sts),
+                        label.colour = NA,
+                        fill = NA,
+                        size = 7.5) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 25),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(color = "black", size = 19),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.position = "none",
+        title = element_text(color = "black", size = 25),
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "grafico_pontos_q1_distancia_borda.png",
+       height = 10, width = 12)
 
 # Modelos lineares de diversidade beta ----
 
