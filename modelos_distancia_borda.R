@@ -8,7 +8,11 @@ library(vegan)
 
 library(performance)
 
+library(ggview)
+
 library(glmmTMB)
+
+library(ordenaR)
 
 # Dados ----
 
@@ -104,6 +108,8 @@ df_beta |> dplyr::glimpse()
 ## Dataframe das estatísticas do modelo ----
 
 ## Gráfico ----
+
+# Ordenação das espécies ----
 
 
 
