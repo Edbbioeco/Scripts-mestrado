@@ -69,7 +69,21 @@ dis_beta
 
 ## Calculando a variação ambiental ----
 
+dis_borda <- ambientais |>
+  dplyr::select(`Distância da Borda`) |>
+  vegan::vegdist(method = "euclidean") |>
+  as.numeric()
+
+dis_borda
+
 ## Gerando o dataframe para o modelo linear ----
+
+df_beta <- tibble::tibble(Composição = dis_beta,
+                          `Dissimilaridade ambiental` = dis_borda)
+
+df_beta
+
+df_beta |> dplyr::glimpse()
 
 # Modelos lineares de diversidade alfa ----
 
