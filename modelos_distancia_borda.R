@@ -60,6 +60,13 @@ df_alfa |> dplyr::glimpse()
 
 ## Calculando a diversidade beta ----
 
+dis_beta <- especies |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
+  vegan::vegdist() |>
+  as.numeric()
+
+dis_beta
+
 ## Calculando a variação ambiental ----
 
 ## Gerando o dataframe para o modelo linear ----
