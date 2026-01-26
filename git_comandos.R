@@ -6,7 +6,7 @@ library(gert)
 
 gert::git_status() |>
   as.data.frame() |>
-  dplyr::filter(file |> stringr::str_detect(".png$"))
+  dplyr::filter(file |> stringr::str_detect(".R$"))
 
 # Adicionando arquivo ----
 
@@ -15,7 +15,7 @@ gert::git_add(list.files(pattern = "git_comandos.R")) |>
 
 # Commitando ----
 
-gert::git_commit("Script comandos de git")
+gert::git_commit("Script para settar repositórios do Github")
 
 # Pushando ----
 
@@ -29,7 +29,11 @@ gert::git_push(remote = "publico", force = TRUE)
 
 # Pullando ----
 
+## Repositório privado ----
+
 gert::git_pull(remote = "privado")
+
+## Repositório público ----
 
 gert::git_pull(remote = "publico")
 
