@@ -14,6 +14,8 @@ library(ggview)
 
 library(glmmTMB)
 
+library(DHARMa)
+
 library(ordenaR)
 
 # Dados ----
@@ -201,13 +203,12 @@ ggsave(filename = "grafico_pontos_q1_distancia_borda.png",
 ## Criando o modelo ----
 
 modelo_beta <- glmmTMB::glmmTMB(Composição ~ `Dissimilaridade ambiental`,
-                                df_beta)
+                                df_beta,
+                                family = glmmTMB::beta_family())
 
 ## Pressupostos do modelo ----
 
-modelo_beta |> performance::check_model(check = c("homogeneity",
-                                                  "qq",
-                                                  "normality"))
+modelo_beta |> DHARMa::simulateResiduals(plot = TRUE)
 
 ## Estatísticas do modelo ----
 
@@ -223,8 +224,7 @@ sts_grafico_beta <- tibble::tibble(sts = paste0("β1 ± EP = ",
                                                 sts_modelo_beta$coefficients$cond[2, 2] |> round(4),
                                                 "<br>z = ",
                                                 sts_modelo_beta$coefficients$cond[2, 3] |> round(2),
-                                                ", p = ",
-                                                sts_modelo_beta$coefficients$cond[2, 4] |> round(3)),
+                                                ", p < 0.01 "),
                                    Composição = 0.6,
                                    `Dissimilaridade ambiental` = df_beta |>
                                      dplyr::pull(`Dissimilaridade ambiental`) |>
@@ -238,6 +238,8 @@ sts_grafico_beta
 df_beta |>
   ggplot(aes(`Dissimilaridade ambiental`, Composição)) +
   geom_point(size = 5) +
+  geom_smooth(method = "glm",
+              se = FALSE) +
   ggtext::geom_richtext(data = sts_grafico_beta,
                         aes(`Dissimilaridade ambiental`, Composição, label = sts),
                         label.colour = NA,
