@@ -33,6 +33,6 @@ usethis::git_remotes()
 
 # Renomear o branch do master para main ----
 
-usethis::git_default_branch_configure()
+usethis::git_default_branch_configure(name = "main")
 
 usethis::git_default_branch_rename(from = "master", to = "main")
