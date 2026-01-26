@@ -295,6 +295,8 @@ especie <- especies |>
 
 especie
 
+purrr::map(especie, modelos_abund_borda)
+
 ## Pressupostos do modelo ----
 
 ## Estatísticas do modelo ----
