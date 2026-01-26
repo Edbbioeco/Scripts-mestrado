@@ -44,7 +44,7 @@ ambientais |> dplyr::glimpse()
 
 # Diversidade alfa ----
 
-## Calculando a diversidade ---
+## Calculando a diversidade ----
 
 div_alfa <- especies |>
   tibble::column_to_rownames(var = "Unidade Amostral") |>
@@ -90,6 +90,12 @@ df_beta <- tibble::tibble(Composição = dis_beta,
 df_beta
 
 df_beta |> dplyr::glimpse()
+
+# Abundância das espécies ----
+
+## Calculando a abundância das espécies ----
+
+## Gerando o dataframe para o modelo linear ----
 
 # Modelos lineares de diversidade alfa ----
 
@@ -250,3 +256,5 @@ especies |>
 
 ggsave(filename = "grafico_ordenacao_especies_distancia_borda.png",
        height = 10, width = 12)
+
+#
