@@ -128,7 +128,7 @@ modelo_alfa |> performance::check_heteroscedasticity()
 
 modelo_alfa |> performance::check_normality()
 
-## Estatísticas o modelo ----
+## Estatísticas do modelo ----
 
 sts_modelo_alfa <- modelo_alfa |> summary()
 
@@ -209,7 +209,7 @@ modelo_beta |> performance::check_model(check = c("homogeneity",
                                                   "qq",
                                                   "normality"))
 
-## Estatísticas o modelo ----
+## Estatísticas do modelo ----
 
 sts_modelo_beta <- modelo_beta |> summary()
 
@@ -271,4 +271,14 @@ especies |>
 ggsave(filename = "grafico_ordenacao_especies_distancia_borda.png",
        height = 10, width = 12)
 
-#
+# Modelos lineares abundância -----
+
+## Criando o modelo ----
+
+## Pressupostos do modelo ----
+
+## Estatísticas do modelo ----
+
+## Dataframe das estatísticas do modelo ----
+
+## Gráfico ----
