@@ -95,7 +95,21 @@ df_beta |> dplyr::glimpse()
 
 ## Calculando a abundância das espécies ----
 
+abund <- especies |>
+  dplyr::select(1:4)
+
+abund
+
 ## Gerando o dataframe para o modelo linear ----
+
+df_abund <- ambientais |>
+  dplyr::select(`Unidade Amostral`, `Distância da Borda`) |>
+  dplyr::left_join(abund,
+                   by = "Unidade Amostral")
+
+df_abund
+
+df_abund |> dplyr::glimpse()
 
 # Modelos lineares de diversidade alfa ----
 
