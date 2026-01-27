@@ -416,3 +416,32 @@ pseudo_r2s
 purrr::map2(1:3, especie |> sort(), sts_dfs)
 
 ## Gráfico ----
+
+graficos_abund <- function(especie, id){
+
+  sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(2)
+
+  species <- especie |> stringr::str_replace("_", " ") |> stringr::word(1)
+
+  if(sps == "hoogmoedi"){
+
+    ggplt <- df_abund |>
+      tidyr::pivot_longer(cols = 3:5,
+                          names_to = "Espécie",
+                          values_to = "Abundância") |>
+      dplyr::filter(Espécie == especie) |>
+      ggplot(aes(distancia_da_borda, Abundância)) +
+      geom_point()
+
+    print(ggplt)
+
+  }
+
+}
+
+sps_df_stats <- ls(pattern = "df_stats_") |>
+  mget(envir = globalenv())
+
+sps_df_stats
+
+purrr::map2(especie |> sort(), 1:3, graficos_abund)
