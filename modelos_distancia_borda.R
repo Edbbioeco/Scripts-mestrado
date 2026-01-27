@@ -323,7 +323,7 @@ modelo <- ls(pattern = "abund_borda_modelo_") |>
 
 modelo
 
-purrr::map2(modelo, especie, pres_abund_borda)
+purrr::map2(modelo, especie |> sort(), pres_abund_borda)
 
 ## Estatísticas do modelo ----
 
@@ -343,8 +343,12 @@ sts_abund_borda <- function(modelo, especie){
 
 }
 
-purrr::map2(modelo, especie, sts_abund_borda)
+purrr::map2(modelo, especie |> sort(), sts_abund_borda)
 
 ## Dataframe das estatísticas do modelo ----
+
+sts_dfs <- function(summary){
+  sts_modelo_Adenomera
+}
 
 ## Gráfico ----
