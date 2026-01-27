@@ -385,11 +385,13 @@ sts_dfs <- function(id, especie){
                                         "<br>z = ",
                                         coeficiente[2, 3] |> round(2),
                                         ", p = ",
-                                        coeficiente[2, 4] |> round(4),
+                                        coeficiente[2, 4] |> round(3),
                                         ", pseudo-R² = ",
                                         pseudo_r2s[[id]][2] |>
                                           as.numeric() |>
-                                          round(3)))
+                                          round(3)),
+                           distancia_da_borda = 225,
+                           Espécie = especie)
 
   assign(paste0("df_stats_", sps),
          df_sts,
@@ -425,17 +427,57 @@ graficos_abund <- function(especie, id){
 
   if(sps == "hoogmoedi"){
 
-    ggplt <- df_abund |>
+    df_abund |>
       tidyr::pivot_longer(cols = 3:5,
                           names_to = "Espécie",
                           values_to = "Abundância") |>
       dplyr::filter(Espécie == especie) |>
       ggplot(aes(distancia_da_borda, Abundância)) +
-      geom_point()
+      geom_point(size = 5) +
+      geom_smooth(method = "lm",
+                  se = FALSE) +
+      ggtext::geom_richtext(data = sps_df_stats[[id]],
+                            aes(distancia_da_borda, Abundância, label = sts),
+                            label.colour = NA,
+                            fill = NA,
+                            size = 7.5) +
+      labs(x = "Distância da borda") +
+      theme_bw() +
+      theme(axis.text = element_text(color = "black", size = 20),
+            axis.title = element_text(color = "black", size = 25),
+            panel.border = element_rect(color = "black", linewidth = 1),
+            strip.text = element_text(color = "black", size = 19),
+            strip.background = element_rect(color = "black", linewidth = 1),
+            legend.position = "none",
+            title = element_text(color = "black", size = 25),
+            panel.background = element_rect(color = "black", linewidth = 1)) +
+      ggview::canvas(height = 10, width = 12)
 
-    print(ggplt)
+  } else {
 
-  }
+    df_abund |>
+      tidyr::pivot_longer(cols = 3:5,
+                          names_to = "Espécie",
+                          values_to = "Abundância") |>
+      dplyr::filter(Espécie == especie) |>
+      ggplot(aes(distancia_da_borda, Abundância)) +
+      geom_point(size = 5) +
+      ggtext::geom_richtext(data = sps_df_stats[[id]],
+                            aes(distancia_da_borda, Abundância, label = sts),
+                            label.colour = NA,
+                            fill = NA,
+                            size = 7.5) +
+      labs(x = "Distância da borda") +
+      theme_bw() +
+      theme(axis.text = element_text(color = "black", size = 20),
+            axis.title = element_text(color = "black", size = 25),
+            panel.border = element_rect(color = "black", linewidth = 1),
+            strip.text = element_text(color = "black", size = 19),
+            strip.background = element_rect(color = "black", linewidth = 1),
+            legend.position = "none",
+            title = element_text(color = "black", size = 25),
+            panel.background = element_rect(color = "black", linewidth = 1)) +
+      ggview::canvas(height = 10, width = 12)}
 
 }
 
