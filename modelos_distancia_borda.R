@@ -308,15 +308,22 @@ purrr::map(especie, modelos_abund_borda)
 
 pres_abund_borda <- function(modelo, especie){
 
-  message(stringr::str_glue("Pressupostos para o modelo de {especie}")) |>
-    crayon::green()
+  stringr::str_glue("Pressupostos para o modelo de {especie}") |>
+    crayon::green() |>
+    message()
+
+  pressupost_plot <- modelo |> DHARMa::simulateResiduals(plot = TRUE)
+
+  print(pressupost_plot)
 
 }
 
-modelos <- ls(pattern = "abund_borda_modelo_") |>
+modelo <- ls(pattern = "abund_borda_modelo_") |>
   mget(envir = globalenv())
 
-modelos
+modelo
+
+purrr::map2(modelo, especie, pres_abund_borda)
 
 ## Estatísticas do modelo ----
 
