@@ -314,6 +314,8 @@ purrr::map(especie, modelos_abund_borda)
 
 pres_abund_borda <- function(modelo, especie){
 
+  sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(1)
+
   stringr::str_glue("Pressupostos para o modelo de {especie}") |>
     crayon::green() |>
     message()
