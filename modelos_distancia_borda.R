@@ -390,7 +390,7 @@ sts_dfs <- function(id, especie){
                                         pseudo_r2s[[id]][2] |>
                                           as.numeric() |>
                                           round(3)),
-                           distancia_da_borda = 225,
+                           distancia_da_borda = 250,
                            Espécie = especie)
 
   assign(paste0("df_stats_", sps),
