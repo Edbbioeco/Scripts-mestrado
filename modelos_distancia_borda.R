@@ -289,7 +289,9 @@ ggsave(filename = "grafico_ordenacao_especies_distancia_borda.png",
 
 modelos_abund_borda <- function(especie){
 
-  modelo <- glm(df_abund[[especie]] ~ distancia_da_borda,
+  abund_resp <- df_abund[[especie]]
+
+  modelo <- glm(abund_resp ~ distancia_da_borda,
                 data = df_abund,
                 family = poisson(link = "log"))
 
@@ -337,7 +339,9 @@ purrr::map2(modelo, especie |> sort(), pres_abund_borda)
 
 sts_abund_borda <- function(modelo, especie){
 
-  stringr::str_glue("Estatísticas o modelo de {especie}") |>
+  sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(1)
+
+  stringr::str_glue("Estatísticas o modelo de {sps}") |>
     crayon::green() |>
     message()
 
@@ -345,19 +349,19 @@ sts_abund_borda <- function(modelo, especie){
 
   print(smry_plot)
 
-  assign(paste0("sts_modelo_", especie |> stringr::word(1)),
+  assign(paste0("sts_modelo_", sps),
          smry_plot,
          envir = globalenv())
 
-  stringr::str_glue("pseudo-R² do modelo de {especie}") |>
+  stringr::str_glue("pseudo-R² do modelo de {sps}") |>
     crayon::green() |>
     message()
 
-  pseudo_r2 <- abund_borda_modelo_Pristimantis |> performance::r2_mcfadden()
+  pseudo_r2 <- abund_borda_modelo_adenomera |> performance::r2_mcfadden()
 
   print(pseudo_r2)
 
-  assign(paste0("pseudor2_", especie |> stringr::word(1)),
+  assign(paste0("pseudor2_", sps),
          pseudo_r2,
          envir = globalenv())
 
