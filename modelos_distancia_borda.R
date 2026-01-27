@@ -372,16 +372,27 @@ purrr::map2(modelo, especie |> sort(), sts_abund_borda)
 
 ## Dataframe das estatísticas do modelo ----
 
-sts_dfs <- function(summary, especie){
+sts_dfs <- function(id, especie){
 
-  coeficiente <- sts_modelo_Adenomera$coefficients
+  sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(1)
+
+  coeficiente <- summaries[[id]]$coefficients
 
   df_sts <- tibble::tibble(sts = paste0("β1 ± EP = ",
                                         coeficiente[2, 1] |> round(5),
                                         " ± ",
                                         coeficiente[2, 2] |> round(5),
                                         "<br>z = ",
-                                        coeficiente[2, 3] |> round(2)))
+                                        coeficiente[2, 3] |> round(2),
+                                        ", p = ",
+                                        coeficiente[2, 4] |> round(4),
+                                        ", pseudo-R² = ",
+                                        pseudo_r2s[[id]] |> round(2)))
+
+  assign(paste0("df_stats_", sps),
+         df_sts,
+         envir = globalenv())
+
 }
 
 ## Gráfico ----
