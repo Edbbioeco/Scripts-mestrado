@@ -289,7 +289,8 @@ ggsave(filename = "grafico_ordenacao_especies_distancia_borda.png",
 
 modelos_abund_borda <- function(especie){
 
-  abund_resp <- df_abund[[especie]]
+  df_abund <- df_abund |>
+    dplyr::mutate(abund_resp = df_abund[[especie]])
 
   modelo <- glm(abund_resp ~ distancia_da_borda,
                 data = df_abund,
@@ -357,7 +358,7 @@ sts_abund_borda <- function(modelo, especie){
     crayon::green() |>
     message()
 
-  pseudo_r2 <- abund_borda_modelo_adenomera |> performance::r2_mcfadden()
+  pseudo_r2 <- abund_borda_modelo_adenomera |> pscl::pR2
 
   print(pseudo_r2)
 
