@@ -387,12 +387,32 @@ sts_dfs <- function(id, especie){
                                         ", p = ",
                                         coeficiente[2, 4] |> round(4),
                                         ", pseudo-R² = ",
-                                        pseudo_r2s[[id]] |> round(2)))
+                                        pseudo_r2s[[id]][2] |>
+                                          as.numeric() |>
+                                          round(3)))
 
   assign(paste0("df_stats_", sps),
          df_sts,
          envir = globalenv())
 
 }
+
+summaries <- paste0("sts_modelo_",
+                    especie |>
+                      stringr::str_replace("_", " ") |>
+                      stringr::word(1)) |>
+  mget(envir = globalenv())
+
+summaries
+
+pseudo_r2s <- paste0("pseudor2_",
+                     especie |>
+                       stringr::str_replace("_", " ") |>
+                       stringr::word(1)) |>
+  mget(envir = globalenv())
+
+pseudo_r2s
+
+purrr::map2(1:3, especie |> sort(), sts_dfs)
 
 ## Gráfico ----
