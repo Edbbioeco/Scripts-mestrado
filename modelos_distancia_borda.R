@@ -6,6 +6,8 @@ library(tidyverse)
 
 library(vegan)
 
+library(janitor)
+
 library(performance)
 
 library(ggtext)
@@ -109,7 +111,8 @@ abund
 df_abund <- ambientais |>
   dplyr::select(`Unidade Amostral`, `Distância da Borda`) |>
   dplyr::left_join(abund,
-                   by = "Unidade Amostral")
+                   by = "Unidade Amostral") |>
+  janitor::clean_names()
 
 df_abund
 
@@ -300,7 +303,7 @@ especie <- especies |>
   dplyr::select(2:4) |>
   names()
 
-especie
+especie |> janitor::clean_names()
 
 purrr::map(especie, modelos_abund_borda)
 
@@ -341,14 +344,34 @@ sts_abund_borda <- function(modelo, especie){
          smry_plot,
          envir = globalenv())
 
+  stringr::str_glue("pseudo-R² do modelo de {especie}") |>
+    crayon::green() |>
+    message()
+
+  pseudo_r2 <- abund_borda_modelo_Pristimantis |> performance::r2_mcfadden()
+
+  print(pseudo_r2)
+
+  assign(paste0("pseudor2_", especie |> stringr::word(1)),
+         pseudo_r2,
+         envir = globalenv())
+
 }
 
 purrr::map2(modelo, especie |> sort(), sts_abund_borda)
 
 ## Dataframe das estatísticas do modelo ----
 
-sts_dfs <- function(summary){
-  sts_modelo_Adenomera
+sts_dfs <- function(summary, especie){
+
+  coeficiente <- sts_modelo_Adenomera$coefficients
+
+  df_sts <- tibble::tibble(sts = paste0("β1 ± EP = ",
+                                        coeficiente[2, 1] |> round(5),
+                                        " ± ",
+                                        coeficiente[2, 2] |> round(5),
+                                        "<br>z = ",
+                                        coeficiente[2, 3] |> round(2)))
 }
 
 ## Gráfico ----
