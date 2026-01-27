@@ -419,7 +419,7 @@ purrr::map2(1:3, especie |> sort(), sts_dfs)
 
 ## Gráfico ----
 
-graficos_abund <- function(especie, id){
+graficos_abund <- function(especie){
 
   sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(2)
 
@@ -436,7 +436,8 @@ graficos_abund <- function(especie, id){
       geom_point(size = 5) +
       geom_smooth(method = "lm",
                   se = FALSE) +
-      ggtext::geom_richtext(data = sps_df_stats[[id]],
+      ggtext::geom_richtext(data = sps_df_stats |>
+                              dplyr::filter(Espécie == especie),
                             aes(distancia_da_borda, Abundância, label = sts),
                             label.colour = NA,
                             fill = NA,
@@ -462,7 +463,8 @@ graficos_abund <- function(especie, id){
       dplyr::filter(Espécie == especie) |>
       ggplot(aes(distancia_da_borda, Abundância)) +
       geom_point(size = 5) +
-      ggtext::geom_richtext(data = sps_df_stats[[id]],
+      ggtext::geom_richtext(data = sps_df_stats |>
+                              dplyr::filter(Espécie == especie),
                             aes(distancia_da_borda, Abundância, label = sts),
                             label.colour = NA,
                             fill = NA,
@@ -482,8 +484,10 @@ graficos_abund <- function(especie, id){
 }
 
 sps_df_stats <- ls(pattern = "df_stats_") |>
-  mget(envir = globalenv())
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows() |>
+  dplyr::mutate(Abundância = c(17, 33, 11))
 
 sps_df_stats
 
-purrr::map2(especie |> sort(), 1:3, graficos_abund)
+purrr::map(especie |> sort(), graficos_abund)
