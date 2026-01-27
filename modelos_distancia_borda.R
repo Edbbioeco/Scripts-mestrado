@@ -479,7 +479,12 @@ graficos_abund <- function(especie){
             legend.position = "none",
             title = element_text(color = "black", size = 25),
             panel.background = element_rect(color = "black", linewidth = 1)) +
-      ggview::canvas(height = 10, width = 12)}
+      ggview::canvas(height = 10, width = 12)
+
+  }
+
+  ggsave(filename = paste0("grafico_pontos_abundancia_", species, ".png"),
+         height = 10, width = 12)
 
 }
 
