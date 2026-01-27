@@ -18,6 +18,8 @@ library(DHARMa)
 
 library(ordenaR)
 
+library(crayon)
+
 # Dados ----
 
 ## Abundância de espécies ----
@@ -303,6 +305,18 @@ especie
 purrr::map(especie, modelos_abund_borda)
 
 ## Pressupostos do modelo ----
+
+pres_abund_borda <- function(modelo, especie){
+
+  message(stringr::str_glue("Pressupostos para o modelo de {especie}")) |>
+    crayon::green()
+
+}
+
+modelos <- ls(pattern = "abund_borda_modelo_") |>
+  mget(envir = globalenv())
+
+modelos
 
 ## Estatísticas do modelo ----
 
