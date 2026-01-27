@@ -289,21 +289,24 @@ ggsave(filename = "grafico_ordenacao_especies_distancia_borda.png",
 
 modelos_abund_borda <- function(especie){
 
-  modelo <- glm(df_abund[[especie]] ~ `Distância da Borda`,
+  modelo <- glm(df_abund[[especie]] ~ distancia_da_borda,
                 data = df_abund,
                 family = poisson(link = "log"))
 
-  assign(paste0("abund_borda_modelo_", especie |> stringr::word(1)),
+  assign(paste0("abund_borda_modelo_",
+                especie |>
+                  stringr::str_replace("_", " ") |>
+                  stringr::word(1)),
          modelo,
          envir = globalenv())
 
 }
 
-especie <- especies |>
-  dplyr::select(2:4) |>
+especie <- df_abund |>
+  dplyr::select(3:5) |>
   names()
 
-especie |> janitor::clean_names()
+especie
 
 purrr::map(especie, modelos_abund_borda)
 
