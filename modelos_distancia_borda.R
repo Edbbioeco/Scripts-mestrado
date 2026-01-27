@@ -327,6 +327,24 @@ purrr::map2(modelo, especie, pres_abund_borda)
 
 ## Estatísticas do modelo ----
 
+sts_abund_borda <- function(modelo, especie){
+
+  stringr::str_glue("Estatísticas o modelo de {especie}") |>
+    crayon::green() |>
+    message()
+
+  smry_plot <- modelo |> summary()
+
+  print(smry_plot)
+
+  assign(paste0("sts_modelo_", especies),
+         smry_plot,
+         envir = globalenv())
+
+}
+
+purrr::map2(modelo, especie, sts_abund_borda)
+
 ## Dataframe das estatísticas do modelo ----
 
 ## Gráfico ----
