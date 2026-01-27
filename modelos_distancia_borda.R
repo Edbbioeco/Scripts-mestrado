@@ -216,6 +216,10 @@ sts_modelo_beta <- modelo_beta |> summary()
 
 sts_modelo_beta
 
+r2_beta <- modelo_beta |> performance::r2_mcfadden()
+
+r2_beta
+
 ## Dataframe das estatísticas do modelo ----
 
 sts_grafico_beta <- tibble::tibble(sts = paste0("β1 ± EP = ",
@@ -224,7 +228,8 @@ sts_grafico_beta <- tibble::tibble(sts = paste0("β1 ± EP = ",
                                                 sts_modelo_beta$coefficients$cond[2, 2] |> round(4),
                                                 "<br>z = ",
                                                 sts_modelo_beta$coefficients$cond[2, 3] |> round(2),
-                                                ", p < 0.01 "),
+                                                ", p < 0.01, pseudo-R² = ",
+                                                r2_beta[[2]] |> round(2)),
                                    Composição = 0.6,
                                    `Dissimilaridade ambiental` = df_beta |>
                                      dplyr::pull(`Dissimilaridade ambiental`) |>
