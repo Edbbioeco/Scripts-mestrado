@@ -427,7 +427,7 @@ graficos_abund <- function(especie){
 
   if(sps == "hoogmoedi"){
 
-    df_abund |>
+    ggplt <- df_abund |>
       tidyr::pivot_longer(cols = 3:5,
                           names_to = "Espécie",
                           values_to = "Abundância") |>
@@ -456,7 +456,7 @@ graficos_abund <- function(especie){
 
   } else {
 
-    df_abund |>
+    ggplt <- df_abund |>
       tidyr::pivot_longer(cols = 3:5,
                           names_to = "Espécie",
                           values_to = "Abundância") |>
@@ -484,6 +484,7 @@ graficos_abund <- function(especie){
   }
 
   ggsave(filename = paste0("grafico_pontos_abundancia_", species, ".png"),
+         plot = ggplt,
          height = 10, width = 12)
 
 }
