@@ -355,10 +355,10 @@ sts_abund_borda <- function(modelo, especie){
          envir = globalenv())
 
   stringr::str_glue("pseudo-R² do modelo de {sps}") |>
-    crayon::green() |>
+    crayon::yellow() |>
     message()
 
-  pseudo_r2 <- abund_borda_modelo_adenomera |> pscl::pR2
+  pseudo_r2 <- modelo |> performance::r2_mcfadden()
 
   print(pseudo_r2)
 
