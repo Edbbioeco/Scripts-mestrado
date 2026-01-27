@@ -337,7 +337,7 @@ sts_abund_borda <- function(modelo, especie){
 
   print(smry_plot)
 
-  assign(paste0("sts_modelo_", especies),
+  assign(paste0("sts_modelo_", especie |> stringr::word(1)),
          smry_plot,
          envir = globalenv())
 
