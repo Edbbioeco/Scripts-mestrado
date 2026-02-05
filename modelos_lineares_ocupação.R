@@ -201,7 +201,7 @@ rodando_modelos_adenomera <- function(id){
   print(avaliacao)
 
   r2 <- modelo |>
-    performance::r2() |>
+    performance::r2_mcfadden() |>
     as.numeric() |>
     round(2)
 
@@ -282,7 +282,7 @@ rodando_modelos_rhinella <- function(id){
   print(avaliacao)
 
   r2 <- modelo |>
-    performance::r2() |>
+    performance::r2_mcfadden() |>
     as.numeric() |>
     round(3)
 
