@@ -422,28 +422,33 @@ sts_adenomera
 
 ## Rhinella hoogmoedi ----
 
-### Múltiplos modelos ----
-
-estatisticas_rhinella <- ls(pattern = "resultados_rhinella_") |>
+sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
-  dplyr::mutate(Estimate = Estimate |> round(4),
+  dplyr::mutate(Estimate_temp = Estimate |> dplyr::lead(),
+                `Std. Error temp` = `Std. Error` |> dplyr::lead()) |>
+  dplyr::filter(!rowname == "Temperatura") |>
+  dplyr::mutate(Estimate = Estimate |> round(3),
+                Estimate_temp = Estimate_temp |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
+                `Std. Error temp` = `Std. Error temp` |> round(4),
                 AIC = AIC |> round(2),
                 `z value` = `z value` |> round(2),
-                `Pr(>|z|)` = `Pr(>|z|)` |> round(2),
-                `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                              .default = `Pr(>|z|)` |>
-                                                as.character()),
                 `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350, 25.75),
                 `Rhinella hoogmoedi` = 10.5,
-                estatistica = paste0("β1 ± EP = ",
+                estatistica = paste0("β1 ± EP<sub>",
+                                     rowname,
+                                     "</sub> = ",
                                      Estimate,
                                      " ± ",
                                      `Std. Error`,
-                                     ", AIC = ",
+                                     "<br>β1 ± EP<sub>temperatura</sub> = ",
+                                     Estimate_temp,
+                                     " ± ",
+                                     `Std. Error temp`,
+                                     "<br>AIC = ",
                                      AIC,
-                                     "<br>z = ",
+                                     ", z = ",
                                      `z value`,
                                      "<sub>6</sub>, p = ",
                                      `Pr(>|z|)`,
@@ -451,42 +456,9 @@ estatisticas_rhinella <- ls(pattern = "resultados_rhinella_") |>
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`")) |>
   rename("Preditor" = rowname) |>
-  dplyr::select(1, 8:10)
+  dplyr::select(2, 11:13)
 
-estatisticas_rhinella
-
-### Modelo múltiplo ----
-
-rhinella_stats <- glm(`Rhinella hoogmoedi` ~ .,
-                       data = df_ocupacao[, c(4, 5, 6, 8, 10, 12)],
-                       family = poisson(link = "log")) |>
-  summary() %>%
-  .$coefficients |>
-  as.data.frame() |>
-  tibble::rownames_to_column() |>
-  dplyr::slice_tail(n = 5) |>
-  dplyr::mutate(Estimate = Estimate |> round(3),
-                `Std. Error` = `Std. Error` |> round(4),
-                `z value` = `z value` |> round(2),
-                `Pr(>|z|)` = `Pr(>|z|)` |> round(3),
-                `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                              .default = `Pr(>|z|)` |>
-                                                as.character()),
-                `Valor preditor` = c(7.5, 0.155, 5, 350, 91.6),
-                `Rhinella hoogmoedi` = 10.5,
-                estatistica = paste0("β1 ± EP = ",
-                                     Estimate,
-                                     " ± ",
-                                     `Std. Error`,
-                                     "<br>z = ",
-                                     `z value`,
-                                     "<sub>6</sub>, p = ",
-                                     `Pr(>|z|)`),
-                rowname = rowname |> stringr::str_remove_all("`")) |>
-  rename("Preditor" = rowname) |>
-  dplyr::select(1, 6:8)
-
-rhinella_stats
+sts_rhinella
 
 # Gráficos ----
 
