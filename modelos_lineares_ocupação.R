@@ -345,6 +345,9 @@ ls(pattern = "resultados_rhinella_") |>
 sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
+  dplyr::mutate(Estimate_temp = Estimate |> dplyr::lead(),
+                `Std. Error temp` = `Std. Error` |> dplyr::lead()) |>
+  dplyr::filter(!rowname == "Temperatura") |>
   dplyr::mutate(Estimate = Estimate |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
                 AIC = AIC |> round(2),
