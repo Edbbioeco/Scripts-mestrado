@@ -81,7 +81,7 @@ df_ocupacao
 df_ocupacao |> glimpse()
 
 df_ocupacao |>
-  dplyr::select(c(5, 6, 8:10, 12)) |>
+  dplyr::select(c(5, 6, 8, 10:12)) |>
   glimpse()
 
 # Modelos lineares ----
@@ -100,7 +100,7 @@ rodando_modelos_pristimantis <- function(id){
     message()
 
   modelo <- glm(`Pristimantis ramagii` ~ .,
-                data = df_ocupacao[, c(2, id)],
+                data = df_ocupacao[, c(2, id, 9)],
                 family = poisson(link = "log"))
 
   nome <- df_ocupacao[, id] |>
@@ -150,7 +150,7 @@ rodando_modelos_pristimantis <- function(id){
 
 }
 
-purrr::walk(c(5, 6, 8:10, 12), rodando_modelos_pristimantis)
+purrr::walk(c(5, 6, 8, 10:12), rodando_modelos_pristimantis)
 
 ls(pattern = "modelo_pristimantis_") |>
   mget(envir = globalenv())
