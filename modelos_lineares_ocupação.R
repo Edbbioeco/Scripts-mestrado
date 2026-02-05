@@ -342,9 +342,7 @@ ls(pattern = "resultados_rhinella_") |>
 
 ## Pristimantis ramagii ----
 
-### Múltiplos modelos ----
-
-estatisticas_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
+sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
   dplyr::mutate(Estimate = Estimate |> round(3),
@@ -373,40 +371,7 @@ estatisticas_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
   rename("Preditor" = rowname) |>
   dplyr::select(1, 8:10)
 
-estatisticas_pristimantis
-
-### Modelo múltiplo ----
-
-pristimantis_stats <- glm(`Pristimantis ramagii` ~ .,
-    data = df_ocupacao[, c(2, 5, 6, 8, 10, 12)],
-    family = poisson(link = "log")) |>
-  summary() %>%
-  .$coefficients |>
-  as.data.frame() |>
-  tibble::rownames_to_column() |>
-  dplyr::slice_tail(n = 5) |>
-  dplyr::mutate(Estimate = Estimate |> round(3),
-                `Std. Error` = `Std. Error` |> round(4),
-                `z value` = `z value` |> round(2),
-                `Pr(>|z|)` = `Pr(>|z|)` |> round(3),
-                `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                              .default = `Pr(>|z|)` |>
-                                                as.character()),
-                `Valor preditor` = c(7.5, 0.155, 5, 350, 91.6),
-                `Pristimantis ramagii` = 28,
-                estatistica = paste0("β1 ± EP = ",
-                                     Estimate,
-                                     " ± ",
-                                     `Std. Error`,
-                                     "<br>z = ",
-                                     `z value`,
-                                     "<sub>6</sub>, p = ",
-                                     `Pr(>|z|)`),
-                rowname = rowname |> stringr::str_remove_all("`")) |>
-  rename("Preditor" = rowname) |>
-  dplyr::select(1, 6:8)
-
-pristimantis_stats
+sts_pristimantis
 
 ## Adenomera hylaedactyla ----
 
