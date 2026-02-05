@@ -120,7 +120,7 @@ rodando_modelos_pristimantis <- function(id){
   print(avaliacao)
 
   r2 <- modelo |>
-    performance::r2() |>
+    performance::r2_mcfadden() |>
     as.numeric() |>
     round(2)
 
@@ -462,9 +462,9 @@ df_ocupacao |>
                         size = 4.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% c("Área das poças",
-                                              "Distância dos corpos hídricos",
-                                              "Temperatura")),
+                dplyr::filter(Preditor %in% c("Abertura do dossel",
+                                              "Altura da serrapilheira",
+                                              "Distância dos corpos hídricos")),
               method = "glm", show.legend = FALSE, se = FALSE) +
   labs(y = "Abundância") +
   #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue", "orangered")) +
