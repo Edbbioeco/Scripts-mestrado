@@ -142,7 +142,9 @@ rodando_modelos_pristimantis <- function(id){
     dplyr::relocate(AIC,
                     .before = `z value`) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`pseudo-R²` = r2)
+    dplyr::mutate(`pseudo-R²` = r2,
+                  Modelo = nome) |>
+    dplyr::relocate(Modelo, .before = rowname)
 
   assign(paste0("resultados_pristimantis_", nome),
          resultados,
