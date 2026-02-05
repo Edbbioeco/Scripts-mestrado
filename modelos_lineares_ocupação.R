@@ -88,8 +88,6 @@ df_ocupacao |>
 
 ## Pristimantis ramagii ----
 
-### Múltiplos modelos ----
-
 rodando_modelos_pristimantis <- function(id){
 
   nome <- df_ocupacao[, id] |> names()
@@ -171,34 +169,6 @@ ls(pattern = "resultados_pristimantis_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
   dplyr::filter(!rowname == "Temperatura")
-
-### Modelo múltiplo ----
-
-### Mlticolinearidade ----
-
-df_ocupacao[, c(5, 6, 8:10, 12)] |>
-  cor(method = "spearman")
-
-#### Criando o modelo ----
-
-glm(`Pristimantis ramagii` ~ .,
-    data = df_ocupacao[, c(2, 5, 6, 8:10, 12)],
-    family = poisson(link = "log")) |>
-  summary()
-
-#### Pressupostos do modelo ----
-
-glm(`Pristimantis ramagii` ~ .,
-    data = df_ocupacao[, c(2, 5, 6, 8:10, 12)],
-    family = poisson(link = "log")) |>
-  DHARMa::simulateResiduals(plot = TRUE)
-
-#### Pseudo-R² ----
-
-glm(`Pristimantis ramagii` ~ .,
-    data = df_ocupacao[, c(2, 5, 6, 8:10, 12)],
-    family = poisson(link = "log")) |>
-  performance::r2_mcfadden()
 
 ## Adenomera Hylaedactyla ----
 
