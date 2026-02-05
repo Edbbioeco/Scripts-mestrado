@@ -329,7 +329,7 @@ ls(pattern = "resultados_rhinella_") |>
   dplyr::bind_rows() |>
   dplyr::filter(!rowname == "Temperatura")
 
-# Esatísticas ----
+# Estatísticas ----
 
 ## Pristimantis ramagii ----
 
@@ -364,7 +364,11 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`")) |>
   rename("Preditor" = rowname) |>
-  dplyr::select(2, 10:12)
+  dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
+                                                `Pr(>|z|)` |>
+                                                  as.numeric() < 0.05 ~ "Sim",
+                                                .default = "Não")) |>
+  dplyr::select(2, 10:13)
 
 sts_pristimantis
 
@@ -401,7 +405,11 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`")) |>
   rename("Preditor" = rowname) |>
-  dplyr::select(2, 10:12)
+  dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
+                                                `Pr(>|z|)` |>
+                                                  as.numeric() < 0.05 ~ "Sim",
+                                                .default = "Não")) |>
+  dplyr::select(2, 10:13)
 
 sts_adenomera
 
@@ -438,7 +446,11 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`")) |>
   rename("Preditor" = rowname) |>
-  dplyr::select(2, 10:12)
+  dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
+                                                `Pr(>|z|)` |>
+                                                  as.numeric() < 0.05 ~ "Sim",
+                                                .default = "Não")) |>
+  dplyr::select(2, 10:13)
 
 sts_rhinella
 
