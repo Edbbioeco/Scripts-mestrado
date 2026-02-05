@@ -343,7 +343,6 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                 Estimate_temp = Estimate_temp |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
                 `Std. Error temp` = `Std. Error temp` |> round(4),
-                AIC = AIC |> round(2),
                 `z value` = `z value` |> round(2),
                 `Valor preditor` = c(0.155, 91.6, 5, 7.5, 500, 300),
                 `Pristimantis ramagii` = 28,
@@ -357,9 +356,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                      Estimate_temp,
                                      " ± ",
                                      `Std. Error temp`,
-                                     "<br>AIC = ",
-                                     AIC,
-                                     ", z = ",
+                                     "<br>, z = ",
                                      `z value`,
                                      "<sub>6</sub>, p = ",
                                      `Pr(>|z|)`,
@@ -367,7 +364,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`")) |>
   rename("Preditor" = rowname) |>
-  dplyr::select(2, 11:13)
+  dplyr::select(2, 10:12)
 
 sts_pristimantis
 
