@@ -500,13 +500,16 @@ ggsave(filename = "modelo_abundancia_pristimantis_multiplo.png",
 ## Adenomera hylaedactyla ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(5, 6, 8, 10, 12),
+  tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
+  dplyr::left_join(sts_adenomera |>
+                     dplyr::select(1, 5),
+                   by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`)) +
   geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = estatisticas_adenomera,
+  ggtext::geom_richtext(data = sts_adenomera,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
@@ -514,6 +517,9 @@ df_ocupacao |>
                         fill = "transparent",
                         size = 4.5) +
   facet_wrap(~Preditor, scales = "free_x") +
+  geom_smooth(data = . %>%
+                dplyr::filter(Significante == "Sim"),
+              method = "glm", show.legend = FALSE, se = FALSE) +
   labs(y = "Abundância") +
   #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue")) +
   #scale_color_manual(values = c("green4", "skyblue4")) +
@@ -536,13 +542,16 @@ ggsave(filename = "modelo_abundancia_adenomera_multiplo.png",
 ## Rhinella hoogmoedi ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(5, 6, 8:10, 12),
+  tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
+  dplyr::left_join(sts_rhinella |>
+                     dplyr::select(1, 5),
+                   by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`)) +
   geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = estatisticas_rhinella,
+  ggtext::geom_richtext(data = sts_rhinella,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
@@ -551,8 +560,7 @@ df_ocupacao |>
                         size = 4.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% c("Abertura do dossel",
-                                             "Altitude")),
+                dplyr::filter(Significante == "Sim"),
               method = "glm", family = poisson, show.legend = FALSE, se = FALSE) +
   #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue", "orangered")) +
   #scale_color_manual(values = c("darkgreen","gold4")) +
