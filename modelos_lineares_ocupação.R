@@ -218,10 +218,7 @@ rodando_modelos_adenomera <- function(id){
     as.data.frame() |>
     tibble::rownames_to_column() |>
     dplyr::mutate(rowname = rowname |>
-                      stringr::str_remove_all("`"),
-                    AIC = modelo |> AIC()) |>
-    dplyr::relocate(AIC,
-                    .before = `z value`) |>
+                      stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2,
                   Modelo = nome,
@@ -302,10 +299,7 @@ rodando_modelos_rhinella <- function(id){
     as.data.frame() |>
     tibble::rownames_to_column() |>
     dplyr::mutate(rowname = rowname |>
-                    stringr::str_remove_all("`"),
-                  AIC = modelo |> AIC()) |>
-    dplyr::relocate(AIC,
-                    .before = `z value`) |>
+                    stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2,
                   Modelo = nome,
