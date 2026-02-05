@@ -354,7 +354,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 AIC = AIC |> round(2),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350, 25.75),
+                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 500, 300),
                 `Pristimantis ramagii` = 28,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -394,7 +394,7 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 AIC = AIC |> round(2),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350, 25.75),
+                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 500, 300),
                 `Adenomera hylaedactyla` = 18,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -434,7 +434,7 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 AIC = AIC |> round(2),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350, 25.75),
+                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 500, 300),
                 `Rhinella hoogmoedi` = 10.5,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -465,13 +465,13 @@ sts_rhinella
 ## Pstimantis ramagii ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(5, 6, 8:10, 12),
+  tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
-  ggtext::geom_richtext(data = estatisticas_pristimantis,
+  ggtext::geom_richtext(data = sts_pristimantis,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
