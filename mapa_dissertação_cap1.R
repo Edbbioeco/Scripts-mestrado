@@ -35,7 +35,8 @@ ggplot() +
 
 parcelas_trat <- parcelas |>
   dplyr::mutate(tipo = c(rep("Uniform Sample", 10),
-                         rep("Riparian Sample", 2)))
+                         rep("Riparian Sample", 2))) |>
+  dplyr::filter(!Trlh.Pr == "1-1")
 
 parcelas_trat
 
