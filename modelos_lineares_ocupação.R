@@ -184,7 +184,7 @@ rodando_modelos_adenomera <- function(id){
     message()
 
   modelo <- glm(`Adenomera hylaedactyla` ~ .,
-                data = df_ocupacao[, c(3, id)],
+                data = df_ocupacao[, c(3, id, 9)],
                 family = poisson(link = "log"))
 
   nome <- df_ocupacao[, id] |>
@@ -215,6 +215,8 @@ rodando_modelos_adenomera <- function(id){
     crayon::green() |>
     message()
 
+  nome <- df_ocupacao[, id] |> names()
+
   resultados <- modelo |>
     summary() %>%
     .$coefficient |>
@@ -226,7 +228,13 @@ rodando_modelos_adenomera <- function(id){
     dplyr::relocate(AIC,
                     .before = `z value`) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`pseudo-R²` = r2)
+    dplyr::mutate(`pseudo-R²` = r2,
+                  Modelo = nome,
+                  `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
+                                                .default = `Pr(>|z|)` |>
+                                                  round(2) |>
+                                                  as.character())) |>
+    dplyr::relocate(Modelo, .before = rowname)
 
   assign(paste0("resultados_adenomera_", nome),
          resultados,
@@ -234,7 +242,7 @@ rodando_modelos_adenomera <- function(id){
 
 }
 
-purrr::walk(c(5, 6, 8, 10, 12), rodando_modelos_adenomera)
+purrr::walk(c(5, 6, 8, 10:12), rodando_modelos_adenomera)
 
 ls(pattern = "modelo_adenomera_") |>
   mget(envir = globalenv())
