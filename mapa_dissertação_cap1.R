@@ -170,9 +170,9 @@ mapa_principal <- ggplot() +
   ggspatial::annotation_scale(location = "br",
                               text_face = "bold",
                               text_cex = 2,
-                              text_col = "black",
+                              text_col = "white",
                               unit_category = "metric",
-                              bar_cols = c("black", "gold"),
+                              bar_cols = c("black", "white"),
                               width_hint = 0.35) +
   ggview::canvas(height = 10, width = 12)
 
