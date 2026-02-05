@@ -338,29 +338,6 @@ ls(pattern = "resultados_rhinella_") |>
   dplyr::bind_rows() |>
   dplyr::filter(!rowname == "Temperatura")
 
-### Modelo múltiplo ----
-
-#### Criando o modelo ----
-
-glm(`Rhinella hoogmoedi` ~ .,
-    data = df_ocupacao[, c(4, 5, 6, 8:10, 12)],
-    family = poisson(link = "log")) |>
-  summary()
-
-#### Pressupostos do modelo ----
-
-glm(`Rhinella hoogmoedi` ~ .,
-    data = df_ocupacao[, c(4, 5, 6, 8, 10, 12)],
-    family = poisson(link = "log")) |>
-  DHARMa::simulateResiduals(plot = TRUE)
-
-#### Pseudo-R² ----
-
-glm(`Rhinella hoogmoedi` ~ .,
-    data = df_ocupacao[, c(4, 5, 6, 8, 10, 12)],
-    family = poisson(link = "log")) |>
-  performance::r2_mcfadden()
-
 # Esatísticas ----
 
 ## Pristimantis ramagii ----
