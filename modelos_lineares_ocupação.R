@@ -345,7 +345,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
                 `Valor preditor` = c(0.155, 91.6, 5, 7.5, 500, 300),
-                `Pristimantis ramagii` = 28,
+                `Pristimantis ramagii` = 29,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
                                      "</sub> = ",
