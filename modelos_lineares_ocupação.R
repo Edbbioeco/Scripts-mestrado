@@ -131,6 +131,8 @@ rodando_modelos_pristimantis <- function(id){
     crayon::green() |>
     message()
 
+  nome <- df_ocupacao[, id] |> names()
+
   resultados <- modelo |>
     summary() %>%
     .$coefficient |>
@@ -164,6 +166,11 @@ ls(pattern = "modelo_pristimantis_") |>
 ls(pattern = "resultados_pristimantis_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
+
+ls(pattern = "resultados_pristimantis_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows() |>
+  dplyr::filter(!rowname == "Temperatura")
 
 ### Modelo múltiplo ----
 
