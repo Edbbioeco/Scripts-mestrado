@@ -344,7 +344,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 500, 300),
+                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 450, 300),
                 `Pristimantis ramagii` = 29,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -385,7 +385,7 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 500, 300),
+                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 450, 300),
                 `Adenomera hylaedactyla` = 18,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -426,7 +426,7 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 500, 300),
+                `Valor preditor` = c(0.155, 91.6, 5, 7.5, 450, 300),
                 `Rhinella hoogmoedi` = 10.5,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -557,7 +557,7 @@ df_ocupacao |>
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
-                        size = 4.5) +
+                        size = 4) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
                 dplyr::filter(Significante == "Sim"),
