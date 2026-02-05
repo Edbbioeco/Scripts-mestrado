@@ -266,7 +266,7 @@ rodando_modelos_rhinella <- function(id){
     message()
 
   modelo <- glm(`Rhinella hoogmoedi` ~ .,
-                data = df_ocupacao[, c(4, id)],
+                data = df_ocupacao[, c(4, id, 9)],
                 family = poisson(link = "log"))
 
   nome <- df_ocupacao[, id] |>
@@ -297,6 +297,8 @@ rodando_modelos_rhinella <- function(id){
     crayon::green() |>
     message()
 
+  nome <- df_ocupacao[, id] |> names()
+
   resultados <- modelo |>
     summary() %>%
     .$coefficient |>
@@ -308,7 +310,13 @@ rodando_modelos_rhinella <- function(id){
     dplyr::relocate(AIC,
                     .before = `z value`) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`pseudo-R²` = r2)
+    dplyr::mutate(`pseudo-R²` = r2,
+                  Modelo = nome,
+                  `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
+                                                .default = `Pr(>|z|)` |>
+                                                  round(2) |>
+                                                  as.character())) |>
+    dplyr::relocate(Modelo, .before = rowname)
 
   assign(paste0("resultados_rhinella_", nome),
          resultados,
@@ -316,7 +324,7 @@ rodando_modelos_rhinella <- function(id){
 
 }
 
-purrr::walk(c(5, 6, 8:10, 12), rodando_modelos_rhinella)
+purrr::walk(c(5, 6, 8, 10:12), rodando_modelos_rhinella)
 
 ls(pattern = "modelo_rhinella_") |>
   mget(envir = globalenv())
@@ -324,6 +332,11 @@ ls(pattern = "modelo_rhinella_") |>
 ls(pattern = "resultados_rhinella_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
+
+ls(pattern = "resultados_rhinella_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows() |>
+  dplyr::filter(!rowname == "Temperatura")
 
 ### Modelo múltiplo ----
 
