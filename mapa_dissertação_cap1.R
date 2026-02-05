@@ -31,7 +31,7 @@ parcelas
 ggplot() +
   geom_sf(data = parcelas, color = "black", linewidth = 1)
 
-### Trtando ----
+### Tratando ----
 
 parcelas_trat <- parcelas |>
   dplyr::mutate(tipo = c(rep("Uniform Sample", 10),
