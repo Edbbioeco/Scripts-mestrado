@@ -349,22 +349,26 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                 `Std. Error temp` = `Std. Error` |> dplyr::lead()) |>
   dplyr::filter(!rowname == "Temperatura") |>
   dplyr::mutate(Estimate = Estimate |> round(3),
+                Estimate_temp = Estimate_temp |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
+                `Std. Error temp` = `Std. Error temp` |> round(4),
                 AIC = AIC |> round(2),
                 `z value` = `z value` |> round(2),
-                `Pr(>|z|)` = `Pr(>|z|)` |> round(2),
-                `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                              .default = `Pr(>|z|)` |>
-                                                as.character()),
                 `Valor preditor` = c(0.155, 91.6, 5, 7.5, 350, 25.75),
                 `Pristimantis ramagii` = 28,
-                estatistica = paste0("β1 ± EP = ",
+                estatistica = paste0("β1 ± EP<sub>",
+                                     rowname,
+                                     "</sub> = ",
                                      Estimate,
                                      " ± ",
                                      `Std. Error`,
-                                     ", AIC = ",
+                                     "<br>β1 ± EP<sub>temperatura</sub> = ",
+                                     Estimate_temp,
+                                     " ± ",
+                                     `Std. Error temp`,
+                                     "<br>AIC = ",
                                      AIC,
-                                     "<br>z = ",
+                                     ", z = ",
                                      `z value`,
                                      "<sub>6</sub>, p = ",
                                      `Pr(>|z|)`,
@@ -372,7 +376,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`")) |>
   rename("Preditor" = rowname) |>
-  dplyr::select(1, 8:10)
+  dplyr::select(2, 11:13)
 
 sts_pristimantis
 
