@@ -462,6 +462,9 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
+  dplyr::left_join(sts_pristimantis |>
+                     dplyr::select(1, 5),
+                   by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
@@ -474,9 +477,7 @@ df_ocupacao |>
                         size = 4.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% c("Abertura do dossel",
-                                              "Altura da serrapilheira",
-                                              "Distância dos corpos hídricos")),
+                dplyr::filter(Significante == "Sim"),
               method = "glm", show.legend = FALSE, se = FALSE) +
   labs(y = "Abundância") +
   #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue", "orangered")) +
