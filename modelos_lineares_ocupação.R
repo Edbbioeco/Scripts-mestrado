@@ -172,8 +172,6 @@ ls(pattern = "resultados_pristimantis_") |>
 
 ## Adenomera Hylaedactyla ----
 
-### Múltiplos modelos ----
-
 rodando_modelos_adenomera <- function(id){
 
   nome <- df_ocupacao[, id] |> names()
@@ -251,28 +249,10 @@ ls(pattern = "resultados_adenomera_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
 
-### Modelo múltiplo ----
-
-#### Criando o modelo ----
-
-glm(`Adenomera hylaedactyla` ~ .,
-    data = df_ocupacao[, c(3, 5, 6, 8, 10, 12)],
-    family = poisson(link = "log")) |>
-  summary()
-
-#### Pressupostos do modelo ----
-
-glm(`Adenomera hylaedactyla` ~ .,
-    data = df_ocupacao[, c(3, 5, 6, 8, 10, 12)],
-    family = poisson(link = "log")) |>
-  DHARMa::simulateResiduals(plot = TRUE)
-
-#### Pseudo-R² ----
-
-glm(`Adenomera hylaedactyla` ~ .,
-    data = df_ocupacao[, c(3, 5, 6, 8, 10, 12)],
-    family = poisson(link = "log")) |>
-  performance::r2_mcfadden()
+ls(pattern = "resultados_adenomera_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows() |>
+  dplyr::filter(!rowname == "Temperatura")
 
 ## Rhinella hoogmoedi ----
 
