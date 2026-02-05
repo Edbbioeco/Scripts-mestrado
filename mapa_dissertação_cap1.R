@@ -172,7 +172,8 @@ mapa_principal <- ggplot() +
                               text_cex = 2,
                               text_col = "black",
                               unit_category = "metric",
-                              bar_cols = c("black", "gold")) +
+                              bar_cols = c("black", "gold"),
+                              width_hint = 0.35) +
   ggview::canvas(height = 10, width = 12)
 
 mapa_principal
