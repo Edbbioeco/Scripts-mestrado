@@ -179,7 +179,7 @@ rodando_modelos_adenomera <- function(id){
     message()
 
   modelo <- glm(`Adenomera hylaedactyla` ~ .,
-                data = df_ocupacao[, c(3, id, 9)],
+                data = df_ocupacao[, c(3, id)],
                 family = poisson(link = "log"))
 
   nome <- df_ocupacao[, id] |>
@@ -220,7 +220,7 @@ rodando_modelos_adenomera <- function(id){
     dplyr::mutate(rowname = rowname |>
                       stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`pseudo-R²` = r2,
+    dplyr::mutate(`pseudo-R²` = r2[2],
                   Modelo = nome,
                   `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
                                                 .default = `Pr(>|z|)` |>
@@ -427,7 +427,7 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
                 `Valor preditor` = c(0.155, 91.6, 5, 7.5, 450, 300),
-                `Rhinella hoogmoedi` = 10.5,
+                `Rhinella hoogmoedi` = 11,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
                                      "</sub> = ",
