@@ -38,7 +38,7 @@ calcular_indice <- function(diretorios){
 
   purrr::map(indice_calcular, imagens)
 
-  indice <<- c(indice_dossel, indice)
+  indice <<- c(indice, indice_dossel)
 
   trilha_dossel <- dplyr::case_when(diretorios[1] |>
                                       stringr::str_detect("T1") ~ "1",
@@ -47,7 +47,7 @@ calcular_indice <- function(diretorios){
                                     diretorios[1] |>
                                       stringr::str_detect("R") ~ "Ripária")
 
-  trilha <- c(trilha_dossel, trilha)
+  trilha <- c(trilha, trilha_dossel)
 
   parcela_dossel <- dplyr::case_when(diretorios[1] |>
                                        stringr::str_detect("P1|R1") ~ "1",
@@ -58,6 +58,15 @@ calcular_indice <- function(diretorios){
                                      diretorios[1] |>
                                        stringr::str_detect("P4") ~ "4")
 
-  parcela <- c(parcela_dossel, parcela)
+  parcela <- c(parcela, parcela_dossel)
+
+  campanha_dossel <- dplyr::case_when(diretorios[1] |>
+                                        stringr::str_detect("C1") ~ "1",
+                                      diretorios[1] |>
+                                        stringr::str_detect("C2") ~ "2",
+                                      diretorios[1] |>
+                                        stringr::str_detect("C3") ~ "3")
+
+  campanha <- c(campanha, campanha_dossel)
 
 }
