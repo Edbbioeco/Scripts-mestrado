@@ -80,7 +80,7 @@ calcular_indice <- function(diretorios){
 
 }
 
-purrr::map(.x = diretorios[1],
+purrr::map(.x = diretorios,
            .f = calcular_indice)
 
 ## Data frame final ----
