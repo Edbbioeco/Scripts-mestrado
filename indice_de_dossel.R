@@ -49,4 +49,15 @@ calcular_indice <- function(diretorios){
 
   trilha <- c(trilha_dossel, trilha)
 
+  parcela_dossel <- dplyr::case_when(diretorios[1] |>
+                                       stringr::str_detect("P1|R1") ~ "1",
+                                     diretorios[1] |>
+                                       stringr::str_detect("P2|R2") ~ "2",
+                                     diretorios[1] |>
+                                       stringr::str_detect("P3") ~ "3",
+                                     diretorios[1] |>
+                                       stringr::str_detect("P4") ~ "4")
+
+  parcela <- c(parcela_dossel, parcela)
+
 }
