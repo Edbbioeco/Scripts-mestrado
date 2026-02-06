@@ -87,3 +87,7 @@ purrr::map(.x = imagens,
 ## Data frame final ----
 
 df_dossel |> as.data.frame()
+
+# Exportando os dados ----
+
+df_dossel |> writexl::write_xlsx("dados_indice_dossel_coir.xlsx")
