@@ -378,9 +378,7 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
   dplyr::mutate(Estimate = Estimate |> round(3),
-                Estimate_temp = Estimate_temp |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
-                `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
                 `Valor preditor` = c(0.155, 91.6, 5, 7.5, 450, 300),
                 `Adenomera hylaedactyla` = 18,
@@ -390,10 +388,6 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
                                      Estimate,
                                      " ± ",
                                      `Std. Error`,
-                                     "<br>β1 ± EP<sub>temperatura</sub> = ",
-                                     Estimate_temp,
-                                     " ± ",
-                                     `Std. Error temp`,
                                      "<br>z = ",
                                      `z value`,
                                      "<sub>6</sub>, p = ",
@@ -406,7 +400,7 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
                                                 `Pr(>|z|)` |>
                                                   as.numeric() < 0.05 ~ "Sim",
                                                 .default = "Não")) |>
-  dplyr::select(2, 10:13)
+  dplyr::select(2, 8:11)
 
 sts_adenomera
 
