@@ -15,9 +15,8 @@ diretorios
 
 ## Imagens ----
 
-imagens <- paste0(diretorios,
-                  "/",
-                  list.files(path = diretorios))
+imagens <- list.files(path = diretorios,
+                      full.names = TRUE)
 
 imagens
 
@@ -36,14 +35,16 @@ calcular_indice <- function(imagens){
 
   indice <<- c(indice, indice_dossel)
 
-  trilha_dossel <- dplyr::case_when(imagens |>
-                                      stringr::str_detect("T1") ~ "1",
-                                    imagens |>
-                                      stringr::str_detect("T2") ~ "2",
-                                    imagens |>
-                                      stringr::str_detect("R") ~ "Ripária")
+  trilha_dossel <- dplyr::case_when(imagens[1] |>
+                                      stringr::str_detect("/T1") ~ "1",
+                                    imagens[1] |>
+                                      stringr::str_detect("/T2") ~ "2",
+                                    imagens[1] |>
+                                      stringr::str_detect("/T3") ~ "3",
+                                    imagens[1] |>
+                                      stringr::str_detect("/R") ~ "Ripária")
 
-  trilha <- c(trilha, trilha_dossel)
+  trilha <<- c(trilha, trilha_dossel)
 
   parcela_dossel <- dplyr::case_when(imagens |>
                                        stringr::str_detect("P1|R1") ~ "1",
@@ -54,7 +55,7 @@ calcular_indice <- function(imagens){
                                      imagens |>
                                        stringr::str_detect("P4") ~ "4")
 
-  parcela <- c(parcela, parcela_dossel)
+  parcela <<- c(parcela, parcela_dossel)
 
   campanha_dossel <- dplyr::case_when(imagens |>
                                         stringr::str_detect("C1") ~ "1",
@@ -63,7 +64,7 @@ calcular_indice <- function(imagens){
                                       imagens |>
                                         stringr::str_detect("C3") ~ "3")
 
-  campanha <- c(campanha, campanha_dossel)
+  campanha <<- c(campanha, campanha_dossel)
 
   df_dossel <<- tibble::tibble(Trilha = trilha,
                                Parcela = parcela,
