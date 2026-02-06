@@ -139,7 +139,7 @@ rodando_modelos_pristimantis <- function(id){
     dplyr::mutate(rowname = rowname |>
                     stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`pseudo-R²` = r2,
+    dplyr::mutate(`pseudo-R²` = r2[2],
                   Modelo = nome,
                   `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
                                                 .default = `Pr(>|z|)` |>
@@ -301,7 +301,7 @@ rodando_modelos_rhinella <- function(id){
     dplyr::mutate(rowname = rowname |>
                     stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`pseudo-R²` = r2,
+    dplyr::mutate(`pseudo-R²` = r2[2],
                   Modelo = nome,
                   `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
                                                 .default = `Pr(>|z|)` |>
