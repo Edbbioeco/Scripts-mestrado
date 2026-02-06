@@ -6,10 +6,20 @@ library(writexl)
 
 # lista de diretórios -----
 
+## Diretorios ----
+
 diretorios <- paste0("./imagens de dossel/",
                      list.files(path = "./imagens de dossel"))
 
 diretorios
+
+## Imagens ----
+
+imagens <- paste0(diretorios,
+                  "/",
+                  list.files(path = diretorios))
+
+imagens
 
 # Calculando índice de abertura de dossel ----
 
