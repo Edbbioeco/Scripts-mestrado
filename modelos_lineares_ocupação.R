@@ -377,9 +377,6 @@ sts_pristimantis
 sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
-  dplyr::mutate(Estimate_temp = Estimate |> dplyr::lead(),
-                `Std. Error temp` = `Std. Error` |> dplyr::lead()) |>
-  dplyr::filter(!rowname == "Temperatura") |>
   dplyr::mutate(Estimate = Estimate |> round(3),
                 Estimate_temp = Estimate_temp |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
