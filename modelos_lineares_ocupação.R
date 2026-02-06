@@ -381,7 +381,7 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `z value` = `z value` |> round(2),
                 `Valor preditor` = c(0.155, 91.6, 5, 7.5, 450, 300),
-                `Adenomera hylaedactyla` = 18,
+                `Adenomera hylaedactyla` = 17,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
                                      "</sub> = ",
