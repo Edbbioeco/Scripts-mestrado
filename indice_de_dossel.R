@@ -21,9 +21,9 @@ parcela <- c()
 
 campanha <- c()
 
-calcular_indice <- function(diretorio){
+calcular_indice <- function(diretorios){
 
-  imagens <- list.files(path = diretorios[1])
+  imagens <- list.files(path = diretorios[5])
 
   indice_calcular <- function(imagens){
 
@@ -39,5 +39,14 @@ calcular_indice <- function(diretorio){
   purrr::map(indice_calcular, imagens)
 
   indice <<- c(indice_dossel, indice)
+
+  trilha_dossel <- dplyr::case_when(diretorios[1] |>
+                                      stringr::str_detect("T1") ~ "1",
+                                    diretorios[1] |>
+                                      stringr::str_detect("T2") ~ "2",
+                                    diretorios[1] |>
+                                      stringr::str_detect("R") ~ "Ripária")
+
+  trilha <- c(trilha_dossel, trilha)
 
 }
