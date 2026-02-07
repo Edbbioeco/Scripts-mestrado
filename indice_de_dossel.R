@@ -35,13 +35,13 @@ calcular_indice <- function(imagens){
 
   indice <<- c(indice, indice_dossel)
 
-  trilha_dossel <- dplyr::case_when(imagens[1] |>
+  trilha_dossel <- dplyr::case_when(imagens |>
                                       stringr::str_detect("/T1") ~ "1",
-                                    imagens[1] |>
+                                    imagens |>
                                       stringr::str_detect("/T2") ~ "2",
-                                    imagens[1] |>
+                                    imagens |>
                                       stringr::str_detect("/T3") ~ "3",
-                                    imagens[1] |>
+                                    imagens |>
                                       stringr::str_detect("/R") ~ "Ripária")
 
   trilha <<- c(trilha, trilha_dossel)
