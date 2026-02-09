@@ -24,7 +24,7 @@ especies <- readxl::read_xlsx("levantamento_anuros.xlsx")
 
 especies
 
-especies %>% dplyr::glimpse()
+especies |> dplyr::glimpse()
 
 ## Shapefile de Saltinho ----
 
