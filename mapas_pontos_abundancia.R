@@ -264,18 +264,16 @@ abundancia_coord |>
           linewidth = 1) +
   geom_sf(data = borda, aes(color = "Native Vegetation"),
           linewidth = 1, fill = "transparent") +
-  geom_sf(data = saltinho, aes(color = "REBio Saltinho"),
-          linewidth = 1, fill = "transparent") +
   geom_sf(data = parcelas, aes(color = "Samples"),
           linewidth = 1) +
-  scale_color_manual(values = c("REBio Saltinho" = "black",
-                                "Native Vegetation" = "darkgreen",
+  scale_color_manual(values = c("Native Vegetation" = "darkgreen",
                                 "Samples" = "royalblue4",
                                 "Hidric Bodies" = "blue")) +
   geom_point(aes(Longitude, Latitude, size = Abundância),
              shape = 21, stroke = 1, color = "black", fill = "green4", width = 0.1) +
   scale_size_continuous(breaks = seq(1, 35, 5),
                         guide = guide_legend(order = 2,
+                                             title = "Abundance",
                                              title.position = "top",
                                              title.hjust = 0.5),
                         range = c(1, 10)) +
@@ -289,7 +287,7 @@ abundancia_coord |>
         legend.title = element_text(color = "black", size = 15),
         strip.text = element_text(color = "black", size = 15, face = "italic"),
         strip.background = element_rect(color = "black", linewidth = 1),
-        legend.position = c(1.05, 0.08),
+        legend.position = c(1, 0.08),
         legend.direction = "horizontal",
         legend.box = "vertical",
         legend.justification = c("right", "bottom"),
