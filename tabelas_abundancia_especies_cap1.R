@@ -81,7 +81,8 @@ especies |>
                                  "Adenomera hylaedactyla",
                                  "Rhinella hoogmoedi")) |>
   dplyr::summarise(Abundância = Abundância |> sum(),
-                   .by = c(Espécie, Campanha))
+                   .by = c(Espécie, Campanha)) |>
+  dplyr::arrange(Espécie)
 
 # Flextable ----
 
