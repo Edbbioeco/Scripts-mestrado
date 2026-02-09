@@ -88,6 +88,15 @@ especies |>
 
 ### Total ----
 
+especies |>
+  dplyr::filter(`Unidade Amostral` != "T1P1" &
+                  Espécie %in% c("Pristimantis ramagii",
+                                 "Adenomera hylaedactyla",
+                                 "Rhinella hoogmoedi")) |>
+  dplyr::summarise(Abundância = Abundância |> sum(),
+                   .by = `Unidade Amostral`) |>
+  as.data.frame()
+
 ### Por espécie ----
 
 especies |>
