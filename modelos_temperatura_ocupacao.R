@@ -112,7 +112,7 @@ modelos_temp <- function(especie){
 
 }
 
-purrr::walk(df_temp[, 2:4] |> names(), modelos_temp)
+purrr::walk(df_temp[, 3:5] |> names(), modelos_temp)
 
 ## Loop com GLM Poisson ----
 
@@ -137,7 +137,7 @@ modelos_temp_glm <- function(especie){
 
 }
 
-purrr::walk(df_temp[, 2:4] |> names(), modelos_temp_glm)
+purrr::walk(df_temp[, 3:5] |> names(), modelos_temp_glm)
 
 ## Gráfico ----
 
