@@ -52,9 +52,14 @@ abund
 
 ### Total ----
 
-abund
+abund |>
+  dplyr::summarise(Abundância = Abundância |> sum())
 
 ### Por espécie ----
+
+abund |>
+  dplyr::summarise(Abundância = Abundância |> sum(),
+                   .by = Espécie)
 
 # Flextable ----
 
