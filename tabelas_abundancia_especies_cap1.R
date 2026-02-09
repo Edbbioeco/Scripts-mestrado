@@ -30,6 +30,8 @@ especies |> dplyr::glimpse()
 
 # Abundância das espécies ----
 
+## Tabela de abundância ----
+
 abund <- especies |>
   dplyr::filter(`Unidade Amostral` != "T1P1" &
                   Espécie %in% c("Pristimantis ramagii",
@@ -45,6 +47,8 @@ abund <- especies |>
                  `Unidade Amostral`)
 
 abund
+
+## Abundância de cada espécie ----
 
 # Flextable ----
 
