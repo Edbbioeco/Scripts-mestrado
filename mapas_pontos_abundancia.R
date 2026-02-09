@@ -244,12 +244,13 @@ abundancia_coord |>
   dplyr::filter(Espécie %in% c("Pristimantis ramagii",
                                "Adenomera hylaedactyla",
                                "Rhinella hoogmoedi")) |>
-  dplyr::mutate(Espécie = dplyr::case_when(Espécie == "Adenomera hylaedactyla" ~ "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
-                                           .default = Espécie),
+  dplyr::mutate(Espécie = dplyr::case_when(Espécie == "Pristimantis ramagii" ~ "<i>Pristimantis ramagii</i>",
+                                           Espécie == "Adenomera hylaedactyla" ~ "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
+                                           Espécie == "Rhinella hoogmoedi" ~ "<i>Rhinella hoogmoedi</i>"),
                 Espécie = Espécie |>
-                  forcats::fct_relevel(c("Pristimantis ramagii",
+                  forcats::fct_relevel(c("<i>Pristimantis ramagii</i>",
                                          "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
-                                         "Rhinella hoogmoedi"))) |>
+                                         "<i>Rhinella hoogmoedi</i>"))) |>
   ggplot() +
   tidyterra::geom_spatraster(data = alt) +
   tidyterra::scale_fill_whitebox_c(palette = "arid",
