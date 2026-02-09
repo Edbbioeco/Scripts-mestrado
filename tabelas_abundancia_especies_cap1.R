@@ -61,6 +61,8 @@ abund |>
   dplyr::summarise(Abundância = Abundância |> sum(),
                    .by = Espécie)
 
+## Abundância por campanha ----
+
 # Flextable ----
 
 ## Criando a tabela ----
