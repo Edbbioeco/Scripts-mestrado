@@ -84,6 +84,12 @@ especies |>
                    .by = c(Espécie, Campanha)) |>
   dplyr::arrange(Espécie)
 
+## Abundância por unidade amostral ----
+
+### Total ----
+
+### Por espécie ----
+
 # Flextable ----
 
 ## Criando a tabela ----
