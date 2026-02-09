@@ -109,6 +109,21 @@ especies |>
   dplyr::arrange(Espécie) |>
   as.data.frame()
 
+### Média e Desvio Padrão por espécie ----
+
+especies |>
+  dplyr::filter(`Unidade Amostral` != "T1P1" &
+                  Espécie %in% c("Pristimantis ramagii",
+                                 "Adenomera hylaedactyla",
+                                 "Rhinella hoogmoedi")) |>
+  dplyr::summarise(Abundância = Abundância |> sum(),
+                   .by = c(Espécie, `Unidade Amostral`)) |>
+  dplyr::summarise(Média = Abundância |> mean(),
+                   `Desvio Padrão` = Abundância |> sd(),
+                   .by = Espécie) |>
+  dplyr::arrange(Espécie) |>
+  as.data.frame()
+
 # Flextable ----
 
 ## Criando a tabela ----
