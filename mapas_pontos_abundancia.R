@@ -12,6 +12,8 @@ library(elevatr)
 
 library(tidyterra)
 
+library(ggtext)
+
 # Dados ----
 
 ## Dados de abundância de espécies ----
@@ -242,11 +244,11 @@ abundancia_coord |>
   dplyr::filter(Espécie %in% c("Pristimantis ramagii",
                                "Adenomera hylaedactyla",
                                "Rhinella hoogmoedi")) |>
-  dplyr::mutate(Espécie = dplyr::case_when(Espécie == "Adenomera hylaedactyla" ~ "Adenomera aff. hylaedactyla",
+  dplyr::mutate(Espécie = dplyr::case_when(Espécie == "Adenomera hylaedactyla" ~ "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
                                            .default = Espécie),
                 Espécie = Espécie |>
                   forcats::fct_relevel(c("Pristimantis ramagii",
-                                         "Adenomera aff. hylaedactyla",
+                                         "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
                                          "Rhinella hoogmoedi"))) |>
   ggplot() +
   tidyterra::geom_spatraster(data = alt) +
@@ -291,7 +293,7 @@ abundancia_coord |>
   theme(axis.text = element_text(color = "black", size = 15),
         legend.text = element_text(color = "black", size = 15),
         legend.title = element_text(color = "black", size = 15),
-        strip.text = element_text(color = "black", size = 15, face = "italic"),
+        strip.text = ggtext::element_markdown(color = "black", size = 15),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = c(1, 0.08),
         legend.direction = "horizontal",
