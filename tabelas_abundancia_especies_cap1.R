@@ -63,6 +63,26 @@ abund |>
 
 ## Abundância por campanha ----
 
+### Total ----
+
+especies |>
+  dplyr::filter(`Unidade Amostral` != "T1P1" &
+                Espécie %in% c("Pristimantis ramagii",
+                               "Adenomera hylaedactyla",
+                               "Rhinella hoogmoedi")) |>
+  dplyr::summarise(Abundância = Abundância |> sum(),
+                   .by = Campanha)
+
+### Por espécie ----
+
+especies |>
+  dplyr::filter(`Unidade Amostral` != "T1P1" &
+                  Espécie %in% c("Pristimantis ramagii",
+                                 "Adenomera hylaedactyla",
+                                 "Rhinella hoogmoedi")) |>
+  dplyr::summarise(Abundância = Abundância |> sum(),
+                   .by = c(Espécie, Campanha))
+
 # Flextable ----
 
 ## Criando a tabela ----
