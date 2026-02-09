@@ -50,6 +50,12 @@ abund
 
 ## Abundância de cada espécie ----
 
+### Total ----
+
+abund
+
+### Por espécie ----
+
 # Flextable ----
 
 ## Criando a tabela ----
