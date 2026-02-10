@@ -77,7 +77,7 @@ df_ocupacao <- especies_ocup |>
                    by = "Unidade Amostral") |>
   dplyr::rename("Pond area" = 5,
                 "Canopy openness" = 6,
-                "Leaf-litter height" = 8,
+                "Leaf-litter deep" = 8,
                 "Temperature" = 9,
                 "Hydric stream distance" = 10,
                 "Edge distance" = 11)
@@ -459,7 +459,7 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                                                 `Pr(>|z|)` |>
                                                   as.numeric() < 0.05 ~ "Sim",
                                                 .default = "Não")) |>
-  dplyr::select(2, 13:15)
+  dplyr::select(2, 12:15)
 
 sts_rhinella
 
@@ -474,6 +474,8 @@ df_ocupacao |>
   dplyr::left_join(sts_pristimantis |>
                      dplyr::select(1, 5),
                    by = "Preditor") |>
+  dplyr::mutate(Preditor = Preditor |>
+                  forcats::fct_relevel(c(""))) |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
