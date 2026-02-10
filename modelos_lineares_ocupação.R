@@ -380,7 +380,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                                 `Pr(>|z|)` |>
                                                   as.numeric() < 0.05 ~ "Sim",
                                                 .default = "Não")) |>
-  dplyr::select(2, 13:15)
+  dplyr::select(2, 12:15)
 
 sts_pristimantis
 
