@@ -379,7 +379,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
   rename("Preditor" = rowname) |>
   dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
                                                 `Pr(>|z|)` |>
-                                                  as.numeric() < 0.05 ~ "Sim",
+                                                  readr::parse_number() < 0.05 ~ "Sim",
                                                 .default = "Não")) |>
   dplyr::select(2, 12:15)
 
@@ -459,7 +459,7 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
   rename("Preditor" = rowname) |>
   dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
                                                 `Pr(>|z|)` |>
-                                                  as.numeric() < 0.05 ~ "Sim",
+                                                  readr::parse_number() < 0.05 ~ "Sim",
                                                 .default = "Não")) |>
   dplyr::select(2, 12:15)
 
@@ -569,6 +569,13 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
+  dplyr::mutate(Preditor = paste0(Preditor, " + Temperature"),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
+                                         "Canopy openness + Temperature",
+                                         "Edge distance + Temperature",
+                                         "Elevation + Temperature",
+                                         "Water area + Temperature"))) |>
   dplyr::left_join(sts_rhinella |>
                      dplyr::select(1, 5),
                    by = "Preditor") |>
