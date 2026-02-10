@@ -375,7 +375,8 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                      p_temp,
                                      "<br>pseudo-R² = ",
                                      `pseudo-R²`),
-                rowname = rowname |> stringr::str_remove_all("`")) |>
+                rowname = rowname |> stringr::str_remove_all("`"),
+                rowname = paste0(rowname, " + Temperature")) |>
   rename("Preditor" = rowname) |>
   dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
                                                 `Pr(>|z|)` |>
