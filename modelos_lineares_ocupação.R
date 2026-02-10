@@ -474,9 +474,6 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  dplyr::left_join(sts_pristimantis |>
-                     dplyr::select(1, 5),
-                   by = "Preditor") |>
   dplyr::mutate(Preditor = paste0(Preditor, " + Temperature"),
                 Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth + Temperature",
@@ -484,6 +481,9 @@ df_ocupacao |>
                                          "Edge distance + Temperature",
                                          "Elevation + Temperature",
                                          "Water area + Temperature"))) |>
+  dplyr::left_join(sts_pristimantis |>
+                     dplyr::select(1, 5),
+                   by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
@@ -493,7 +493,7 @@ df_ocupacao |>
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
-                        size = 4.5) +
+                        size = 4.25) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
                 dplyr::filter(Significante == "Sim"),
