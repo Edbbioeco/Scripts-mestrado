@@ -477,12 +477,13 @@ df_ocupacao |>
   dplyr::left_join(sts_pristimantis |>
                      dplyr::select(1, 5),
                    by = "Preditor") |>
-  dplyr::mutate(Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth",
-                                         "Canopy openness",
-                                         "Edge distance",
-                                         "Altitude",
-                                         "Pond area"))) |>
+  dplyr::mutate(Preditor = paste0(Preditor, " + Temperature"),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
+                                         "Canopy openness + Temperature",
+                                         "Edge distance + Temperature",
+                                         "Elevation + Temperature",
+                                         "Water area + Temperature"))) |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
