@@ -343,8 +343,10 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
   dplyr::mutate(Estimate_temp = Estimate |> dplyr::lead(),
-                `Std. Error temp` = `Std. Error` |> dplyr::lead()) |>
-  dplyr::filter(!rowname == "Temperatura") |>
+                `Std. Error temp` = `Std. Error` |> dplyr::lead(),
+                z_temp = `z value` |> dplyr::lead(),
+                p_temp = `Pr(>|z|)` |> dplyr::lead()) |>
+  dplyr::filter(!rowname == "Temperature") |>
   dplyr::mutate(Estimate = Estimate |> round(3),
                 Estimate_temp = Estimate_temp |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
@@ -358,15 +360,19 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                      Estimate,
                                      " ± ",
                                      `Std. Error`,
+                                     "<br>z = ",
+                                     `z value`,
+                                     "<sub>6</sub>, p = ",
+                                     `Pr(>|z|)`,
                                      "<br>β1 ± EP<sub>temperatura</sub> = ",
                                      Estimate_temp,
                                      " ± ",
                                      `Std. Error temp`,
                                      "<br>z = ",
-                                     `z value`,
+                                     z_temp,
                                      "<sub>6</sub>, p = ",
-                                     `Pr(>|z|)`,
-                                     ", pseudo-R² = ",
+                                     p_temp,
+                                     "<br>pseudo-R² = ",
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`")) |>
   rename("Preditor" = rowname) |>
@@ -374,7 +380,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                                 `Pr(>|z|)` |>
                                                   as.numeric() < 0.05 ~ "Sim",
                                                 .default = "Não")) |>
-  dplyr::select(2, 10:13)
+  dplyr::select(2, 13:15)
 
 sts_pristimantis
 
