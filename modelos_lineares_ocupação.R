@@ -439,15 +439,19 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                                      Estimate,
                                      " ± ",
                                      `Std. Error`,
-                                     "<br>β1 ± EP<sub>temperatura</sub> = ",
-                                     Estimate_temp,
-                                     " ± ",
-                                     `Std. Error temp`,
                                      "<br>z = ",
                                      `z value`,
                                      "<sub>6</sub>, p = ",
                                      `Pr(>|z|)`,
-                                     ", pseudo-R² = ",
+                                     "<br>β1 ± EP<sub>temperature</sub> = ",
+                                     Estimate_temp,
+                                     " ± ",
+                                     `Std. Error temp`,
+                                     "<br>z = ",
+                                     z_temp,
+                                     "<sub>6</sub>, p = ",
+                                     p_temp,
+                                     "<br>pseudo-R² = ",
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`")) |>
   rename("Preditor" = rowname) |>
@@ -455,7 +459,7 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                                                 `Pr(>|z|)` |>
                                                   as.numeric() < 0.05 ~ "Sim",
                                                 .default = "Não")) |>
-  dplyr::select(2, 10:13)
+  dplyr::select(2, 13:15)
 
 sts_rhinella
 
