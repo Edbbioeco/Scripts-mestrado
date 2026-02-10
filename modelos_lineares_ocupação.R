@@ -74,7 +74,13 @@ especies_ocup
 
 df_ocupacao <- especies_ocup |>
   dplyr::left_join(ambientais,
-                   by = "Unidade Amostral")
+                   by = "Unidade Amostral") |>
+  dplyr::rename("Pond area" = 5,
+                "Canopy openness" = 6,
+                "Leaf-litter height" = 8,
+                "Temperature" = 9,
+                "Hydric stream distance" = 10,
+                "Edge distance" = 11)
 
 df_ocupacao
 
