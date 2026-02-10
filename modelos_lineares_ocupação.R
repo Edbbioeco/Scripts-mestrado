@@ -521,6 +521,12 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
+  dplyr::mutate(Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Water area"))) |>
   dplyr::left_join(sts_adenomera |>
                      dplyr::select(1, 5),
                    by = "Preditor") |>
