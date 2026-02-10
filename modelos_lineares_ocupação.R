@@ -364,7 +364,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                      `z value`,
                                      "<sub>6</sub>, p = ",
                                      `Pr(>|z|)`,
-                                     "<br>β1 ± EP<sub>temperatura</sub> = ",
+                                     "<br>β1 ± EP<sub>temperature</sub> = ",
                                      Estimate_temp,
                                      " ± ",
                                      `Std. Error temp`,
@@ -422,8 +422,10 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
   dplyr::mutate(Estimate_temp = Estimate |> dplyr::lead(),
-                `Std. Error temp` = `Std. Error` |> dplyr::lead()) |>
-  dplyr::filter(!rowname == "Temperatura") |>
+                `Std. Error temp` = `Std. Error` |> dplyr::lead(),
+                z_temp = `z value` |> dplyr::lead(),
+                p_temp = `Pr(>|z|)` |> dplyr::lead()) |>
+  dplyr::filter(!rowname == "Temperature") |>
   dplyr::mutate(Estimate = Estimate |> round(3),
                 Estimate_temp = Estimate_temp |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
