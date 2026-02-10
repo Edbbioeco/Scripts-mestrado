@@ -75,12 +75,13 @@ especies_ocup
 df_ocupacao <- especies_ocup |>
   dplyr::left_join(ambientais,
                    by = "Unidade Amostral") |>
-  dplyr::rename("Pond area" = 5,
+  dplyr::rename("Water pool area" = 5,
                 "Canopy openness" = 6,
                 "Leaf-litter depth" = 8,
                 "Temperature" = 9,
                 "Hydric stream distance" = 10,
-                "Edge distance" = 11)
+                "Edge distance" = 11,
+                "Elevation" = 12)
 
 df_ocupacao
 
@@ -475,7 +476,11 @@ df_ocupacao |>
                      dplyr::select(1, 5),
                    by = "Preditor") |>
   dplyr::mutate(Preditor = Preditor |>
-                  forcats::fct_relevel(c("Canopy depth"))) |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Altitude",
+                                         "Pond area"))) |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black", stroke = 1,
              size = 3.5, show.legend = FALSE) +
