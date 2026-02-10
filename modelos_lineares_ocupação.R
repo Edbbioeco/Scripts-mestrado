@@ -149,9 +149,9 @@ rodando_modelos_pristimantis <- function(id){
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Modelo = nome,
                   `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                                .default = `Pr(>|z|)` |>
-                                                  round(2) |>
-                                                  as.character())) |>
+                                                .default = paste0("= ",
+                                                                  `Pr(>|z|)` |>
+                                                                    round(2)))) |>
     dplyr::relocate(Modelo, .before = rowname)
 
   assign(paste0("resultados_pristimantis_", nome),
@@ -172,7 +172,7 @@ ls(pattern = "resultados_pristimantis_") |>
 ls(pattern = "resultados_pristimantis_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
-  dplyr::filter(!rowname == "Temperatura")
+  dplyr::filter(!rowname == "Temperature")
 
 ## Adenomera Hylaedactyla ----
 
@@ -230,9 +230,9 @@ rodando_modelos_adenomera <- function(id){
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Modelo = nome,
                   `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                                .default = `Pr(>|z|)` |>
-                                                  round(2) |>
-                                                  as.character())) |>
+                                                .default = paste0("= ",
+                                                                  `Pr(>|z|)` |>
+                                                                    round(2)))) |>
     dplyr::relocate(Modelo, .before = rowname)
 
   assign(paste0("resultados_adenomera_", nome),
@@ -252,8 +252,7 @@ ls(pattern = "resultados_adenomera_") |>
 
 ls(pattern = "resultados_adenomera_") |>
   mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::filter(!rowname == "Temperatura")
+  dplyr::bind_rows()
 
 ## Rhinella hoogmoedi ----
 
@@ -311,9 +310,9 @@ rodando_modelos_rhinella <- function(id){
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Modelo = nome,
                   `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                                .default = `Pr(>|z|)` |>
-                                                  round(2) |>
-                                                  as.character())) |>
+                                                .default = paste0("= ",
+                                                                  `Pr(>|z|)` |>
+                                                                    round(2)))) |>
     dplyr::relocate(Modelo, .before = rowname)
 
   assign(paste0("resultados_rhinella_", nome),
@@ -334,7 +333,7 @@ ls(pattern = "resultados_rhinella_") |>
 ls(pattern = "resultados_rhinella_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
-  dplyr::filter(!rowname == "Temperatura")
+  dplyr::filter(!rowname == "Temperature")
 
 # Estatísticas ----
 
