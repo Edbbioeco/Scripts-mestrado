@@ -31,7 +31,8 @@ calcular_indice <- function(imagens){
   indice_dossel <- raster |>
     coiR::coir_crop(plot = FALSE) |>
     coiR::coir_binarize(plot = FALSE) |>
-    coiR::coir_index(round = 5)
+    coiR::coir_index(threshold = 0.75,
+                     round = 5)
 
   indice <<- c(indice, indice_dossel)
 
@@ -66,9 +67,25 @@ calcular_indice <- function(imagens){
 
   campanha <<- c(campanha, campanha_dossel)
 
+  ponto_dossel <- dplyr::case_when(imagens |>
+                                     stringr::str_detect("P000") ~ "P000",
+                                   imagens |>
+                                     stringr::str_detect("P050") ~ "P050",
+                                   imagens |>
+                                     stringr::str_detect("P100") ~ "P100",
+                                   imagens |>
+                                     stringr::str_detect("P150") ~ "P150",
+                                   imagens |>
+                                     stringr::str_detect("P200") ~ "P200",
+                                   imagens |>
+                                     stringr::str_detect("P250") ~ "P250")
+
+  pontos <<- c(pontos, ponto_dossel)
+
   df_dossel <<- tibble::tibble(Trilha = trilha,
                                Parcela = parcela,
                                Campanha = campanha,
+                               Pontos = pontos,
                                Índice = indice)
 
 }
@@ -80,6 +97,8 @@ trilha <- c()
 parcela <- c()
 
 campanha <- c()
+
+ponto <- c()
 
 purrr::map(.x = imagens,
            .f = calcular_indice)
