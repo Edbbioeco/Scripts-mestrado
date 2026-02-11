@@ -498,8 +498,6 @@ df_ocupacao |>
               method = "glm", show.legend = FALSE, se = FALSE) +
   labs(x = "Predictor value",
        y = "<i>Pristimantis ramagii</i> abundance") +
-  #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue", "orangered")) +
-  #scale_color_manual(values = c("blue", "skyblue4", "darkorange")) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
@@ -545,13 +543,12 @@ df_ocupacao |>
   geom_smooth(data = . %>%
                 dplyr::filter(Significante == "Sim"),
               method = "glm", show.legend = FALSE, se = FALSE) +
-  labs(y = "Abundância") +
-  #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue")) +
-  #scale_color_manual(values = c("green4", "skyblue4")) +
-  scale_y_continuous(limits = c(4, 18)) +
+  labs(x = "Predictor value",
+       y = "<i>Adenomera</i> aff. <i>hylaedactyla</i> abundance") +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
         strip.text = element_text(color = "black", size = 15),
         strip.background = element_rect(color = "black", linewidth = 1),
