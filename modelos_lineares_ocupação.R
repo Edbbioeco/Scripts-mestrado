@@ -531,7 +531,7 @@ df_ocupacao |>
                    by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`)) +
   geom_point(color = "black",
-             size = 4) +
+             size = 3.5) +
   ggtext::geom_richtext(data = sts_adenomera,
                         aes(label = estatistica),
                         color = "black",
