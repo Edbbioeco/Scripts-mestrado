@@ -431,7 +431,7 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 450, 91.6, 300, 5, 7.5),
+                `Valor preditor` = c(0.155, 450, 91.6, 300, 5),
                 `Rhinella hoogmoedi` = 11,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
