@@ -451,7 +451,7 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                                      z_temp,
                                      "<sub>6</sub>, p ",
                                      p_temp,
-                                     "<br>pseudo-R² = ",
+                                     ", pseudo-R² = ",
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`"),
                 rowname = paste0(rowname, " + Temperature")) |>
@@ -484,7 +484,7 @@ df_ocupacao |>
                    by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black",
-             size = 3.5, show.legend = FALSE) +
+             size = 3.5) +
   ggtext::geom_richtext(data = sts_pristimantis,
                         aes(label = estatistica),
                         color = "black",
@@ -517,7 +517,7 @@ ggsave(filename = "modelo_abundancia_pristimantis_multiplo.png",
 ## Adenomera hylaedactyla ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
+  tidyr::pivot_longer(cols = c(6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = Preditor |>
@@ -530,8 +530,8 @@ df_ocupacao |>
                      dplyr::select(1, 5),
                    by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`)) +
-  geom_point(color = "black", stroke = 1,
-             size = 3.5, show.legend = FALSE) +
+  geom_point(color = "black",
+             size = 4) +
   ggtext::geom_richtext(data = sts_adenomera,
                         aes(label = estatistica),
                         color = "black",
