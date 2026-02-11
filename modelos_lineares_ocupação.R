@@ -538,7 +538,7 @@ df_ocupacao |>
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
-                        size = 4.5) +
+                        size = 4) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
                 dplyr::filter(Significante == "Sim"),
@@ -565,7 +565,7 @@ ggsave(filename = "modelo_abundancia_adenomera_multiplo.png",
 ## Rhinella hoogmoedi ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
+  tidyr::pivot_longer(cols = c(6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = paste0(Preditor, " + Temperature"),
@@ -579,8 +579,8 @@ df_ocupacao |>
                      dplyr::select(1, 5),
                    by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`)) +
-  geom_point(color = "black", stroke = 1,
-             size = 3.5, show.legend = FALSE) +
+  geom_point(color = "black",
+             size = 3.5) +
   ggtext::geom_richtext(data = sts_rhinella,
                         aes(label = estatistica),
                         color = "black",
