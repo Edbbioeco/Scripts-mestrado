@@ -75,8 +75,7 @@ especies_ocup
 df_ocupacao <- especies_ocup |>
   dplyr::left_join(ambientais,
                    by = "Unidade Amostral") |>
-  dplyr::rename("Water pool area" = 5,
-                "Canopy openness" = 6,
+  dplyr::rename("Canopy openness" = 6,
                 "Leaf-litter depth" = 8,
                 "Temperature" = 9,
                 "Hydric stream distance" = 10,
@@ -88,7 +87,7 @@ df_ocupacao
 df_ocupacao |> glimpse()
 
 df_ocupacao |>
-  dplyr::select(c(5, 6, 8, 10:12)) |>
+  dplyr::select(c(6, 8, 10:12)) |>
   glimpse()
 
 # Modelos lineares ----
