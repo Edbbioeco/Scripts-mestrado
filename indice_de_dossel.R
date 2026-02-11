@@ -30,9 +30,9 @@ calcular_indice <- function(imagens){
 
   indice_dossel <- raster |>
     coiR::coir_crop(plot = FALSE) |>
-    coiR::coir_binarize(plot = FALSE) |>
-    coiR::coir_index(threshold = 0.75,
-                     round = 5)
+    coiR::coir_binarize(threshold = 0.75,
+                        plot = FALSE) |>
+    coiR::coir_index(round = 5)
 
   indice <<- c(indice, indice_dossel)
 
