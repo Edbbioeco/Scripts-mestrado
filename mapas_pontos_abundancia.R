@@ -240,17 +240,30 @@ ggsave(filename = "mapa_especies_abundancia.png", height = 10, width = 12)
 
 ## Versão com pontos com tamanhos diferentes ----
 
-abundancia_coord |>
+### Criando um data frame prévio ----
+
+df_pontos_abu <- abundancia_coord |>
   dplyr::filter(Espécie %in% c("Pristimantis ramagii",
                                "Adenomera hylaedactyla",
                                "Rhinella hoogmoedi")) |>
-  dplyr::mutate(Espécie = dplyr::case_when(Espécie == "Pristimantis ramagii" ~ "<i>Pristimantis ramagii</i>",
-                                           Espécie == "Adenomera hylaedactyla" ~ "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
-                                           Espécie == "Rhinella hoogmoedi" ~ "<i>Rhinella hoogmoedi</i>"),
-                Espécie = Espécie |>
-                  forcats::fct_relevel(c("<i>Pristimantis ramagii</i>",
-                                         "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
-                                         "<i>Rhinella hoogmoedi</i>"))) |>
+  dplyr::mutate(Espécie = dplyr::case_when(Espécie == "Adenomera hylaedactyla" ~ "Adenomera aff. hylaedactyla",
+                                           .default = Espécie),
+                Espécie = paste0("<i>", Espécie, "</i>"),
+                Espécie = dplyr::if_else(Espécie |> stringr::str_detect("aff.|gr.|cf.|aff|gr|cf"),
+                                         Espécie |>
+                                           stringr::str_replace_all(c(" aff " = "</i> aff. <i>",
+                                                                      " aff. " = "</i> aff. <i>",
+                                                                      " gr " = "</i> gr. <i>",
+                                                                      " gr. " = "</i> gr. <i>",
+                                                                      " cf " = "</i> cf. <i>",
+                                                                      " cf. " = "</i> cf. <i>")),
+                                         Espécie))
+
+df_pontos_abu
+
+### Gráfico ----
+
+df_pontos_abu |>
   ggplot() +
   tidyterra::geom_spatraster(data = alt) +
   tidyterra::scale_fill_whitebox_c(palette = "arid",
