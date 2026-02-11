@@ -545,6 +545,7 @@ df_ocupacao |>
               method = "glm", show.legend = FALSE, se = FALSE) +
   labs(x = "Predictor value",
        y = "<i>Adenomera</i> aff. <i>hylaedactyla</i> abundance") +
+  scale_y_continuous(limits = c(5, 17.5)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
