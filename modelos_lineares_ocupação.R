@@ -159,7 +159,7 @@ rodando_modelos_pristimantis <- function(id){
 
 }
 
-purrr::walk(c(5, 6, 8, 10:12), rodando_modelos_pristimantis)
+purrr::walk(c(6, 8, 10:12), rodando_modelos_pristimantis)
 
 ls(pattern = "modelo_pristimantis_") |>
   mget(envir = globalenv())
@@ -240,7 +240,7 @@ rodando_modelos_adenomera <- function(id){
 
 }
 
-purrr::walk(c(5, 6, 8, 10:12), rodando_modelos_adenomera)
+purrr::walk(c(6, 8, 10:12), rodando_modelos_adenomera)
 
 ls(pattern = "modelo_adenomera_") |>
   mget(envir = globalenv())
@@ -320,7 +320,7 @@ rodando_modelos_rhinella <- function(id){
 
 }
 
-purrr::walk(c(5, 6, 8, 10:12), rodando_modelos_rhinella)
+purrr::walk(c(6, 8, 10:12), rodando_modelos_rhinella)
 
 ls(pattern = "modelo_rhinella_") |>
   mget(envir = globalenv())
