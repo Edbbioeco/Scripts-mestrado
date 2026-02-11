@@ -371,7 +371,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                      z_temp,
                                      "<sub>6</sub>, p ",
                                      p_temp,
-                                     "<br>pseudo-R² = ",
+                                     ", pseudo-R² = ",
                                      `pseudo-R²`),
                 rowname = rowname |> stringr::str_remove_all("`"),
                 rowname = paste0(rowname, " + Temperature")) |>
@@ -494,7 +494,7 @@ df_ocupacao |>
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
-                        size = 4.25) +
+                        size = 4) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
                 dplyr::filter(Significante == "Sim"),
