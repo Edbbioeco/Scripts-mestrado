@@ -483,7 +483,10 @@ df_ocupacao |>
                      dplyr::select(1, 5),
                    by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
-  geom_point(color = "black", stroke = 1,
+  geom_point(color = "black",
+             shape = 21,
+             fill = "gray",
+             stroke = 1,
              size = 3.5, show.legend = FALSE) +
   ggtext::geom_richtext(data = sts_pristimantis,
                         aes(label = estatistica),
