@@ -592,13 +592,12 @@ df_ocupacao |>
   geom_smooth(data = . %>%
                 dplyr::filter(Significante == "Sim"),
               method = "glm", family = poisson, show.legend = FALSE, se = FALSE) +
-  #scale_fill_manual(values = c("green2", "gold", "orange2", "royalblue", "skyblue", "orangered")) +
-  #scale_color_manual(values = c("darkgreen","gold4")) +
-  labs(y = "Abundância") +
-  scale_y_continuous(limits = c(1, 12)) +
+  labs(x = "Predictor value",
+       y = "<i>Rhinella hoogmoedi</i> abundance") +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
         strip.text = element_text(color = "black", size = 15),
         strip.background = element_rect(color = "black", linewidth = 1),
