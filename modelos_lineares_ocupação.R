@@ -469,7 +469,7 @@ sts_rhinella
 ## Pstimantis ramagii ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(5, 6, 8, 10:12),
+  tidyr::pivot_longer(cols = c(6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = paste0(Preditor, " + Temperature"),
