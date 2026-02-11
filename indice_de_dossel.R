@@ -80,12 +80,12 @@ calcular_indice <- function(imagens){
                                    imagens |>
                                      stringr::str_detect("P250") ~ "P250")
 
-  pontos <<- c(pontos, ponto_dossel)
+  ponto <<- c(ponto, ponto_dossel)
 
   df_dossel <<- tibble::tibble(Trilha = trilha,
                                Parcela = parcela,
                                Campanha = campanha,
-                               Pontos = pontos,
+                               Pontos = ponto,
                                Índice = indice)
 
 }
@@ -107,6 +107,13 @@ purrr::map(.x = imagens,
 
 df_dossel |> as.data.frame()
 
+## Histograma ----
+
+df_dossel |>
+  ggplot(aes(Índice)) +
+  geom_histogram(color = "black", binwidth = 0.0075)
+
 # Exportando os dados ----
 
-df_dossel |> writexl::write_xlsx("dados_indice_dossel_coir.xlsx")
+df_dossel |>
+  writexl::write_xlsx("dados_indice_dossel_coir.xlsx")
