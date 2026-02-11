@@ -392,7 +392,7 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
   dplyr::mutate(Estimate = Estimate |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 450, 91.6, 300, 5, 7.5),
+                `Valor preditor` = c(0.155, 450, 91.6, 300, 5),
                 `Adenomera hylaedactyla` = 17,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
