@@ -257,7 +257,11 @@ df_pontos_abu <- abundancia_coord |>
                                                                       " gr. " = "</i> gr. <i>",
                                                                       " cf " = "</i> cf. <i>",
                                                                       " cf. " = "</i> cf. <i>")),
-                                         Espécie))
+                                         Espécie),
+                Espécie = Espécie |>
+                  forcats::fct_relevel(c("<i>Pristimantis ramagii</i>",
+                                         "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
+                                         "<i>Rhinella hoogmoedi</i>")))
 
 df_pontos_abu
 
