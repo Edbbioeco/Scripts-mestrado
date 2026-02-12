@@ -187,10 +187,10 @@ mapa_paralelo <- ggplot(data = br) +
   tidyterra::geom_spatraster_rgb(data = saltinho_rast) +
   scale_x_continuous(limits = c(-74, -30)) +
   ggmagnify::geom_magnify(from = c(-35.20319, -35.15696, -8.744113, -8.710025),
-                          to = c(-41,
-                                 (-41 + 0.04623 * 200),
-                                 -5,
-                                 (-5 + 0.034088 * 200)),
+                          to = c(-37,
+                                 (-37 + 0.04623 * 200),
+                                 -17,
+                                 (-17 + 0.034088 * 200)),
                           linewidth = 1,
                           shadow = TRUE,
                           colour = "darkred",
