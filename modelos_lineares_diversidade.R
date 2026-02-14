@@ -137,14 +137,12 @@ matriz_altitude
 
 ### Criando o dataframe ----
 
-df_beta <- tibble::tibble(Composição = matriz_comp,
-                          `Abertura de dossel` = matriz_dossel,
-                          `Área de Poças` = matriz_pocas,
-                          `Altura da Serrapilheira` = matriz_serrapilheira,
-                          `Distância dos corpos hidricos` = matriz_distancia,
-                          Temperatura = matriz_temperatura,
-                          `Distância da borda` = matriz_borda,
-                          `Altitude` = matriz_altitude)
+df_beta <- tibble::tibble(Composition = matriz_comp,
+                          `Canopy openness` = matriz_dossel,
+                          `Leaf-litter depth` = matriz_serrapilheira,
+                          `Hydric stream distance` = matriz_distancia,
+                          `Edge distance` = matriz_borda,
+                          `Elevation` = matriz_altitude)
 
 df_beta
 
