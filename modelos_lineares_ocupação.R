@@ -435,18 +435,18 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
   dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
                                                 `Pr(>|z|)` |>
                                                   as.numeric() < 0.05 ~ "Sim",
-                                                .default = "Não"),
-                Preditor = Preditor |>
+                                                .default = "Não")) |>
+  dplyr::select(2, 8:10) |>
+  dplyr::left_join(medianas |>
+                     dplyr::mutate(Preditor = Preditor |>
+                                     stringr::str_remove(" \\+ Temperature")),
+                   by = "Preditor") |>
+  dplyr::mutate(Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Water area"))) |>
-  dplyr::select(2, 8:10) |>
-  dplyr::left_join(medianas |>
-                     dplyr::mutate(Preditor = Preditor |>
-                                     stringr::str_remove(" + Temperature")),
-                   by = "Preditor")
+                                         "Water area")))
 
 sts_adenomera
 
@@ -565,9 +565,9 @@ df_ocupacao |>
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Water area"))) |>
+                                         "Hydric stream distance"))) |>
   dplyr::left_join(sts_adenomera |>
-                     dplyr::select(1, 5),
+                     dplyr::select(1, 4),
                    by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`)) +
   geom_point(color = "black",
