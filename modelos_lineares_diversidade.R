@@ -72,8 +72,8 @@ df_alfa <- div_alfa |>
   dplyr::rename("Canopy openness" = `Abertura do dossel`,
                 "Edge distance" = `Distância da Borda`,
                 "Elevation" = Altitude,
-                "Hydric stream" = `Distância dos corpos hídricos`,
-                "leaf-litter depth" = `Altura da serrapilheira`)
+                "Hydric stream distance" = `Distância dos corpos hídricos`,
+                "Leaf-litter depth" = `Altura da serrapilheira`)
 
 df_alfa
 
@@ -238,34 +238,6 @@ ls(pattern = "resultados_alfa_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
 
-#### Tabela ----
-
-##### Dataframe da tabelas ----
-
-ls(pattern = "resultados_alfa_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows()
-
-df_flex1 <- ls(pattern = "resultados_alfa_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::rename("Preditor" = 1) |>
-  dplyr::mutate(Estimate = Estimate |> round(4),
-                `Std. Error` = `Std. Error` |> round(4),
-                `t value` = `t value` |> round(3),
-                `Pr(>|t|)` = `Pr(>|t|)` |> round(2)) |>
-  dplyr::relocate(Preditor, .before = Estimate) |>
-  dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
-  dplyr::rename("β1" = Estimate,
-                "EP" = `Std. Error`,
-                "t" = `t value`,
-                "p" = `Pr(>|t|)`) |>
-  tidyr::unite(β1:EP,
-               sep = " ± ",
-               col = "β1 ± EP")
-
-df_flex1
-
 ## Dataframe de estatísticas usadas no gráfico ----
 
 ### Valor medano das variáveis ----
@@ -275,9 +247,14 @@ medias_alfa <- df_alfa |>
   tidyr::pivot_longer(cols = dplyr::everything(),
                       names_to = "Preditor",
                       values_to = "Valor") |>
-  dplyr::arrange(Preditor |> forcats::fct_relevel(df_flex1$Preditor)) |>
   dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
-                   .by = Preditor)
+                   .by = Preditor) |>
+  dplyr::mutate(Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance")))
 
 medias_alfa
 
@@ -316,7 +293,13 @@ df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
                                      ", p = ",
                                      `p global`,
                                      ", R² aju. = ",
-                                     `R² ajustado`)) |>
+                                     `R² ajustado`),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance"))) |>
   dplyr::select(-c(2:9)) |>
   dplyr::left_join(medias_alfa,
                    by = "Preditor")
@@ -326,12 +309,16 @@ df_q1_estatisticas
 ### Gráfico -----
 
 df_alfa |>
-  tidyr::pivot_longer(cols = c(3, 4, 6, 8, 10),
+  tidyr::pivot_longer(cols = c(4, 6, 8:10),
                       names_to = "Preditor",
                       values_to = "Valor Preditor") |>
   dplyr::mutate(Preditor = Preditor |>
-                  stringr::str_replace("hidrico", "hídrico")) |>
-  ggplot(aes(`Valor Preditor`,`Q = 1`,  fill = Preditor)) +
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance"))) |>
+  ggplot(aes(`Valor Preditor`,`Q = 1`)) +
   geom_point(color = "black",
              size = 3.5,
              stroke = 1) +
@@ -343,7 +330,6 @@ df_alfa |>
                         label.colour = "transparent",
                         fill = "transparent",
                         size = 4.75) +
-  #scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
   labs(title = "t-crítico = 1.83, F-crítico = 5.12") +
   scale_y_continuous(limits = c(2.5, 4.45)) +
   theme_bw() +
