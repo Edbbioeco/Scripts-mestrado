@@ -358,13 +358,19 @@ ggsave(filename = "grafico_pontos_q1.png", height = 10, width = 12)
 
 ## Diversidade beta -----
 
+### Multicolinearidade ----
+
+df_beta |>
+  dplyr::select(2:6) |>
+  cor(method = "spearman")
+
 ### Criando o modelo ----
 
-modelo_beta <- glmmTMB::glmmTMB(Composição ~ `Abertura de dossel` +
-                                  `Área de Poças` +
-                                  `Altura da Serrapilheira` +
-                                  `Distância dos corpos hidricos` +
-                                  Altitude,
+modelo_beta <- glmmTMB::glmmTMB(Composition ~ `Leaf-litter depth` +
+                                  `Canopy openness` +
+                                  `Edge distance` +
+                                  `Elevation` +
+                                  `Hydric stream distance`,
                                 data = df_beta,
                                 family = glmmTMB::beta_family())
 
@@ -372,12 +378,6 @@ modelo_beta <- glmmTMB::glmmTMB(Composição ~ `Abertura de dossel` +
 
 modelo_beta |>
   DHARMa::simulateResiduals(plot = TRUE)
-
-modelo_beta |>
-  performance::check_model(check = c("vif",
-                                     "qq",
-                                     "normality",
-                                     "homogeneity"))
 
 ### Avaliando o modelo ----
 
