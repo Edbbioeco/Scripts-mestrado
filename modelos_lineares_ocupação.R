@@ -379,7 +379,13 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
   dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
                                                 `Pr(>|z|)` |>
                                                   readr::parse_number() < 0.05 ~ "Sim",
-                                                .default = "Não")) |>
+                                                .default = "Não"),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
+                                         "Canopy openness + Temperature",
+                                         "Edge distance + Temperature",
+                                         "Elevation + Temperature",
+                                         "Water area + Temperature"))) |>
   dplyr::select(2, 12:15)
 
 sts_pristimantis
