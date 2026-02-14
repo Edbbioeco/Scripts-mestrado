@@ -271,15 +271,15 @@ df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
   dplyr::relocate(Preditor, .before = Estimate) |>
   dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
   dplyr::rename("β1" = Estimate,
-                "EP" = `Std. Error`,
+                "SE" = `Std. Error`,
                 "t" = `t value`,
                 "p" = `Pr(>|t|)`) |>
-  tidyr::unite(β1:EP,
+  tidyr::unite(β1:SE,
                sep = " ± ",
-               col = "β1 ± EP") |>
+               col = "β1 ± SE") |>
   dplyr::mutate(`Q = 1` = 4.3,
-                estatistica = paste0("β1 ± EP = ",
-                                     `β1 ± EP`,
+                estatistica = paste0("β1 ± SE = ",
+                                     `β1 ± SE`,
                                      "<br>t = ",
                                      t,
                                      ", p = ",
