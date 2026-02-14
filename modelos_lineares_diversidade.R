@@ -390,18 +390,33 @@ modelo_beta |> performance::r2_ferrari()
 
 ### Dataframe de estatísticas usadas no gráfico ----
 
+#### Valor medano das variáveis ----
+
+medias_beta <- df_beta |>
+  dplyr::select(2:6) |>
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "Preditor",
+                      values_to = "Valor") |>
+  dplyr::mutate(Preditor = Preditor |> stringr::str_replace_all("hidricos",
+                                                                "hídricos")) |>
+  dplyr::arrange(Preditor |> forcats::fct_relevel(df_flexbeta_trat$Preditor)) |>
+  dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
+                   .by = Preditor)
+
+medias_beta
+
 #### Dataframe da tabelas ----
 
-df_flexbeta <- modelo_beta |>
+df_sts <- modelo_beta |>
   summary() %>%
   .$coefficients  %>%
   .$cond
 
-nomes_var <- df_flexbeta |> rownames()
+nomes_var <- df_sts |> rownames()
 
 nomes_var
 
-df_flexbeta_trat <- df_flexbeta |>
+df_sts_trat <- df_sts |>
   tibble::as_tibble() |>
   dplyr::mutate(Preditor = nomes_var |>
                   stringr::str_remove_all("`") |>
@@ -435,22 +450,7 @@ df_flexbeta_trat <- df_flexbeta |>
   dplyr::left_join(medias_beta,
                    by = "Preditor")
 
-df_flexbeta_trat
-
-#### Valor medano das variáveis ----
-
-medias_beta <- df_beta |>
-  dplyr::select(2:5, 8) |>
-  tidyr::pivot_longer(cols = dplyr::everything(),
-                      names_to = "Preditor",
-                      values_to = "Valor") |>
-  dplyr::mutate(Preditor = Preditor |> stringr::str_replace_all("hidricos",
-                                                                "hídricos")) |>
-  dplyr::arrange(Preditor |> forcats::fct_relevel(df_flexbeta_trat$Preditor)) |>
-  dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
-                   .by = Preditor)
-
-medias_beta
+df_sts_trat
 
 #### Gráfico ----
 
