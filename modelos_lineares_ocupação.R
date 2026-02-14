@@ -465,7 +465,6 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 450, 91.6, 300, 5),
                 `Rhinella hoogmoedi` = 11,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -500,7 +499,9 @@ sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
                                          "Edge distance + Temperature",
                                          "Elevation + Temperature",
                                          "Water area + Temperature"))) |>
-  dplyr::select(2, 12:15)
+  dplyr::select(2, 12:14) |>
+  dplyr::left_join(medianas,
+                   by = "Preditor")
 
 sts_rhinella
 
@@ -614,9 +615,9 @@ df_ocupacao |>
                                          "Canopy openness + Temperature",
                                          "Edge distance + Temperature",
                                          "Elevation + Temperature",
-                                         "Water area + Temperature"))) |>
+                                         "Hydric stream distance + Temperature"))) |>
   dplyr::left_join(sts_rhinella |>
-                     dplyr::select(1, 5),
+                     dplyr::select(1, 4),
                    by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`)) +
   geom_point(color = "black",
