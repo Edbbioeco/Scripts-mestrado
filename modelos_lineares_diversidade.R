@@ -68,7 +68,12 @@ div_alfa
 
 df_alfa <- div_alfa |>
   dplyr::left_join(ambientais,
-                   by = "Unidade Amostral")
+                   by = "Unidade Amostral") |>
+  dplyr::rename("Canopy openness" = `Abertura do dossel`,
+                "Edge distance" = `Distância da Borda`,
+                "Elevation" = Altitude,
+                "Hydric stream" = `Distância dos corpos hídricos`,
+                "leaf-litter depth" = `Altura da serrapilheira`)
 
 df_alfa
 
