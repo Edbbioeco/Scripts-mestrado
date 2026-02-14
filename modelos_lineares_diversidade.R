@@ -238,6 +238,34 @@ ls(pattern = "resultados_alfa_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
 
+#### Tabela ----
+
+##### Dataframe da tabelas ----
+
+ls(pattern = "resultados_alfa_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows()
+
+df_flex1 <- ls(pattern = "resultados_alfa_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows() |>
+  dplyr::rename("Preditor" = 1) |>
+  dplyr::mutate(Estimate = Estimate |> round(4),
+                `Std. Error` = `Std. Error` |> round(4),
+                `t value` = `t value` |> round(3),
+                `Pr(>|t|)` = `Pr(>|t|)` |> round(2)) |>
+  dplyr::relocate(Preditor, .before = Estimate) |>
+  dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
+  dplyr::rename("β1" = Estimate,
+                "EP" = `Std. Error`,
+                "t" = `t value`,
+                "p" = `Pr(>|t|)`) |>
+  tidyr::unite(β1:EP,
+               sep = " ± ",
+               col = "β1 ± EP")
+
+df_flex1
+
 ## Dataframe de estatísticas usadas no gráfico ----
 
 ### Valor medano das variáveis ----
@@ -255,7 +283,23 @@ medias_alfa
 
 ### Dataframe ----
 
-df_q1_estatisticas <- df_flex1 |>
+df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows() |>
+  dplyr::rename("Preditor" = 1) |>
+  dplyr::mutate(Estimate = Estimate |> round(4),
+                `Std. Error` = `Std. Error` |> round(4),
+                `t value` = `t value` |> round(3),
+                `Pr(>|t|)` = `Pr(>|t|)` |> round(2)) |>
+  dplyr::relocate(Preditor, .before = Estimate) |>
+  dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
+  dplyr::rename("β1" = Estimate,
+                "EP" = `Std. Error`,
+                "t" = `t value`,
+                "p" = `Pr(>|t|)`) |>
+  tidyr::unite(β1:EP,
+               sep = " ± ",
+               col = "β1 ± EP") |>
   dplyr::mutate(`Q = 1` = 4.3,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
