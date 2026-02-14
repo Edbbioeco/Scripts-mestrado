@@ -150,12 +150,6 @@ df_beta |> dplyr::glimpse()
 
 # Modelos lineares ----
 
-## Multicolinearidade ----
-
-df_alfa |>
-  dplyr::select(3, 4, 6, 8, 10) |>
-  cor(method = "spearman")
-
 ## Diversidade alfa ----
 
 ### Múltiplos modelos ----
