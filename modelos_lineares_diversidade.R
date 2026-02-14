@@ -390,7 +390,11 @@ modelo_beta |>
 
 ### Pseudo-R² ----
 
-modelo_beta |> performance::r2_ferrari()
+r2_beta <- modelo_beta |> performance::r2_ferrari() |>
+  as.numeric() |>
+  round(2)
+
+r2_beta
 
 ### Dataframe de estatísticas usadas no gráfico ----
 
@@ -502,7 +506,7 @@ df_beta |>
   scale_y_continuous(limits = c(0.1, 0.5325)) +
   labs(x = "Predictor distance",
        y = "Composition distance",
-       title = "z-critic = 1.96, adjusted pseudo-R² = 0.20") +
+       title = paste0("z-critic = 1.96, adjusted pseudo-R² = ", r2_beta)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 20),
         axis.title = element_text(color = "black", size = 25),
