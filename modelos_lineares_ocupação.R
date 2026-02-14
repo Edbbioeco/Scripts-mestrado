@@ -350,7 +350,7 @@ medianas <- df_ocupacao |>
                                          "Canopy openness + Temperature",
                                          "Edge distance + Temperature",
                                          "Elevation + Temperature",
-                                         "Water area + Temperature")))
+                                         "Hydric stream distance + Temperature")))
 
 medianas
 
@@ -417,7 +417,6 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
   dplyr::mutate(Estimate = Estimate |> round(3),
                 `Std. Error` = `Std. Error` |> round(4),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 450, 91.6, 300, 5),
                 `Adenomera hylaedactyla` = 17,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -438,12 +437,16 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
                                                   as.numeric() < 0.05 ~ "Sim",
                                                 .default = "Não"),
                 Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
-                                         "Canopy openness + Temperature",
-                                         "Edge distance + Temperature",
-                                         "Elevation + Temperature",
-                                         "Water area + Temperature"))) |>
-  dplyr::select(2, 8:11)
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Water area"))) |>
+  dplyr::select(2, 8:10) |>
+  dplyr::left_join(medianas |>
+                     dplyr::mutate(Preditor = Preditor |>
+                                     stringr::str_remove(" + Temperature")),
+                   by = "Preditor")
 
 sts_adenomera
 
