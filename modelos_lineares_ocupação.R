@@ -369,7 +369,6 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `Std. Error temp` = `Std. Error temp` |> round(4),
                 `z value` = `z value` |> round(2),
-                `Valor preditor` = c(0.155, 450, 91.6, 300, 5),
                 `Pristimantis ramagii` = 29,
                 estatistica = paste0("β1 ± EP<sub>",
                                      rowname,
@@ -404,7 +403,9 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                          "Edge distance + Temperature",
                                          "Elevation + Temperature",
                                          "Water area + Temperature"))) |>
-  dplyr::select(2, 12:15)
+  dplyr::select(2, 12:14) |>
+  dplyr::left_join(medianas,
+                   by = "Preditor")
 
 sts_pristimantis
 
