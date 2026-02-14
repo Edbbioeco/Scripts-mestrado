@@ -336,6 +336,24 @@ ls(pattern = "resultados_rhinella_") |>
 
 # Estatísticas ----
 
+## Medianas dos preditores ----
+
+medianas <- df_ocupacao |>
+  tidyr::pivot_longer(cols = c(6, 8, 10:12),
+                      names_to = "Preditor",
+                      values_to = "Valor preditor") |>
+  dplyr::mutate(Preditor = paste0(Preditor, " + Temperature"),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
+                                         "Canopy openness + Temperature",
+                                         "Edge distance + Temperature",
+                                         "Elevation + Temperature",
+                                         "Water area + Temperature"))) |>
+  dplyr::summarise(`Valor preditor` = `Valor preditor` |> median(),
+                   .by = Preditor)
+
+medianas
+
 ## Pristimantis ramagii ----
 
 sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
