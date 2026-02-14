@@ -271,7 +271,7 @@ df_flex1
 ### Valor medano das variáveis ----
 
 medias_alfa <- df_alfa |>
-  dplyr::select(3:4, 6, 8, 10) |>
+  dplyr::select(4, 6, 8:10) |>
   tidyr::pivot_longer(cols = dplyr::everything(),
                       names_to = "Preditor",
                       values_to = "Valor") |>
