@@ -299,7 +299,9 @@ df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Hydric stream distance"))) |>
+                                         "Hydric stream distance")),
+                significante = dplyr::case_when(`p global` < 0.05 ~ "Sim",
+                                               .default = "Não")) |>
   dplyr::select(-c(2:9)) |>
   dplyr::left_join(medias_alfa,
                    by = "Preditor")
@@ -318,6 +320,9 @@ df_alfa |>
                                          "Edge distance",
                                          "Elevation",
                                          "Hydric stream distance"))) |>
+  dplyr::left_join(df_q1_estatisticas |>
+                     dplyr::select(1, 4),
+                   by = "Preditor") |>
   ggplot(aes(`Valor Preditor`,`Q = 1`)) +
   geom_point(color = "black",
              size = 3.5,
@@ -330,6 +335,10 @@ df_alfa |>
                         label.colour = "transparent",
                         fill = "transparent",
                         size = 4.75) +
+  geom_smooth(data = . %>%
+                dplyr::filter(significante == "Sim"),
+              method = "lm",
+              se = FALSE) +
   labs(title = "t-crítico = 1.83, F-crítico = 5.12") +
   scale_y_continuous(limits = c(2.5, 4.45)) +
   theme_bw() +
