@@ -339,7 +339,9 @@ df_alfa |>
                 dplyr::filter(significante == "Sim"),
               method = "lm",
               se = FALSE) +
-  labs(title = "t-crítico = 1.83, F-crítico = 5.12") +
+  labs(title = "t-crítico = 1.83, F-crítico = 5.12",
+       x = "Predictor value",
+       y = "Diversity (Q = 1)") +
   scale_y_continuous(limits = c(2.5, 4.45)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 20),
@@ -355,12 +357,6 @@ df_alfa |>
 ggsave(filename = "grafico_pontos_q1.png", height = 10, width = 12)
 
 ## Diversidade beta -----
-
-### Multicolinearidade ----
-
-df_beta |>
-  dplyr::select(2:5, 8) |>
-  cor(method = "spearman")
 
 ### Criando o modelo ----
 
