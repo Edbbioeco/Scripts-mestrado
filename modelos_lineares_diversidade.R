@@ -93,13 +93,6 @@ matriz_comp
 
 ### Matrizes ambientais ----
 
-matriz_pocas <- ambientais |>
-  dplyr::select(`Área das poças`) |>
-  vegan::vegdist(method = "euclidean") |>
-  as.numeric()
-
-matriz_pocas
-
 matriz_dossel <- ambientais |>
   dplyr::select(`Abertura do dossel`) |>
   vegan::vegdist(method = "euclidean") |>
