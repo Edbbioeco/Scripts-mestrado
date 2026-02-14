@@ -417,7 +417,13 @@ sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
   dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
                                                 `Pr(>|z|)` |>
                                                   as.numeric() < 0.05 ~ "Sim",
-                                                .default = "Não")) |>
+                                                .default = "Não"),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
+                                         "Canopy openness + Temperature",
+                                         "Edge distance + Temperature",
+                                         "Elevation + Temperature",
+                                         "Water area + Temperature"))) |>
   dplyr::select(2, 8:11)
 
 sts_adenomera
