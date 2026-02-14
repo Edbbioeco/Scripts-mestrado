@@ -236,12 +236,12 @@ ls(pattern = "resultados_alfa_") |>
 
 #### Valor medano das variáveis ----
 
-medias_alfa <- df_alfa |>
+medianas_alfa <- df_alfa |>
   dplyr::select(4, 6, 8:10) |>
   tidyr::pivot_longer(cols = dplyr::everything(),
                       names_to = "Preditor",
-                      values_to = "Valor") |>
-  dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
+                      values_to = "Valor preditor") |>
+  dplyr::summarise(`Valor Preditor` = `Valor preditor` |> range() |> mean(),
                    .by = Preditor) |>
   dplyr::mutate(Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
@@ -250,7 +250,7 @@ medias_alfa <- df_alfa |>
                                          "Elevation",
                                          "Hydric stream distance")))
 
-medias_alfa
+medianas_alfa
 
 #### Dataframe ----
 
@@ -297,7 +297,7 @@ df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
                 significante = dplyr::case_when(`p global` < 0.05 ~ "Sim",
                                                .default = "Não")) |>
   dplyr::select(-c(2:9)) |>
-  dplyr::left_join(medias_alfa,
+  dplyr::left_join(medianas_alfa,
                    by = "Preditor")
 
 df_q1_estatisticas
@@ -400,11 +400,11 @@ r2_beta
 
 #### Valor medano das variáveis ----
 
-medias_beta <- df_beta |>
+medianas_beta <- df_beta |>
   dplyr::select(2:6) |>
   tidyr::pivot_longer(cols = dplyr::everything(),
                       names_to = "Preditor",
-                      values_to = "Valor") |>
+                      values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
@@ -412,10 +412,10 @@ medias_beta <- df_beta |>
                                          "Elevation",
                                          "Hydric stream distance"))) |>
   dplyr::arrange(Preditor |> forcats::fct_relevel(df_flexbeta_trat$Preditor)) |>
-  dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
+  dplyr::summarise(`Valor Preditor` = `Valor preditor` |> range() |> mean(),
                    .by = Preditor)
 
-medias_beta
+medianas_beta
 
 #### Dataframe da tabelas ----
 
@@ -467,7 +467,7 @@ df_sts_trat <- df_sts |>
                                          "Elevation",
                                          "Hydric stream distance"))) |>
   dplyr::select(-c(2:5)) |>
-  dplyr::left_join(medias_beta,
+  dplyr::left_join(medianas_beta,
                    by = "Preditor")
 
 df_sts_trat
