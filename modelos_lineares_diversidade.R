@@ -165,10 +165,9 @@ modelos_diversidade <- function(id){
     crayon::green() |>
     message()
 
-  df_trat <<- df_alfa |> dplyr::select(2, id)
-
   modelo <- lm(`Q = 1` ~ .,
-               data = df_trat)
+               data = df_alfa |>
+                 dplyr::select(2, id))
 
   nome <- df_alfa[, id] |>
     names() |>
@@ -230,7 +229,7 @@ modelos_diversidade <- function(id){
 
 }
 
-purrr::walk(c(3, 4, 6, 8, 10), modelos_diversidade)
+purrr::walk(c(4, 6, 8:10), modelos_diversidade)
 
 ls(pattern = "modelo_alfa_") |>
   mget(envir = globalenv())
@@ -238,84 +237,6 @@ ls(pattern = "modelo_alfa_") |>
 ls(pattern = "resultados_alfa_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
-
-### Modelo múltiplo ----
-
-#### Criando o modelo ----
-
-modelo_q1 <- lm(`Q = 1` ~ .,
-                data = df_alfa |>
-                   dplyr::select(2:4, 6, 8, 10))
-
-#### Pressupostos do modelo ----
-
-modelo_q1 |> performance::check_heteroscedasticity()
-
-modelo_q1 |> performance::check_normality()
-
-modelo_q1 |> performance::check_model(check = c("vif",
-                                                "qq",
-                                                "normality",
-                                                "homogeneity"))
-
-#### Avaliando o modelo ----
-
-modelo_q1 |> summary()
-
-qt(p = 0.05, df = 6, lower.tail = FALSE)
-
-qf(p = 0.05, df1 = 4, df2 = 6, lower.tail = FALSE)
-
-#### Pseudo-R² ----
-
-modelo_q1 |> rsq::rsq()
-
-modelo_q1 |> rsq::rsq(adj = TRUE)
-
-#### Tabela ----
-
-##### Dataframe da tabelas ----
-
-ls(pattern = "resultados_alfa_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows()
-
-df_flex1 <- ls(pattern = "resultados_alfa_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::rename("Preditor" = 1) |>
-  dplyr::mutate(Estimate = Estimate |> round(4),
-                `Std. Error` = `Std. Error` |> round(4),
-                `t value` = `t value` |> round(3),
-                `Pr(>|t|)` = `Pr(>|t|)` |> round(2)) |>
-  dplyr::relocate(Preditor, .before = Estimate) |>
-  dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
-  dplyr::rename("β1" = Estimate,
-                "EP" = `Std. Error`,
-                "t" = `t value`,
-                "p" = `Pr(>|t|)`) |>
-  tidyr::unite(β1:EP,
-               sep = " ± ",
-               col = "β1 ± EP")
-
-df_flex1
-
-##### Criando a tabela ----
-
-flex_q1 <- df_flex1 |>
-  flextable::flextable() |>
-  flextable::align(align = "center", part = "all") |>
-  flextable::width(width = 1.5, j = 2) |>
-  flextable::add_footer_lines("t-crítico = 1.83") |>
-  flextable::fontsize(size = 12, part = "all") |>
-  flextable::bg(bg = "white", part = "all")
-
-flex_q1
-
-##### Exportando a tabela ----
-
-flex_q1 |>
-  flextable::save_as_docx(path = "tabela_q1.docx")
 
 ## Dataframe de estatísticas usadas no gráfico ----
 
