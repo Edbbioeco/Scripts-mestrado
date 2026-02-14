@@ -386,8 +386,7 @@ modelo_beta |>
 
 ### Pseudo-R² ----
 
-modelo_beta |> performance::r2()
-
+modelo_beta |> performance::r2_ferrari()
 ### Tabela ----
 
 #### Dataframe da tabelas ----
