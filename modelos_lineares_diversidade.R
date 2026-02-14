@@ -238,9 +238,9 @@ ls(pattern = "resultados_alfa_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
 
-## Dataframe de estatísticas usadas no gráfico ----
+### Dataframe de estatísticas usadas no gráfico ----
 
-### Valor medano das variáveis ----
+#### Valor medano das variáveis ----
 
 medias_alfa <- df_alfa |>
   dplyr::select(4, 6, 8:10) |>
@@ -258,7 +258,7 @@ medias_alfa <- df_alfa |>
 
 medias_alfa
 
-### Dataframe ----
+#### Dataframe ----
 
 df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
   mget(envir = globalenv()) |>
@@ -308,7 +308,7 @@ df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
 
 df_q1_estatisticas
 
-### Gráfico -----
+#### Gráfico -----
 
 df_alfa |>
   tidyr::pivot_longer(cols = c(4, 6, 8:10),
@@ -387,7 +387,8 @@ modelo_beta |>
 ### Pseudo-R² ----
 
 modelo_beta |> performance::r2_ferrari()
-### Tabela ----
+
+### Dataframe de estatísticas usadas no gráfico ----
 
 #### Dataframe da tabelas ----
 
@@ -419,46 +420,7 @@ df_flexbeta_trat <- df_flexbeta |>
   tidyr::unite(β1:EP,
                sep = " ± ",
                col = "β1 ± EP") |>
-  dplyr::relocate(DF, .before = p)
-
-df_flexbeta_trat
-
-#### Criando a tabela ----
-
-flex_beta <- df_flexbeta_trat |>
-  flextable::flextable() |>
-  flextable::align(align = "center", part = "all") |>
-  flextable::width(width = 1.5, j = 2) |>
-  flextable::add_footer_lines("z-crítico = 1.96, pseudo-R² = 0.20") |>
-  flextable::fontsize(size = 12, part = "all")
-
-flex_beta
-
-#### Exportando a tabela ----
-
-flex_beta |>
-  flextable::save_as_docx(path = "tabela_beta.docx")
-
-## Dataframe de estatísticas usadas no gráfico ----
-
-### Valor medano das variáveis ----
-
-medias_beta <- df_beta |>
-  dplyr::select(2:5, 8) |>
-  tidyr::pivot_longer(cols = dplyr::everything(),
-                      names_to = "Preditor",
-                      values_to = "Valor") |>
-  dplyr::mutate(Preditor = Preditor |> stringr::str_replace_all("hidricos",
-                                                                "hídricos")) |>
-  dplyr::arrange(Preditor |> forcats::fct_relevel(df_flexbeta_trat$Preditor)) |>
-  dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
-                   .by = Preditor)
-
-medias_beta
-
-### Dataframe ----
-
-df_beta_estatisticas <- df_flexbeta_trat |>
+  dplyr::relocate(DF, .before = p) |>
   dplyr::mutate(Composição = 0.52,
                 DF = 51,
                 estatistica = paste0("β1 ± EP = ",
@@ -473,9 +435,24 @@ df_beta_estatisticas <- df_flexbeta_trat |>
   dplyr::left_join(medias_beta,
                    by = "Preditor")
 
-df_beta_estatisticas
+df_flexbeta_trat
 
-### Gráfico ----
+#### Valor medano das variáveis ----
+
+medias_beta <- df_beta |>
+  dplyr::select(2:5, 8) |>
+  tidyr::pivot_longer(cols = dplyr::everything(),
+                      names_to = "Preditor",
+                      values_to = "Valor") |>
+  dplyr::mutate(Preditor = Preditor |> stringr::str_replace_all("hidricos",
+                                                                "hídricos")) |>
+  dplyr::arrange(Preditor |> forcats::fct_relevel(df_flexbeta_trat$Preditor)) |>
+  dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
+                   .by = Preditor)
+
+medias_beta
+
+#### Gráfico ----
 
 df_beta |>
   tidyr::pivot_longer(cols = c(`Abertura de dossel`,
@@ -521,3 +498,6 @@ df_beta |>
   ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "grafico_pontos_beta.png", height = 10, width = 12)
+
+
+### Tabela ----
