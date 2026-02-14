@@ -4,21 +4,15 @@ library(readxl)
 
 library(tidyverse)
 
-library(sf)
-
 library(vegan)
-
-library(DHARMa)
 
 library(performance)
 
+library(ggtext)
+
 library(ggview)
 
-library(flextable)
-
-library(rsq)
-
-library(ggtext)
+library(DHARMa)
 
 library(glmmTMB)
 
@@ -397,8 +391,12 @@ medias_beta <- df_beta |>
   tidyr::pivot_longer(cols = dplyr::everything(),
                       names_to = "Preditor",
                       values_to = "Valor") |>
-  dplyr::mutate(Preditor = Preditor |> stringr::str_replace_all("hidricos",
-                                                                "hídricos")) |>
+  dplyr::mutate(Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance"))) |>
   dplyr::arrange(Preditor |> forcats::fct_relevel(df_flexbeta_trat$Preditor)) |>
   dplyr::summarise(`Valor Preditor` = mean(c(min(Valor), max(Valor))),
                    .by = Preditor)
@@ -436,7 +434,7 @@ df_sts_trat <- df_sts |>
                sep = " ± ",
                col = "β1 ± EP") |>
   dplyr::relocate(DF, .before = p) |>
-  dplyr::mutate(Composição = 0.52,
+  dplyr::mutate(Composition = 0.52,
                 DF = 51,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
@@ -447,7 +445,13 @@ df_sts_trat <- df_sts |>
                                      "</sub>, p = ",
                                      p |> round(3)),
                 significante = dplyr::case_when(p < 0.05 ~ "Sim",
-                                                .default = "Não")) |>
+                                                .default = "Não"),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance"))) |>
   dplyr::select(-c(2:5)) |>
   dplyr::left_join(medias_beta,
                    by = "Preditor")
@@ -463,6 +467,12 @@ df_beta |>
   dplyr::left_join(df_sts_trat |>
                      dplyr::select(1, 4),
                    by = "Preditor")  |>
+  dplyr::mutate(Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance"))) |>
   ggplot(aes(`Valor Preditor`, Composition)) +
   geom_point(color = "black",
              size = 3.5,
@@ -472,30 +482,26 @@ df_beta |>
               method = "lm",
               se = FALSE) +
   facet_wrap(~Preditor, scales = "free_x") +
-  ggtext::geom_richtext(data = df_beta_estatisticas,
+  ggtext::geom_richtext(data = df_sts_trat,
                         aes(label = estatistica),
                         color = "black",
                         fontface = "bold",
                         label.colour = "transparent",
                         fill = "transparent",
                         size = 5) +
-  #scale_fill_manual(values = c("green4", "gold", "orange3", "skyblue", "royalblue")) +
-  scale_y_continuous(limits = c(0.1, 0.53)) +
-  labs(x = "Distância preditora",
-       y = "Distância de composição",
-       title = "z-crítico = 1.96, pseudo-R² ajustado = 0.20") +
+  scale_y_continuous(limits = c(0.1, 0.5325)) +
+  labs(x = "Predictor distance",
+       y = "Composition distance",
+       title = "z-critic = 1.96, adjusted pseudo-R² = 0.20") +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 15),
-        axis.title = element_text(color = "black", size = 15),
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 25),
         panel.border = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(color = "black", size = 15),
+        strip.text = element_text(color = "black", size = 19),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
-        title = element_text(color = "black", size = 15),
+        title = element_text(color = "black", size = 25),
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "grafico_pontos_beta.png", height = 10, width = 12)
-
-
-### Tabela ----
