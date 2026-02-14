@@ -302,6 +302,16 @@ df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
 
 df_q1_estatisticas
 
+#### Estatísticas críticas ----
+
+q_t <- qt(p = 0.05, df = 10, lower.tail = FALSE) |> round(2)
+
+q_t
+
+q_f <- qf(p = 0.05, df1 = 1, df2 = 9, lower.tail = FALSE) |> round(2)
+
+q_f
+
 #### Gráfico -----
 
 df_alfa |>
@@ -333,7 +343,7 @@ df_alfa |>
                 dplyr::filter(significante == "Sim"),
               method = "lm",
               se = FALSE) +
-  labs(title = "t-crítico = 1.83, F-crítico = 5.12",
+  labs(title = paste0("t-critic = ", q_t, ", F-critic = ", q_f),
        x = "Predictor value",
        y = "Diversity (Q = 1)") +
   scale_y_continuous(limits = c(2.5, 4.45)) +
