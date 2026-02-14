@@ -343,7 +343,7 @@ medianas <- df_ocupacao |>
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = paste0(Preditor, " + Temperature")) |>
-  dplyr::summarise(`Valor preditor` = `Valor preditor` |> median(),
+  dplyr::summarise(`Valor preditor` = `Valor preditor` |> range() |> mean(),
                    .by = Preditor) |>
   dplyr::mutate(Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth + Temperature",
@@ -402,7 +402,7 @@ sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
                                          "Canopy openness + Temperature",
                                          "Edge distance + Temperature",
                                          "Elevation + Temperature",
-                                         "Water area + Temperature"))) |>
+                                         "Hydric stream distance + Temperature"))) |>
   dplyr::select(2, 12:14) |>
   dplyr::left_join(medianas,
                    by = "Preditor")
@@ -518,9 +518,9 @@ df_ocupacao |>
                                          "Canopy openness + Temperature",
                                          "Edge distance + Temperature",
                                          "Elevation + Temperature",
-                                         "Water area + Temperature"))) |>
+                                         "Hydric stream distance + Temperature"))) |>
   dplyr::left_join(sts_pristimantis |>
-                     dplyr::select(1, 5),
+                     dplyr::select(1, 4),
                    by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black",
