@@ -445,7 +445,9 @@ df_sts_trat <- df_sts |>
                                      "<sub>",
                                      DF,
                                      "</sub>, p = ",
-                                     p |> round(3))) |>
+                                     p |> round(3)),
+                significante = dplyr::case_when(p < 0.05 ~ "Sim",
+                                                .default = "Não")) |>
   dplyr::select(-c(2:5)) |>
   dplyr::left_join(medias_beta,
                    by = "Preditor")
@@ -455,22 +457,18 @@ df_sts_trat
 #### Gráfico ----
 
 df_beta |>
-  tidyr::pivot_longer(cols = c(`Abertura de dossel`,
-                               `Área de Poças`,
-                               `Altura da Serrapilheira`,
-                               `Distância dos corpos hidricos`,
-                               Altitude),
+  tidyr::pivot_longer(cols = 2:6,
                       names_to = "Preditor",
                       values_to = "Valor Preditor") |>
-  dplyr::mutate(Preditor = Preditor |>
-                  stringr::str_replace("hidrico", "hídrico")) |>
-  ggplot(aes(`Valor Preditor`, Composição, fill = Preditor)) +
+  dplyr::left_join(df_sts_trat |>
+                     dplyr::select(1, 4),
+                   by = "Preditor")  |>
+  ggplot(aes(`Valor Preditor`, Composition)) +
   geom_point(color = "black",
              size = 3.5,
              stroke = 1) +
   geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% c("Abertura de dossel",
-                                              "Altitude")),
+                dplyr::filter(significante == "Sim"),
               method = "lm",
               se = FALSE) +
   facet_wrap(~Preditor, scales = "free_x") +
