@@ -36,11 +36,23 @@ ambientais
 
 ambientais |> dplyr::glimpse()
 
+### Tratando ----
+
+ambientais <- ambientais |>
+  dplyr::rename("Canopy openness" = 3,
+                "Leaf-litter depth" = 5,
+                "Hydric stream distance" = 7,
+                "Edge distance" = 8,
+                "Elevation" = 9)
+
+ambientais
+
 # Gráfico de barras -----
 
 ## Gráfico como as unidades amostrais ----
 
 especies |>
+  dplyr::rename("Adenomera aff. hylaedactyla" = `Adenomera hylaedactyla`) |>
   ordenaR::order_circle(gradient = "Unidade Amostral",
                         species = 2:11,
                         direct = FALSE,
@@ -54,6 +66,7 @@ ordenar_especies <- function(var){
   grafico <- especies |>
     dplyr::left_join(ambientais,
                      by = "Unidade Amostral") |>
+    dplyr::rename("Adenomera aff. hylaedactyla" = `Adenomera hylaedactyla`) |>
     ordenaR::order_circle(gradient = var,
                           species = 2:11,
                           range = 5) +
@@ -73,7 +86,7 @@ ordenar_especies <- function(var){
 
 }
 
-var <- ambientais[c(2:3, 5, 7, 9)] |> names()
+var <- ambientais[c(3, 5, 7:9)] |> names()
 
 purrr::map(var, ordenar_especies)
 
