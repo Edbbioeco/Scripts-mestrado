@@ -84,18 +84,17 @@ var <- ambientais[c(3, 5, 7:9)] |> names()
 
 purrr::map(var, ordenar_especies)
 
-design <- c(patchwork::area(1, 1), # A
-            patchwork::area(1, 2), # B
-            patchwork::area(2, 1), # C
-            patchwork::area(2, 2), # D
-            patchwork::area(3, 1)  # E
-            )
+design <- c(patchwork::area(1, 1),
+            patchwork::area(1, 2),
+            patchwork::area(2, 1),
+            patchwork::area(2, 2),
+            patchwork::area(3, 1))
 
-(`gg_Abertura do dossel` +
-    gg_Altitude +
-    `gg_Altura da serrapilheira` +
-    `gg_Área das poças` +
-    `gg_Distância dos corpos hídricos`) +
+(`gg_Leaf-litter depth` +
+    `gg_Canopy openness` +
+    `gg_Edge distance` +
+    `gg_Elevation` +
+    `gg_Hydric stream distance`) +
   patchwork::plot_layout(design = design) +
   ggview::canvas(height = 10, width = 12)
 
