@@ -74,12 +74,6 @@ ordenar_especies <- function(var){
 
   print(grafico)
 
-  ggsave(filename = paste0("grafico_circulos_ordenar_",
-                           var,
-                           ".png"),
-         height = 10,
-         width = 12)
-
   assign(paste0("gg_", var),
          grafico,
          envir = globalenv())
