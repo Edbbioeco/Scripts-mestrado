@@ -115,7 +115,7 @@ modelos_temp <- function(especie){
 
 }
 
-purrr::walk(df_temp[, 3:5] |> names(), modelos_temp)
+purrr::map(df_temp[, 3:5] |> names(), modelos_temp)
 
 qt(p = 0.05, df = 30, lower.tail = FALSE)
 
@@ -143,7 +143,7 @@ modelos_temp_glm_fix <- function(especie){
 
 }
 
-purrr::walk(df_temp[, 3:5] |> names(), modelos_temp_glm_fix)
+purrr::map(df_temp[, 3:5] |> names(), modelos_temp_glm_fix)
 
 ## Gráfico ----
 
