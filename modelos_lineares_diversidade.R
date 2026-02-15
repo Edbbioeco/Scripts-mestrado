@@ -348,13 +348,14 @@ df_alfa |>
        y = "Diversity (Q = 1)") +
   scale_y_continuous(limits = c(2.5, 4.45)) +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 20),
-        axis.title = element_text(color = "black", size = 25),
+  theme(axis.text = element_text(color = "black", size = 15),
+        axis.title = element_text(color = "black", size = 15),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(color = "black", size = 19),
+        strip.text = element_text(color = "black", size = 15),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
-        title = element_text(color = "black", size = 25),
+        title = element_text(color = "black", size = 15),
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
@@ -398,7 +399,7 @@ r2_beta
 
 ### Dataframe de estatísticas usadas no gráfico ----
 
-#### Valor medano das variáveis ----
+#### Valor mediano das variáveis ----
 
 medianas_beta <- df_beta |>
   dplyr::select(2:6) |>
@@ -411,7 +412,6 @@ medianas_beta <- df_beta |>
                                          "Edge distance",
                                          "Elevation",
                                          "Hydric stream distance"))) |>
-  dplyr::arrange(Preditor |> forcats::fct_relevel(df_flexbeta_trat$Preditor)) |>
   dplyr::summarise(`Valor Preditor` = `Valor preditor` |> range() |> mean(),
                    .by = Preditor)
 
@@ -508,13 +508,14 @@ df_beta |>
        y = "Composition distance",
        title = paste0("z-critic = 1.96, adjusted pseudo-R² = ", r2_beta)) +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 20),
-        axis.title = element_text(color = "black", size = 25),
+  theme(axis.text = element_text(color = "black", size = 15),
+        axis.title = element_text(color = "black", size = 15),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(color = "black", size = 19),
+        strip.text = element_text(color = "black", size = 15),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
-        title = element_text(color = "black", size = 25),
+        title = element_text(color = "black", size = 15),
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
