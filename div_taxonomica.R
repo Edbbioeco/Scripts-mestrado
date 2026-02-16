@@ -173,8 +173,8 @@ dados_curva |>
   geom_point(color = "black", size = 5, shape = 21) +
   scale_x_continuous(breaks = seq(1, 11, 1),
                      limits = c(1, 11)) +
-  scale_y_continuous(breaks = seq(3, 14, 1),
-                     limits = c(3, 14)) +
+  scale_y_continuous(breaks = seq(1, 14, 1),
+                     limits = c(1, 14)) +
   scale_color_manual(values = c("royalblue", "orange")) +
   scale_fill_manual(values = c("royalblue", "orange")) +
   labs(fill = NULL,
