@@ -4,7 +4,9 @@ library(readxl)
 
 library(tidyverse)
 
-library(flextable)
+library(gt)
+
+library(rmarkdown)
 
 # Dados ----
 
@@ -69,38 +71,52 @@ tabela <- especies |>
                                             "Adelophryne nordestina" ~ " Lourenço-de-Moraes, Lisboa, Drummond, Moura, Moura, Lyra, Guarnieri, Mott, Hoogmoed, and Santana, 2021",
                                             "Physalaemus cuvieri" ~ " Fitzinger, 1826",
                                             "Elachistocleis cesari" ~ " (Miranda-Ribeiro, 1920)",
-                                            "Rhinella crucifer" ~" (Wied-Neuwied, 1821)")) |>
+                                            "Rhinella crucifer" ~" (Wied-Neuwied, 1821)"),
+                Espécie = paste0("<i>", Espécie, "</i>"),
+                Espécie = Espécie |> stringr::str_replace_all(c(" aff " = "</i> aff. <i>",
+                                                                " aff. " = "</i> aff. <i>",
+                                                                " gr " = "</i> gr. <i>",
+                                                                " gr. " = "</i> gr. <i>",
+                                                                " cf " = "</i> cf. <i>",
+                                                                " cf. " = "</i> cf. <i>"))) |>
   dplyr::arrange(`Unidade Amostral`, Família) |>
   dplyr::rename("Sampling Unit" = `Unidade Amostral`,
                 "Family" = Família,
                 "Species" = Espécie,
-                "Abundance" = Abundância)
+                "Abundance" = Abundância) |>
+  tidyr::unite(col = "Species",
+               c(3, 5),
+               sep = " ")
 
 tabela
 
-## Tabela flextablae ----
+## Tabela gt ----
 
-flex <- tabela |>
-  flextable::flextable(col_keys = tabela[1:5] |> names()) |>
-  flextable::width(width = 2.25,
-                   j = 3:2) |>
-  flextable::width(width = 1.25,
-                   j = 1:2) |>
-  flextable::align(align = "center", part = "all") |>
-  flextable::italic(j = 3,
-                    i = ~ !Species |>
-                      stringr::str_detect("aff."),
-                    part = "body") |>
-  flextable::compose(j = "Specie",
-                     value = flextable::as_paragraph(flextable::as_chunk(Espécie),
-                                                     Autoria))
+tabela_gt <- tabela |>
+  gt() |>
+  fmt_markdown(columns = Species) |>
+  cols_align(align = "center",
+             columns = everything()) |>
+  cols_width(Species ~ px(300)) |>
+  tab_options(column_labels.border.top.color = "black",
+              column_labels.border.bottom.color = "black",
+              table_body.hlines.color = "transparent",
+              table.border.bottom.color = "black",
+              table.font.color = "black",
+              table.font.size = 12,
+              table.font.names = "Arial",
+              table.background.color = "white")
 
-flex
+tabela_gt
 
 ## Exportando a tabela ----
 
-flex |>
-  flextable::save_as_docx(path = "tabela_especies.docx")
+tabela_gt |>
+  gt::gtsave("tabela_especies.html")
+
+rmarkdown::pandoc_convert("tabela_especies.html",
+                          to = "docx",
+                          output = "tabela_especies.docx")
 
 # Estatísticas sobre as espécies ----
 
