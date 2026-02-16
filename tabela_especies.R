@@ -88,14 +88,10 @@ flex <- tabela |>
                    j = 1:2) |>
   flextable::align(align = "center", part = "all") |>
   flextable::italic(j = 3,
+                    i = ~ !Species |>
+                      stringr::str_detect("aff."),
                     part = "body") |>
-  flextable::italic(j = 3,
-                    i = ~ grepl("aff\\.",
-                                Espécie,
-                                ignore.case = TRUE),
-                    italic = FALSE,
-                    part = "body") |>
-  flextable::compose(j = "Espécie",
+  flextable::compose(j = "Specie",
                      value = flextable::as_paragraph(flextable::as_chunk(Espécie),
                                                      Autoria))
 
