@@ -77,14 +77,22 @@ tabela
 ## Tabela flextablae ----
 
 flex <- tabela |>
-  flextable::flextable(col_keys = tabela[1:4] |> names()) |>
+  flextable::flextable(col_keys = tabela[1:5] |> names()) |>
   flextable::width(width = 2.25,
                    j = 3:2) |>
   flextable::width(width = 1.25,
                    j = 1:2) |>
   flextable::align(align = "center", part = "all") |>
+  flextable::italic(j = 3,
+                    part = "body") |>
+  flextable::italic(j = 3,
+                    i = ~ grepl("aff\\.",
+                                Espécie,
+                                ignore.case = TRUE),
+                    italic = FALSE,
+                    part = "body") |>
   flextable::compose(j = "Espécie",
-                     value = flextable::as_paragraph(flextable::as_i(Espécie),
+                     value = flextable::as_paragraph(flextable::as_chunk(Espécie),
                                                      Autoria))
 
 flex
