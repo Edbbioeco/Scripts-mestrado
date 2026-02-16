@@ -56,9 +56,12 @@ tabela <- especies |>
                    by = "Espécie") |>
   dplyr::relocate(Família, .before = Espécie) |>
   dplyr::distinct() |>
-  dplyr::mutate(Autoria = dplyr::case_match(Espécie,
+  dplyr::mutate(Espécie = dplyr::case_match(Espécie,
+                                            "Adenomera hylaedactyla" ~ "Adenomera aff. hylaedactyla",
+                                            .default = Espécie),
+                Autoria = dplyr::case_match(Espécie,
                                              "Pristimantis ramagii" ~ " (Boulenger, 1888)",
-                                            "Adenomera hylaedactyla" ~ " (Cope, 1868)",
+                                            "Adenomera aff. hylaedactyla" ~ " (Cope, 1868)",
                                             "Rhinella hoogmoedi" ~ " Caramaschi and Pombal, 2006",
                                             "Rhinella granulosa" ~ " (Spix, 1824)",
                                             "Leptodactylus troglodytes" ~ " Lutz, 1926",
