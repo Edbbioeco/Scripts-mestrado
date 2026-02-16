@@ -70,7 +70,11 @@ tabela <- especies |>
                                             "Physalaemus cuvieri" ~ " Fitzinger, 1826",
                                             "Elachistocleis cesari" ~ " (Miranda-Ribeiro, 1920)",
                                             "Rhinella crucifer" ~" (Wied-Neuwied, 1821)")) |>
-  dplyr::arrange(`Unidade Amostral`, Família)
+  dplyr::arrange(`Unidade Amostral`, Família) |>
+  dplyr::rename("Sampling Unit" = `Unidade Amostral`,
+                "Family" = Família,
+                "Species" = Espécie,
+                "Abundance" = Abundância)
 
 tabela
 
