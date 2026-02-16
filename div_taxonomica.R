@@ -149,24 +149,24 @@ curva
 
 dados_curva <- curva$S |>
   tibble::as_tibble() |>
-  dplyr::rename("Riqueza" = S,
-                "Número de Parcelas" = N) |>
-  dplyr::mutate(Tipo = "Observada") |>
+  dplyr::rename("Richness" = S,
+                "Number of sampling units" = N) |>
+  dplyr::mutate(Tipo = "Observed") |>
   dplyr::bind_rows(curva$chao |>
                      tibble::as_tibble() |>
-                     dplyr::rename("Riqueza" = Chao,
-                                   "Número de Parcelas" = N) |>
-                     dplyr::mutate(Tipo = "Estimada"))
+                     dplyr::rename("Richness" = Chao,
+                                   "Number of sampling units" = N) |>
+                     dplyr::mutate(Tipo = "Estimated"))
 
 dados_curva |> as.data.frame()
 
 ## Gráfico ----
 
 dados_curva |>
-  ggplot(aes(`Número de Parcelas`, Riqueza, color = Tipo, fill = Tipo)) +
-  geom_ribbon(aes(x = `Número de Parcelas`,
-                  ymin = Riqueza - Std.Dev,
-                  ymax = Riqueza + Std.Dev),
+  ggplot(aes(`Number of sampling units`, Richness, color = Tipo, fill = Tipo)) +
+  geom_ribbon(aes(x = `Number of sampling units`,
+                  ymin = Richness - Std.Dev,
+                  ymax = Richness + Std.Dev),
               alpha = 0.3,
               color = "transparent") +
   geom_line(linewidth = 1) +
