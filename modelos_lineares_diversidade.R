@@ -449,7 +449,6 @@ df_sts_trat <- df_sts |>
                col = "β1 ± EP") |>
   dplyr::relocate(DF, .before = p) |>
   dplyr::mutate(Composition = 0.52,
-                DF = 51,
                 estatistica = paste0("β1 ± EP = ",
                                      `β1 ± EP`,
                                      "<br>z = ",
