@@ -437,7 +437,7 @@ df_sts_trat <- df_sts |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `z value` = `z value` |> round(3),
                 `Pr(>|z|)` = `Pr(>|z|)` |> round(5),
-                DF = 50) |>
+                DF = 51) |>
   dplyr::relocate(Preditor, .before = Estimate) |>
   dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
   dplyr::rename("β1" = Estimate,
