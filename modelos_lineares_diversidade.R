@@ -211,7 +211,7 @@ modelos_diversidade <- function(id){
                                               df2 = summary$fstatistic[3],
                                               lower.tail = FALSE) |>
                                          round(2),
-                                       `R² ajustado` = summary$adj.r.squared |>
+                                       `Adj. R²` = summary$adj.r.squared |>
                                          round(2))
 
   resultados <- resultados |>
@@ -286,8 +286,8 @@ df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
                                      `F`,
                                      ", p = ",
                                      `p global`,
-                                     ", R² aju. = ",
-                                     `R² ajustado`),
+                                     ", Adj. R² = ",
+                                     `Adj. R²`),
                 Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
