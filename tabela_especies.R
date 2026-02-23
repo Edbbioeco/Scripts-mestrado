@@ -73,12 +73,13 @@ tabela <- especies |>
                                             "Elachistocleis cesari" ~ " (Miranda-Ribeiro, 1920)",
                                             "Rhinella crucifer" ~" (Wied-Neuwied, 1821)"),
                 Espécie = paste0("<i>", Espécie, "</i>"),
-                Espécie = Espécie |> stringr::str_replace_all(c(" aff " = "</i> aff. <i>",
-                                                                " aff. " = "</i> aff. <i>",
-                                                                " gr " = "</i> gr. <i>",
-                                                                " gr. " = "</i> gr. <i>",
-                                                                " cf " = "</i> cf. <i>",
-                                                                " cf. " = "</i> cf. <i>"))) |>
+                Espécie = Espécie |> stringr::str_replace_all(c(
+                  " aff " = "</i> aff. <i>",
+                  " aff. " = "</i> aff. <i>",
+                  " gr " = "</i> gr. <i>",
+                  " gr. " = "</i> gr. <i>",
+                  " cf " = "</i> cf. <i>",
+                  " cf. " = "</i> cf. <i>"))) |>
   dplyr::arrange(`Unidade Amostral`, Família) |>
   dplyr::rename("Sampling Unit" = `Unidade Amostral`,
                 "Family" = Família,
@@ -111,12 +112,9 @@ tabela_gt
 
 ## Exportando a tabela ----
 
-tabela_gt |>
-  gt::gtsave("tabela_especies.html")
+file.remove("tabela_especies.docx")
 
-rmarkdown::pandoc_convert("tabela_especies.html",
-                          to = "docx",
-                          output = "tabela_especies.docx")
+gt::gtsave(tabela_gt, filename = "tabela_especies.docx")
 
 # Estatísticas sobre as espécies ----
 
