@@ -71,6 +71,9 @@ ordenar_especies <- function(var){
                           species = 2:11,
                           range = 5) +
     labs(title = var) +
+    theme(plot.title = element_text(hjust = 0.5,
+                                    face = "bold",
+                                    size = 20)) +
     ggview::canvas(height = 10, width = 12)
 
   print(grafico)
@@ -99,10 +102,6 @@ design <- c(patchwork::area(1, 1),
     `gg_Elevation` +
     `gg_Hydric stream distance`) +
   patchwork::plot_layout(design = design) +
-  patchwork::plot_annotation(tag_levels = "A") &
-  theme(plot.tag = element_text(face = "bold",
-                                size = 25),
-        plot.tag.position = c(0, 1)) &
   ggview::canvas(height = 10, width = 12)
 
 ggsave("grafico_composicao_especies.png",
