@@ -4,10 +4,6 @@ library(readxl)
 
 library(tidyverse)
 
-library(gt)
-
-library(rmarkdown)
-
 # Dados ----
 
 ## Importando ----
