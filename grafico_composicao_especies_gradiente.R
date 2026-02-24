@@ -59,7 +59,7 @@ especies |>
                         range = 20) +
   ggview::canvas(height = 10, width = 12)
 
-## Gráfico das variáveis ambientais ----
+## Gráficos das variáveis ambientais ----
 
 ordenar_especies <- function(var){
 
@@ -83,6 +83,8 @@ ordenar_especies <- function(var){
 var <- ambientais[c(3, 5, 7:9)] |> names()
 
 purrr::map(var, ordenar_especies)
+
+## Unindo os gráficos ----
 
 design <- c(patchwork::area(1, 1),
             patchwork::area(1, 2),
