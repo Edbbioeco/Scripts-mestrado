@@ -6,6 +6,8 @@ library(tidyverse)
 
 library(magrittr)
 
+library(lmerTest)
+
 library(lme4)
 
 library(performance)
@@ -98,7 +100,7 @@ modelos_temp <- function(especie){
     crayon::green() |>
     message()
 
-  modelo_linear <- lme4::lmer(df_temp[[especie]] ~ Temperatura +
+  modelo_linear <- lmerTest::lmer(df_temp[[especie]] ~ Temperatura +
                                 (1 | `Unidade Amostral`),
                       data = df_temp)
 
