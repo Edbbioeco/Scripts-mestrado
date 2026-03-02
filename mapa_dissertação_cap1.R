@@ -175,6 +175,7 @@ mapa_principal <- ggplot() +
                               unit_category = "metric",
                               bar_cols = c("black", "white"),
                               width_hint = 0.35) +
+  theme(legend.margin = margin(t = 0, unit = "pt"))
   ggview::canvas(height = 10, width = 12)
 
 mapa_principal
