@@ -206,14 +206,10 @@ mapa_paralelo
 
 cowplot::ggdraw(mapa_principal) +
   cowplot::draw_plot(mapa_paralelo,
-                     x = 0.6,
+                     x = 0.58,
                      y = 0.55,
-                     height = 0.475,
-                     width = 0.475) +
-  theme(plot.margin = margin(t = 50,
-                             r = 50,
-                             l = 50,
-                             b = 50)) +
+                     height = 0.425,
+                     width = 0.425) +
   ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "mapa_dissertacao_cap1.png", height = 10, width = 12)
