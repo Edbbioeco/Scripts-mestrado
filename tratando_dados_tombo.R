@@ -32,7 +32,8 @@ dados |>
   dplyr::right_join(dados_pis,
                     by = "ID") |>
   dplyr::mutate(CHUFPE = CHUFPE |> readr::parse_number() |> abs()) |>
-  tidyr::fill(CHUFPE) |> as.data.frame() |>
+  tidyr::fill(CHUFPE) |>
+  dplyr::mutate(CHUFPE = paste0("A-", CHUFPE)) |>
   dplyr::arrange(ID) |>
   tidyr::fill(Data) |>
   as.data.frame()
