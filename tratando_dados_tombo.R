@@ -4,6 +4,8 @@ library(readxl)
 
 library(tidyverse)
 
+library(writexl)
+
 # Dados ----
 
 ## Importando ----
@@ -48,3 +50,8 @@ dados_trat <- dados |>
   as.data.frame()
 
 dados_trat
+
+## Exportando ----
+
+dados_trat |>
+  writexl::write_xlsx("dados_tratados_pis.xlsx")
