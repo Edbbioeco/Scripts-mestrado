@@ -32,9 +32,7 @@ dados_pis |> dplyr::glimpse()
 
 dados_trat <- dados |>
   dplyr::right_join(dados_pis,
-                    by = "ID") |>
-  dplyr::mutate(CHUFPE = CHUFPE |> readr::parse_number() |> abs()) |>
-  tidyr::fill(CHUFPE) |>
+                    by = "ID") |> as.data.frame() |>
   dplyr::mutate(Data = Data |> lubridate::as_date(),
                 CHUFPE = paste0("A-", CHUFPE),
                 Família = dplyr::if_else(Família |> is.na(),
