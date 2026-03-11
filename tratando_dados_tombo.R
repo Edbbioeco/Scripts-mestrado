@@ -46,7 +46,6 @@ dados_trat <- dados |>
                 Espécie = dplyr::if_else(Espécie |> is.na(),
                                          paste(Gênero, " cuvieri"),
                                          Espécie)) |>
-  dplyr::arrange(ID) |>
   tidyr::fill(Data) |>
   as.data.frame()
 
