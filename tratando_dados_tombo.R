@@ -31,4 +31,5 @@ dados_pis |> dplyr::glimpse()
 dados |>
   dplyr::right_join(dados_pis,
                     by = "ID") |>
+  dplyr::arrange(ID) |>
   as.data.frame()
