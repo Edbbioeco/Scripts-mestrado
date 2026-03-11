@@ -35,7 +35,8 @@ dados_trat <- dados |>
                     by = "ID") |>
   dplyr::mutate(CHUFPE = CHUFPE |> readr::parse_number() |> abs()) |>
   tidyr::fill(CHUFPE) |>
-  dplyr::mutate(CHUFPE = paste0("A-", CHUFPE),
+  dplyr::mutate(Data = Data |> lubridate::as_date(),
+                CHUFPE = paste0("A-", CHUFPE),
                 Família = dplyr::if_else(Família |> is.na(),
                                          "Leptodactylidae",
                                          Família),
