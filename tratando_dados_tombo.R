@@ -33,7 +33,16 @@ dados |>
                     by = "ID") |>
   dplyr::mutate(CHUFPE = CHUFPE |> readr::parse_number() |> abs()) |>
   tidyr::fill(CHUFPE) |>
-  dplyr::mutate(CHUFPE = paste0("A-", CHUFPE)) |>
+  dplyr::mutate(CHUFPE = paste0("A-", CHUFPE),
+                Família = dplyr::if_else(Família |> is.na(),
+                                         "Leptodactylidae",
+                                         Família),
+                Gênero = dplyr::if_else(Gênero |> is.na(),
+                                         "Physalaemus",
+                                         Gênero),
+                Espécie = dplyr::if_else(Espécie |> is.na(),
+                                         paste(Gênero, " cuvieri"),
+                                         Espécie)) |>
   dplyr::arrange(ID) |>
   tidyr::fill(Data) |>
   as.data.frame()
