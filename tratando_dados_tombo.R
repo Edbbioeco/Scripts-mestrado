@@ -16,6 +16,15 @@ dados
 
 dados |> dplyr::glimpse()
 
+## Tratando ----
+
+dados <- dados |>
+  dplyr::mutate(n = dplyr::row_number())
+
+dados
+
+dados |> dplyr::glimpse()
+
 # Tratando ----
 
 ## Criando um dataframe com os dados de PIS completos ----
