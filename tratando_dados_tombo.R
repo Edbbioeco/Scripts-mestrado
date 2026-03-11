@@ -28,7 +28,7 @@ dados_pis |> dplyr::glimpse()
 
 ## Unindo os dataframes ----
 
-dados |>
+dados_trat <- dados |>
   dplyr::right_join(dados_pis,
                     by = "ID") |>
   dplyr::mutate(CHUFPE = CHUFPE |> readr::parse_number() |> abs()) |>
@@ -46,3 +46,5 @@ dados |>
   dplyr::arrange(ID) |>
   tidyr::fill(Data) |>
   as.data.frame()
+
+dados_trat
