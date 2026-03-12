@@ -66,7 +66,7 @@ parcelas_trat
 
 ## Adicionando os dados de parcela às informações de tombo ----
 
-pis |>
+pis_trat <- pis |>
   dplyr::mutate(`Unidade Amostral` = dplyr::case_when(
     Família == "Leptodactylidae" ~ "T1P3",
     Data == "20.viii.2025" & Família == "Craugastoridae" ~ "T2P1",
@@ -75,6 +75,8 @@ pis |>
     Data == "25.ix.2025" ~ "T2P2")) |>
   dplyr::select(CHUFPE, Espécie, `Unidade Amostral`) |>
   as.data.frame()
+
+pis_trat
 
 ## Unindo os dados de altitude e das parcelas ----
 
