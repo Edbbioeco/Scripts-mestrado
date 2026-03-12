@@ -48,3 +48,17 @@ parcelas
 
 ggplot() +
   geom_sf(data = parcelas, color = "black")
+
+## PIS ----
+
+### Importando ----
+
+dados <- readxl::read_xlsx("dados_tratados_pis.xlsx")
+
+### Visualizando ----
+
+dados
+
+dados |> as.data.frame()
+
+dados |> dplyr::glimpse()
