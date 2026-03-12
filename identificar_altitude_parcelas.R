@@ -64,11 +64,15 @@ parcelas_trat <- parcelas |>
 
 parcelas_trat
 
+## Adicionando os dados de parcela às informações de tombo ----
+
 ## Unindo os dados de altitude e das parcelas ----
 
-altitude |>
+alt_parcela <- altitude |>
   dplyr::select(`Unidade Amostral`, Altitude) |>
   dplyr::left_join(parcelas_trat |>
                      dplyr::select(`Unidade Amostral`, geometry),
                    by = "Unidade Amostral") |>
   as.data.frame()
+
+alt_parcela
