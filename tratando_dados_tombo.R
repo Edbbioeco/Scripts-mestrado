@@ -16,6 +16,8 @@ dados <- readxl::read_xlsx("dados_pis_saltinho.xlsx")
 
 dados
 
+dados |> as.data.frame()
+
 dados |> dplyr::glimpse()
 
 # Tratando ----
@@ -33,6 +35,7 @@ dados_pis |> dplyr::glimpse()
 dados_trat <- dados |>
   dplyr::right_join(dados_pis,
                     by = "ID") |>
+  dplyr::filter(ID != "0586") |>
   dplyr::mutate(Data = Data |> lubridate::as_date(),
                 CRC = dplyr::case_when(!CRC |> is.na() ~ paste0(CRC,
                                                                 " mm"),
@@ -40,7 +43,7 @@ dados_trat <- dados |>
                   stringr::str_replace("\\.", ","),
                 CHUFPE = c(CHUFPE |> na.omit(),
                            paste0("A-",
-                                  2583:2593)),
+                                  2583:2592)),
                 Família = dplyr::if_else(Família |> is.na(),
                                          "Leptodactylidae",
                                          Família),
