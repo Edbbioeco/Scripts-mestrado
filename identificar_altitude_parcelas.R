@@ -78,7 +78,7 @@ pis_trat <- pis |>
 
 pis_trat
 
-## Unindo os dados de altitude e das parcelas ----
+## Unindo os dados de altitude às parcelas ----
 
 alt_parcela <- altitude |>
   dplyr::select(`Unidade Amostral`, Altitude) |>
@@ -88,3 +88,6 @@ alt_parcela <- altitude |>
   as.data.frame()
 
 alt_parcela
+
+## Unindo os dados de altitude e pacelas ao dados de tombamento ----
+
