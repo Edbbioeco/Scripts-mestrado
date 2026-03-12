@@ -36,7 +36,8 @@ dados_trat <- dados |>
   dplyr::mutate(Data = Data |> lubridate::as_date(),
                 CRC = dplyr::case_when(!CRC |> is.na() ~ paste0(CRC,
                                                                 " mm"),
-                                       .default = CRC |> as.character()),
+                                       .default = CRC |> as.character()) |>
+                  stringr::str_replace("\\.", ","),
                 CHUFPE = c(CHUFPE |> na.omit(),
                            paste0("A-",
                                   2583:2593)),
