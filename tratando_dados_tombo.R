@@ -51,6 +51,17 @@ dados_trat <- dados |>
                                          paste(Gênero, " cuvieri"),
                                          Espécie)) |>
   tidyr::fill(Data) |>
+  dplyr::mutate(Dia = Data |> lubridate::day(),
+                Mês = Data |> lubridate::month() |>
+                  as.roman() |>
+                  stringr::str_to_lower(),
+                Ano = Data |> lubridate::year(),
+                Data = paste0(Dia,
+                              ".",
+                              Mês,
+                              ".",
+                              Ano)) |>
+  dplyr::select(-c(Dia, Mês, Ano)) |>
   as.data.frame()
 
 dados_trat
