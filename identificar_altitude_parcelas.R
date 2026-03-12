@@ -39,15 +39,15 @@ ggplot() +
 
 ### Importando ----
 
-dados <- readxl::read_xlsx("dados_tratados_pis.xlsx")
+pis <- readxl::read_xlsx("dados_tratados_pis.xlsx")
 
 ### Visualizando ----
 
-dados
+pis
 
-dados |> as.data.frame()
+pis |> as.data.frame()
 
-dados |> dplyr::glimpse()
+pis |> dplyr::glimpse()
 
 # Alttitude das parcelas ----
 
@@ -65,6 +65,16 @@ parcelas_trat <- parcelas |>
 parcelas_trat
 
 ## Adicionando os dados de parcela às informações de tombo ----
+
+pis |>
+  dplyr::mutate(`Unidade Amostral` = dplyr::case_when(
+    Família == "Leptodactylidae" ~ "T1P3",
+    Data == "20.viii.2025" & Família == "Craugastoridae" ~ "T2P1",
+    Data == "21.viii.2025" ~ "R1",
+    Data == "24.ix.2025" ~ "T2P1",
+    Data == "25.ix.2025" ~ "T2P2")) |>
+  dplyr::select(CHUFPE, Espécie, `Unidade Amostral`) |>
+  as.data.frame()
 
 ## Unindo os dados de altitude e das parcelas ----
 
