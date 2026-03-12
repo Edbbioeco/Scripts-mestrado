@@ -8,20 +8,6 @@ library(sf)
 
 # Dados ----
 
-## Anuros -----
-
-### Importando ----
-
-anuros <- readxl::read_xlsx("levantamento_anuros.xlsx")
-
-### Visualizando ----
-
-anuros
-
-anuros |> as.data.frame()
-
-anuros |> dplyr::glimpse()
-
 ## Altitude ----
 
 ### Importando ----
