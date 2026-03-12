@@ -35,3 +35,16 @@ altitude
 altitude |> as.data.frame()
 
 altitude |> dplyr::glimpse()
+
+## Shapefile das parcelas ----
+
+### Importando ----
+
+parcelas <- sf::st_read("coordenadas_parcelas_saltinho.shp")
+
+### Visualizando ----
+
+parcelas
+
+ggplot() +
+  geom_sf(data = parcelas, color = "black")
