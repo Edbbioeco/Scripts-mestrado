@@ -37,6 +37,11 @@ dados_trat <- dados |>
                     by = "ID") |>
   dplyr::filter(ID != "0586") |>
   dplyr::mutate(Data = Data |> lubridate::as_date(),
+                Data = dplyr:::case_when(ID %in% c("0579",
+                                                   "0580",
+                                                   "0581") ~ "2025-08-20" |>
+                                           lubridate::as_date(),
+                                        .default = "2025-09-25" |>  lubridate::as_date()),
                 CRC = dplyr::case_when(!CRC |> is.na() ~ paste0(CRC,
                                                                 " mm"),
                                        .default = CRC |> as.character()) |>
