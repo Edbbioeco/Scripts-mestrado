@@ -48,3 +48,13 @@ dados
 dados |> as.data.frame()
 
 dados |> dplyr::glimpse()
+
+# Alttitude das parcelas ----
+
+## Tratando os dados das parcelas ----
+
+parcelas_trat <- parcelas |>
+  dplyr::mutate(Trilha = dplyr::if_else(Trilha == 3,
+                                        "R",
+                                        Trilha |> as.character()),
+                `Unidade Amostral`)
