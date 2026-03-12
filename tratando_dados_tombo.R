@@ -32,9 +32,11 @@ dados_pis |> dplyr::glimpse()
 
 dados_trat <- dados |>
   dplyr::right_join(dados_pis,
-                    by = "ID") |> as.data.frame() |>
+                    by = "ID") |>
   dplyr::mutate(Data = Data |> lubridate::as_date(),
-                CHUFPE = paste0("A-", CHUFPE),
+                CRC = dplyr::case_when(!CRC |> is.na() ~ paste0(CRC,
+                                                                " mm"),
+                                       .default = CRC |> as.character()),
                 Família = dplyr::if_else(Família |> is.na(),
                                          "Leptodactylidae",
                                          Família),
