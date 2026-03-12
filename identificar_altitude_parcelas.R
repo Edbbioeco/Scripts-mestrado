@@ -57,4 +57,6 @@ parcelas_trat <- parcelas |>
   dplyr::mutate(Trilha = dplyr::if_else(Trilha == 3,
                                         "R",
                                         Trilha |> as.character()),
-                `Unidade Amostral`)
+                `Unidade Amostral` = paste0("T", Trilha, "P", Parcela))
+
+parcelas_trat
