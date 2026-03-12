@@ -63,3 +63,11 @@ parcelas_trat <- parcelas |>
                                                       .default = `Unidade Amostral`))
 
 parcelas_trat
+
+## Unindo os dados ----
+
+altitude |>
+  dplyr::select(`Unidade Amostral`, Altitude) |>
+  dplyr::left_join(parcelas_trat |>
+                     dplyr::select(`Unidade Amostral`, geometry),
+                   by = "Unidade Amostral")
