@@ -387,7 +387,7 @@ df_sts_beta <- df_sts |>
                 Estimate = Estimate |> round(4),
                 `Std. Error` = `Std. Error` |> round(4),
                 `z value` = `z value` |> round(3),
-                `Pr(>|z|)` = `Pr(>|z|)` |> round(5),
+                `Pr(>|z|)` = `Pr(>|z|)` |> round(2),
                 DF = 51) |>
   dplyr::relocate(Predictor, .before = Estimate) |>
   dplyr::filter(!Predictor |> stringr::str_detect("\\(")) |>
