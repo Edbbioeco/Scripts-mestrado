@@ -226,16 +226,19 @@ rodando_modelos_adenomera <- function(id){
     .$coefficient |>
     as.data.frame() |>
     tibble::rownames_to_column() |>
-    dplyr::mutate(rowname = rowname |>
+    dplyr::mutate(Species = "Adenomera aff. hylaedactyla",
+                  rowname = rowname |>
                       stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2[2],
-                  Modelo = nome,
+                  Model = nome,
                   `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
                                                 .default = paste0("= ",
                                                                   `Pr(>|z|)` |>
                                                                     round(2)))) |>
-    dplyr::relocate(Modelo, .before = rowname)
+    dplyr::rename("p" = `Pr(>|z|)`,
+                  "Predictor" = rowname) |>
+    dplyr::relocate(c(Species, Model), .before = Predictor)
 
   assign(paste0("resultados_adenomera_", nome),
          resultados,
@@ -243,7 +246,7 @@ rodando_modelos_adenomera <- function(id){
 
 }
 
-purrr::walk(c(6, 8, 10:12), rodando_modelos_adenomera)
+purrr::map(c(6, 8, 10:12), rodando_modelos_adenomera)
 
 ls(pattern = "modelo_adenomera_") |>
   mget(envir = globalenv())
@@ -254,7 +257,8 @@ ls(pattern = "resultados_adenomera_") |>
 
 ls(pattern = "resultados_adenomera_") |>
   mget(envir = globalenv()) |>
-  dplyr::bind_rows()
+  dplyr::bind_rows() |>
+  dplyr::filter(!Predictor == "Temperature")
 
 ## Rhinella hoogmoedi ----
 
