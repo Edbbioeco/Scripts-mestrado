@@ -377,7 +377,9 @@ sts_df_flex <- sts_df |>
   flextable::width(j = c(1, 3), width = 1.5) |>
   flextable::width(j = 6, width = 1) |>
   flextable::italic(j = 1, part = "body") |>
-  flextable::fontsize(size = 12, part = "all")
+  flextable::fontsize(size = 12, part = "all") |>
+  flextable::bg(part = "all", bg = "white") |>
+  flextable::bg(i = ~abs(z) > 1.96, bg = "gray")
 
 sts_df_flex
 
