@@ -310,11 +310,10 @@ df_alfa |>
              stroke = 1) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
-                dplyr::filter(significante == "Sim"),
+                dplyr::filter(Preditor %in% q1_predictor),
               method = "lm",
               se = FALSE) +
-  labs(title = paste0("t-critic = ", q_t, ", F-critic = ", q_f),
-       x = "Predictor value",
+  labs(x = "Predictor value",
        y = "Diversity (Q = 1)") +
   scale_y_continuous(limits = c(2.5, 4.45)) +
   theme_bw() +
@@ -322,7 +321,7 @@ df_alfa |>
         axis.title = element_text(color = "black", size = 15),
         axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(color = "black", size = 15),
+        strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
         title = element_text(color = "black", size = 15),
