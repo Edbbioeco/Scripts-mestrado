@@ -284,6 +284,14 @@ df_q1_flex
 df_q1_flex |>
   flextable::save_as_docx(path = "tabela_estatisticas_modelos_lineares_diversidade_alfa.docx")
 
+### Preditores significativos ----
+
+q1_predictor <- df_q1_estatisticas |>
+  dplyr::filter(abs(t) > 1.96 & `F` > q_f) |>
+  dplyr::pull(Predictor)
+
+q1_predictor
+
 ### Gráfico -----
 
 df_alfa |>
@@ -296,21 +304,11 @@ df_alfa |>
                                          "Edge distance",
                                          "Elevation",
                                          "Hydric stream distance"))) |>
-  dplyr::left_join(df_q1_estatisticas |>
-                     dplyr::select(1, 4),
-                   by = "Preditor") |>
   ggplot(aes(`Valor Preditor`,`Q = 1`)) +
   geom_point(color = "black",
              size = 3.5,
              stroke = 1) +
   facet_wrap(~Preditor, scales = "free_x") +
-  ggtext::geom_richtext(data = df_q1_estatisticas,
-                        aes(label = estatistica),
-                        color = "black",
-                        fontface = "bold",
-                        label.colour = "transparent",
-                        fill = "transparent",
-                        size = 4.75) +
   geom_smooth(data = . %>%
                 dplyr::filter(significante == "Sim"),
               method = "lm",
