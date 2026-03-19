@@ -148,8 +148,14 @@ rodando_modelos_pristimantis <- function(id){
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Model = nome,
-                  `Pr(>|z|)` = `Pr(>|z|)` |> round(2)) |>
-    dplyr::rename("p" = `Pr(>|z|)`,
+                  `Pr(>|z|)` = dplyr::if_else(`Pr(>|z|)` < 0.01,
+                                              "< 0.01",
+                                              `Pr(>|z|)` |>
+                                                round(2) |>
+                                                as.character()),
+                  `z value` = `z value` |> round(2)) |>
+    dplyr::rename("z" = `z value`,
+                  "p" = `Pr(>|z|)`,
                   "Predictor" = rowname) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
 
