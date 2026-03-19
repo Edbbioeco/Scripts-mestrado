@@ -371,10 +371,20 @@ sts_df
 
 ## Tabela flextable ----
 
-sts_df |>
+sts_df_flex <- sts_df |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
-  flextable::width(j = 3, width = 2)
+  flextable::width(j = c(1, 3), width = 1.5) |>
+  flextable::width(j = 6, width = 1) |>
+  flextable::italic(j = 1, part = "body") |>
+  flextable::fontsize(size = 12, part = "all")
+
+sts_df_flex
+
+## Exportando a tabela ----
+
+sts_df_flex |>
+  flextable::save_as_docx(path = "tabela_estatisticas_modelos_ocupacao.docx")
 
 # Gráficos ----
 
