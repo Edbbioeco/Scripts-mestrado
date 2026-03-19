@@ -411,7 +411,8 @@ df_beta_flex <- df_sts_beta |>
   flextable::width(j = 2, width = 1.5) |>
   flextable::fontsize(size = 12, part = "all") |>
   flextable::bg(part = "all", bg = "white") |>
-  flextable::bg(i = ~abs(z) > 1.96, bg = "gray")
+  flextable::bg(i = ~abs(z) > 1.96, bg = "gray") |>
+  flextable::set_caption(paste0("pseudo-R² = ", r2_beta))
 
 df_beta_flex
 
@@ -449,7 +450,6 @@ df_beta |>
               method = "lm",
               se = FALSE) +
   facet_wrap(~Predictor, scales = "free_x") +
-  scale_y_continuous(limits = c(0.1, 0.5325)) +
   labs(x = "Predictor distance",
        y = "Composition distance") +
   theme_bw() +
