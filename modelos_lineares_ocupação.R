@@ -351,101 +351,12 @@ sts_df <- ls(pattern = "^resultados_") |>
 
 sts_df
 
-## Adenomera hylaedactyla ----
+## Tabela flextable ----
 
-sts_adenomera <- ls(pattern = "resultados_adenomera_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::mutate(Estimate = Estimate |> round(3),
-                `Std. Error` = `Std. Error` |> round(4),
-                `z value` = `z value` |> round(2),
-                `Adenomera hylaedactyla` = 17,
-                estatistica = paste0("β1 ± EP<sub>",
-                                     rowname,
-                                     "</sub> = ",
-                                     Estimate,
-                                     " ± ",
-                                     `Std. Error`,
-                                     "<br>z = ",
-                                     `z value`,
-                                     "<sub>6</sub>, p ",
-                                     `Pr(>|z|)`,
-                                     ", pseudo-R² = ",
-                                     `pseudo-R²`),
-                rowname = rowname |> stringr::str_remove_all("`")) |>
-  rename("Preditor" = rowname) |>
-  dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
-                                                `Pr(>|z|)` |>
-                                                  as.numeric() < 0.05 ~ "Sim",
-                                                .default = "Não")) |>
-  dplyr::select(2, 8:10) |>
-  dplyr::left_join(medianas |>
-                     dplyr::mutate(Preditor = Preditor |>
-                                     stringr::str_remove(" \\+ Temperature")),
-                   by = "Preditor") |>
-  dplyr::mutate(Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth",
-                                         "Canopy openness",
-                                         "Edge distance",
-                                         "Elevation",
-                                         "Water area")))
-
-sts_adenomera
-
-## Rhinella hoogmoedi ----
-
-sts_rhinella <- ls(pattern = "resultados_rhinella_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::mutate(Estimate_temp = Estimate |> dplyr::lead(),
-                `Std. Error temp` = `Std. Error` |> dplyr::lead(),
-                z_temp = `z value` |> dplyr::lead() |> round(2),
-                p_temp = `Pr(>|z|)` |> dplyr::lead()) |>
-  dplyr::filter(!rowname == "Temperature") |>
-  dplyr::mutate(Estimate = Estimate |> round(3),
-                Estimate_temp = Estimate_temp |> round(3),
-                `Std. Error` = `Std. Error` |> round(4),
-                `Std. Error temp` = `Std. Error temp` |> round(4),
-                `z value` = `z value` |> round(2),
-                `Rhinella hoogmoedi` = 11,
-                estatistica = paste0("β1 ± EP<sub>",
-                                     rowname,
-                                     "</sub> = ",
-                                     Estimate,
-                                     " ± ",
-                                     `Std. Error`,
-                                     "<br>z = ",
-                                     `z value`,
-                                     "<sub>6</sub>, p ",
-                                     `Pr(>|z|)`,
-                                     "<br>β1 ± EP<sub>temperature</sub> = ",
-                                     Estimate_temp,
-                                     " ± ",
-                                     `Std. Error temp`,
-                                     "<br>z = ",
-                                     z_temp,
-                                     "<sub>6</sub>, p ",
-                                     p_temp,
-                                     ", pseudo-R² = ",
-                                     `pseudo-R²`),
-                rowname = rowname |> stringr::str_remove_all("`"),
-                rowname = paste0(rowname, " + Temperature")) |>
-  rename("Preditor" = rowname) |>
-  dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
-                                                `Pr(>|z|)` |>
-                                                  readr::parse_number() < 0.05 ~ "Sim",
-                                                .default = "Não"),
-                Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
-                                         "Canopy openness + Temperature",
-                                         "Edge distance + Temperature",
-                                         "Elevation + Temperature",
-                                         "Water area + Temperature"))) |>
-  dplyr::select(2, 12:14) |>
-  dplyr::left_join(medianas,
-                   by = "Preditor")
-
-sts_rhinella
+sts_df |>
+  flextable::flextable() |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::width(j = 3, width = 2)
 
 # Gráficos ----
 
