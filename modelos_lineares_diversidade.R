@@ -8,7 +8,7 @@ library(vegan)
 
 library(performance)
 
-library(ggtext)
+library(flextable)
 
 library(ggview)
 
@@ -281,8 +281,8 @@ df_q1_flex
 
 ## Exportando a tabela ----
 
-sts_df_flex |>
-  flextable::save_as_docx(path = "tabela_estatisticas_modelos_ocupacao.docx")
+df_q1_flex |>
+  flextable::save_as_docx(path = "tabela_estatisticas_modelos_lineares_diversidade_alfa.docx")
 
 ### Gráfico -----
 
