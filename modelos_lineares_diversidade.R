@@ -279,7 +279,7 @@ df_q1_flex <- df_q1_estatisticas |>
 
 df_q1_flex
 
-## Exportando a tabela ----
+#### Exportando a tabela ----
 
 df_q1_flex |>
   flextable::save_as_docx(path = "tabela_estatisticas_modelos_lineares_diversidade_alfa.docx")
