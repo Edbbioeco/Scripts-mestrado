@@ -255,11 +255,6 @@ ls(pattern = "resultados_adenomera_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
 
-ls(pattern = "resultados_adenomera_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::filter(!Predictor == "Temperature")
-
 ## Rhinella hoogmoedi ----
 
 rodando_modelos_rhinella <- function(id){
