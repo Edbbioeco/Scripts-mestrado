@@ -355,14 +355,13 @@ ls(pattern = "resultados_rhinella_") |>
 sts_df <- ls(pattern = "^resultados_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
-  dplyr::filter(!Predictor == "Temperature") |>
   dplyr::rename("β1" = Estimate,
                 "SE" = `Std. Error`) |>
   dplyr::mutate("β1 ± EP" = paste0(β1 |> round(4),
                                    " ± ",
                                    SE |> round(4))) |>
-  dplyr::select(-c(Predictor, β1, SE)) |>
-  dplyr::relocate(`β1 ± EP`, .after = Model) |>
+  dplyr::select(-c(Model, β1, SE)) |>
+  dplyr::relocate(`β1 ± EP`, .after = Predictor) |>
   dplyr::arrange(Species = Species |> forcats::fct_relevel(c("Pristimantis ramagii",
                                                              "Adenomera aff. hylaedactyla",
                                                              "Rhinella hoogmoedi")))
