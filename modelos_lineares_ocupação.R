@@ -416,22 +416,18 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  dplyr::mutate(Preditor = paste0(Preditor, " + Temperature"),
-                Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
-                                         "Canopy openness + Temperature",
-                                         "Edge distance + Temperature",
-                                         "Elevation + Temperature",
-                                         "Hydric stream distance + Temperature"))) |>
-  dplyr::left_join(sts_pristimantis |>
-                     dplyr::select(1, 4),
-                   by = "Preditor") |>
+  dplyr::mutate(Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance"))) |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black",
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
-                dplyr::filter(Significante == "Sim"),
+                dplyr::filter(Preditor %in% prediotores_pristimantis),
               method = "glm", show.legend = FALSE, se = FALSE) +
   labs(x = "Predictor value",
        y = "<i>Pristimantis ramagii</i> abundance") +
@@ -440,7 +436,7 @@ df_ocupacao |>
         axis.title = element_text(color = "black", size = 15),
         axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(color = "black", size = 15),
+        strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
         title = element_text(color = "black", size = 15),
@@ -505,13 +501,13 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  dplyr::mutate(Preditor = paste0(Preditor, " + Temperature"),
+  dplyr::mutate(Preditor = paste0(Preditor, ""),
                 Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
-                                         "Canopy openness + Temperature",
-                                         "Edge distance + Temperature",
-                                         "Elevation + Temperature",
-                                         "Hydric stream distance + Temperature"))) |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance"))) |>
   dplyr::left_join(sts_rhinella |>
                      dplyr::select(1, 4),
                    by = "Preditor") |>
