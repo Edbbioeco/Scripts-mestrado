@@ -16,7 +16,7 @@ library(DHARMa)
 
 library(performance)
 
-library(ggtext)
+library(flextable)
 
 # Dados ----
 
@@ -343,7 +343,7 @@ ls(pattern = "resultados_rhinella_") |>
   dplyr::bind_rows() |>
   dplyr::filter(!Predictor == "Temperature")
 
-# Estatísticas ----
+# Tabela das estatísticas ----
 
 ## Medianas dos preditores ----
 
