@@ -390,6 +390,8 @@ sts_df_flex |>
 
 # Gráficos ----
 
+## Preditores significativos para cada espécie ----
+
 ## Pstimantis ramagii ----
 
 df_ocupacao |>
@@ -409,13 +411,6 @@ df_ocupacao |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black",
              size = 3.5) +
-  ggtext::geom_richtext(data = sts_pristimantis,
-                        aes(label = estatistica),
-                        color = "black",
-                        fontface = "bold",
-                        label.colour = "transparent",
-                        fill = "transparent",
-                        size = 4) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
                 dplyr::filter(Significante == "Sim"),
