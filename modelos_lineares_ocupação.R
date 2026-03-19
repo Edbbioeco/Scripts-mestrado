@@ -225,14 +225,11 @@ rodando_modelos_adenomera <- function(id){
     tibble::rownames_to_column() |>
     dplyr::mutate(Species = "Adenomera aff. hylaedactyla",
                   rowname = rowname |>
-                      stringr::str_remove_all("`")) |>
+                    stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Model = nome,
-                  `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                                .default = paste0("= ",
-                                                                  `Pr(>|z|)` |>
-                                                                    round(2)))) |>
+                  `Pr(>|z|)` = `Pr(>|z|)` |> round(2)) |>
     dplyr::rename("p" = `Pr(>|z|)`,
                   "Predictor" = rowname) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
@@ -302,23 +299,16 @@ rodando_modelos_rhinella <- function(id){
     .$coefficient |>
     as.data.frame() |>
     tibble::rownames_to_column() |>
-    dplyr::mutate(Species = "Rhinella hoogmoedi",
+    dplyr::mutate(Species = "Rhinella hoognoedi",
                   rowname = rowname |>
                     stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Model = nome,
-                  `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                                .default = paste0("= ",
-                                                                  `Pr(>|z|)` |>
-                                                                    round(2)))) |>
+                  `Pr(>|z|)` = `Pr(>|z|)` |> round(2)) |>
     dplyr::rename("p" = `Pr(>|z|)`,
                   "Predictor" = rowname) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
-
-  assign(paste0("resultados_adenomera_", nome),
-         resultados,
-         envir = globalenv())
 
   assign(paste0("resultados_rhinella_", nome),
          resultados,
@@ -354,51 +344,12 @@ sts_df <- ls(pattern = "^resultados_") |>
                                    " ± ",
                                    SE |> round(4))) |>
   dplyr::select(-c(Predictor, β1, SE)) |>
-  dplyr::filter(!rowname == "Temperature") |>
-  dplyr::mutate(Estimate = Estimate |> round(3),
-                Estimate_temp = Estimate_temp |> round(3),
-                `Std. Error` = `Std. Error` |> round(4),
-                `Std. Error temp` = `Std. Error temp` |> round(4),
-                `z value` = `z value` |> round(2),
-                `Pristimantis ramagii` = 29,
-                estatistica = paste0("β1 ± EP<sub>",
-                                     rowname,
-                                     "</sub> = ",
-                                     Estimate,
-                                     " ± ",
-                                     `Std. Error`,
-                                     "<br>z = ",
-                                     `z value`,
-                                     "<sub>6</sub>, p ",
-                                     `Pr(>|z|)`,
-                                     "<br>β1 ± EP<sub>temperature</sub> = ",
-                                     Estimate_temp,
-                                     " ± ",
-                                     `Std. Error temp`,
-                                     "<br>z = ",
-                                     z_temp,
-                                     "<sub>6</sub>, p ",
-                                     p_temp,
-                                     ", pseudo-R² = ",
-                                     `pseudo-R²`),
-                rowname = rowname |> stringr::str_remove_all("`"),
-                rowname = paste0(rowname, " + Temperature")) |>
-  rename("Preditor" = rowname) |>
-  dplyr::mutate(Significante = dplyr::case_when(`Pr(>|z|)` == "< 0.01" ~ "Sim",
-                                                `Pr(>|z|)` |>
-                                                  readr::parse_number() < 0.05 ~ "Sim",
-                                                .default = "Não"),
-                Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
-                                         "Canopy openness + Temperature",
-                                         "Edge distance + Temperature",
-                                         "Elevation + Temperature",
-                                         "Hydric stream distance + Temperature"))) |>
-  dplyr::select(2, 12:14) |>
-  dplyr::left_join(medianas,
-                   by = "Preditor")
+  dplyr::relocate(`β1 ± EP`, .after = Model) |>
+  dplyr::arrange(Species = Species |> forcats::fct_relevel(c("Pristimantis ramagii",
+                                                             "Adenomera aff. hylaedactyla",
+                                                             "Rhinella hoogmoedi")))
 
-sts_pristimantis
+sts_df
 
 ## Adenomera hylaedactyla ----
 
