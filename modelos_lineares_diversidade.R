@@ -232,25 +232,7 @@ ls(pattern = "resultados_alfa_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows()
 
-### Dataframe de estatísticas usadas no gráfico ----
-
-#### Valor medano das variáveis ----
-
-medianas_alfa <- df_alfa |>
-  dplyr::select(4, 6, 8:10) |>
-  tidyr::pivot_longer(cols = dplyr::everything(),
-                      names_to = "Preditor",
-                      values_to = "Valor preditor") |>
-  dplyr::summarise(`Valor Preditor` = `Valor preditor` |> range() |> mean(),
-                   .by = Preditor) |>
-  dplyr::mutate(Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth",
-                                         "Canopy openness",
-                                         "Edge distance",
-                                         "Elevation",
-                                         "Hydric stream distance")))
-
-medianas_alfa
+### Tabela das estatísticas ----
 
 #### Dataframe ----
 
