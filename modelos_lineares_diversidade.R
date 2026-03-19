@@ -366,27 +366,9 @@ r2_beta <- modelo_beta |> performance::r2_ferrari() |>
 
 r2_beta
 
-### Dataframe de estatísticas usadas no gráfico ----
+### Tabela das estatísticas ----
 
-#### Valor mediano das variáveis ----
-
-medianas_beta <- df_beta |>
-  dplyr::select(2:6) |>
-  tidyr::pivot_longer(cols = dplyr::everything(),
-                      names_to = "Preditor",
-                      values_to = "Valor preditor") |>
-  dplyr::mutate(Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth",
-                                         "Canopy openness",
-                                         "Edge distance",
-                                         "Elevation",
-                                         "Hydric stream distance"))) |>
-  dplyr::summarise(`Valor Preditor` = `Valor preditor` |> range() |> mean(),
-                   .by = Preditor)
-
-medianas_beta
-
-#### Dataframe da tabelas ----
+#### Dataframe ----
 
 df_sts <- modelo_beta |>
   summary() %>%
@@ -416,27 +398,7 @@ df_sts_trat <- df_sts |>
   tidyr::unite(β1:EP,
                sep = " ± ",
                col = "β1 ± EP") |>
-  dplyr::relocate(DF, .before = p) |>
-  dplyr::mutate(Composition = 0.52,
-                estatistica = paste0("β1 ± EP = ",
-                                     `β1 ± EP`,
-                                     "<br>z = ",
-                                     z,
-                                     "<sub>",
-                                     DF,
-                                     "</sub>, p = ",
-                                     p |> round(3)),
-                significante = dplyr::case_when(p < 0.05 ~ "Sim",
-                                                .default = "Não"),
-                Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth",
-                                         "Canopy openness",
-                                         "Edge distance",
-                                         "Elevation",
-                                         "Hydric stream distance"))) |>
-  dplyr::select(-c(2:5)) |>
-  dplyr::left_join(medianas_beta,
-                   by = "Preditor")
+  dplyr::relocate(DF, .before = p)
 
 df_sts_trat
 
