@@ -267,7 +267,9 @@ q_f <- qf(p = 0.05, df1 = 1, df2 = 9, lower.tail = FALSE) |> round(2)
 
 q_f
 
-#### Gráfico -----
+#### Tabela flextable ----
+
+### Gráfico -----
 
 df_alfa |>
   tidyr::pivot_longer(cols = c(4, 6, 8:10),
