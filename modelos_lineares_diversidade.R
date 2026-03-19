@@ -239,48 +239,21 @@ ls(pattern = "resultados_alfa_") |>
 df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
-  dplyr::rename("Preditor" = 1) |>
   dplyr::mutate(Estimate = Estimate |> round(4),
                 `Std. Error` = `Std. Error` |> round(4),
                 `t value` = `t value` |> round(3),
                 `Pr(>|t|)` = `Pr(>|t|)` |> round(2)) |>
-  dplyr::relocate(Preditor, .before = Estimate) |>
-  dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
-  dplyr::rename("β1" = Estimate,
+  dplyr::relocate(rowname, .before = Estimate) |>
+  dplyr::filter(!rowname |> stringr::str_detect("\\(")) |>
+  dplyr::rename("Predictor" = 1,
+                "β1" = Estimate,
                 "SE" = `Std. Error`,
                 "t" = `t value`,
-                "p" = `Pr(>|t|)`) |>
+                "p" = `Pr(>|t|)`,
+                `Global p` = `p global`) |>
   tidyr::unite(β1:SE,
                sep = " ± ",
-               col = "β1 ± SE") |>
-  dplyr::mutate(`Q = 1` = 4.3,
-                estatistica = paste0("β1 ± SE = ",
-                                     `β1 ± SE`,
-                                     "<br>t = ",
-                                     t,
-                                     ", p = ",
-                                     p,
-                                     "<br>F<sub>",
-                                     df1,
-                                     ", ",
-                                     df2,
-                                     "</sub> = ",
-                                     `F`,
-                                     ", p = ",
-                                     `p global`,
-                                     ", Adj. R² = ",
-                                     `Adj. R²`),
-                Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth",
-                                         "Canopy openness",
-                                         "Edge distance",
-                                         "Elevation",
-                                         "Hydric stream distance")),
-                significante = dplyr::case_when(`p global` < 0.05 ~ "Sim",
-                                               .default = "Não")) |>
-  dplyr::select(-c(2:9)) |>
-  dplyr::left_join(medianas_alfa,
-                   by = "Preditor")
+               col = "β1 ± SE")
 
 df_q1_estatisticas
 
