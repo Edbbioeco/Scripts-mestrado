@@ -148,10 +148,7 @@ rodando_modelos_pristimantis <- function(id){
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Model = nome,
-                  `Pr(>|z|)` = dplyr::case_when(`Pr(>|z|)` < 0.01 ~ "< 0.01",
-                                                .default = paste0("= ",
-                                                                  `Pr(>|z|)` |>
-                                                                    round(2)))) |>
+                  `Pr(>|z|)` = `Pr(>|z|)` |> round(2)) |>
     dplyr::rename("p" = `Pr(>|z|)`,
                   "Predictor" = rowname) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
@@ -345,33 +342,18 @@ ls(pattern = "resultados_rhinella_") |>
 
 # Tabela das estatísticas ----
 
-## Medianas dos preditores ----
+## Criando o data frame ----
 
-medianas <- df_ocupacao |>
-  tidyr::pivot_longer(cols = c(6, 8, 10:12),
-                      names_to = "Preditor",
-                      values_to = "Valor preditor") |>
-  dplyr::mutate(Preditor = paste0(Preditor, " + Temperature")) |>
-  dplyr::summarise(`Valor preditor` = `Valor preditor` |> range() |> mean(),
-                   .by = Preditor) |>
-  dplyr::mutate(Preditor = Preditor |>
-                  forcats::fct_relevel(c("Leaf-litter depth + Temperature",
-                                         "Canopy openness + Temperature",
-                                         "Edge distance + Temperature",
-                                         "Elevation + Temperature",
-                                         "Hydric stream distance + Temperature")))
-
-medianas
-
-## Pristimantis ramagii ----
-
-sts_pristimantis <- ls(pattern = "resultados_pristimantis_") |>
+sts_df <- ls(pattern = "^resultados_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
-  dplyr::mutate(Estimate_temp = Estimate |> dplyr::lead(),
-                `Std. Error temp` = `Std. Error` |> dplyr::lead(),
-                z_temp = `z value` |> dplyr::lead() |> round(2),
-                p_temp = `Pr(>|z|)` |> dplyr::lead()) |>
+  dplyr::filter(!Predictor == "Temperature") |>
+  dplyr::rename("β1" = Estimate,
+                "SE" = `Std. Error`) |>
+  dplyr::mutate("β1 ± EP" = paste0(β1 |> round(4),
+                                   " ± ",
+                                   SE |> round(4))) |>
+  dplyr::select(-c(Predictor, β1, SE)) |>
   dplyr::filter(!rowname == "Temperature") |>
   dplyr::mutate(Estimate = Estimate |> round(3),
                 Estimate_temp = Estimate_temp |> round(3),
