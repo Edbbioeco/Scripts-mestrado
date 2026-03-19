@@ -379,9 +379,9 @@ nomes_var <- df_sts |> rownames()
 
 nomes_var
 
-df_sts_trat <- df_sts |>
+df_sts_beta <- df_sts |>
   tibble::as_tibble() |>
-  dplyr::mutate(Preditor = nomes_var |>
+  dplyr::mutate(Predictor = nomes_var |>
                   stringr::str_remove_all("`") |>
                   stringr::str_replace("hidrico", "hídrico"),
                 Estimate = Estimate |> round(4),
@@ -389,8 +389,8 @@ df_sts_trat <- df_sts |>
                 `z value` = `z value` |> round(3),
                 `Pr(>|z|)` = `Pr(>|z|)` |> round(5),
                 DF = 51) |>
-  dplyr::relocate(Preditor, .before = Estimate) |>
-  dplyr::filter(!Preditor |> stringr::str_detect("\\(")) |>
+  dplyr::relocate(Predictor, .before = Estimate) |>
+  dplyr::filter(!Predictor |> stringr::str_detect("\\(")) |>
   dplyr::rename("β1" = Estimate,
                 "EP" = `Std. Error`,
                 "z" = `z value`,
@@ -400,49 +400,64 @@ df_sts_trat <- df_sts |>
                col = "β1 ± EP") |>
   dplyr::relocate(DF, .before = p)
 
-df_sts_trat
+df_sts_beta
 
-#### Gráfico ----
+#### Tabela flextable ----
+
+df_beta_flex <- df_sts_beta |>
+  flextable::flextable() |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::width(j = 1, width = 1.5) |>
+  flextable::width(j = 2, width = 1.5) |>
+  flextable::fontsize(size = 12, part = "all") |>
+  flextable::bg(part = "all", bg = "white") |>
+  flextable::bg(i = ~abs(z) > 1.96, bg = "gray")
+
+df_beta_flex
+
+#### Exportando a tabela ----
+
+df_beta_flex |>
+  flextable::save_as_docx(path = "tabela_estatisticas_modelos_lineares_diversidade_beta.docx")
+
+### Preditores significativos ----
+
+beta_predictor <- df_sts_beta |>
+  dplyr::filter(abs(z) > 1.96) |>
+  dplyr::pull(Predictor)
+
+beta_predictor
+
+### Gráfico ----
 
 df_beta |>
   tidyr::pivot_longer(cols = 2:6,
-                      names_to = "Preditor",
-                      values_to = "Valor Preditor") |>
-  dplyr::left_join(df_sts_trat |>
-                     dplyr::select(1, 4),
-                   by = "Preditor")  |>
-  dplyr::mutate(Preditor = Preditor |>
+                      names_to = "Predictor",
+                      values_to = "Valor Predictor") |>
+  dplyr::mutate(Predictor = Predictor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
                                          "Hydric stream distance"))) |>
-  ggplot(aes(`Valor Preditor`, Composition)) +
+  ggplot(aes(`Valor Predictor`, Composition)) +
   geom_point(color = "black",
              size = 3.5,
              stroke = 1) +
   geom_smooth(data = . %>%
-                dplyr::filter(significante == "Sim"),
+                dplyr::filter(Predictor %in% beta_predictor),
               method = "lm",
               se = FALSE) +
-  facet_wrap(~Preditor, scales = "free_x") +
-  ggtext::geom_richtext(data = df_sts_trat,
-                        aes(label = estatistica),
-                        color = "black",
-                        fontface = "bold",
-                        label.colour = "transparent",
-                        fill = "transparent",
-                        size = 5) +
+  facet_wrap(~Predictor, scales = "free_x") +
   scale_y_continuous(limits = c(0.1, 0.5325)) +
   labs(x = "Predictor distance",
-       y = "Composition distance",
-       title = paste0("z-critic = 1.96, adjusted pseudo-R² = ", r2_beta)) +
+       y = "Composition distance") +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
         axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(color = "black", size = 15),
+        strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
         title = element_text(color = "black", size = 15),
