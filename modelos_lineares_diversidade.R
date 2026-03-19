@@ -386,7 +386,7 @@ df_sts_beta <- df_sts |>
                   stringr::str_replace("hidrico", "hídrico"),
                 Estimate = Estimate |> round(4),
                 `Std. Error` = `Std. Error` |> round(4),
-                `z value` = `z value` |> round(3),
+                `z value` = `z value` |> round(2),
                 `Pr(>|z|)` = `Pr(>|z|)` |> round(2),
                 DF = 51) |>
   dplyr::relocate(Predictor, .before = Estimate) |>
