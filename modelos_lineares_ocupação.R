@@ -235,8 +235,14 @@ rodando_modelos_adenomera <- function(id){
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Model = nome,
-                  `Pr(>|z|)` = `Pr(>|z|)` |> round(2)) |>
-    dplyr::rename("p" = `Pr(>|z|)`,
+                  `Pr(>|z|)` = dplyr::if_else(`Pr(>|z|)` < 0.01,
+                                              "< 0.01",
+                                              `Pr(>|z|)` |>
+                                                round(2) |>
+                                                as.character()),
+                  `z value` = `z value` |> round(2)) |>
+    dplyr::rename("z" = `z value`,
+                  "p" = `Pr(>|z|)`,
                   "Predictor" = rowname) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
 
@@ -305,14 +311,20 @@ rodando_modelos_rhinella <- function(id){
     .$coefficient |>
     as.data.frame() |>
     tibble::rownames_to_column() |>
-    dplyr::mutate(Species = "Rhinella hoognoedi",
+    dplyr::mutate(Species = "Rhinella hoogmoedi",
                   rowname = rowname |>
                     stringr::str_remove_all("`")) |>
     dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
     dplyr::mutate(`pseudo-R²` = r2[2],
                   Model = nome,
-                  `Pr(>|z|)` = `Pr(>|z|)` |> round(2)) |>
-    dplyr::rename("p" = `Pr(>|z|)`,
+                  `Pr(>|z|)` = dplyr::if_else(`Pr(>|z|)` < 0.01,
+                                              "< 0.01",
+                                              `Pr(>|z|)` |>
+                                                round(2) |>
+                                                as.character()),
+                  `z value` = `z value` |> round(2)) |>
+    dplyr::rename("z" = `z value`,
+                  "p" = `Pr(>|z|)`,
                   "Predictor" = rowname) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
 
