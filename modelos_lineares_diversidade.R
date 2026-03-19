@@ -269,6 +269,14 @@ q_f
 
 #### Tabela flextable ----
 
+df_q1_estatisticas |>
+  flextable::flextable() |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::width(j = 2, width = 2) |>
+  flextable::fontsize(size = 12, part = "all") |>
+  flextable::bg(part = "all", bg = "white") |>
+  flextable::bg(i = ~abs(t) > q_t & `F` >= q_f, bg = "gray")
+
 ### Gráfico -----
 
 df_alfa |>
