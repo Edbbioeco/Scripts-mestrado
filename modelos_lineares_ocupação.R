@@ -459,22 +459,12 @@ df_ocupacao |>
                                          "Edge distance",
                                          "Elevation",
                                          "Hydric stream distance"))) |>
-  dplyr::left_join(sts_adenomera |>
-                     dplyr::select(1, 4),
-                   by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`)) +
   geom_point(color = "black",
              size = 3.5) +
-  ggtext::geom_richtext(data = sts_adenomera,
-                        aes(label = estatistica),
-                        color = "black",
-                        fontface = "bold",
-                        label.colour = "transparent",
-                        fill = "transparent",
-                        size = 4) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
-                dplyr::filter(Significante == "Sim"),
+                dplyr::filter(Preditor %in% prediotores_adenomera),
               method = "glm", show.legend = FALSE, se = FALSE) +
   labs(x = "Predictor value",
        y = "<i>Adenomera</i> aff. <i>hylaedactyla</i> abundance") +
@@ -484,7 +474,7 @@ df_ocupacao |>
         axis.title = element_text(color = "black", size = 15),
         axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(color = "black", size = 15),
+        strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
         title = element_text(color = "black", size = 15),
@@ -508,22 +498,12 @@ df_ocupacao |>
                                          "Edge distance",
                                          "Elevation",
                                          "Hydric stream distance"))) |>
-  dplyr::left_join(sts_rhinella |>
-                     dplyr::select(1, 4),
-                   by = "Preditor") |>
   ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`)) +
   geom_point(color = "black",
              size = 3.5) +
-  ggtext::geom_richtext(data = sts_rhinella,
-                        aes(label = estatistica),
-                        color = "black",
-                        fontface = "bold",
-                        label.colour = "transparent",
-                        fill = "transparent",
-                        size = 4) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_smooth(data = . %>%
-                dplyr::filter(Significante == "Sim"),
+                dplyr::filter(Preditor %in% prediotores_rhinella),
               method = "glm", family = poisson, show.legend = FALSE, se = FALSE) +
   labs(x = "Predictor value",
        y = "<i>Rhinella hoogmoedi</i> abundance") +
