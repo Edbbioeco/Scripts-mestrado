@@ -18,7 +18,7 @@ library(patchwork)
 
 # Dados ----
 
-## Shapefile do Brasil ----
+## Brasil ----
 
 ### Importando ----
 
@@ -41,3 +41,15 @@ pe <- br |>
 ggplot() +
   geom_sf(data = br, color = "black") +
   geom_sf(data = pe, color = "black", fill = "gold")
+
+## Saltinho ----
+
+### Importando ----
+
+saltinho <- sf::st_read("saltinho.shp")
+
+### Visualizando ----
+
+ggplot() +
+  geom_sf(data = pe, color = "black", fill = "gold") +
+  geom_sf(data = saltinho, color = "black", fill = "forestgreen")
