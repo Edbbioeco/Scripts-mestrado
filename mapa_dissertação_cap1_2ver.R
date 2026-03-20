@@ -28,3 +28,16 @@ br <- geobr::read_state(year = 2019)
 
 ggplot() +
   geom_sf(data = br, color = "black")
+
+## Pernambuco ----
+
+### Importando ----
+
+pe <- br |>
+  dplyr::filter(abbrev_state == "PE")
+
+### Visualizando ----
+
+ggplot() +
+  geom_sf(data = br, color = "black") +
+  geom_sf(data = pe, color = "black", fill = "gold")
