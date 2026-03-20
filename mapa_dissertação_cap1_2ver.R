@@ -78,3 +78,18 @@ ggplot() +
   geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1)
+
+## Imagem de satélite ----
+
+### Importando ----
+
+saltinho_tif <- terra::rast("saltinho.tif")
+
+### Visualizando ----
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
+  geom_sf(data = saltinho, color = "yellow", fill = "transparent", linewidth = 1) +
+  geom_sf(data = borda, color = "green4", fill = "transparent", linewidth = 1) +
+  geom_sf(data = parcelas, color = "red", linewidth = 1) +
+  coord_sf(expand = FALSE)
