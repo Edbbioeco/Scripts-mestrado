@@ -26,6 +26,8 @@ br <- geobr::read_state(year = 2019)
 
 ### Visualizando ----
 
+br
+
 ggplot() +
   geom_sf(data = br, color = "black")
 
@@ -37,6 +39,8 @@ pe <- br |>
   dplyr::filter(abbrev_state == "PE")
 
 ### Visualizando ----
+
+pe
 
 ggplot() +
   geom_sf(data = br, color = "black") +
@@ -50,6 +54,8 @@ saltinho <- sf::st_read("saltinho.shp")
 
 ### Visualizando ----
 
+saltinho
+
 ggplot() +
   geom_sf(data = pe, color = "black", fill = "gold") +
   geom_sf(data = saltinho, color = "black", fill = "forestgreen")
@@ -61,6 +67,8 @@ ggplot() +
 borda <- sf::st_read("borda_saltinho.shp")
 
 ### Visualizando ----
+
+borda
 
 ggplot() +
   geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
@@ -74,10 +82,28 @@ parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
 
 ### Visualizando ----
 
+parcelas
+
 ggplot() +
   geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1)
+
+## Corpos hídricos ----
+
+### Importando ----
+
+corpos_hid <- sf::st_read("corpos_hidricos_saltinho.gpkg")
+
+### Visualizando ----
+
+corpos_hid
+
+ggplot() +
+  geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
+  geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = parcelas, color = "red", linewidth = 1) +
+  geom_sf(data = corpos_hid, color = "royalblue", fill = "transparent", linewidth = 1)
 
 ## Imagem de satélite ----
 
