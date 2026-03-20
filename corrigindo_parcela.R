@@ -26,10 +26,20 @@ coord |> dplyr::glimpse()
 
 ## Trilha 1 Parcela 3 ----
 
-coord_trat <- coord %>%
+coord_trat <- coord |>
   dplyr::filter(Trilha == "1" & Parcela == 3) |>
   dplyr::select(Longitude, Latitude, `Azimute (graus)`, `Comprimento (m)`) |>
   dplyr::slice(-1)
+
+coord_trat
+
+coord_trat |> dplyr::glimpse()
+
+## Cinvertendo as coordenadas para graus decimais ----
+
+coord_trat <- coord_trat |>
+  dplyr::mutate(Longitude = Longitude |> parzer::parse_lon(),
+                Latitude = Latitude |> parzer::parse_lat())
 
 coord_trat
 
