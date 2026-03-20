@@ -67,3 +67,14 @@ ggplot() +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1)
 
 ## Parcelas de amostragem ----
+
+### Importando ----
+
+parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
+
+### Visualizando ----
+
+ggplot() +
+  geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
+  geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = parcelas, color = "red", linewidth = 1)
