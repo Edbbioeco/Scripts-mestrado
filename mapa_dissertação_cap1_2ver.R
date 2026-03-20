@@ -105,3 +105,64 @@ br_map <- ggplot() +
   ggview::canvas(height = 10, width = 12)
 
 br_map
+
+# Mapa de Pernambuco ----
+
+pe_map <- ggplot() +
+  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 1) +
+  geom_sf(data = pe, color = "black", fill = "gold", linewidth = 1) +
+  geom_sf(data = saltinho, color = "orange", fill = "transparent", linewidth = 1) +
+  ggspatial::coord_sf(label_graticule = "NE",
+                      xlim = c(-36.3, -34.8),
+                      ylim = c(-8.9, -7.4)) +
+  theme(axis.text = element_text(size = 20)) +
+  ggview::canvas(height = 10, width = 12)
+
+pe_map
+
+# Mapa de Saltinho ----
+
+mapa_principal <- ggplot() +
+  geom_sf(data = br, color = "black",
+          aes(fill = "Brazil"), linewidth = 1) +
+  geom_sf(data = pe, color = "black",
+          aes(fill = "Pernambuco"), linewidth = 1) +
+  tidyterra::geom_spatraster_rgb(data = saltinho_rast) +
+  geom_sf(data = borda,
+          aes(color = "Native Forest"),
+          linewidth = 1, fill = "transparent") +
+  geom_sf(data = corpos_hid,
+          aes(color = "Hidric bodies"),
+          linewidth = 1, fill = "transparent") +
+  geom_sf(data = saltinho,
+          aes(color = "REBio Saltinho"),
+          linewidth = 1, fill = "transparent") +
+  geom_sf(data = parcelas_trat,
+          aes(color = tipo),
+          linewidth = 1, fill = "transparent") +
+  coord_sf(label_graticule = "NSEW",
+           xlim = c(-35.20319, -35.15696),
+           ylim = c(-8.744113, -8.710025),
+           expand = FALSE) +
+  labs(fill = NULL,
+       color = NULL) +
+  scale_fill_manual(values = c("white",
+                               "lightgoldenrod")) +
+  scale_color_manual(values = c("Native Forest" = "gold3",
+                                "REBio Saltinho" = "red",
+                                "Hidric bodies" = "royalblue",
+                                "Uniform Sample" = "orange2",
+                                "Riparian Sample" = "purple"),
+                     breaks = c("Native Forest", "Hidric bodies", "REBio Saltinho",
+                                "Uniform Sample", "Riparian Sample")) +
+  ggspatial::annotation_scale(location = "br",
+                              text_face = "bold",
+                              text_cex = 2,
+                              text_col = "white",
+                              unit_category = "metric",
+                              bar_cols = c("black", "white"),
+                              width_hint = 0.35) +
+  theme(legend.margin = margin(t = 0, unit = "pt"))
+ggview::canvas(height = 10, width = 12)
+
+mapa_principal
