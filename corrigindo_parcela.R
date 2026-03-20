@@ -35,7 +35,7 @@ coord_trat
 
 coord_trat |> dplyr::glimpse()
 
-## Cinvertendo as coordenadas para graus decimais ----
+## Convertendo as coordenadas para graus decimais ----
 
 coord_trat <- coord_trat |>
   dplyr::mutate(Longitude = Longitude |> parzer::parse_lon(),
