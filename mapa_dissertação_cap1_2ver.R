@@ -89,6 +89,20 @@ ggplot() +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1)
 
+### Tratando ----
+
+parcelas_trat <- parcelas |>
+  dplyr::mutate(tipo = c(rep("Uniform Sample", 10),
+                         rep("Riparian Sample", 2))) |>
+  dplyr::filter(!Trlh.Pr == "1-1")
+
+parcelas_trat
+
+ggplot() +
+  geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
+  geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = parcelas_trat, aes(color = tipo), linewidth = 1)
+
 ## Corpos hídricos ----
 
 ### Importando ----
@@ -124,7 +138,7 @@ ggplot() +
 
 br_map <- ggplot() +
   geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 1) +
-  geom_sf(data = pe, color = "black", fill = "gold", linewidth = 1) +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 1) +
   ggspatial::coord_sf(expand = FALSE,
                       label_graticule = "SE") +
   theme(axis.text = element_text(size = 20)) +
@@ -136,8 +150,8 @@ br_map
 
 pe_map <- ggplot() +
   geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 1) +
-  geom_sf(data = pe, color = "black", fill = "gold", linewidth = 1) +
-  geom_sf(data = saltinho, color = "orange", fill = "transparent", linewidth = 1) +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 1) +
+  geom_sf(data = saltinho, color = "red", fill = "transparent", linewidth = 1) +
   ggspatial::coord_sf(label_graticule = "NE",
                       xlim = c(-36.3, -34.8),
                       ylim = c(-8.9, -7.4)) +
@@ -153,7 +167,7 @@ mapa_principal <- ggplot() +
           aes(fill = "Brazil"), linewidth = 1) +
   geom_sf(data = pe, color = "black",
           aes(fill = "Pernambuco"), linewidth = 1) +
-  tidyterra::geom_spatraster_rgb(data = saltinho_rast) +
+  tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
   geom_sf(data = borda,
           aes(color = "Native Forest"),
           linewidth = 1, fill = "transparent") +
@@ -166,13 +180,13 @@ mapa_principal <- ggplot() +
   geom_sf(data = parcelas_trat,
           aes(color = tipo),
           linewidth = 1, fill = "transparent") +
-  coord_sf(label_graticule = "NSEW",
-           xlim = c(-35.20319, -35.15696),
-           ylim = c(-8.744113, -8.710025),
-           expand = FALSE) +
+  ggspatial::coord_sf(label_graticule = "NSW",
+                      xlim = c(-35.20319, -35.15696),
+                      ylim = c(-8.7442, -8.710025),
+                      expand = FALSE) +
   labs(fill = NULL,
        color = NULL) +
-  scale_fill_manual(values = c("white",
+  scale_fill_manual(values = c("lightgray",
                                "lightgoldenrod")) +
   scale_color_manual(values = c("Native Forest" = "gold3",
                                 "REBio Saltinho" = "red",
@@ -188,7 +202,19 @@ mapa_principal <- ggplot() +
                               unit_category = "metric",
                               bar_cols = c("black", "white"),
                               width_hint = 0.35) +
-  theme(legend.margin = margin(t = 0, unit = "pt"))
-ggview::canvas(height = 10, width = 12)
+  guides(fill = guide_legend(nrow = 2),
+         color = guide_legend(nrow = 2)) +
+  theme(legend.margin = margin(t = 0, unit = "pt")) +
+  ggview::canvas(height = 10, width = 12)
 
 mapa_principal
+
+## Unindo os mapas ----
+
+mapa_final <- mapa_principal + (pe_map / br_map) +
+  plot_layout(widths = c(4, 1.54),
+              guides = "collect")
+
+mapa_final +
+  ggview::canvas(height = 10, width = 12)
+
