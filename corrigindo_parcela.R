@@ -53,8 +53,8 @@ convertendo_coords <- function(x){
 
     dest <- geosphere::destPoint(c(coord_trat$Longitude[x-1],
                                    coord_trat$Latitude[x-1]),
-                                 coord_trat$`Angulo de virada`[x-1],
-                                 coord_trat$`Distância (m)`[x-1])
+                                 coord_trat$`Azimute (graus)`[x-1],
+                                 coord_trat$`Comprimento (m)`[x-1])
 
     coord_trat$Longitude[x] <<- dest[1]
 
@@ -65,3 +65,7 @@ convertendo_coords <- function(x){
 }
 
 purrr::map(2:nrow(coord_trat), convertendo_coords)
+
+coord_trat
+
+coord_trat |> dplyr::glimpse()
