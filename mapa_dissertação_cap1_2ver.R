@@ -225,4 +225,4 @@ mapa_final +
   ggview::canvas(height = 7.5, width = 12)
 
 ggsave(filename = "mapa_cap1_2ver.png",
-       height = 10, width = 12)
+       height = 7.5, width = 12)
