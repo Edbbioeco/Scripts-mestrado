@@ -4,6 +4,8 @@ library(readxl)
 
 library(tidyverse)
 
+library(parzer)
+
 library(geosphere)
 
 library(sf)
@@ -25,7 +27,9 @@ coord |> dplyr::glimpse()
 ## Trilha 1 Parcela 3 ----
 
 coord_trat <- coord %>%
-  dplyr::filter(Trilha == "1" & Parcela == 3)
+  dplyr::filter(Trilha == "1" & Parcela == 3) |>
+  dplyr::select(Longitude, Latitude, `Azimute (graus)`, `Comprimento (m)`) |>
+  dplyr::slice(-1)
 
 coord_trat
 
@@ -35,19 +39,19 @@ coord_trat |> dplyr::glimpse()
 
 convertendo_coords <- function(x){
 
-  if(coord$Longitude[x] |> is.na() | coord$Latitude[x] |> is.na()){
+  if(coord_trat$Longitude[x] |> is.na() | coord_trat$Latitude[x] |> is.na()){
 
-    dest <- geosphere::destPoint(c(coord$Longitude[x-1],
-                                   coord$Latitude[x-1]),
-                                 coord$`Angulo de virada`[x-1],
-                                 coord$`Distância (m)`[x-1])
+    dest <- geosphere::destPoint(c(coord_trat$Longitude[x-1],
+                                   coord_trat$Latitude[x-1]),
+                                 coord_trat$`Angulo de virada`[x-1],
+                                 coord_trat$`Distância (m)`[x-1])
 
-    coord$Longitude[x] <<- dest[1]
+    coord_trat$Longitude[x] <<- dest[1]
 
-    coord$Latitude[x] <<- dest[2]
+    coord_trat$Latitude[x] <<- dest[2]
 
   }
 
 }
 
-purrr::map(2:nrow(coord), convertendo_coords)
+purrr::map(2:nrow(coord_trat), convertendo_coords)
