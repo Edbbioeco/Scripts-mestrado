@@ -141,8 +141,8 @@ source("C:/Users/LENOVO/OneDrive/Documentos/funções/tema.R")
 # Mapa do Brasil ----
 
 br_map <- ggplot() +
-  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.5) +
-  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.75) +
+  geom_sf(data = br, color = "black", fill = "lightgray") +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod") +
   ggspatial::coord_sf(expand = FALSE,
                       label_graticule = "SE") +
   theme(axis.text = element_text(size = 20)) +
@@ -153,8 +153,8 @@ br_map
 # Mapa de Pernambuco ----
 
 pe_map <- ggplot() +
-  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.75) +
-  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.75) +
+  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.5) +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.5) +
   geom_sf(data = saltinho, color = "red", fill = "transparent", linewidth = 1) +
   ggspatial::coord_sf(label_graticule = "NE",
                       xlim = c(-36.3, -34.8),
