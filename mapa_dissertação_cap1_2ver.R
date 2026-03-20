@@ -93,3 +93,15 @@ ggplot() +
   geom_sf(data = borda, color = "green4", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
   coord_sf(expand = FALSE)
+
+# Mapa do Brasil ----
+
+br_map <- ggplot() +
+  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 1) +
+  geom_sf(data = pe, color = "black", fill = "gold", linewidth = 1) +
+  ggspatial::coord_sf(expand = FALSE,
+                      label_graticule = "SE") +
+  theme(axis.text = element_text(size = 20)) +
+  ggview::canvas(height = 10, width = 12)
+
+br_map
