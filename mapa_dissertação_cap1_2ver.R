@@ -134,6 +134,10 @@ ggplot() +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
   coord_sf(expand = FALSE)
 
+# Setando tema ----
+
+source("C:/Users/LENOVO/OneDrive/Documentos/funções/tema.R")
+
 # Mapa do Brasil ----
 
 br_map <- ggplot() +
