@@ -53,3 +53,17 @@ saltinho <- sf::st_read("saltinho.shp")
 ggplot() +
   geom_sf(data = pe, color = "black", fill = "gold") +
   geom_sf(data = saltinho, color = "black", fill = "forestgreen")
+
+## Borda da mata ----
+
+### Importando ----
+
+borda <- sf::st_read("borda_saltinho.shp")
+
+### Visualizando ----
+
+ggplot() +
+  geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
+  geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1)
+
+## Parcelas de amostragem ----
