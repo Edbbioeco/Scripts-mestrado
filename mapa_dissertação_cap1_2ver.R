@@ -141,8 +141,8 @@ source("C:/Users/LENOVO/OneDrive/Documentos/funções/tema.R")
 # Mapa do Brasil ----
 
 br_map <- ggplot() +
-  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 1) +
-  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 1) +
+  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.5) +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.75) +
   ggspatial::coord_sf(expand = FALSE,
                       label_graticule = "SE") +
   theme(axis.text = element_text(size = 20)) +
@@ -153,12 +153,13 @@ br_map
 # Mapa de Pernambuco ----
 
 pe_map <- ggplot() +
-  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 1) +
-  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 1) +
+  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.75) +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.75) +
   geom_sf(data = saltinho, color = "red", fill = "transparent", linewidth = 1) +
   ggspatial::coord_sf(label_graticule = "NE",
                       xlim = c(-36.3, -34.8),
                       ylim = c(-8.9, -7.4)) +
+  scale_x_continuous(breaks = seq(-36.2, -34.8, 0.4)) +
   theme(axis.text = element_text(size = 20)) +
   ggview::canvas(height = 10, width = 12)
 
@@ -168,9 +169,9 @@ pe_map
 
 mapa_principal <- ggplot() +
   geom_sf(data = br, color = "black",
-          aes(fill = "Brazil"), linewidth = 1) +
+          aes(fill = "Brazil"), linewidth = 0.5) +
   geom_sf(data = pe, color = "black",
-          aes(fill = "Pernambuco"), linewidth = 1) +
+          aes(fill = "Pernambuco"), linewidth = 0.75) +
   tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
   geom_sf(data = borda,
           aes(color = "Native Forest"),
@@ -208,7 +209,7 @@ mapa_principal <- ggplot() +
                               width_hint = 0.35) +
   guides(fill = guide_legend(nrow = 2),
          color = guide_legend(nrow = 2)) +
-  theme(legend.margin = margin(t = 0, unit = "pt")) +
+  #theme(legend.margin = margin(t = 0, unit = "pt")) +
   ggview::canvas(height = 10, width = 12)
 
 mapa_principal
@@ -217,8 +218,11 @@ mapa_principal
 
 mapa_final <- mapa_principal + (pe_map / br_map) +
   plot_layout(widths = c(4, 1.54),
-              guides = "collect")
+              guides = "collect") &
+  theme(axis.text = element_text(size = 12.5))
 
 mapa_final +
-  ggview::canvas(height = 10, width = 12)
+  ggview::canvas(height = 7.5, width = 12)
 
+ggsave(filename = "mapa_cap1_2ver.png",
+       height = 10, width = 12)
