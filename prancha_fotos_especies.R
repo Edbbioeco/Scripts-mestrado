@@ -98,5 +98,8 @@ lista_ggplots <- ls(pattern = "^ggplot_") |>
 
 lista_ggplots
 
-## Fotos unidas ----
+## Criando a prancha ----
+
+patchwork::wrap_plots(lista_ggplots) +
+  patchwork::plot_annotation(tag_levels = "A")
 
