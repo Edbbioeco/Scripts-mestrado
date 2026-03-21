@@ -93,7 +93,10 @@ purrr::map2(fotos_unidas, nome_especies, criando_ggplots)
 ## Lista dos ggplots ----
 
 lista_ggplots <- ls(pattern = "^ggplot_") |>
-  rev()
+  rev() |>
+  mget(envir = globalenv())
+
+lista_ggplots
 
 ## Fotos unidas ----
 
