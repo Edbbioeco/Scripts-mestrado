@@ -37,10 +37,16 @@ purrr::map(foto, importar_fotos)
 
 ## Visualizando ----
 
-### Unindo as fotos ----
+### Lista das fotos ----
 
 fotos_unidas <- ls(pattern = "^foto_") |>
   mget(envir = globalenv()) |>
-  c()
+  terra::rast()
 
 fotos_unidas
+
+### Gráfico ----
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = fotos_unidas) +
+  facet_wrap(~lyr)
