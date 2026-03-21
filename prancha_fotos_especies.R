@@ -102,15 +102,29 @@ lista_ggplots
 
 ### Horizontal ----
 
-prancha <- patchwork::wrap_plots(lista_ggplots) +
+prancha_horizontal <- patchwork::wrap_plots(lista_ggplots) +
   patchwork::plot_annotation(tag_levels = "A") &
-  theme(plot.tag = element_text(face = "bold"))
+  theme(plot.tag = element_text(face = "bold", size = 20))
 
-prancha
+prancha_horizontal
 
-prancha + ggview::canvas(height = 4.5, width = 12)
+prancha_horizontal + ggview::canvas(height = 4.5, width = 12)
 
-ggsave(filename = "prancha_species.png",
-       height = 10,
+ggsave(filename = "prancha_species_horizontal.png",
+       height = 4.5,
        width = 12)
 
+### Vertical ----
+
+prancha_vertical <- patchwork::wrap_plots(lista_ggplots,
+                                          ncol = 1) +
+  patchwork::plot_annotation(tag_levels = "A") &
+  theme(plot.tag = element_text(face = "bold", size = 20))
+
+prancha_vertical
+
+prancha_vertical + ggview::canvas(height = 12, width = 4.5)
+
+ggsave(filename = "prancha_species_vertical.png",
+       height = 12,
+       width = 4.5)
