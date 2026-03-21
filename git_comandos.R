@@ -10,32 +10,20 @@ gert::git_status() |>
 
 # Adicionando arquivo ----
 
-gert::git_add(list.files(pattern = "git_comandos.R")) |>
+gert::git_add(list.files(pattern = "^git_")) |>
   as.data.frame()
 
 # Commitando ----
 
-gert::git_commit("Script para settar repositórios do Github")
+gert::git_commit("Script para os comandos de Git")
 
 # Pushando ----
 
-## Repositório privado ----
-
-gert::git_push(remote = "privado", force = TRUE)
-
-## Repositório público ----
-
-gert::git_push(remote = "publico", force = TRUE)
+gert::git_push(remote = "mestrado", force = TRUE)
 
 # Pullando ----
 
-## Repositório privado ----
-
-gert::git_pull(remote = "privado")
-
-## Repositório público ----
-
-gert::git_pull(remote = "publico")
+gert::git_pull(remote = "mestrado")
 
 # Resetando ----
 
@@ -52,6 +40,6 @@ gert::git_commit("Removendo arquivos não .R do repositório")
 
 #gert::git_push(remote = "privado", force = TRUE)
 
-gert::git_push(remote = "publico", force = TRUE)
+gert::git_push(remote = "mestrado", force = TRUE)
 
-gert::git_pull(remote = "publico")
+gert::git_pull(remote = "mestrado")
