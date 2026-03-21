@@ -20,7 +20,8 @@ foto
 
 importar_fotos <- function(foto){
 
-  foto_importada <- terra::rast(foto)
+  foto_importada <- terra::rast(foto) |>
+    terra::flip(direction = "vertical")
 
   nome_sps <- foto |>
     stringr::str_replace_all("_", " ") |>
@@ -40,13 +41,24 @@ purrr::map(foto, importar_fotos)
 ### Lista das fotos ----
 
 fotos_unidas <- ls(pattern = "^foto_") |>
-  mget(envir = globalenv()) |>
-  terra::rast()
+  mget(envir = globalenv())
 
 fotos_unidas
 
 ### Gráfico ----
 
-ggplot() +
-  tidyterra::geom_spatraster_rgb(data = fotos_unidas) +
-  facet_wrap(~lyr)
+visualizar_fotos <- function(fotos_unidas){
+
+  ggplt <- ggplot() +
+    tidyterra::geom_spatraster_rgb(data = fotos_unidas) +
+    coord_sf(expand = FALSE) +
+    coord_equal() +
+    theme_void()
+
+  print(ggplt)
+
+}
+
+purrr::map(fotos_unidas, visualizar_fotos)
+
+# Prancha ----
