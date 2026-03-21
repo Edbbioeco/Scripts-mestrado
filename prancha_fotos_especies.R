@@ -104,7 +104,8 @@ lista_ggplots
 
 prancha_horizontal <- patchwork::wrap_plots(lista_ggplots) +
   patchwork::plot_annotation(tag_levels = "A") &
-  theme(plot.tag = element_text(face = "bold", size = 20))
+  theme(plot.tag = element_text(face = "bold", size = 20, hjust = -0.5),
+        plot.tag.position = c(0, 1))
 
 prancha_horizontal
 
