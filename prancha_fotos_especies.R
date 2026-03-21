@@ -101,5 +101,6 @@ lista_ggplots
 ## Criando a prancha ----
 
 patchwork::wrap_plots(lista_ggplots) +
-  patchwork::plot_annotation(tag_levels = "A")
+  patchwork::plot_annotation(tag_levels = "A") &
+  theme(plot.tag = element_text(face = "bold"))
 
