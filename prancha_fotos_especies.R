@@ -41,6 +41,7 @@ purrr::map(foto, importar_fotos)
 ### Lista das fotos ----
 
 fotos_unidas <- ls(pattern = "^foto_") |>
+  rev() |>
   mget(envir = globalenv())
 
 fotos_unidas
