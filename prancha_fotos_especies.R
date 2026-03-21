@@ -64,9 +64,17 @@ purrr::map(fotos_unidas, visualizar_fotos)
 
 # Prancha ----
 
+## Nome das fotos na lista ----
+
+nome_especies <- c("ramagii",
+                   "hylaedactyla",
+                   "hoogmoedi")
+
+nome_especies
+
 ## Criando os ggplots ----
 
-criando_ggplots <- function(fotos_unidas){
+criando_ggplots <- function(fotos_unidas, nome_especies){
 
   ggplt <- ggplot() +
     tidyterra::geom_spatraster_rgb(data = fotos_unidas) +
@@ -74,18 +82,18 @@ criando_ggplots <- function(fotos_unidas){
     coord_equal() +
     theme_void()
 
-  nome_sps <- fotos_unidas |>
-    names() |>
-    stringr::str_replace("_", " ") |>
-    stringr::str_extract("\\w+$")
-
-  assign(paste0("ggplot_", nome_sps),
+  assign(paste0("ggplot_", nome_especies),
          ggplt,
          envir = globalenv())
 
 }
 
-purrr::map(fotos_unidas, criando_ggplots)
+purrr::map2(fotos_unidas, nome_especies, criando_ggplots)
+
+## Lista dos ggplots ----
+
+lista_ggplots <- ls(pattern = "^ggplot_") |>
+  rev()
 
 ## Fotos unidas ----
 
