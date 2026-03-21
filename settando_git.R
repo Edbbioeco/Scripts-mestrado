@@ -15,24 +15,13 @@ usethis::use_git_config(user.name = "Edbbioeco",
 
 usethis::proj_get()
 
-## Repositório púbico ----
-
-usethis::use_git_remote(name = "publico",
+usethis::use_git_remote(name = "mestrado",
                         url = "https://github.com/Edbbioeco/Scripts-mestrado.git",
                         overwrite = TRUE)
-
-## Repositório privado ----
-
-usethis::use_git_remote(name = "privado",
-                        url = "https://github.com/Edbbioeco/scripts_tabelas_dados_mestrado.git",
-                        overwrite = TRUE)
-
-## Checar quais os repositórios settados ----
-
-usethis::git_remotes()
 
 # Renomear o branch do master para main ----
 
 usethis::git_default_branch_configure(name = "main")
 
 usethis::git_default_branch_rename(from = "master", to = "main")
+
