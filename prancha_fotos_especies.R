@@ -23,7 +23,7 @@ importar_fotos <- function(foto){
   foto_importada <- terra::rast(foto)
 
   nome_sps <- foto |>
-    stringr::str_replace("_", " ") |>
+    stringr::str_replace_all("_", " ") |>
     stringr::str_remove(".jpg|.jpeg|.JPG") |>
     stringr::str_extract("\\w+$")
 
@@ -34,3 +34,13 @@ importar_fotos <- function(foto){
 }
 
 purrr::map(foto, importar_fotos)
+
+## Visualizando ----
+
+### Unindo as fotos ----
+
+fotos_unidas <- ls(pattern = "^foto_") |>
+  mget(envir = globalenv()) |>
+  c()
+
+fotos_unidas
