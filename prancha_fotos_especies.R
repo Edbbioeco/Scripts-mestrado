@@ -87,3 +87,5 @@ criando_ggplots <- function(fotos_unidas){
 
 purrr::map(fotos_unidas, criando_ggplots)
 
+## Fotos unidas ----
+
