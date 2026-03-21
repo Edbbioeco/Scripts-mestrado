@@ -100,7 +100,17 @@ lista_ggplots
 
 ## Criando a prancha ----
 
-patchwork::wrap_plots(lista_ggplots) +
+### Horizontal ----
+
+prancha <- patchwork::wrap_plots(lista_ggplots) +
   patchwork::plot_annotation(tag_levels = "A") &
   theme(plot.tag = element_text(face = "bold"))
+
+prancha
+
+prancha + ggview::canvas(height = 4.5, width = 12)
+
+ggsave(filename = "prancha_species.png",
+       height = 10,
+       width = 12)
 
