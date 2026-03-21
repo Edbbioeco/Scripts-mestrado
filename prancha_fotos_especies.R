@@ -63,3 +63,27 @@ visualizar_fotos <- function(fotos_unidas){
 purrr::map(fotos_unidas, visualizar_fotos)
 
 # Prancha ----
+
+## Criando os ggplots ----
+
+criando_ggplots <- function(fotos_unidas){
+
+  ggplt <- ggplot() +
+    tidyterra::geom_spatraster_rgb(data = fotos_unidas) +
+    coord_sf(expand = FALSE) +
+    coord_equal() +
+    theme_void()
+
+  nome_sps <- fotos_unidas |>
+    names() |>
+    stringr::str_replace("_", " ") |>
+    stringr::str_extract("\\w+$")
+
+  assign(paste0("ggplot_", nome_sps),
+         ggplt,
+         envir = globalenv())
+
+}
+
+purrr::map(fotos_unidas, criando_ggplots)
+
