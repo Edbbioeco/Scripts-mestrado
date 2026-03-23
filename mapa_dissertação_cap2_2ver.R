@@ -94,14 +94,16 @@ ggplot() +
 parcelas_trat <- parcelas |>
   dplyr::mutate(tipo = c(rep("Uniform Sample", 10),
                          rep("Riparian Sample", 2))) |>
-  dplyr::filter(!Trlh.Pr == "1-1")
+  dplyr::filter(!Trlh.Pr == "1-1") |>
+  sf::st_centroid()
 
 parcelas_trat
 
 ggplot() +
   geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
-  geom_sf(data = parcelas_trat, aes(color = tipo), linewidth = 1)
+  geom_sf(data = parcelas_trat, aes(fill = tipo), color = "black",
+          size = 5, shape = 21, stroke = 1)
 
 ## Corpos hídricos ----
 
