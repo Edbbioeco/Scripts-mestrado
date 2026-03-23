@@ -46,20 +46,6 @@ ggplot() +
   geom_sf(data = br, color = "black") +
   geom_sf(data = pe, color = "black", fill = "gold")
 
-## Saltinho ----
-
-### Importando ----
-
-saltinho <- sf::st_read("saltinho.shp")
-
-### Visualizando ----
-
-saltinho
-
-ggplot() +
-  geom_sf(data = pe, color = "black", fill = "gold") +
-  geom_sf(data = saltinho, color = "black", fill = "forestgreen")
-
 ## Borda da mata ----
 
 ### Importando ----
@@ -71,7 +57,6 @@ borda <- sf::st_read("borda_saltinho.shp")
 borda
 
 ggplot() +
-  geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1)
 
 ## Parcelas de amostragem ----
@@ -85,7 +70,6 @@ parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
 parcelas
 
 ggplot() +
-  geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1)
 
@@ -100,7 +84,6 @@ parcelas_trat <- parcelas |>
 parcelas_trat
 
 ggplot() +
-  geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas_trat, aes(fill = tipo),
           color = "black", shape = 21, size = 3, linewidth = 1)
@@ -116,7 +99,6 @@ corpos_hid <- sf::st_read("corpos_hidricos_saltinho.gpkg")
 corpos_hid
 
 ggplot() +
-  geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
   geom_sf(data = corpos_hid, color = "royalblue", fill = "transparent", linewidth = 1)
@@ -131,7 +113,6 @@ saltinho_tif <- terra::rast("saltinho.tif")
 
 ggplot() +
   tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
-  geom_sf(data = saltinho, color = "yellow", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "green4", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
   coord_sf(expand = FALSE)
@@ -150,7 +131,6 @@ area_rebio
 
 ggplot() +
   tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
-  geom_sf(data = saltinho, color = "yellow", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "green4", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
   geom_sf(data = area_rebio, fill = "orange", color = "orangered",
