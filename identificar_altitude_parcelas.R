@@ -91,3 +91,6 @@ alt_parcela
 
 ## Unindo os dados de altitude e pacelas ao dados de tombamento ----
 
+pis_trat |>
+  dplyr::left_join(alt_parcela,
+                   by = "Unidade Amostral")
