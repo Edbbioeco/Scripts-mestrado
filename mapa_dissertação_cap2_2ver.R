@@ -201,7 +201,7 @@ mapa_principal <- ggplot() +
        color = NULL) +
   ggnewscale::new_scale_fill() +
   geom_sf(data = parcelas_trat, aes(fill = tipo),
-          color = "black", shape = 21, size = 3, stroke = 1) +
+          color = "black", shape = 21, size = 5, stroke = 1) +
   scale_fill_manual(values = c("Uniform sample" = "orange2",
                                "Riparian sample" = "royalblue"),
                     breaks = c("Uniform sample", "Riparian sample")) +
