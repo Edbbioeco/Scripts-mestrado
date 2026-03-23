@@ -136,6 +136,14 @@ ggplot() +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
   coord_sf(expand = FALSE)
 
+## Área da REBio ----
+
+### Criando ----
+
+area_rebio <- saltinho_tif |>
+  sf::st_bbox() |>
+  sf::st_as_sfc()
+
 # Setando tema ----
 
 source("C:/Users/LENOVO/OneDrive/Documentos/funções/tema.R")
