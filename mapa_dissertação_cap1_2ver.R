@@ -158,7 +158,7 @@ pe_map <- ggplot() +
   geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.5) +
   geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.5) +
   geom_sf(data = area_rebio, color = "darkred", fill = "red",
-          alpha = 0.5, linewidth = 1) +
+          alpha = 0.5, linewidth = 0.5) +
   ggspatial::coord_sf(label_graticule = "NE",
                       xlim = c(-36.3, -34.8),
                       ylim = c(-8.9, -7.4)) +
@@ -201,7 +201,7 @@ mapa_principal <- ggplot() +
        color = NULL) +
   ggnewscale::new_scale_fill() +
   geom_sf(data = parcelas_trat, aes(fill = tipo),
-          color = "black", shape = 21, size = 5, stroke = 1) +
+          color = "black", shape = 21, size = 3, stroke = 1) +
   scale_fill_manual(values = c("Uniform sample" = "orange2",
                                "Riparian sample" = "royalblue"),
                     breaks = c("Uniform sample", "Riparian sample")) +
