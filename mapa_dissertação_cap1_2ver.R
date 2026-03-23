@@ -94,14 +94,16 @@ ggplot() +
 parcelas_trat <- parcelas |>
   dplyr::mutate(tipo = c(rep("Uniform Sample", 10),
                          rep("Riparian Sample", 2))) |>
-  dplyr::filter(!Trlh.Pr == "1-1")
+  dplyr::filter(!Trlh.Pr == "1-1") |>
+  sf::st_centroid()
 
 parcelas_trat
 
 ggplot() +
   geom_sf(data = saltinho, color = "black", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
-  geom_sf(data = parcelas_trat, aes(color = tipo), linewidth = 1)
+  geom_sf(data = parcelas_trat, aes(fill = tipo),
+          color = "black", shape = 21, size = 3, linewidth = 1)
 
 ## Corpos hídricos ----
 
@@ -182,24 +184,32 @@ mapa_principal <- ggplot() +
   geom_sf(data = saltinho,
           aes(color = "REBio Saltinho"),
           linewidth = 1, fill = "transparent") +
-  geom_sf(data = parcelas_trat,
-          aes(color = tipo),
-          linewidth = 1, fill = "transparent") +
+  scale_fill_manual(values = c("Brazil" = "lightgray",
+                               "Pernambuco" = "lightgoldenrod"),
+                    breaks = c("Brazil", "Pernambuco")) +
+  scale_color_manual(values = c("Native Forest" = "gold3",
+                                "REBio Saltinho" = "red",
+                                "Hidric bodies" = "royalblue",
+                                "Uniform Sample" = "black",
+                                "Riparian Sample" = "black"),
+                     breaks = c("Native Forest", "Hidric bodies", "REBio Saltinho",
+                                "Uniform Sample", "Riparian Sample")) +
+  guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
+         color = guide_legend(order = 2, nrow = 2)) +
+  labs(fill = NULL,
+       color = NULL) +
+  ggnewscale::new_scale_fill() +
+  geom_sf(data = parcelas_trat, aes(fill = tipo),
+          color = "black", shape = 21, size = 3, stroke = 1) +
+  scale_fill_manual(values = c("Uniform Sample" = "orange2",
+                               "Riparian Sample" = "purple"),
+                    breaks = c("Uniform Sample", "Riparian Sample")) +
+  guides(fill = guide_legend(order = 3, nrow = 2)) +
+  labs(fill = NULL) +
   ggspatial::coord_sf(label_graticule = "NSW",
                       xlim = c(-35.20319, -35.15696),
                       ylim = c(-8.7442, -8.710025),
                       expand = FALSE) +
-  labs(fill = NULL,
-       color = NULL) +
-  scale_fill_manual(values = c("lightgray",
-                               "lightgoldenrod")) +
-  scale_color_manual(values = c("Native Forest" = "gold3",
-                                "REBio Saltinho" = "red",
-                                "Hidric bodies" = "royalblue",
-                                "Uniform Sample" = "orange2",
-                                "Riparian Sample" = "purple"),
-                     breaks = c("Native Forest", "Hidric bodies", "REBio Saltinho",
-                                "Uniform Sample", "Riparian Sample")) +
   ggspatial::annotation_scale(location = "br",
                               text_face = "bold",
                               text_cex = 2,
@@ -207,9 +217,6 @@ mapa_principal <- ggplot() +
                               unit_category = "metric",
                               bar_cols = c("black", "white"),
                               width_hint = 0.35) +
-  guides(fill = guide_legend(nrow = 2),
-         color = guide_legend(nrow = 2)) +
-  #theme(legend.margin = margin(t = 0, unit = "pt")) +
   ggview::canvas(height = 10, width = 12)
 
 mapa_principal
