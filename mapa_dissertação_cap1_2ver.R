@@ -183,17 +183,17 @@ mapa_principal <- ggplot() +
           aes(color = "Native forest"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = corpos_hid,
-          aes(color = "Hidric streams"),
+          aes(color = "Water streams"),
           linewidth = 1, fill = "transparent") +
   scale_fill_manual(values = c("Brazil" = "lightgray",
                                "Pernambuco" = "lightgoldenrod"),
                     breaks = c("Brazil", "Pernambuco")) +
   scale_color_manual(values = c("Native forest" = "gold3",
                                 "REBio area" = "darkred",
-                                "Hidric streams" = "royalblue",
+                                "Water streams" = "royalblue",
                                 "Uniform sample" = "black",
                                 "Riparian sample" = "black"),
-                     breaks = c("Native forest", "Hidric streams", "REBio area",
+                     breaks = c("Native forest", "Water streams", "REBio area",
                                 "Uniform sample", "Riparian sample")) +
   guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
          color = guide_legend(order = 2, nrow = 2)) +
@@ -201,7 +201,7 @@ mapa_principal <- ggplot() +
        color = NULL) +
   ggnewscale::new_scale_fill() +
   geom_sf(data = parcelas_trat, aes(fill = tipo),
-          color = "black", shape = 21, size = 3, stroke = 1) +
+          color = "black", shape = 21, size = 5, stroke = 1) +
   scale_fill_manual(values = c("Uniform sample" = "orange2",
                                "Riparian sample" = "royalblue"),
                     breaks = c("Uniform sample", "Riparian sample")) +
