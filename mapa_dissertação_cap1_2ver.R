@@ -153,7 +153,7 @@ ggplot() +
   geom_sf(data = saltinho, color = "yellow", fill = "transparent", linewidth = 1) +
   geom_sf(data = borda, color = "green4", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
-  geom_sf(data = area_rebio, fill = "orangered", color = "orange",
+  geom_sf(data = area_rebio, fill = "orange", color = "orangered",
           linewidth = 1, alpha = 0.5)
 
 # Setando tema ----
