@@ -144,6 +144,18 @@ area_rebio <- saltinho_tif |>
   sf::st_bbox() |>
   sf::st_as_sfc()
 
+### Visualizando ----
+
+area_rebio
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
+  geom_sf(data = saltinho, color = "yellow", fill = "transparent", linewidth = 1) +
+  geom_sf(data = borda, color = "green4", fill = "transparent", linewidth = 1) +
+  geom_sf(data = parcelas, color = "red", linewidth = 1) +
+  geom_sf(data = area_rebio, fill = "orangered", color = "orange",
+          linewidth = 1, alpha = 0.5)
+
 # Setando tema ----
 
 source("C:/Users/LENOVO/OneDrive/Documentos/funções/tema.R")
