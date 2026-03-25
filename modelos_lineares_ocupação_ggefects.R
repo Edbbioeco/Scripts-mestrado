@@ -465,7 +465,9 @@ df_tendencia <- ls(pattern = "tendencia_") |>
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Hydric stream distance")))
+                                         "Hydric stream distance"))) |>
+  dplyr::group_by(Preditor, Species) |>
+  dplyr::slice(c(1, 11))
 
 df_tendencia
 
