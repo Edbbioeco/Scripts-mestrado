@@ -285,16 +285,16 @@ df_pontos_abu |>
                      breaks = seq(-35.19509, -35.15463, 0.03)) +
   scale_y_continuous(expand = c(0, 0)) +
   ggnewscale::new_scale_fill() +
-  geom_sf(data = hid, aes(color = "Hidric Bodies"),
+  geom_sf(data = hid, aes(color = "Water streams"),
           fill = "blue",
           linewidth = 1) +
-  geom_sf(data = borda, aes(color = "Native Vegetation"),
+  geom_sf(data = borda, aes(color = "Forest Vegetation"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = parcelas, aes(color = "Samples"),
           linewidth = 1) +
-  scale_color_manual(values = c("Native Vegetation" = "darkgreen",
+  scale_color_manual(values = c("Forest Vegetation" = "darkgreen",
                                 "Samples" = "royalblue4",
-                                "Hidric Bodies" = "blue")) +
+                                "Water streams" = "blue")) +
   geom_point(aes(Longitude, Latitude, size = Abundância),
              shape = 21, stroke = 1, color = "black", fill = "green4", width = 0.1) +
   scale_size_continuous(breaks = seq(1, 35, 5),
