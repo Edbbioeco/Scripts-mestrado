@@ -415,20 +415,32 @@ prediotores_rhinella
 
 ### Criando as linhas de tendência ----
 
-criar_linhas <- function(modelo, varivel){
+criar_linhas <- function(modelo, variavel){
 
-  tendencia <- ggeffects::ggpredict(model = modelo,
-                                    terms = varivel) |>
-    as.data.frame() |>
-    dplyr::select(1:2) |>
-    dplyr::mutate(Predictor = variavel) |>
-    dplyr::rename("Predictor value" = 1)
+  gerar_tendencias <- function(especie){
+
+    tendencia <- ggeffects::ggpredict(model = modelo,
+                                      terms = variavel) |>
+      as.data.frame() |>
+      dplyr::select(1:2) |>
+      dplyr::mutate(Predictor = variavel,
+                    Species = especie) |>
+      dplyr::rename("Predictor value" = 1)
+
+  }
+
+  purrr::map(especie, gerar_tendencias)
 
   assign(paste("tendencia_", nome),
          tendencia,
          envir = globalenv())
 
 }
+
+modelo <- ls(pattern = "modelo_") |>
+  mget(envir = globalenv())
+
+variavel
 
 ## Pstimantis ramagii ----
 
