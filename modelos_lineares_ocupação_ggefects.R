@@ -413,6 +413,23 @@ prediotores_rhinella
 
 ## Linhas de tendência ----
 
+### Criando as linhas de tendência ----
+
+criar_linhas <- function(modelo, varivel){
+
+  tendencia <- ggeffects::ggpredict(model = modelo,
+                                    terms = varivel) |>
+    as.data.frame() |>
+    dplyr::select(1:2) |>
+    dplyr::mutate(Predictor = variavel) |>
+    dplyr::rename("Predictor value" = 1)
+
+  assign(paste("tendencia_", nome),
+         tendencia,
+         envir = globalenv())
+
+}
+
 ## Pstimantis ramagii ----
 
 df_ocupacao |>
