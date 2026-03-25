@@ -423,9 +423,9 @@ criar_linhas <- function(modelo, variavel){
                                       terms = variavel) |>
       as.data.frame() |>
       dplyr::select(1:2) |>
-      dplyr::mutate(Predictor = variavel,
+      dplyr::mutate(Preditor = variavel,
                     Species = especie) |>
-      dplyr::rename("Predictor value" = 1)
+      dplyr::rename("Valor preditor" = 1)
 
   nome <- variavel |>
     stringr::word(1)
@@ -464,7 +464,13 @@ purrr::map2(modelo, variavel, criar_linhas)
 
 ### Unindo os dados ----
 
-## Pstimantis ramagii ----
+df_tendencia <- ls(pattern = "tendencia_") |>
+  mget(envir = globalenv()) |>
+  dplyr::bind_rows()
+
+df_tendencia
+
+## Pristimantis ramagii ----
 
 df_ocupacao |>
   tidyr::pivot_longer(cols = c(6, 8, 10:12),
@@ -480,9 +486,10 @@ df_ocupacao |>
   geom_point(color = "black",
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
-  geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% prediotores_pristimantis),
-              method = "glm", show.legend = FALSE, se = FALSE) +
+  geom_line(data = df_tendencia |>
+              dplyr::filter(Species == "Adenomera aff. hylaedactyla" &
+                              Preditor %in% prediotores_adenomera),
+            aes(`Valor preditor`, Preditor)) +
   labs(x = "Predictor value",
        y = "<i>Pristimantis ramagii</i> abundance") +
   theme_bw() +
@@ -517,9 +524,10 @@ df_ocupacao |>
   geom_point(color = "black",
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
-  geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% prediotores_adenomera),
-              method = "glm", show.legend = FALSE, se = FALSE) +
+  geom_line(data = df_tendencia |>
+              dplyr::filter(Species == "Adenomera aff. hylaedactyla" &
+                              Preditor %in% prediotores_adenomera),
+            aes(`Valor preditor`, Preditor)) +
   labs(x = "Predictor value",
        y = "<i>Adenomera</i> aff. <i>hylaedactyla</i> abundance") +
   scale_y_continuous(limits = c(5, 17.5)) +
