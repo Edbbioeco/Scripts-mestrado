@@ -431,6 +431,9 @@ criar_linhas <- function(modelo, variavel){
 
   purrr::map(especie, gerar_tendencias)
 
+  nome <- variavel |>
+    stringr::word(2)
+
   assign(paste("tendencia_", nome),
          tendencia,
          envir = globalenv())
@@ -439,6 +442,8 @@ criar_linhas <- function(modelo, variavel){
 
 modelo <- ls(pattern = "modelo_") |>
   mget(envir = globalenv())
+
+modelo
 
 variavel
 
