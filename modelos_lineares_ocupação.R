@@ -393,19 +393,19 @@ sts_df_flex |>
 
 prediotores_pristimantis <- sts_df |>
   dplyr::filter(Species == "Pristimantis ramagii" & abs(z) > 1.96) |>
-  dplyr::pull(Model)
+  dplyr::pull(Predictor)
 
 prediotores_pristimantis
 
 prediotores_adenomera <- sts_df |>
   dplyr::filter(Species == "Adenomera aff. hylaedactyla" & abs(z) > 1.96) |>
-  dplyr::pull(Model)
+  dplyr::pull(Predictor)
 
 prediotores_adenomera
 
 prediotores_rhinella <- sts_df |>
   dplyr::filter(Species == "Rhinella hoogmoedi" & abs(z) > 1.96) |>
-  dplyr::pull(Model)
+  dplyr::pull(Predictor)
 
 prediotores_rhinella
 
