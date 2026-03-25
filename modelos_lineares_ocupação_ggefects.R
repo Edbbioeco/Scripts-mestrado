@@ -415,28 +415,28 @@ prediotores_rhinella
 
 ### Criando as linhas de tendência ----
 
-criar_linhas <- function(modelo, variavel){
+criar_linhas <- function(id){
 
-  gerar_tendencias <- function(especie){
+  especie <- modelo[id] |>
+    names() |>
+    stringr::str_replace_all("_", " ") |>
+    stringr::word(2)
 
-    tendencia <- ggeffects::ggpredict(model = modelo,
-                                      terms = variavel) |>
-      as.data.frame() |>
-      dplyr::select(1:2) |>
-      dplyr::mutate(Preditor = variavel,
-                    Species = especie) |>
-      dplyr::rename("Valor preditor" = 1)
+  tendencia <- ggeffects::ggpredict(model = modelo[id],
+                                    terms = variavel[id]) |>
+    as.data.frame() |>
+    dplyr::select(1:2) |>
+    dplyr::mutate(Preditor = variavel[id],
+                  Species = especie) |>
+    dplyr::rename("Valor preditor" = 1,
+                  "Predicted" = 2)
 
-  nome <- variavel |>
+  nome <- variavel[id] |>
     stringr::word(1)
 
   assign(paste0("tendencia_", nome, "_", especie),
          tendencia,
          envir = globalenv())
-
-  }
-
-  purrr::map(especie, gerar_tendencias)
 
 }
 
@@ -453,20 +453,19 @@ variavel <- df_ocupacao |>
 
 variavel
 
-especie <- rep(c("Adenomera aff. hylaedactyla",
-                 "Pristimantis ramagii",
-                 "Rhinella hoogmoedi"),
-               each = 5)
-
-especie
-
-purrr::map2(modelo, variavel, criar_linhas)
+purrr::map(1:15, criar_linhas)
 
 ### Unindo os dados ----
 
 df_tendencia <- ls(pattern = "tendencia_") |>
   mget(envir = globalenv()) |>
-  dplyr::bind_rows()
+  dplyr::bind_rows() |>
+  dplyr::mutate(Preditor = Preditor |>
+                  forcats::fct_relevel(c("Leaf-litter depth",
+                                         "Canopy openness",
+                                         "Edge distance",
+                                         "Elevation",
+                                         "Hydric stream distance")))
 
 df_tendencia
 
@@ -487,9 +486,9 @@ df_ocupacao |>
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_line(data = df_tendencia |>
-              dplyr::filter(Species == "Adenomera aff. hylaedactyla" &
-                              Preditor %in% prediotores_adenomera),
-            aes(`Valor preditor`, Preditor)) +
+              dplyr::filter(Species == "pristimantis" &
+                              Preditor %in% prediotores_pristimantis),
+            aes(`Valor preditor`, Predicted), color = "blue", linewidth = 1) +
   labs(x = "Predictor value",
        y = "<i>Pristimantis ramagii</i> abundance") +
   theme_bw() +
@@ -505,7 +504,7 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_pristimantis_multiplo.png",
+ggsave(filename = "modelo_abundancia_pristimantis_multiplo_ggeffects.png",
        height = 10, width = 12)
 
 ## Adenomera hylaedactyla ----
