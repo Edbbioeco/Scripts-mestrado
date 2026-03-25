@@ -584,36 +584,3 @@ df_ocupacao |>
 
 ggsave(filename = "modelo_abundancia_rhinella_multiplo_ggeffect.png",
        height = 10, width = 12)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ggeffects::ggpredict(`modelo_pristimantis_Leaf-litter`,
-                     terms = "Leaf-litter depth") |>
-  plot()
-
-predict(`modelo_pristimantis_Leaf-litter`,
-        newdata = df_ocupacao |>
-          dplyr::select(`Leaf-litter depth`, Temperature),
-        type = "response",
-        re.form = NA)
-
-ggeffects::ggpredict(`modelo_pristimantis_Leaf-litter`,
-                     terms = "Leaf-litter depth") |>
-  as.data.frame()
