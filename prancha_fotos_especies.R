@@ -72,6 +72,41 @@ nome_especies <- c("ramagii",
 
 nome_especies
 
+## Posição das letras nas fotos ----
+
+extencao <- function(fotos){
+
+  extenc <- fotos |> terra::ext()
+
+  x_pos <- extenc[2]/8
+
+  y_pos <- (extenc[2]/8)*7
+
+  x_vetor <<- c(x_vetor, x_pos)
+
+  y_vetor <<- c(y_vetor, y_pos)
+
+}
+
+x_vetor <- c()
+
+y_vetor <- c()
+
+purrr::map(fotos_unidas, extencao)
+
+x_vetor
+
+y_vetor
+
+## Data frame da posiçõa das letras nos gráficos ----
+
+id_letras <- tibble::tibble(x = x_vetor,
+                            y = y_vetor,
+                            letra = LETTERS[1:3],
+                            id = nome_especies)
+
+id_letras
+
 ## Criando os ggplots ----
 
 criando_ggplots <- function(fotos_unidas, nome_especies){
@@ -80,6 +115,12 @@ criando_ggplots <- function(fotos_unidas, nome_especies){
     tidyterra::geom_spatraster_rgb(data = fotos_unidas) +
     coord_sf(expand = FALSE) +
     coord_equal() +
+    geom_text(data = id_letras |>
+                dplyr::filter(id == nome_especies),
+              aes(x, y, label = letra),
+              size = 10,
+              color = "white",
+              fontface = "bold") +
     theme_void()
 
   assign(paste0("ggplot_", nome_especies),
@@ -103,7 +144,6 @@ lista_ggplots
 ### Horizontal ----
 
 prancha_horizontal <- patchwork::wrap_plots(lista_ggplots) +
-  patchwork::plot_annotation(tag_levels = "A") &
   theme(plot.tag = element_text(face = "bold", size = 20, hjust = -0.5),
         plot.tag.position = c(0, 1))
 
@@ -119,7 +159,6 @@ ggsave(filename = "prancha_species_horizontal.png",
 
 prancha_vertical <- patchwork::wrap_plots(lista_ggplots,
                                           ncol = 1) +
-  patchwork::plot_annotation(tag_levels = "A") &
   theme(plot.tag = element_text(face = "bold", size = 20, hjust = -0.5),
         plot.tag.position = c(0, 1))
 
