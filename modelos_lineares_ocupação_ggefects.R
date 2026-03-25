@@ -427,16 +427,16 @@ criar_linhas <- function(modelo, variavel){
                     Species = especie) |>
       dplyr::rename("Predictor value" = 1)
 
+  nome <- variavel |>
+    stringr::word(1)
+
+  assign(paste0("tendencia_", nome, "_", especie),
+         tendencia,
+         envir = globalenv())
+
   }
 
   purrr::map(especie, gerar_tendencias)
-
-  nome <- variavel |>
-    stringr::word(2)
-
-  assign(paste("tendencia_", nome),
-         tendencia,
-         envir = globalenv())
 
 }
 
@@ -445,7 +445,24 @@ modelo <- ls(pattern = "modelo_") |>
 
 modelo
 
+variavel <- df_ocupacao |>
+  dplyr::select(c(6, 8, 10:12)) |>
+  names() |>
+  sort() |>
+  rep(3)
+
 variavel
+
+especie <- rep(c("Adenomera aff. hylaedactyla",
+                 "Pristimantis ramagii",
+                 "Rhinella hoogmoedi"),
+               each = 5)
+
+especie
+
+purrr::map2(modelo, variavel, criar_linhas)
+
+### Unindo os dados ----
 
 ## Pstimantis ramagii ----
 
