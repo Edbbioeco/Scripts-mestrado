@@ -524,7 +524,7 @@ df_ocupacao |>
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_line(data = df_tendencia |>
-              dplyr::filter(Species == "Adenomera aff. hylaedactyla" &
+              dplyr::filter(Species == "Adenomera" &
                               Preditor %in% prediotores_adenomera),
             aes(`Valor preditor`, Preditor)) +
   labs(x = "Predictor value",
@@ -543,7 +543,7 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_adenomera_multiplo.png",
+ggsave(filename = "modelo_abundancia_adenomera_multiplo_ggeffect.png",
        height = 10, width = 12)
 
 ## Rhinella hoogmoedi ----
@@ -563,9 +563,10 @@ df_ocupacao |>
   geom_point(color = "black",
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
-  geom_smooth(data = . %>%
-                dplyr::filter(Preditor %in% prediotores_rhinella),
-              method = "glm", family = poisson, show.legend = FALSE, se = FALSE) +
+  geom_line(data = df_tendencia |>
+              dplyr::filter(Species == "rhinella" &
+                              Preditor %in% prediotores_rhinella),
+            aes(`Valor preditor`, Predicted), color = "blue", linewidth = 1) +
   labs(x = "Predictor value",
        y = "<i>Rhinella hoogmoedi</i> abundance") +
   theme_bw() +
@@ -581,7 +582,7 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_rhinella_multiplo.png",
+ggsave(filename = "modelo_abundancia_rhinella_multiplo_ggeffect.png",
        height = 10, width = 12)
 
 
