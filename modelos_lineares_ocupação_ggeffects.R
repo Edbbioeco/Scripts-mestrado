@@ -490,12 +490,15 @@ purrr::map(1:15, criar_linhas)
 df_tendencia <- ls(pattern = "tendencia_") |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
-  dplyr::mutate(Preditor = Preditor |>
+  dplyr::mutate(Preditor = dplyr::case_when(
+                  Preditor == "Hydric stream distance" ~ "Water stream distance",
+                  .default = Predictor),
+                Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Hydric stream distance"))) |>
+                                         "Water stream distance"))) |>
   dplyr::group_by(Preditor, Species) |>
   dplyr::slice(c(1, n()))
 
