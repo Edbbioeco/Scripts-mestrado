@@ -355,6 +355,25 @@ ls(pattern = "resultados_rhinella_") |>
 ## Criando o data frame ----
 
 sts_df <- ls(pattern = "^resultados_") |>
+  as.data.frame() |>
+  dplyr::rename("string" = 1) |>
+  dplyr::mutate(especie = string |>
+                  stringr::str_replace_all("_", " ") |>
+                  stringr::word(2),
+                variavel = string |>
+                  stringr::str_replace_all("_", " ") |>
+                  stringr::word(3)) |>
+  dplyr::arrange(especie = especie |>
+                   forcats::fct_relevel(c("pristimantis",
+                                          "adenomera",
+                                          "rhinella")),
+                 variavel = variavel |>
+                   forcats::fct_relevel(c("Leaf-litter",
+                                          "Canopy",
+                                          "Edge",
+                                          "Elevation",
+                                          "Hydric"))) |>
+  dplyr::pull(string) |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
   dplyr::rename("β1" = Estimate,
@@ -363,10 +382,7 @@ sts_df <- ls(pattern = "^resultados_") |>
                                    " ± ",
                                    SE |> round(4))) |>
   dplyr::select(-c(Model, β1, SE)) |>
-  dplyr::relocate(`β1 ± EP`, .after = Predictor) |>
-  dplyr::arrange(Species = Species |> forcats::fct_relevel(c("Pristimantis ramagii",
-                                                             "Adenomera aff. hylaedactyla",
-                                                             "Rhinella hoogmoedi")))
+  dplyr::relocate(`β1 ± EP`, .after = Predictor)
 
 sts_df
 
@@ -379,10 +395,21 @@ sts_df_flex <- sts_df |>
   flextable::width(j = 6, width = 1) |>
   flextable::italic(j = 1, part = "body") |>
   flextable::fontsize(size = 12, part = "all") |>
+  flextable::bg(part = "all", bg = "white")
+
+sts_df_flex
+
+sts_df_flex_destacado <- sts_df |>
+  flextable::flextable() |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::width(j = c(1, 3), width = 1.5) |>
+  flextable::width(j = 6, width = 1) |>
+  flextable::italic(j = 1, part = "body") |>
+  flextable::fontsize(size = 12, part = "all") |>
   flextable::bg(part = "all", bg = "white") |>
   flextable::bg(i = ~abs(z) > 1.96, bg = "gray")
 
-sts_df_flex
+sts_df_flex_destacado
 
 ## Exportando a tabela ----
 
