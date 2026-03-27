@@ -492,7 +492,7 @@ df_tendencia <- ls(pattern = "tendencia_") |>
   dplyr::bind_rows() |>
   dplyr::mutate(Preditor = dplyr::case_when(
                   Preditor == "Hydric stream distance" ~ "Water stream distance",
-                  .default = Predictor),
+                  .default = Preditor),
                 Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
@@ -510,12 +510,15 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  dplyr::mutate(Preditor = Preditor |>
+  dplyr::mutate(Preditor = dplyr::case_when(
+    Preditor == "Hydric stream distance" ~ "Water stream distance",
+    .default = Preditor),
+                Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Hydric stream distance"))) |>
+                                         "Water stream distance"))) |>
   ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
   geom_point(color = "black",
              size = 3.5) +
