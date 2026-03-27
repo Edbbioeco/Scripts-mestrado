@@ -551,7 +551,10 @@ df_ocupacao |>
   tidyr::pivot_longer(cols = c(6, 8, 10:12),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
-  dplyr::mutate(Preditor = Preditor |>
+  dplyr::mutate(Preditor = dplyr::case_when(
+    Preditor == "Hydric stream distance" ~ "Water stream distance",
+    .default = Preditor),
+                Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
                                          "Edge distance",
@@ -591,12 +594,15 @@ df_ocupacao |>
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = paste0(Preditor, ""),
+                Preditor = dplyr::case_when(
+                  Preditor == "Hydric stream distance" ~ "Water stream distance",
+                  .default = Preditor),
                 Preditor = Preditor |>
                   forcats::fct_relevel(c("Leaf-litter depth",
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Hydric stream distance"))) |>
+                                         "Water stream distance"))) |>
   ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`)) +
   geom_point(color = "black",
              size = 3.5) +
