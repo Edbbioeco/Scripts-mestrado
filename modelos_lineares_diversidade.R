@@ -454,6 +454,10 @@ df_beta_flex <- df_sts_beta |>
   flextable::width(j = 2, width = 1.5) |>
   flextable::fontsize(size = 12, part = "all") |>
   flextable::bg(part = "all", bg = "white") |>
+  flextable::compose(j = "z51",
+                     part = "header",
+                     value = flextable::as_paragraph("z",
+                                                     flextable::as_sub("51"))) |>
   flextable::set_caption(paste0("pseudo-R² = ", r2_beta))
 
 df_beta_flex
@@ -468,6 +472,10 @@ df_beta_flex_destacado <- df_sts_beta |>
   flextable::fontsize(size = 12, part = "all") |>
   flextable::bg(part = "all", bg = "white") |>
   flextable::bg(i = ~abs(z51) > 1.96, bg = "gray") |>
+  flextable::compose(j = "z51",
+                     part = "header",
+                     value = flextable::as_paragraph("z",
+                                                     flextable::as_sub("51"))) |>
   flextable::set_caption(paste0("pseudo-R² = ", r2_beta))
 
 df_beta_flex_destacado
