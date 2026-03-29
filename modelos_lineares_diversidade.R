@@ -66,7 +66,7 @@ df_alfa <- div_alfa |>
   dplyr::rename("Canopy openness" = `Abertura do dossel`,
                 "Edge distance" = `Distância da Borda`,
                 "Elevation" = Altitude,
-                "Hydric stream distance" = `Distância dos corpos hídricos`,
+                "Water stream distance" = `Distância dos corpos hídricos`,
                 "Leaf-litter depth" = `Altura da serrapilheira`)
 
 df_alfa
@@ -134,7 +134,7 @@ matriz_altitude
 df_beta <- tibble::tibble(Composition = matriz_comp,
                           `Canopy openness` = matriz_dossel,
                           `Leaf-litter depth` = matriz_serrapilheira,
-                          `Hydric stream distance` = matriz_distancia,
+                          `Water stream distance` = matriz_distancia,
                           `Edge distance` = matriz_borda,
                           `Elevation` = matriz_altitude)
 
@@ -303,7 +303,7 @@ df_alfa |>
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Hydric stream distance"))) |>
+                                         "Water stream distance"))) |>
   ggplot(aes(`Valor Preditor`,`Q = 1`)) +
   geom_point(color = "black",
              size = 3.5,
@@ -344,7 +344,7 @@ modelo_beta <- glmmTMB::glmmTMB(Composition ~ `Leaf-litter depth` +
                                   `Canopy openness` +
                                   `Edge distance` +
                                   `Elevation` +
-                                  `Hydric stream distance`,
+                                  `Water stream distance`,
                                 data = df_beta,
                                 family = glmmTMB::beta_family())
 
@@ -440,7 +440,7 @@ df_beta |>
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Hydric stream distance"))) |>
+                                         "Water stream distance"))) |>
   ggplot(aes(`Valor Predictor`, Composition)) +
   geom_point(color = "black",
              size = 3.5,
