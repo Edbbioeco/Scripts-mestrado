@@ -446,6 +446,7 @@ df_sts_beta
 #### Tabela flextable ----
 
 df_beta_flex <- df_sts_beta |>
+  dplyr::rename("z51" = z) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
   flextable::width(j = 1, width = 1.5) |>
@@ -457,13 +458,14 @@ df_beta_flex <- df_sts_beta |>
 df_beta_flex
 
 df_beta_flex_destacado <- df_sts_beta |>
+  dplyr::rename("z51" = z) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
   flextable::width(j = 1, width = 1.5) |>
   flextable::width(j = 2, width = 1.5) |>
   flextable::fontsize(size = 12, part = "all") |>
   flextable::bg(part = "all", bg = "white") |>
-  flextable::bg(i = ~abs(z) > 1.96, bg = "gray") |>
+  flextable::bg(i = ~abs(z51) > 1.96, bg = "gray") |>
   flextable::set_caption(paste0("pseudo-R² = ", r2_beta))
 
 df_beta_flex_destacado
