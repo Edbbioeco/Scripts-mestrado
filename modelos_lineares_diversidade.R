@@ -447,6 +447,7 @@ df_sts_beta
 
 df_beta_flex <- df_sts_beta |>
   dplyr::rename("z51" = z) |>
+  dplyr::select(-DF) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
   flextable::width(j = 1, width = 1.5) |>
@@ -459,6 +460,7 @@ df_beta_flex
 
 df_beta_flex_destacado <- df_sts_beta |>
   dplyr::rename("z51" = z) |>
+  dplyr::select(-DF) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
   flextable::width(j = 1, width = 1.5) |>
