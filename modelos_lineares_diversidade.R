@@ -270,6 +270,9 @@ q_f
 #### Tabela flextable ----
 
 df_q1_flex <- df_q1_estatisticas |>
+  dplyr::rename("pt" = p,
+                "pF" = `Global p`,
+                "F1, 9" = `F`) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
   flextable::width(j = 2, width = 2) |>
@@ -279,6 +282,9 @@ df_q1_flex <- df_q1_estatisticas |>
 df_q1_flex
 
 df_q1_flex_destacado <- df_q1_estatisticas |>
+  dplyr::rename("pt" = p,
+                "pF" = `Global p`,
+                "F1, 9" = `F`) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
   flextable::width(j = 2, width = 2) |>
