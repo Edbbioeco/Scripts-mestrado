@@ -55,3 +55,7 @@ centroides_df <- centroides |>
   dplyr::mutate(Parcela = parcelas_trat$Parcela)
 
 centroides_df
+
+## Exportando ----
+
+centroides_df |> writexl::write_xlsx("centroides_parcelas.xlsx")
