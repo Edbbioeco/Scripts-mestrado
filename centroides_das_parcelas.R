@@ -45,3 +45,13 @@ centroides
 
 ggplot() +
   geom_sf(data = centroides, color = "red", size = 2)
+
+## Transformando em data frame ----
+
+centroides_df <- centroides |>
+  sf::st_coordinates() |>
+  as.data.frame() |>
+  dplyr::rename("Longitude" = X, "Latitude" = Y) |>
+  dplyr::mutate(Parcela = parcelas_trat$Parcela)
+
+centroides_df
