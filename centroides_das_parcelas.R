@@ -29,6 +29,7 @@ parcelas_trat <- parcelas |>
                                  c(paste0("P", rep(1:4,
                                                    times = 2)),
                                    paste0("P", 1:2),
-                                   paste0("R", 1:2))))
+                                   paste0("R", 1:2)))) |>
+  dplyr::filter(!Parcela == "T1P1")
 
 parcelas_trat
