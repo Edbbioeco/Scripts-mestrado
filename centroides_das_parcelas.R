@@ -33,3 +33,15 @@ parcelas_trat <- parcelas |>
   dplyr::filter(!Parcela == "T1P1")
 
 parcelas_trat
+
+# Centroides ----
+
+## Calculando os centroides ----
+
+centroides <- parcelas_trat |>
+  sf::st_centroid()
+
+centroides
+
+ggplot() +
+  geom_sf(data = centroides, color = "red", size = 2)
