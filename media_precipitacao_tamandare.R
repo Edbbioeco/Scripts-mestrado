@@ -29,7 +29,7 @@ prec_trat <- prec |>
 
 prec_trat
 
-## média anul ----
+## média anual ----
 
 ### Calculando ----
 
@@ -43,3 +43,4 @@ prec_trat |>
   dplyr::summarise(Media = mean(Precipitação, na.rm = TRUE),
                    .by = Ano) |>
   writexl::write_xlsx("media_precipitacao_tamandare_anual.xlsx")
+
