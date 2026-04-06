@@ -58,3 +58,14 @@ prec_trat |>
   dplyr::summarise(Media = mean(Precipitação, na.rm = TRUE),
                    .by = Mês) |>
   writexl::write_xlsx("media_precipitacao_tamandare_mensal.xlsx")
+
+## Média total ----
+
+prec_trat |>
+  dplyr::summarise(Media = mean(Precipitação, na.rm = TRUE))
+
+### Exportando ----
+
+prec_trat |>
+  dplyr::summarise(Media = mean(Precipitação, na.rm = TRUE)) |>
+  writexl::write_xlsx("media_precipitacao_tamandare_total.xlsx")
