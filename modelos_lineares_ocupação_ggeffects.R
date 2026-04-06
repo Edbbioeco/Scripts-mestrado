@@ -6,12 +6,6 @@ library(tidyverse)
 
 library(magrittr)
 
-library(sf)
-
-library(elevatr)
-
-library(terra)
-
 library(DHARMa)
 
 library(performance)
