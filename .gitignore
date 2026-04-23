@@ -22,7 +22,16 @@
 *.shx
 *.dbf
 *.prj
+*.kml
+*.gpkg
 *.docx
 *.bib
 *.jpeg
 *.kmz
+*.tif
+*.phy
+*.tre
+*.txt
+*.html
+*.zip
+.positai
