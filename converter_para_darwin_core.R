@@ -4,6 +4,12 @@ library(readxl)
 
 library(tidyverse)
 
+library(sf)
+
+library(geosphere)
+
+library(rgbif)
+
 library(writexl)
 
 # Dados ----
