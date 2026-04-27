@@ -96,24 +96,36 @@ coords_gms
 ## Conferindo se os taxons podem ser rastreados até seus IDs ----
 
 taxon <- anuros |>
+  dplyr::filter(!Espécie |> is.na()) |>
   dplyr::pull(Espécie) |>
   unique()
 
 taxon
 
+taxonid <- c()
+
 testar_id <- function(taxon){
 
-  paste0("Tetando para: ", taxon) |>
+  paste0("Testando para: ", taxon) |>
     crayon::green() |>
     message()
 
-  taxon |>
-    rgbif::name_backbone_checklist() |>
-    dplyr::pull(usageKey)
+  idtaxon <- taxon |>
+    rgbif::name_backbone_checklist(sleep = 1, bucket_size = 10) |>
+    dplyr::pull(1)
+
+  taxonid <<- c(taxonid, idtaxon)
 
 }
 
 purrr::map(taxon, testar_id)
+
+taxonid
+
+df_taxonid <- tibble::tibble(Espécie = taxon,
+                             taxonid)
+
+df_taxonid
 
 ## Data frame das informações a serem copiadas ----
 
@@ -123,6 +135,8 @@ df_copy <- anuros |>
                    by = "Unidade Amostral") |>
   dplyr::filter(!Espécie |> is.na()) |>
   dplyr::mutate(Data = Data |> lubridate::ymd()) |>
+  dplyr::left_join(df_taxonid,
+                   by = "Espécie") |>
   as.data.frame()
 
 df_copy
