@@ -69,3 +69,22 @@ modelo <- darwin_core |>
 modelo
 
 modelo |> dplyr::glimpse()
+
+## Coordenadas das parcelas ----
+
+coords_gms <- coords |>
+  sf::st_centroid() |>
+  sf::st_coordinates() |>
+  as.data.frame() |>
+  dplyr::rename("decimalLongitude" = X,
+                "decimalLatitude" = Y) |>
+  dplyr::mutate(decimalLongitude = decimalLongitude |>
+                  sp::dd2dms(NS = FALSE) |>
+                  as.character() |>
+                  stringr::str_replace("d", "°"),
+                decimalLatitude = decimalLatitude |>
+                  sp::dd2dms(NS = TRUE) |>
+                  as.character() |>
+                  stringr::str_replace("d", "°"))
+
+coords_gms
