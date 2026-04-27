@@ -32,6 +32,19 @@ anuros
 
 anuros |> dplyr::glimpse()
 
+## Coordenada das parcelas ----
+
+### Importar ----
+
+coords <-sf::st_read("saltinho_ppbio_parcelas.shp")
+
+### Visualizar ------
+
+coords
+
+ggplot() +
+  geom_sf(data = coords)
+
 # Modelo ----
 
 ## Criar o modelo base ----
