@@ -6,7 +6,7 @@ library(tidyverse)
 
 library(sf)
 
-library(geosphere)
+library(sp)
 
 library(rgbif)
 
