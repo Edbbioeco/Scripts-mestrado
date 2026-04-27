@@ -104,3 +104,25 @@ df_copy <- anuros |>
   as.data.frame()
 
 df_copy
+
+## Conferindo se os taxons podem ser rastreados até seus IDs ----
+
+taxon <- df_copy |>
+  dplyr::pull(Espécie) |>
+  unique()
+
+taxon
+
+testar_id <- function(taxon){
+
+  paste0("Tetando para: ", taxon) |>
+    crayon::green() |>
+    message()
+
+  taxon |>
+    rgbif::name_backbone_checklist() |>
+    dplyr::pull(usageKey)
+
+}
+
+purrr::map(taxon, testar_id)
