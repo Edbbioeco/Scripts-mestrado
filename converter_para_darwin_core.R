@@ -85,6 +85,10 @@ coords_gms <- coords |>
                 decimalLatitude = decimalLatitude |>
                   sp::dd2dms(NS = TRUE) |>
                   as.character() |>
-                  stringr::str_replace("d", "°"))
+                  stringr::str_replace("d", "°"),
+                `Unidade Amostral` = c(paste0("T1P", 1:4),
+                                       paste0("T2P", 1:4),
+                                       paste0("T3P", 1:2),
+                                       paste0("R", 1:2)))
 
 coords_gms
