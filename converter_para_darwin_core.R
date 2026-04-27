@@ -92,3 +92,15 @@ coords_gms <- coords |>
                                        paste0("R", 1:2)))
 
 coords_gms
+
+## Data frame das informações a serem copiadas ----
+
+df_copy <- anuros |>
+  dplyr::select(`Unidade Amostral`, Ordem:Espécie, Data) |>
+  dplyr::left_join(coords_gms,
+                   by = "Unidade Amostral") |>
+  dplyr::filter(!Espécie |> is.na()) |>
+  dplyr::mutate(Data = Data |> lubridate::ymd()) |>
+  as.data.frame()
+
+df_copy
