@@ -31,3 +31,22 @@ anuros <- readxl::read_xlsx("levantamento_anuros.xlsx")
 anuros
 
 anuros |> dplyr::glimpse()
+
+# Modelo ----
+
+## Criar o modelo base ----
+
+modelo <- darwin_core |>
+  dplyr::mutate(baseOfRecord = "HumanObservation",
+                occurrenceID = "",
+                recordedBy = "",
+                decimalLongitude = "",
+                decimalLatitude = "",
+                country = "") |>
+  dplyr::relocate(recordedBy, .after = license) |>
+  dplyr::relocate(decimalLongitude:country, .before = locality) |>
+  dplyr::relocate(baseOfRecord:occurrenceID, .before = datasetName)
+
+modelo
+
+modelo |> dplyr::glimpse()
