@@ -20,3 +20,14 @@ darwin_core
 
 darwin_core |> dplyr::glimpse()
 
+## Dados do levantamento de anuros ----
+
+### Importar ----
+
+anuros <- readxl::read_xlsx("levantamento_anuros.xlsx")
+
+### Visualizar ----
+
+anuros
+
+anuros |> dplyr::glimpse()
