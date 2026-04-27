@@ -93,21 +93,9 @@ coords_gms <- coords |>
 
 coords_gms
 
-## Data frame das informações a serem copiadas ----
-
-df_copy <- anuros |>
-  dplyr::select(`Unidade Amostral`, Ordem:Espécie, Data) |>
-  dplyr::left_join(coords_gms,
-                   by = "Unidade Amostral") |>
-  dplyr::filter(!Espécie |> is.na()) |>
-  dplyr::mutate(Data = Data |> lubridate::ymd()) |>
-  as.data.frame()
-
-df_copy
-
 ## Conferindo se os taxons podem ser rastreados até seus IDs ----
 
-taxon <- df_copy |>
+taxon <- anuros |>
   dplyr::pull(Espécie) |>
   unique()
 
@@ -126,3 +114,15 @@ testar_id <- function(taxon){
 }
 
 purrr::map(taxon, testar_id)
+
+## Data frame das informações a serem copiadas ----
+
+df_copy <- anuros |>
+  dplyr::select(`Unidade Amostral`, Ordem:Espécie, Data) |>
+  dplyr::left_join(coords_gms,
+                   by = "Unidade Amostral") |>
+  dplyr::filter(!Espécie |> is.na()) |>
+  dplyr::mutate(Data = Data |> lubridate::ymd()) |>
+  as.data.frame()
+
+df_copy
