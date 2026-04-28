@@ -178,7 +178,10 @@ modelo |>
                                                   " ",
                                                   df_copy$autoria),
                 kingdom = "Animalia",
-                phylum = "Chordata") |>
+                phylum = "Chordata",
+                class = dplyr::case_when(scientificName |>
+                                           stringr::str_detect("Enyaluius|Coleodactyus") ~ "Reptilia",
+                                         .default = "Amphibia")) |>
   tidyr::fill(dplyr::everything()) |>
   as.data.frame()
 
