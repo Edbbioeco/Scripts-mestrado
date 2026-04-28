@@ -181,7 +181,12 @@ modelo |>
                 phylum = "Chordata",
                 class = dplyr::case_when(scientificName |>
                                            stringr::str_detect("Enyaluius|Coleodactyus") ~ "Reptilia",
-                                         .default = "Amphibia")) |>
+                                         .default = "Amphibia"),
+                order = df_copy$Ordem,
+                family = df_copy$Família,
+                genus = df_copy$Gênero,
+                specificEpithet = df_copy$Epípeto,
+                infraspecificEpithet = NA) |>
   tidyr::fill(dplyr::everything()) |>
   as.data.frame()
 
