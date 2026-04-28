@@ -173,6 +173,12 @@ modelo <- modelo[rep(1, nrow(df_copy)), ]
 modelo |>
   dplyr::mutate(taxonID = df_copy$taxonID,
                 scientificName = df_copy$Espécie,
-                taxonRank = "Species") |>
+                taxonRank = "Species",
+                scientificNameAuthorship = paste0(df_copy$Espécie,
+                                                  " ",
+                                                  df_copy$autoria),
+                kingdom = "Animalia",
+                phylum = "Chordata") |>
   tidyr::fill(dplyr::everything()) |>
   as.data.frame()
+
