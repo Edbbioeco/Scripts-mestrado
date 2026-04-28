@@ -256,3 +256,6 @@ modelo_refeito <- modelo |>
 
 modelo_refeito
 
+## Exportar data frame ----
+
+modelo_refeito |> writexl::write_xlsx("dados_anuros_darwin_core.xlsx")
