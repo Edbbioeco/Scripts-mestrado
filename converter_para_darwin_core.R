@@ -251,11 +251,10 @@ modelo_refeito <- modelo |>
                 recordedBy = "Edson Nilton de Moura Silva-Júnior",
                 rightsHolder = "Edson Nilton de Moura Silva-Júnior",
                 informationWithheld = NA) |>
-  tidyr::fill(dplyr::everything()) |>
   as.data.frame()
 
 modelo_refeito
 
 ## Exportar data frame ----
 
-modelo_refeito |> writexl::write_xlsx("dados_anuros_darwin_core.xlsx")
+modelo_refeito |> writexl::write_xlsx("dados_herpeto_saltinho_darwin_core.xlsx")
