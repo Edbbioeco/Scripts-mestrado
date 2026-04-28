@@ -234,6 +234,7 @@ modelo_refeito <- modelo |>
                 order = df_copy$Ordem,
                 family = df_copy$Família,
                 genus = df_copy$Gênero,
+                subgenus = NA,
                 specificEpithet = df_copy$Epípeto,
                 infraspecificEpithet = NA,
                 vernacularName = df_copy$nomes_vernaculares,
