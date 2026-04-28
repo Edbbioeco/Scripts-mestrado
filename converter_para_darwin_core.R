@@ -125,7 +125,7 @@ purrr::map(taxon, testar_id)
 taxonid
 
 df_taxonid <- tibble::tibble(Espécie = taxon,
-                             taxonid)
+                             taxonID = taxonid)
 
 df_taxonid
 
