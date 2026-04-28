@@ -125,7 +125,30 @@ purrr::map(taxon, testar_id)
 taxonid
 
 df_taxonid <- tibble::tibble(Espécie = taxon,
-                             taxonID = taxonid)
+                             taxonID = taxonid,
+                             autoria = c(
+                               "Pristimantis ramagii"        = "(Boulenger, 1888)",
+                               "Adenomera hylaedactyla"      = "(Cope, 1868)",
+                               "Rhinella hoogmoedi"          = "Caramaschi and Pombal, 2006",
+                               "Rhinella granulosa"          = "(Spix, 1824)",
+                               "Frostius pernambucensis"     = "(Bokermann, 1962)",
+                               "Leptodactylus natalensis"    = "Lutz, 1930",
+                               "Dendropsophus minutus"       = "(Peters, 1872)",
+                               "Leptodactylus troglodytes"   = "Lutz, 1926",
+                               "Dendropsophus elegans"       = "(Wied-Neuwied, 1824)",
+                               "Dendropsophus haddadi"       = "(Bastos and Pombal, 1996)",
+                               "Pithecopus gonzagai"         = "Andrade, Haga, Ferreira, Recco-Pimentel, Toledo and Bruschi, 2020",
+                               "Dryadobates alagoanus"       = "(Bokermann, 1967)",
+                               "Dendropsophus oliveirai"     = "(Bokermann, 1963)",
+                               "Adelophryne nordestina"      = "Lourenco-de-Moraes et al., 2021",
+                               "Coleodactylus meridionalis"  = "(Boulenger, 1888)",
+                               "Dendropsophus branneri"      = "(Cochran, 1948)",
+                               "Physalaemus cuvieri"         = "Fitzinger, 1826",
+                               "Boana atlantica"             = "(Caramaschi and Velosa, 1996)",
+                               "Leptodactylus natalensis"    = "Lutz, 1930",
+                               "Elachistocleis cesari"       = "(Miranda-Ribeiro, 1920)",
+                               "Enyalius catenatus"          = "(Wied-Neuwied, 1821)",
+                               "Rhinella crucifer"           = "(Wied-Neuwied, 1821)"))
 
 df_taxonid
 
