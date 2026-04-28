@@ -142,3 +142,14 @@ df_copy <- anuros |>
   as.data.frame()
 
 df_copy
+
+## Completando no modelo -----
+
+modelo <- modelo[rep(1, nrow(df_copy)), ]
+
+modelo |>
+  dplyr::mutate(taxonID = df_copy$taxonID,
+                scientificName = df_copy$Espécie,
+                taxonRank = "Species") |>
+  tidyr::fill(dplyr::everything()) |>
+  as.data.frame()
