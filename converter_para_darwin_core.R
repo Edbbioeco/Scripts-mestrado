@@ -216,8 +216,11 @@ df_copy
 
 modelo <- modelo[rep(1, nrow(df_copy)), ]
 
-modelo |>
-  dplyr::mutate(taxonID = df_copy$taxonID,
+modelo_refeito <- modelo |>
+  dplyr::mutate(occurrenceID = paste0("UFPE_CHUPE-", dplyr::row_number()),
+                datasetName = "Registros Herpetológicos de Saltinho",
+                institutionCode = "UFPE",
+                taxonID = df_copy$taxonID,
                 scientificName = df_copy$Espécie,
                 taxonRank = "Species",
                 scientificNameAuthorship = paste0(df_copy$Espécie,
@@ -232,7 +235,24 @@ modelo |>
                 family = df_copy$Família,
                 genus = df_copy$Gênero,
                 specificEpithet = df_copy$Epípeto,
-                infraspecificEpithet = NA) |>
+                infraspecificEpithet = NA,
+                vernacularName = df_copy$nomes_vernaculares,
+                taxonRemarks = NA,
+                taxonomicStatus = "Accepted",
+                status = df_copy$iucn_status,
+                criteria = "IUCN",
+                eventDate = df_copy$Data,
+                decimalLongitude = df_copy$decimalLongitude,
+                decimalLatitude = df_copy$decimalLatitude,
+                country = "Brasil",
+                locality = "Saltinho",
+                stateProvince = "Pernambuco",
+                license = "CC BY 4.0",
+                recordedBy = "Edson Nilton de Moura Silva-Júnior",
+                rightsHolder = "Edson Nilton de Moura Silva-Júnior",
+                informationWithheld = NA) |>
   tidyr::fill(dplyr::everything()) |>
   as.data.frame()
+
+modelo_refeito
 
