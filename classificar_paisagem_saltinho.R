@@ -21,3 +21,18 @@ library(randomForest)
 library(ggspatial)
 
 library(ggview)
+
+# Dados ----
+
+## Shapéfile de Saltinho ----
+
+### Saltinhop ----
+
+saltinho <- sf::st_read("Saltinho.shp")
+
+### Visualizar ----
+
+saltinho
+
+ggplot() +
+  geom_sf(data = saltinho)
