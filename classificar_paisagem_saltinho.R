@@ -4,17 +4,15 @@ library(sf)
 
 library(tidyverse)
 
+library(terra)
+
+library(tidyterra)
+
 library(leaflet)
 
 library(leaflet.extras)
 
 library(leafem)
-
-library(maptiles)
-
-library(tidyterra)
-
-library(terra)
 
 library(randomForest)
 
