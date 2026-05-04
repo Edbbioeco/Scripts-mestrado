@@ -43,7 +43,7 @@ ggplot() +
 
 saltinho_sat <- saltinho |>
   maptiles::get_tiles(provider = "Esri.WorldImagery",
-                      zoom = 18)
+                      zoom = 15)
 
 ### Visualizar ----
 
@@ -79,3 +79,19 @@ mapa <- leaflet::leaflet() |>
                        fillOpacity = 0)
 
 mapa
+
+## Pontos de treino ----
+
+### Vegetação nativa ----
+
+veg_nat <- mapedit::editMap(mapa)
+
+veg_nat <- veg_nat$drawn
+
+veg_nat
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_sat) +
+  geom_sf(data = saltinho, color = "red", fill = "transparent", size = 1) +
+  geom_sf(data = veg_nat) +
+  coord_sf(expand = FALSE)
