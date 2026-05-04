@@ -4,9 +4,11 @@ library(sf)
 
 library(tidyverse)
 
-library(terra)
+library(maptiles)
 
 library(tidyterra)
+
+library(terra)
 
 library(leaflet)
 
@@ -39,7 +41,9 @@ ggplot() +
 
 ### Baixar ----
 
-saltinho_sat <- terra::rast("saltinho.tif")
+saltinho_sat <- saltinho |>
+  maptiles::get_tiles(provider = "Esri.WorldImagery",
+                      zoom = 18)
 
 ### Visualizar ----
 
@@ -49,3 +53,8 @@ ggplot() +
   tidyterra::geom_spatraster_rgb(data = saltinho_sat) +
   geom_sf(data = saltinho, color = "red", fill = "transparent", size = 1) +
   coord_sf(expand = FALSE)
+
+### Exportar ----
+
+saltinho_sat |>
+  terra::writeRaster("saltinho_sat.tif")
