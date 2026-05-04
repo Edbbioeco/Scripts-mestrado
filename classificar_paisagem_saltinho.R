@@ -95,3 +95,18 @@ ggplot() +
   geom_sf(data = saltinho, color = "red", fill = "transparent", size = 1) +
   geom_sf(data = veg_nat) +
   coord_sf(expand = FALSE)
+
+### Vegetação nativa ----
+
+plantacao <- mapedit::editMap(mapa)
+
+plantacao <- plantacao$drawn
+
+plantacao
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_sat) +
+  geom_sf(data = saltinho, color = "red", fill = "transparent", size = 1) +
+  geom_sf(data = veg_nat) +
+  geom_sf(data = plantacao, color = "limegreen") +
+  coord_sf(expand = FALSE)
