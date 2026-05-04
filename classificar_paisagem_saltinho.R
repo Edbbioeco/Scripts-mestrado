@@ -58,3 +58,24 @@ ggplot() +
 
 saltinho_sat |>
   terra::writeRaster("saltinho_sat.tif")
+
+# Pontos de treino ----
+
+## Criar o mapa de visualização ----
+
+mapa <- leaflet::leaflet() |>
+  leaflet::addProviderTiles(provider = providers$Esri.WorldImagery) |>
+  leaflet.extras::addDrawToolbar(targetGroup = "Draw",
+                                 circleOptions = TRUE,
+                                 polygonOptions = TRUE,
+                                 rectangleOptions = TRUE,
+                                 markerOptions = TRUE,
+                                 polylineOptions = TRUE,
+                                 circleMarkerOptions = TRUE,
+                                 editOptions = leaflet.extras::editToolbarOptions()) |>
+  leafem::addMouseCoordinates() |>
+  leaflet::addPolygons(data = saltinho,
+                       color = "gold",
+                       fillOpacity = 0)
+
+mapa
