@@ -33,3 +33,19 @@ ne
 ggplot() +
   geom_sf(data = br, color = "black") +
   geom_sf(data = ne, color = "black", fill = "goldenrod")
+
+## Mata Atlântica ----
+
+### Importar ----
+
+ma <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/aula_geoespacial/biomas.shp") |>
+  dplyr::filter(name_biome == "Mata Atlântica")
+
+### Visualizar ----
+
+ma
+
+ggplot() +
+  geom_sf(data = br, color = "black") +
+  geom_sf(data = ne, color = "black", fill = "goldenrod") +
+  geom_sf(data = ma, color = "darkgreen", fill = "transparent")
