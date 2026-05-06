@@ -4,6 +4,8 @@ library(sf)
 
 library(tidyverse)
 
+library(ggview)
+
 # Dados ----
 
 ## Shapefile dos Estados do Brasil ----
