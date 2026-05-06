@@ -68,3 +68,50 @@ ggplot() +
   geom_sf(data = ne, color = "black", fill = "goldenrod") +
   geom_sf(data = ma, color = "darkgreen", fill = "transparent") +
   geom_sf(data = uc, color = "darkred", fill = "darkred", alpha = 0.3)
+
+# Mapa ----
+
+ggplot() +
+  geom_sf(data = br,
+          aes(color = "Brasil", fill = "Brasil"),
+          linewidth = 1) +
+  geom_sf(data = ne,
+          aes(color = "Nordeste", fill = "Nordeste"),
+          linewidth = 1) +
+  geom_sf(data = ma,
+          aes(color = "Mata Atlântica", fill = "Mata Atlântica"),
+          alpha = 0.5, linewidth = 1) +
+  geom_sf(data = uc,
+          aes(color = "Unidades de Conservação", fill = "Unidades de Conservação"),
+          alpha = 0.5) +
+  coord_sf(xlim = c(-48.75515, -32.37777),
+           ylim = c(-18.34849, -1.04971),
+           expand = FALSE,
+           label_graticule = "NSWE") +
+  scale_color_manual(values = c("Brasil" = "black",
+                                "Nordeste" = "black",
+                                "Mata Atlântica" = "darkgreen",
+                                "Unidades de Conservação" = "darkred"),
+                     breaks = c("Brasil",
+                                "Nordeste",
+                                "Mata Atlântica",
+                                "Unidades de Conservação")) +
+  scale_fill_manual(values = c("Brasil" = "gray",
+                               "Nordeste" = "goldenrod",
+                               "Mata Atlântica" = "darkgreen",
+                               "Unidades de Conservação" = "darkred"),
+                    breaks = c("Brasil",
+                               "Nordeste",
+                               "Mata Atlântica",
+                               "Unidades de Conservação")) +
+  labs(fill = NULL,
+       color = NULL) +
+  theme_minimal() +
+  theme(axis.text = element_text(color = "black", size = 25),
+        legend.text = element_text(color = "black", size = 25),
+        legend.title = element_text(color = "black", size = 25),
+        legend.position = "bottom") +
+  ggview::canvas(height = 12, width = 12)
+
+ggsave(filename = "mapa_mata_atlantica_nordestina.png",
+       height = 12, width = 12)
