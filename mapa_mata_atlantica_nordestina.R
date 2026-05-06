@@ -1,10 +1,8 @@
 # Pacotes ----
 
-library(geobr)
+library(sf)
 
 library(tidyverse)
-
-library(sf)
 
 # Dados ----
 
