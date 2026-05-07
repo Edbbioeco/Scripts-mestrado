@@ -39,17 +39,18 @@ gg_spectro <- dryadobates |>
   scale_y_continuous(expand = FALSE,
                      limits = c(5.75, 6.75)) +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 12),
+  theme(axis.text = element_text(color = "black", size = 20),
         axis.text.x = element_blank(),
-        axis.title = element_text(color = "black", size = 12),
+        axis.title = element_text(color = "black", size = 20),
         axis.title.x = element_blank(),
         axis.ticks.x = element_blank(),
-        strip.text = element_text(color = "black", size = 12,
+        strip.text = element_text(color = "black", size = 20,
                                   face = "bold.italic"),
         legend.position = "none",
         plot.margin = margin(0.5, -0.5, 0, 0.5, "cm"),
         panel.background = element_rect(fill = "black"),
-        panel.grid = element_line(linetype = "dashed"))
+        panel.grid = element_line(linetype = "dashed")) +
+  ggview::canvas(height = 10, width = 12)
 
 gg_spectro
 
@@ -73,13 +74,14 @@ gg_osc <- tbl_osc %>%
   geom_line()  +
   scale_x_continuous(expand = FALSE) +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 12),
-        axis.title = element_text(color = "black", size = 12),
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 20),
         plot.margin = margin(0, -0.5, 0.5, 0.5, "cm"),
         legend.position = "none",
-        panel.grid = element_line(linetype = "dashed"))
+        panel.grid = element_line(linetype = "dashed")) +
+  ggview::canvas(height = 10, width = 12)
 
-  gg_osc
+gg_osc
 
 # Gráfico final ----
 
