@@ -18,16 +18,7 @@ dryadobates <- tuneR::readWave("C:/Users/LENOVO/OneDrive/Documentos/projeto mest
 
 dryadobates
 
-dryadobates |>
-  seewave::ggspectro(f = 512) +
-  stat_contour(geom = "polygon",
-               aes(fill = ..level..,
-                   alpha = ..level..),
-               bins = 150) +
-  scale_fill_viridis_c(option = "inferno",
-                       direction = -1) +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0))
+dryadobates |> seewave::listen()
 
 # Analisando ----
 
