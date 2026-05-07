@@ -40,7 +40,6 @@ tibl_spectro <- tibble::tibble(`Time (s)` = rep(spectro$time,
                                                        length(spectro$time)),
                                Amplitude = spectro$amp |>
                                  as.vector()) |>
-  dplyr::mutate(`Time (s)` = `Time (s)` - 0.85) |>
   dplyr::filter(Amplitude > -35)
 
 tibl_spectro
@@ -51,8 +50,8 @@ gg_spectro <- tibl_spectro |>
                aes(fill = ..level..),
                bins = 150) +
   scale_fill_viridis_c(option = "inferno") +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0),
+  scale_x_continuous(expand = FALSE) +
+  scale_y_continuous(expand = FALSE,
                      limits = c(5.75, 6.75)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 12),
@@ -78,9 +77,7 @@ dryadobates |>
 
 tbl_osc <- tibble::tibble(`Time (s)` = seq(0, seewave::duration(dryadobates),
                                            length.out = length(dryadobates@left)),
-                          `Amplitude (KU)` = dryadobates@left) |>
-  dplyr::filter(`Time (s)` |> dplyr::between(0.85, 1.8)) |>
-  dplyr::mutate(`Time (s)` = `Time (s)` - 0.85)
+                          `Amplitude (KU)` = dryadobates@left)
 
 tbl_osc
 
@@ -89,7 +86,7 @@ tbl_osc
 gg_osc <- tbl_osc %>%
   ggplot(aes(`Time (s)`, `Amplitude (KU)`)) +
   geom_line()  +
-  scale_x_continuous(expand = c(0, 0)) +
+  scale_x_continuous(expand = FALSE) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 12),
         axis.title = element_text(color = "black", size = 12),
@@ -97,11 +94,11 @@ gg_osc <- tbl_osc %>%
         legend.position = "none",
         panel.grid = element_line(linetype = "dashed"))
 
-gg_osc
+  gg_osc
 
 # Gráfico final ----
 
-gg_spectro + gg_m_spec + gg_osc +
-  patchwork::plot_layout(ncol = 2)
+(gg_spectro / gg_osc) &
+    ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "vocalizacoes_dryadobates.png", height = 10, width = 12)
