@@ -8,6 +8,8 @@ library(tidyverse)
 
 library(patchwork)
 
+library(ggview)
+
 # Dados ----
 
 ## Importando ----
