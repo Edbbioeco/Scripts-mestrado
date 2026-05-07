@@ -24,7 +24,7 @@ dryadobates |> seewave::listen()
 
 ## Espectrotrograma ----
 
-### Espectrotro ----
+### Espectrograma inicial ----
 
 dryadobates |>
   seewave::spectro(wl = 2048,
