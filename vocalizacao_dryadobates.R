@@ -27,10 +27,10 @@ dryadobates |> seewave::listen()
 ### Espectrotro ----
 
 spectro <- dryadobates |>
-  seewave::spectro(wl = 512,
+  seewave::spectro(wl = 2048,
+                   wn = "blackman",
                    ovl = 99,
-                   flim = c(5.75, 6.75),
-                   tlim = c(0.85, 1.8))
+                   flim = c(5.75, 6.75))
 
 ### ggplot ----
 
