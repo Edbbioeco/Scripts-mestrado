@@ -69,47 +69,6 @@ gg_spectro <- tibl_spectro |>
 
 gg_spectro
 
-## Densidade de frequência ----
-
-spec <- dryadobates |>
-  seewave::meanspec(from = 0.85,
-                    to = 1.8,
-                    dB = "C")
-
-tbl_m_spec <- spec |>
-  tibble::as_tibble() |>
-  dplyr::rename("Frequency (KHz)" = x,
-                "Amplitude density (dB/KHz)" = y) |>
-  dplyr::filter(`Frequency (KHz)`  |> dplyr::between(5.75, 6.75) &
-                  `Amplitude density (dB/KHz)` >= -32.5)
-
-tbl_m_spec
-
-### ggplot ----
-
-gg_m_spec <- tbl_m_spec |>
-  ggplot(aes(`Frequency (KHz)`, `Amplitude density (dB/KHz)`)) +
-  geom_line(linewidth = 1) +
-  scale_x_continuous(expand = c(0, 0),
-                     limits = c(5.75, 6.75)) +
-  scale_y_continuous(expand = c(0, 0),
-                     limits = c(-32.5, 1),
-                     position = "right") +
-  coord_flip() +
-  theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 12),
-        axis.text.y = element_blank(),
-        axis.title = element_text(color = "black", size = 12),
-        axis.title.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        strip.text = element_text(color = "black", size = 12,
-                                  face = "bold.italic"),
-        legend.position = "none",
-        plot.margin = margin(0.5, 0.5, 0, -0.5, "cm"),
-        panel.grid = element_line(linetype = "dashed"))
-
-gg_m_spec
-
 ## Oscilograma ----
 
 ### Calculando ----
