@@ -26,7 +26,7 @@ dryadobates |> seewave::listen()
 
 ### Espectrotro ----
 
-spectro <- dryadobates |>
+dryadobates |>
   seewave::spectro(wl = 2048,
                    wn = "blackman",
                    ovl = 99,
