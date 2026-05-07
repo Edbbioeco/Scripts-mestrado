@@ -26,30 +26,15 @@ dryadobates |> seewave::listen()
 
 ### Espectrograma inicial ----
 
-dryadobates |>
-  seewave::spectro(wl = 2048,
-                   wn = "blackman",
-                   ovl = 99,
-                   flim = c(5.75, 6.75))
-
-### ggplot ----
-
-tibl_spectro <- tibble::tibble(`Time (s)` = rep(spectro$time,
-                                                each = length(spectro$freq)),
-                               `Frequency (KHz)` = rep(spectro$freq,
-                                                       length(spectro$time)),
-                               Amplitude = spectro$amp |>
-                                 as.vector()) |>
-  dplyr::filter(Amplitude > -35)
-
-tibl_spectro
-
-gg_spectro <- tibl_spectro |>
-  ggplot(aes(`Time (s)`, `Frequency (KHz)`, z = Amplitude)) +
-  stat_contour(geom = "polygon",
-               aes(fill = ..level..),
-               bins = 150) +
-  scale_fill_viridis_c(option = "inferno") +
+gg_spectro <- dryadobates |>
+  seewave::ggspectro(wl = 4096,
+                     wn = "blackman",
+                     ovl = 99,
+                     flim = c(5.75, 6.75)) +
+  geom_tile(aes(fill = amplitude)) +
+  scale_fill_viridis_c(option = "inferno",
+                       limits = c(-35, 0),
+                       na.value = "transparent") +
   scale_x_continuous(expand = FALSE) +
   scale_y_continuous(expand = FALSE,
                      limits = c(5.75, 6.75)) +
