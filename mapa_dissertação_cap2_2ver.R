@@ -224,7 +224,9 @@ mapa_principal <- ggplot() +
                                "Riparian sample" = "royalblue"),
                     breaks = c("Uniform sample", "Riparian sample")) +
   guides(fill = guide_legend(order = 3, nrow = 2)) +
-  labs(fill = NULL) +
+  labs(fill = NULL,
+       x = NULL,
+       y = NULL) +
   ggspatial::coord_sf(label_graticule = "SEW",
                       xlim = c(-35.20319, -35.15696),
                       ylim = c(-8.7442, -8.710025),
