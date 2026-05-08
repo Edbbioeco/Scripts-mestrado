@@ -10,6 +10,8 @@ library(terra)
 
 library(tidyterra)
 
+library(vegan)
+
 library(ggview)
 
 # Dados ----
