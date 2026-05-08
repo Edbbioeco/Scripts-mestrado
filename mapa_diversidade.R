@@ -12,6 +12,8 @@ library(tidyterra)
 
 library(vegan)
 
+library(ggspatial)
+
 library(ggview)
 
 # Dados ----
