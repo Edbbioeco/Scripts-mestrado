@@ -28,6 +28,7 @@ comp_trat <- comp |>
   dplyr::filter(`Unidade Amostral` != "T1P1") |>
   dplyr::mutate(`Unidade Amostral` = paste0(Campanha, " ", `Unidade Amostral`)) |>
   tidyr::pivot_wider(names_from = Espécie,
-                     values_from = Abundância)
+                     values_from = Abundância,
+                     values_fill = 0)
 
 comp_trat
