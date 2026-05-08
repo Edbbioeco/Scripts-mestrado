@@ -41,3 +41,16 @@ borda
 ggplot() +
   geom_sf(data = borda, color = "black", linewidth = 1)
 
+## Coordenadas das parcelas ----
+
+### Importar ----
+
+parcelas <- sf::st_read("coordenadas_parcelas_saltinho.shp")
+
+### Visualizar ----
+
+parcelas
+
+ggplot() +
+  geom_sf(data = borda, color = "black", linewidth = 1) +
+  geom_sf(data = parcelas, color = "black", linewidth = 1)
