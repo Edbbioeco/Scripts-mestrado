@@ -22,7 +22,7 @@ library(patchwork)
 
 ### Importando ----
 
-br <- geobr::read_state(year = 2019)
+br <- sf::st_read("br.shp")
 
 ### Visualizando ----
 
@@ -36,7 +36,7 @@ ggplot() +
 ### Importando ----
 
 pe <- br |>
-  dplyr::filter(abbrev_state == "PE")
+  dplyr::filter(abbrv_s == "PE")
 
 ### Visualizando ----
 
