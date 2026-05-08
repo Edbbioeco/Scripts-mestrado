@@ -54,3 +54,20 @@ parcelas
 ggplot() +
   geom_sf(data = borda, color = "black", linewidth = 1) +
   geom_sf(data = parcelas, color = "black", linewidth = 1)
+
+## Altitude ----
+
+### Importar ----
+
+alt <- terra::rast("altitude.tif")
+
+### Visualizar ----
+
+alt
+
+ggplot() +
+  tidyterra::geom_spatraster(data = alt) +
+  geom_sf(data = borda, color = "black", linewidth = 1, fill = "transparent") +
+  geom_sf(data = parcelas, color = "black", linewidth = 1) +
+  scale_fill_viridis_c()
+
