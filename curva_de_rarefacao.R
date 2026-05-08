@@ -19,3 +19,15 @@ comp <- readxl::read_xlsx("levantamento_anuros.xlsx")
 comp
 
 comp |> dplyr::glimpse()
+
+## Tratar ----
+
+comp_trat <- comp |>
+  dplyr::summarise(Abundância = Abundância |> max(),
+                   .by = c(Espécie, `Unidade Amostral`, Campanha)) |>
+  dplyr::filter(`Unidade Amostral` != "T1P1") |>
+  dplyr::mutate(`Unidade Amostral` = paste0(Campanha, " ", `Unidade Amostral`)) |>
+  tidyr::pivot_wider(names_from = Espécie,
+                     values_from = Abundância)
+
+comp_trat
