@@ -168,3 +168,61 @@ ggplot() +
         legend.position = "bottom",
         legend.background = element_blank()) +
   ggview::canvas(height = 10, width = 12)
+
+## Mapa de diversidade taxonômica ----
+
+ggplot() +
+  tidyterra::geom_spatraster(data = alt) +
+  geom_sf(data = borda,
+          aes(color = "Native vegetation"),
+          linewidth = 1,
+          fill = "transparent") +
+  geom_sf(data = corpos_hid,
+          aes(color = "Hydric Streams"),
+          linewidth = 1,
+          fill = "transparent") +
+  geom_sf(data = parcelas_div,
+          aes(size = `Alpha Diversity`),
+          fill = "forestgreen",
+          color = "black",
+          shape = 21,
+          stroke = 1) +
+  tidyterra::scale_fill_whitebox_c(palette = "arid",
+                                   direction = -1,
+                                   name = "Altitude",
+                                   guide = guide_colorbar(order = 1,
+                                                          title.position = "top",
+                                                          title.hjust = 0.5,
+                                                          barwidth = 20,
+                                                          frame.colour = "black",
+                                                          frame.linewidth = 1,
+                                                          ticks.colour = "black",
+                                                          ticks.linewidth = 1)) +
+  scale_color_manual(values = c("Native vegetation" = "darkgreen",
+                                "Hydric Streams" = "blue"),
+                     breaks = c("Native vegetation",
+                                "Hydric Streams"),
+                     guide = guide_legend(order = 2)) +
+  scale_size_continuous(breaks = seq(2.5, 4.5, 0.25),
+                        guide = guide_legend(order = 3,
+                                             title.position = "top",
+                                             title.hjust = 0.5),
+                        range = c(1, 10)) +
+  scale_x_continuous(expand = FALSE,
+                     breaks = seq(-35.19509, -35.15463, 0.03)) +
+  scale_y_continuous(expand = FALSE) +
+  ggspatial::annotation_scale(location = "bl",
+                              bar_cols = c("black", "gold"),
+                              text_cex = 2.5) +
+  labs(x = NULL,
+       y = NULL,
+       colour = NULL) +
+  coord_sf(label_graticule = "NSWE") +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 17.5),
+        legend.text = element_text(color = "black", size = 17.5),
+        legend.title = element_text(color = "black", size = 17.5),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.position = "bottom",
+        legend.background = element_blank()) +
+  ggview::canvas(height = 10, width = 12)
