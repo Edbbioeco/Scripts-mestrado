@@ -75,7 +75,24 @@ ggplot() +
 
 parcelas_trat <- parcelas |>
   dplyr::mutate(tipo = c(rep("Uniform sample", 10),
-                         rep("Riparian sample", 2))) |>
+                         rep("Riparian sample", 2)),
+                Trilha = dplyr::case_when(Trlh.Pr |>
+                                            stringr::str_detect("1-") ~ "T1P",
+                                          Trlh.Pr |>
+                                            stringr::str_detect("2-") ~ "T2P",
+                                          Trlh.Pr |>
+                                            stringr::str_detect("3-") ~ "T3P",
+                                          .default = "R"),
+                `Unidade Amostral` = dplyr::case_when(
+                  Trlh.Pr |>
+                    stringr::str_detect("-1") ~ paste0(Trilha, 1),
+                  Trlh.Pr |>
+                    stringr::str_detect("-2") ~ paste0(Trilha, 2),
+                  Trlh.Pr |>
+                    stringr::str_detect("-3") ~ paste0(Trilha, 3),
+                  Trlh.Pr |>
+                    stringr::str_detect("-4") ~ paste0(Trilha, 4))) |>
+  dplyr::select(-Trilha) |>
   dplyr::filter(!Trlh.Pr == "1-1") |>
   sf::st_centroid()
 
@@ -83,7 +100,9 @@ parcelas_trat
 
 ggplot() +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
-  geom_sf(data = parcelas_trat, aes(fill = tipo),
+  geom_sf_label(data = parcelas_trat,
+                aes(fill = tipo,
+                    label = `Unidade Amostral`),
           color = "black", shape = 21, size = 3, linewidth = 1)
 
 ## Corpos hídricos ----
