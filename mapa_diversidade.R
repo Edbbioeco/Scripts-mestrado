@@ -153,6 +153,9 @@ ggplot() +
   scale_x_continuous(expand = FALSE,
                      breaks = seq(-35.19509, -35.15463, 0.03)) +
   scale_y_continuous(expand = FALSE) +
+  ggspatial::annotation_scale(location = "bl",
+                              bar_cols = c("black", "gold"),
+                              text_cex = 2.5) +
   labs(x = NULL,
        y = NULL,
        colour = NULL) +
