@@ -178,7 +178,7 @@ ggplot() +
           linewidth = 1,
           fill = "transparent") +
   geom_sf(data = corpos_hid,
-          aes(color = "Hydric Streams"),
+          aes(color = "Water Streams"),
           linewidth = 1,
           fill = "transparent") +
   geom_sf(data = parcelas_div,
@@ -199,9 +199,9 @@ ggplot() +
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
   scale_color_manual(values = c("Native vegetation" = "darkgreen",
-                                "Hydric Streams" = "blue"),
+                                "Water Streams" = "blue"),
                      breaks = c("Native vegetation",
-                                "Hydric Streams"),
+                                "Water Streams"),
                      guide = guide_legend(order = 2)) +
   scale_size_continuous(breaks = seq(2.5, 4.5, 0.25),
                         guide = guide_legend(order = 3,
@@ -226,3 +226,6 @@ ggplot() +
         legend.position = "bottom",
         legend.background = element_blank()) +
   ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "mapa_valores_diversidade_cap2.png",
+       height = 10, width = 12)
