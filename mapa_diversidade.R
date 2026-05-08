@@ -71,3 +71,16 @@ ggplot() +
   geom_sf(data = parcelas, color = "black", linewidth = 1) +
   scale_fill_viridis_c()
 
+# Diversidade taxonômica ----
+
+## Calculara a diversidade taoxnômica ----
+
+div_tax <- comp |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
+  vegan::renyi(scales = 0:1, hill = TRUE) |>
+  tibble::rownames_to_column() |>
+  dplyr::rename("Sampling Units" = rowname,
+                "Richness" = `0`,
+                "Alpha Diversity" = `1`)
+
+div_tax
