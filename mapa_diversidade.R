@@ -84,3 +84,11 @@ div_tax <- comp |>
                 "Alpha Diversity" = `1`)
 
 div_tax
+
+## Atribuindo estes valores ao shapefile das coordenadas ----
+
+parcelas_div <- parcelas |>
+  dplyr::slice(-1) |>
+  dplyr::bind_cols(div_tax)
+
+parcelas_div
