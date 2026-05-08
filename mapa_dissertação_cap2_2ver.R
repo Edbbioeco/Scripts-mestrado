@@ -181,7 +181,7 @@ mapa_principal <- ggplot() +
           aes(color = "Native forest"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = corpos_hid,
-          aes(color = "Hidric streams"),
+          aes(color = "Water streams"),
           linewidth = 1, fill = "transparent") +
   scale_fill_manual(values = c("Brazil" = "lightgray",
                                "Pernambuco" = "lightgoldenrod"),
@@ -232,3 +232,4 @@ mapa_final + ggview::canvas(width = 12.5, height = 12.5)
 
 ggsave(filename = "mapa_cap2_2ver.png",
        height = 12.5, width = 12.5)
+
