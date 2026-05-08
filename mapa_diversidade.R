@@ -120,6 +120,10 @@ ggplot() +
           aes(color = "Native vegetation"),
           linewidth = 1,
           fill = "transparent") +
+  geom_sf(data = corpos_hid,
+          aes(color = "Hydric Streams"),
+          linewidth = 1,
+          fill = "transparent") +
   geom_sf(data = parcelas_div,
           aes(size = Richness),
           fill = "forestgreen",
@@ -137,7 +141,10 @@ ggplot() +
                                                           frame.linewidth = 1,
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
-  scale_color_manual(values = "darkgreen",
+  scale_color_manual(values = c("Native vegetation" = "darkgreen",
+                                "Hydric Streams" = "blue"),
+                     breaks = c("Native vegetation",
+                                "Hydric Streams"),
                      guide = guide_legend(order = 2)) +
   scale_size_continuous(breaks = seq(4, 6, 1),
                         guide = guide_legend(order = 3,
