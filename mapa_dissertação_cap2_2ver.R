@@ -190,10 +190,10 @@ mapa_principal <- ggplot() +
                     breaks = c("Brazil", "Pernambuco")) +
   scale_color_manual(values = c("Native forest" = "gold3",
                                 "REBio area" = "darkred",
-                                "Hidric streams" = "royalblue",
+                                "Water streams" = "royalblue",
                                 "Uniform sample" = "black",
                                 "Riparian sample" = "black"),
-                     breaks = c("Native forest", "Hidric streams", "REBio area",
+                     breaks = c("Native forest", "Water streams", "REBio area",
                                 "Uniform sample", "Riparian sample")) +
   guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
          color = guide_legend(order = 2, nrow = 2)) +
