@@ -55,6 +55,21 @@ ggplot() +
   geom_sf(data = borda, color = "black", linewidth = 1) +
   geom_sf(data = parcelas, color = "black", linewidth = 1)
 
+## Corpos Hídricos ----
+
+### Importar ----
+
+corpos_hid <- sf::st_read("corpos_hidricos_saltinho.gpkg")
+
+### Visualizar ----
+
+corpos_hid
+
+ggplot() +
+  geom_sf(data = borda, color = "black", linewidth = 1) +
+  geom_sf(data = corpos_hid, color = "black", linewidth = 1) +
+  geom_sf(data = parcelas, color = "black", linewidth = 1)
+
 ## Altitude ----
 
 ### Importar ----
