@@ -462,6 +462,13 @@ modelos <- c(modelos_pristimantis,
 
 modelos
 
+sps <- c("Pristimantis ramagii",
+                    "Adenomera hylaedactyla",
+                    "Rhinella hoogmoedi") |>
+  rep(each = 5)
+
+sps
+
 variavel <- df_ocupacao |>
   dplyr::select(c(6, 8, 10:12)) |>
   names() |>
@@ -469,22 +476,16 @@ variavel <- df_ocupacao |>
 
 variavel
 
-df_tendencia <- purrr::map2(modelos, variavel, \(modelo, variavel){
+df_tendencia <- purrr::pmap(list(modelos, variavel, sps), \(modelos, variavel, sps){
 
-  purrr::map(c("Pristimantis ramagii",
-              "Adenomera hylaedactyla",
-              "Rhinella hoogmoedi"), \(especie){
-
-                tendencia <- ggeffects::ggpredict(model = modelo,
-                                                  terms = variavel) |>
-                  as.data.frame() |>
-                  dplyr::select(1:2) |>
-                  dplyr::mutate(Preditor = variavel,
-                                Species = especie) |>
-                  dplyr::rename("Valor preditor" = 1,
-                                "Predicted" = 2)
-
-                })
+  ggeffects::ggpredict(model = modelos,
+                       terms = variavel) |>
+    as.data.frame() |>
+    dplyr::select(1:2) |>
+    dplyr::mutate(Preditor = variavel,
+                  Species = sps) |>
+    dplyr::rename("Valor preditor" = 1,
+                  "Predicted" = 2)
 
   }) |>
   dplyr::bind_rows() |>
@@ -523,7 +524,7 @@ df_ocupacao |>
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_line(data = df_tendencia |>
-              dplyr::filter(Species == "pristimantis" &
+              dplyr::filter(Species == "Pristimantis ramagii" &
                               Preditor %in% prediotores_pristimantis),
             aes(`Valor preditor`, Predicted), color = "blue", linewidth = 1) +
   labs(x = "Predictor value",
