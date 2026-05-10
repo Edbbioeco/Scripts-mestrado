@@ -230,9 +230,7 @@ resultados_modelos
 
 #### Dataframe ----
 
-df_q1_estatisticas <- ls(pattern = "resultados_alfa_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
+df_q1_estatisticas <- resultados_modelos |>
   dplyr::mutate(Estimate = Estimate |> round(4),
                 `Std. Error` = `Std. Error` |> round(4),
                 `t value` = `t value` |> round(3),
