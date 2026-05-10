@@ -121,7 +121,7 @@ qt(p = 0.05, df = 30, lower.tail = FALSE)
 
 ## Loop com GLM Poisson ----
 
-modelos_temp_glm_fix <- function(especie){
+purrr::map(df_temp[, 3:5] |> names(), \(especie){
 
   paste0("modelo linear para a espécie: ", especie) |>
     crayon::green() |>
@@ -129,8 +129,8 @@ modelos_temp_glm_fix <- function(especie){
 
   modelo_linear <- lme4::glmer(df_temp[[especie]] ~ Temperatura +
                                  (1 | `Unidade Amostral`),
-                       data = df_temp,
-                       family = poisson(link = "log"))
+                               data = df_temp,
+                               family = poisson(link = "log"))
 
   performance_modelo <- modelo_linear |>
     DHARMa::simulateResiduals(plot = TRUE)
@@ -141,9 +141,7 @@ modelos_temp_glm_fix <- function(especie){
 
   sumario |> print()
 
-}
-
-purrr::map(df_temp[, 3:5] |> names(), modelos_temp_glm_fix)
+})
 
 ## Gráfico ----
 
