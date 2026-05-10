@@ -404,19 +404,25 @@ sts_df_flex |>
 ## Preditores significativos para cada espécie ----
 
 prediotores_pristimantis <- sts_df |>
-  dplyr::filter(Species == "Pristimantis ramagii" & abs(z) > 1.96) |>
+  dplyr::filter(Species == "Pristimantis ramagii" &
+                  abs(z) > 1.96 &
+                  Predictor != "Temperature") |>
   dplyr::pull(Predictor)
 
 prediotores_pristimantis
 
 prediotores_adenomera <- sts_df |>
-  dplyr::filter(Species == "Adenomera aff. hylaedactyla" & abs(z) > 1.96) |>
+  dplyr::filter(Species == "Adenomera aff. hylaedactyla" &
+                  abs(z) > 1.96 &
+                  Predictor != "Temperature") |>
   dplyr::pull(Predictor)
 
 prediotores_adenomera
 
 prediotores_rhinella <- sts_df |>
-  dplyr::filter(Species == "Rhinella hoogmoedi" & abs(z) > 1.96) |>
+  dplyr::filter(Species == "Rhinella hoogmoedi" &
+                  abs(z) > 1.96 &
+                  Predictor != "Temperature") |>
   dplyr::pull(Predictor)
 
 prediotores_rhinella
