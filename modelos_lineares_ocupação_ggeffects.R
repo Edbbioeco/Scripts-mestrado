@@ -350,17 +350,12 @@ sts_df <- ls(pattern = "^resultados_") |>
                    forcats::fct_relevel(c("Pristimantis ramagii",
                                           "Adenomera aff. hylaedactyla",
                                           "Rhinella hoogmoedi")),
-                 Predictor = Predictor |>
+                 Model = Model |>
                    forcats::fct_relevel(c("Leaf-litter depth",
-                                          "Temperature",
                                           "Canopy openness",
-                                          "Temperature",
                                           "Edge distance",
-                                          "Temperature",
                                           "Elevation",
-                                          "Temperature",
-                                          "Hydric stream distance",
-                                          "Temperature"))) |>
+                                          "Hydric stream distance"))) |>
   dplyr::rename("β1" = Estimate,
                 "SE" = `Std. Error`) |>
   dplyr::mutate("β1 ± EP" = paste0(β1 |> round(4),
