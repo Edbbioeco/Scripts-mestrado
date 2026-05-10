@@ -431,31 +431,6 @@ prediotores_rhinella
 
 ### Criando as linhas de tendência ----
 
-criar_linhas <- function(id){
-
-  especie <- modelo[id] |>
-    names() |>
-    stringr::str_replace_all("_", " ") |>
-    stringr::word(2)
-
-  tendencia <- ggeffects::ggpredict(model = modelo[id],
-                                    terms = variavel[id]) |>
-    as.data.frame() |>
-    dplyr::select(1:2) |>
-    dplyr::mutate(Preditor = variavel[id],
-                  Species = especie) |>
-    dplyr::rename("Valor preditor" = 1,
-                  "Predicted" = 2)
-
-  nome <- variavel[id] |>
-    stringr::word(1)
-
-  assign(paste0("tendencia_", nome, "_", especie),
-         tendencia,
-         envir = globalenv())
-
-}
-
 modelos <- c(modelos_pristimantis,
              modelos_adenomera,
              modelos_rhinella)
