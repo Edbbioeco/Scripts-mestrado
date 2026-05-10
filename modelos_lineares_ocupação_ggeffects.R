@@ -139,8 +139,7 @@ purrr::map2(c(6, 8, 10:12), modelos_pristimantis, \(id, modelo){
 resultados_pristimantis <- map2(c(6, 8, 10:12), modelos_pristimantis, \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
-    names() |>
-    stringr::word(1)
+    names()
 
   r2 <- modelo |>
     performance::r2_mcfadden() |>
@@ -223,8 +222,7 @@ purrr::map2(c(6, 8, 10:12), modelos_adenomera, \(id, modelo){
 resultados_adenomera <- map2(c(6, 8, 10:12), modelos_adenomera, \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
-    names() |>
-    stringr::word(1)
+    names()
 
   r2 <- modelo |>
     performance::r2_mcfadden() |>
@@ -307,8 +305,7 @@ purrr::map2(c(6, 8, 10:12), modelos_rhinella, \(id, modelo){
 resultados_rhinella <- map2(c(6, 8, 10:12), modelos_rhinella, \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
-    names() |>
-    stringr::word(1)
+    names()
 
   r2 <- modelo |>
     performance::r2_mcfadden() |>
