@@ -583,7 +583,7 @@ df_ocupacao |>
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_line(data = df_tendencia |>
-              dplyr::filter(Species == "rhinella" &
+              dplyr::filter(Species == "Rhinella hoogmoedi" &
                               Preditor %in% prediotores_rhinella),
             aes(`Valor preditor`, Predicted), color = "blue", linewidth = 1) +
   labs(x = "Predictor value",
