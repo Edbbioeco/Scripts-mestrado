@@ -540,7 +540,7 @@ df_ocupacao |>
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_line(data = df_tendencia |>
-              dplyr::filter(Species == "Adenomera" &
+              dplyr::filter(Species == "Adenomera hylaedactyla" &
                               Preditor %in% prediotores_adenomera),
             aes(`Valor preditor`, Preditor)) +
   labs(x = "Predictor value",
