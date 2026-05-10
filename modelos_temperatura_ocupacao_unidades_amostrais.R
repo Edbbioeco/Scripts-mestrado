@@ -94,15 +94,15 @@ df_temp |> dplyr::glimpse()
 
 ## Loop para as 3 espécies -----
 
-modelos_temp <- function(especie){
+purrr::map(df_temp[, 3:5] |> names(), \(especie){
 
   paste0("modelo linear para a espécie: ", especie) |>
     crayon::green() |>
     message()
 
   modelo_linear <- lmerTest::lmer(df_temp[[especie]] ~ Temperatura +
-                                (1 | `Unidade Amostral`),
-                      data = df_temp)
+                                    (1 | `Unidade Amostral`),
+                                  data = df_temp)
 
   performance_modelo <- modelo_linear |>
     performance::check_model(check = c("qq",
@@ -115,9 +115,7 @@ modelos_temp <- function(especie){
 
   sumario |> print()
 
-}
-
-purrr::map(df_temp[, 3:5] |> names(), modelos_temp)
+})
 
 qt(p = 0.05, df = 30, lower.tail = FALSE)
 
