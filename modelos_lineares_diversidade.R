@@ -223,14 +223,83 @@ modelos_diversidade <- function(id){
 
 }
 
-purrr::walk(c(4, 6, 8:10), modelos_diversidade)
+modelos <- purrr::map(c(4, 6, 8:10), \(id){
 
-ls(pattern = "modelo_alfa_") |>
-  mget(envir = globalenv())
+  lm(`Q = 1` ~ .,
+     data = df_alfa |>
+       dplyr::select(2, id))
 
-ls(pattern = "resultados_alfa_") |>
-  mget(envir = globalenv()) |>
+})
+
+modelos
+
+purrr::map2(c(4, 6, 8:10), modelos, \(id, modelo){
+
+  nome <- df_alfa[id] |> names()
+
+  paste0("Criando o modelo para: ",
+         nome) |>
+    crayon::green() |>
+    message()
+
+  nome <- df_alfa[, id] |>
+    names() |>
+    stringr::word(1)
+
+  paste0("pressupostos do modelo de: ",
+         nome) |>
+    crayon::green() |>
+    message()
+
+  modelo |>
+    performance::check_heteroscedasticity() |>
+    print()
+
+  modelo |>
+    performance::check_normality() |>
+    print()
+
+  modelo |>
+    performance::check_model(check = c("vif",
+                                       "qq",
+                                       "normality",
+                                       "homogeneity"))
+
+  })
+
+resultados_modelos <- purrr::map(modelos, \(modelo){
+
+  resultados <- modelo |>
+    summary() %>%
+    .$coefficient |>
+    as.data.frame() |>
+    tibble::rownames_to_column() |>
+    dplyr::mutate(rowname = rowname |>
+                    stringr::str_remove_all("`")) |>
+    dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
+    dplyr::rename()
+
+  summary <- modelo |>
+    summary()
+
+  resultados_summary <- tibble::tibble(`F` = summary$fstatistic[1] |> round(2),
+                                       df1 = summary$fstatistic[2],
+                                       df2 = summary$fstatistic[3],
+                                       `p global` = pf(q = summary$fstatistic[1],
+                                              df1 = summary$fstatistic[2],
+                                              df2 = summary$fstatistic[3],
+                                              lower.tail = FALSE) |>
+                                         round(2),
+                                       `Adj. R²` = summary$adj.r.squared |>
+                                         round(2))
+
+  resultados <- resultados |>
+    dplyr::bind_cols(resultados_summary)
+
+  }) |>
   dplyr::bind_rows()
+
+resultados_modelos
 
 ### Tabela das estatísticas ----
 
