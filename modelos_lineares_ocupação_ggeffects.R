@@ -450,25 +450,37 @@ criar_linhas <- function(id){
 
 }
 
-modelo <- ls(pattern = "modelo_") |>
-  mget(envir = globalenv())
+modelos <- c(modelos_pristimantis,
+             modelos_adenomera,
+             modelos_rhinella)
 
-modelo
+modelos
 
 variavel <- df_ocupacao |>
   dplyr::select(c(6, 8, 10:12)) |>
   names() |>
-  sort() |>
   rep(3)
 
 variavel
 
-purrr::map(1:15, criar_linhas)
+df_tendencia <- purrr::map2(modelos, variavel, \(modelo, variavel){
 
-### Unindo os dados ----
+  purrr::map(c("Pristimantis ramagii",
+              "Adenomera hylaedactyla",
+              "Rhinella hoogmoedi"), \(especie){
 
-df_tendencia <- ls(pattern = "tendencia_") |>
-  mget(envir = globalenv()) |>
+                tendencia <- ggeffects::ggpredict(model = modelo,
+                                                  terms = variavel) |>
+                  as.data.frame() |>
+                  dplyr::select(1:2) |>
+                  dplyr::mutate(Preditor = variavel,
+                                Species = especie) |>
+                  dplyr::rename("Valor preditor" = 1,
+                                "Predicted" = 2)
+
+                })
+
+  }) |>
   dplyr::bind_rows() |>
   dplyr::mutate(Preditor = dplyr::case_when(
                   Preditor == "Hydric stream distance" ~ "Water stream distance",
@@ -480,7 +492,8 @@ df_tendencia <- ls(pattern = "tendencia_") |>
                                          "Elevation",
                                          "Water stream distance"))) |>
   dplyr::group_by(Preditor, Species) |>
-  dplyr::slice(c(1, n()))
+  dplyr::slice(c(1, n())) |>
+  dplyr::ungroup()
 
 df_tendencia
 
