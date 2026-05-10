@@ -163,19 +163,87 @@ rodando_modelos_pristimantis <- function(id){
 
 }
 
-purrr::map(c(6, 8, 10:12), rodando_modelos_pristimantis)
+modelos_pristimantis <- purrr::map(c(6, 8, 10:12), \(id){
 
-ls(pattern = "modelo_pristimantis_") |>
-  mget(envir = globalenv())
+  modelo <- glm(`Pristimantis ramagii` ~ .,
+                data = df_ocupacao[, c(2, id, 9)],
+                family = poisson(link = "log"))
 
-ls(pattern = "resultados_pristimantis_") |>
-  mget(envir = globalenv()) |>
+  })
+
+modelos_pristimantis
+
+purrr::map2(c(6, 8, 10:12), modelos_pristimantis, \(id, modelo){
+
+  nome <- df_ocupacao[, id] |> names()
+
+  paste0("Criando o modelo de Pristimantis para: ",
+         nome) |>
+    crayon::green() |>
+    message()
+
+  nome <- df_ocupacao[, id] |>
+    names() |>
+    stringr::word(1)
+
+  paste0("pressupostos do modelo de Pristimantis para: ",
+         nome) |>
+    crayon::green() |>
+    message()
+
+  modelo |>
+    DHARMa::simulateResiduals(plot = TRUE) |>
+    print()
+
+  r2 <- modelo |>
+    performance::r2_mcfadden() |>
+    as.numeric() |>
+    round(2)
+
+  paste0("pseudo-R²: ",
+         r2) |>
+    crayon::green() |>
+    message()
+
+  })
+
+resultados_pristimantis <- map2(c(6, 8, 10:12), modelos_pristimantis, \(id, modelo){
+
+  nome <- df_ocupacao[, id] |>
+    names() |>
+    stringr::word(1)
+
+  r2 <- modelo |>
+    performance::r2_mcfadden() |>
+    as.numeric() |>
+    round(2)
+
+  modelo |>
+    summary() %>%
+    .$coefficient |>
+    as.data.frame() |>
+    tibble::rownames_to_column() |>
+    dplyr::mutate(Species = "Pristimantis ramagii",
+                  rowname = rowname |>
+                    stringr::str_remove_all("`")) |>
+    dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
+    dplyr::mutate(`pseudo-R²` = r2[2],
+                  Model = nome,
+                  `Pr(>|z|)` = dplyr::if_else(`Pr(>|z|)` < 0.01,
+                                              "< 0.01",
+                                              `Pr(>|z|)` |>
+                                                round(2) |>
+                                                as.character()),
+                  `z value` = `z value` |> round(2)) |>
+    dplyr::rename("z" = `z value`,
+                  "p" = `Pr(>|z|)`,
+                  "Predictor" = rowname) |>
+    dplyr::relocate(c(Species, Model), .before = Predictor)
+
+  }) |>
   dplyr::bind_rows()
 
-ls(pattern = "resultados_pristimantis_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::filter(!Predictor == "Temperature")
+resultados_pristimantis
 
 ## Adenomera Hylaedactyla ----
 
