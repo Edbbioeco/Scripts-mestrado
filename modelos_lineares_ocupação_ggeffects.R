@@ -347,27 +347,23 @@ resultados_rhinella
 ## Criando o data frame ----
 
 sts_df <- ls(pattern = "^resultados_") |>
-  as.data.frame() |>
-  dplyr::rename("string" = 1) |>
-  dplyr::mutate(especie = string |>
-                  stringr::str_replace_all("_", " ") |>
-                  stringr::word(2),
-                variavel = string |>
-                  stringr::str_replace_all("_", " ") |>
-                  stringr::word(3)) |>
-  dplyr::arrange(especie = especie |>
-                   forcats::fct_relevel(c("pristimantis",
-                                          "adenomera",
-                                          "rhinella")),
-                 variavel = variavel |>
-                   forcats::fct_relevel(c("Leaf-litter",
-                                          "Canopy",
-                                          "Edge",
-                                          "Elevation",
-                                          "Hydric"))) |>
-  dplyr::pull(string) |>
   mget(envir = globalenv()) |>
   dplyr::bind_rows() |>
+  dplyr::arrange(Species = Species |>
+                   forcats::fct_relevel(c("Pristimantis ramagii",
+                                          "Adenomera aff. hylaedactyla",
+                                          "Rhinella hoogmoedi")),
+                 Predictor = Predictor |>
+                   forcats::fct_relevel(c("Leaf-litter depth",
+                                          "Temperature",
+                                          "Canopy openness",
+                                          "Temperature",
+                                          "Edge distance",
+                                          "Temperature",
+                                          "Elevation",
+                                          "Temperature",
+                                          "Hydric stream distance",
+                                          "Temperature"))) |>
   dplyr::rename("β1" = Estimate,
                 "SE" = `Std. Error`) |>
   dplyr::mutate("β1 ± EP" = paste0(β1 |> round(4),
