@@ -260,7 +260,17 @@ resultados_adenomera
 
 ## Rhinella hoogmoedi ----
 
-rodando_modelos_rhinella <- function(id){
+modelos_rhinella <- purrr::map(c(6, 8, 10:12), \(id){
+
+  modelo <- glm(`Rhinella hoogmoedi` ~ .,
+                data = df_ocupacao[, c(4, id, 9)],
+                family = poisson(link = "log"))
+
+})
+
+modelos_rhinella
+
+purrr::map2(c(6, 8, 10:12), modelos_rhinella, \(id, modelo){
 
   nome <- df_ocupacao[, id] |> names()
 
@@ -269,41 +279,43 @@ rodando_modelos_rhinella <- function(id){
     crayon::green() |>
     message()
 
-  modelo <- glm(`Rhinella hoogmoedi` ~ .,
-                data = df_ocupacao[, c(4, id, 9)],
-                family = poisson(link = "log"))
-
   nome <- df_ocupacao[, id] |>
     names() |>
     stringr::word(1)
-
-  assign(paste0("modelo_rhinella_", nome),
-         modelo,
-         envir = globalenv())
 
   paste0("pressupostos do modelo de Rhinella para: ",
          nome) |>
     crayon::green() |>
     message()
 
-  avaliacao <- modelo |>
-    DHARMa::simulateResiduals(plot = TRUE)
-
-  print(avaliacao)
+  modelo |>
+    DHARMa::simulateResiduals(plot = TRUE) |>
+    print()
 
   r2 <- modelo |>
     performance::r2_mcfadden() |>
     as.numeric() |>
-    round(3)
+    round(2)
 
   paste0("pseudo-R²: ",
          r2) |>
     crayon::green() |>
     message()
 
-  nome <- df_ocupacao[, id] |> names()
+})
 
-  resultados <- modelo |>
+resultados_rhinella <- map2(c(6, 8, 10:12), modelos_rhinella, \(id, modelo){
+
+  nome <- df_ocupacao[, id] |>
+    names() |>
+    stringr::word(1)
+
+  r2 <- modelo |>
+    performance::r2_mcfadden() |>
+    as.numeric() |>
+    round(2)
+
+  modelo |>
     summary() %>%
     .$coefficient |>
     as.data.frame() |>
@@ -325,25 +337,10 @@ rodando_modelos_rhinella <- function(id){
                   "Predictor" = rowname) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
 
-  assign(paste0("resultados_rhinella_", nome),
-         resultados,
-         envir = globalenv())
-
-}
-
-purrr::map(c(6, 8, 10:12), rodando_modelos_rhinella)
-
-ls(pattern = "modelo_rhinella_") |>
-  mget(envir = globalenv())
-
-ls(pattern = "resultados_rhinella_") |>
-  mget(envir = globalenv()) |>
+  }) |>
   dplyr::bind_rows()
 
-ls(pattern = "resultados_rhinella_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::filter(!Predictor == "Temperature")
+resultados_rhinella
 
 # Tabela das estatísticas ----
 
