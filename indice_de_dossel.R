@@ -100,8 +100,63 @@ campanha <- c()
 
 ponto <- c()
 
-purrr::map(.x = imagens,
-           .f = calcular_indice)
+df_dossel <- purrr::map(.x = imagens,
+                        .f = \(imagens){
+
+             raster <- terra::rast(imagens)
+
+             indice_dossel <- raster |>
+               coiR::coir_crop(plot = FALSE) |>
+               coiR::coir_binarize(threshold = 0.75,
+                                   plot = FALSE) |>
+               coiR::coir_index(round = 5)
+
+             trilha_dossel <- dplyr::case_when(imagens |>
+                                                 stringr::str_detect("/T1") ~ "1",
+                                               imagens |>
+                                                 stringr::str_detect("/T2") ~ "2",
+                                               imagens |>
+                                                 stringr::str_detect("/T3") ~ "3",
+                                               imagens |>
+                                                 stringr::str_detect("/R") ~ "Ripária")
+
+             parcela_dossel <- dplyr::case_when(imagens |>
+                                                  stringr::str_detect("P1|R1") ~ "1",
+                                                imagens |>
+                                                  stringr::str_detect("P2|R2") ~ "2",
+                                                imagens |>
+                                                  stringr::str_detect("P3") ~ "3",
+                                                imagens |>
+                                                  stringr::str_detect("P4") ~ "4")
+
+             campanha_dossel <- dplyr::case_when(imagens |>
+                                                   stringr::str_detect("C1") ~ "1",
+                                                 imagens |>
+                                                   stringr::str_detect("C2") ~ "2",
+                                                 imagens |>
+                                                   stringr::str_detect("C3") ~ "3")
+
+             ponto_dossel <- dplyr::case_when(imagens |>
+                                                stringr::str_detect("P000") ~ "P000",
+                                              imagens |>
+                                                stringr::str_detect("P050") ~ "P050",
+                                              imagens |>
+                                                stringr::str_detect("P100") ~ "P100",
+                                              imagens |>
+                                                stringr::str_detect("P150") ~ "P150",
+                                              imagens |>
+                                                stringr::str_detect("P200") ~ "P200",
+                                              imagens |>
+                                                stringr::str_detect("P250") ~ "P250")
+
+             tibble::tibble(Trilha = trilha_dossel,
+                            Parcela = parcela_dossel,
+                            Campanha = campanha_dossel,
+                            Pontos = ponto_dossel,
+                            Índice = indice_dossel)
+
+           }) |>
+  dplyr::bind_rows()
 
 ## Data frame final ----
 
