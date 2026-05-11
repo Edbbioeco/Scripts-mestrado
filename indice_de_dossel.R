@@ -90,7 +90,8 @@ df_dossel |> as.data.frame()
 
 df_dossel |>
   ggplot(aes(Índice)) +
-  geom_histogram(color = "black", binwidth = 0.0075)
+  geom_histogram(color = "black", binwidth = 0.0075) +
+  facet_wrap(~Trilha)
 
 # Exportando os dados ----
 
