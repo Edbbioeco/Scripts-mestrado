@@ -367,9 +367,13 @@ ggsave(filename = "grafico_pontos_q1.png", height = 10, width = 12)
 
 ### Multicolinearidade ----
 
-df_beta |>
+#### Calcular ----
+
+betar_cor <- df_beta |>
   dplyr::select(2:6) |>
   cor(method = "spearman")
+
+betar_cor
 
 ### Criando o modelo ----
 
