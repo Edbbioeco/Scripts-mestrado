@@ -41,7 +41,7 @@ ambientais |> dplyr::glimpse()
 ambientais <- ambientais |>
   dplyr::rename("Canopy openness" = 3,
                 "Leaf-litter depth" = 5,
-                "Hydric stream distance" = 7,
+                "Water stream distance" = 7,
                 "Edge distance" = 8,
                 "Elevation" = 9)
 
@@ -65,7 +65,7 @@ graficos <- purrr::map(c("Leaf-litter depth",
                          "Canopy openness",
                          "Edge distance",
                          "Elevation",
-                         "Hydric stream distance"),
+                         "Water stream distance"),
                        \(var){
 
   grafico <- especies |>
