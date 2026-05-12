@@ -55,6 +55,13 @@ comp_trat
 comp_flex <- comp_trat |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
-  flextable::italic(part = "header", j = 2:11)
+  flextable::italic(part = "header", j = c(2, 4:11)) |>
+  flextable::compose(part = "header",
+                     j = 3,
+                     value = flextable::as_paragraph(
+                       flextable::as_i("Adenomera"),
+                       " aff. ",
+                       flextable::as_i("hylaedactyla")
+                     ))
 
 comp_flex
