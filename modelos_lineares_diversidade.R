@@ -144,11 +144,9 @@ df_beta
 
 df_beta |> dplyr::glimpse()
 
-# Modelos lineares ----
+# Modelos lineares da diversidade alfa ----
 
-## Diversidade alfa ----
-
-### Múltiplos modelos ----
+## Múltiplos modelos ----
 
 modelos <- purrr::map(c(4, 6, 8:10), \(id){
 
@@ -228,9 +226,9 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
 
 resultados_modelos
 
-### Tabela das estatísticas ----
+## Tabela das estatísticas ----
 
-#### Dataframe ----
+### Dataframe ----
 
 df_q1_estatisticas <- resultados_modelos |>
   dplyr::mutate(Estimate = Estimate |> round(4),
@@ -251,7 +249,7 @@ df_q1_estatisticas <- resultados_modelos |>
 
 df_q1_estatisticas
 
-#### Estatísticas críticas ----
+### Estatísticas críticas ----
 
 q_t <- qt(p = 0.05, df = 10, lower.tail = FALSE) |> round(2)
 
@@ -261,7 +259,7 @@ q_f <- qf(p = 0.05, df1 = 1, df2 = 9, lower.tail = FALSE) |> round(2)
 
 q_f
 
-#### Tabela flextable ----
+### Tabela flextable ----
 
 df_q1_flex <- df_q1_estatisticas |>
   dplyr::rename("pt" = p,
@@ -314,12 +312,12 @@ df_q1_flex_destacado <- df_q1_estatisticas |>
 
 df_q1_flex_destacado
 
-#### Exportando a tabela ----
+### Exportando a tabela ----
 
 df_q1_flex |>
   flextable::save_as_docx(path = "tabela_estatisticas_modelos_lineares_diversidade_alfa.docx")
 
-### Preditores significativos ----
+## Preditores significativos ----
 
 q1_predictor <- df_q1_estatisticas |>
   dplyr::filter(abs(t) > 1.96 & `F` > q_f) |>
@@ -327,7 +325,7 @@ q1_predictor <- df_q1_estatisticas |>
 
 q1_predictor
 
-### Gráfico -----
+## Gráfico -----
 
 df_alfa |>
   tidyr::pivot_longer(cols = c(4, 6, 8:10),
@@ -365,11 +363,11 @@ df_alfa |>
 
 ggsave(filename = "grafico_pontos_q1.png", height = 10, width = 12)
 
-## Diversidade beta -----
+# Modelos lineares da diversidade beta -----
 
-### Multicolinearidade ----
+## Multicolinearidade ----
 
-#### Calcular ----
+### Calcular ----
 
 beta_cor <- df_beta |>
   dplyr::select(2:6) |>
@@ -378,7 +376,7 @@ beta_cor <- df_beta |>
 
 beta_cor
 
-#### Transformar a matriz em data frame ----
+### Transformar a matriz em data frame ----
 
 beta_cor[upper.tri(beta_cor)] <- NA
 
@@ -392,9 +390,7 @@ cor_df <- beta_cor |>
 
 cor_df
 
-#### Data frame dos valores de correlação ----
-
-### Criando o modelo ----
+## Criar o modelo ----
 
 modelo_beta <- glmmTMB::glmmTMB(Composition ~ `Leaf-litter depth` +
                                   `Canopy openness` +
@@ -404,17 +400,17 @@ modelo_beta <- glmmTMB::glmmTMB(Composition ~ `Leaf-litter depth` +
                                 data = df_beta,
                                 family = glmmTMB::beta_family())
 
-### Pressupostos do modelo ----
+## Pressupostos do modelo ----
 
 modelo_beta |>
   DHARMa::simulateResiduals(plot = TRUE)
 
-### Avaliando o modelo ----
+## Avaliar o modelo ----
 
 modelo_beta |>
   summary()
 
-### Pseudo-R² ----
+## Pseudo-R² ----
 
 r2_beta <- modelo_beta |> performance::r2_ferrari() |>
   as.numeric() |>
@@ -422,9 +418,9 @@ r2_beta <- modelo_beta |> performance::r2_ferrari() |>
 
 r2_beta
 
-### Tabela das estatísticas ----
+## Tabela das estatísticas ----
 
-#### Dataframe ----
+### Dataframe ----
 
 df_sts <- modelo_beta |>
   summary() %>%
@@ -458,7 +454,7 @@ df_sts_beta <- df_sts |>
 
 df_sts_beta
 
-#### Tabela flextable ----
+### Tabela flextable ----
 
 df_beta_flex <- df_sts_beta |>
   dplyr::rename("z51" = z) |>
@@ -495,12 +491,12 @@ df_beta_flex_destacado <- df_sts_beta |>
 
 df_beta_flex_destacado
 
-#### Exportando a tabela ----
+### Exportando a tabela ----
 
 df_beta_flex |>
   flextable::save_as_docx(path = "tabela_estatisticas_modelos_lineares_diversidade_beta.docx")
 
-### Preditores significativos ----
+## Preditores significativos ----
 
 beta_predictor <- df_sts_beta |>
   dplyr::filter(abs(z) > 1.96) |>
@@ -508,7 +504,7 @@ beta_predictor <- df_sts_beta |>
 
 beta_predictor
 
-### Gráfico ----
+## Gráfico ----
 
 df_beta |>
   tidyr::pivot_longer(cols = 2:6,
