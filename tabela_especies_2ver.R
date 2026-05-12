@@ -11,3 +11,9 @@ library(flextable)
 ## Importar ----
 
 comp <- readxl::read_xlsx("matriz_composicao.xlsx")
+
+## Visualizar ----
+
+comp
+
+comp |> dplyr::glimpse()
