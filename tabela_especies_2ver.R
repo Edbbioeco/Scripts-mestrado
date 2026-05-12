@@ -51,5 +51,9 @@ comp_trat
 
 ## Tabela flextable ----
 
-comp_trat |>
-  flextable::flextable()
+comp_flex <- comp_trat |>
+  flextable::flextable() |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::italic(part = "header", j = 2:11)
+
+comp_flex
