@@ -61,7 +61,14 @@ especies |>
 
 ## Gráficos das variáveis ambientais ----
 
-ordenar_especies <- function(var){
+var <- ambientais[c(3, 5, 7:9)] |> names()
+
+graficos <- purrr::map(c("Leaf-litter depth",
+             "Canopy openness",
+             "Edge distance",
+             "Elevation",
+             "Hydric stream distance"),
+           \(var){
 
   grafico <- especies |>
     dplyr::left_join(ambientais,
@@ -82,11 +89,9 @@ ordenar_especies <- function(var){
          grafico,
          envir = globalenv())
 
-}
+  })
 
-var <- ambientais[c(3, 5, 7:9)] |> names()
-
-purrr::map(var, ordenar_especies)
+graficos
 
 ## Unindo os gráficos ----
 
