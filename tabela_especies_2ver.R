@@ -29,6 +29,12 @@ comp_trat <- comp |>
                   Família != "Hylidae") |>
   dplyr::summarise(Abundância = Abundância |> sum(),
                    .by = c(`Unidade Amostral`, Espécie, Campanha)) |>
+  tidyr::pivot_wider(names_from = `Unidade Amostral`,
+                     values_from = Abundância,
+                     values_fill = 0) |>
+  tidyr::pivot_longer(names_to = "Unidade Amostral",
+                      values_to = "Abundância",
+                      cols = 3:13) |>
   tidyr::pivot_wider(names_from = Espécie,
                      values_from = Abundância,
                      values_fill = 0) |>
