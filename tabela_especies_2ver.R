@@ -45,7 +45,8 @@ comp_trat <- comp |>
                      stringr::str_c(collapse = ", "),
                    .by = c(`Unidade Amostral`, Espécie)) |>
   tidyr::pivot_wider(names_from = Espécie,
-                     values_from = Abundância)
+                     values_from = Abundância) |>
+  dplyr::rename("Adenomera aff. hylaedactyla" = `Adenomera hylaedactyla`)
 
 comp_trat
 
