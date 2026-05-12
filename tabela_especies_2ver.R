@@ -62,7 +62,8 @@ comp_flex <- comp_trat |>
                        flextable::as_i("Adenomera"),
                        " aff. ",
                        flextable::as_i("hylaedactyla")
-                     ))
+                     )) |>
+  flextable::fontsize(size = 10, part = "all")
 
 comp_flex
 
