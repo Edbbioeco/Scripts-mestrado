@@ -61,14 +61,12 @@ especies |>
 
 ## Gráficos das variáveis ambientais ----
 
-var <- ambientais[c(3, 5, 7:9)] |> names()
-
 graficos <- purrr::map(c("Leaf-litter depth",
-             "Canopy openness",
-             "Edge distance",
-             "Elevation",
-             "Hydric stream distance"),
-           \(var){
+                         "Canopy openness",
+                         "Edge distance",
+                         "Elevation",
+                         "Hydric stream distance"),
+                       \(var){
 
   grafico <- especies |>
     dplyr::left_join(ambientais,
