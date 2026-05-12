@@ -371,7 +371,8 @@ ggsave(filename = "grafico_pontos_q1.png", height = 10, width = 12)
 
 beta_cor <- df_beta |>
   dplyr::select(2:6) |>
-  cor(method = "spearman")
+  cor(method = "spearman") |>
+  as.matrix()
 
 beta_cor
 
