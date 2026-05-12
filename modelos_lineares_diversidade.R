@@ -369,11 +369,13 @@ ggsave(filename = "grafico_pontos_q1.png", height = 10, width = 12)
 
 #### Calcular ----
 
-betar_cor <- df_beta |>
+beta_cor <- df_beta |>
   dplyr::select(2:6) |>
   cor(method = "spearman")
 
-betar_cor
+beta_cor
+
+#### Data frame dos valores de correlação ----
 
 ### Criando o modelo ----
 
