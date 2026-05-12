@@ -390,6 +390,38 @@ cor_df <- beta_cor |>
 
 cor_df
 
+### Gráfico ----
+
+cor_df |>
+  ggplot(aes(Var1, Var2,
+             fill = `Spearman Correlation Index`,
+             label = `Spearman Correlation Index` |> round(2))) +
+  geom_tile(color = "black", linewidth = 1) +
+  geom_text(size = 10) +
+  scale_fill_gradientn(colours = c(viridis::viridis(n = 10) |> rev(),
+                                   viridis::viridis(n = 10)),
+                       limits = c(-1, 1),
+                       guide = guide_colourbar(title.position = "top",
+                                               title.hjust = 0.5,
+                                               barwidth = 25,
+                                               frame.colour = "black",
+                                               ticks.colour = "black")) +
+  coord_equal() +
+  labs(x = NULL,
+       y = NULL) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        axis.title = element_text(color = "black", size = 20),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(color = "black", size = 20),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.text = element_text(color = "black", size = 20),
+        legend.position = "top",
+        title = element_text(color = "black", size = 20),
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
 ## Criar o modelo ----
 
 modelo_beta <- glmmTMB::glmmTMB(Composition ~ `Leaf-litter depth` +
