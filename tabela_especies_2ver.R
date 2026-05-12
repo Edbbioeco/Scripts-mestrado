@@ -20,6 +20,29 @@ comp |> dplyr::glimpse()
 
 # Tabela ----
 
+## Tratar ----
+
+comp_trat <- comp |>
+  dplyr::filter(Ordem == "Anura" &
+                  !Epípeto %in% c("natalensis", "mystaceus") &
+                  Gênero != "Frostius" &
+                  Família != "Hylidae") |>
+  dplyr::summarise(Abundância = Abundância |> sum(),
+                   .by = c(`Unidade Amostral`, Espécie, Campanha)) |>
+  tidyr::pivot_wider(names_from = Espécie,
+                     values_from = Abundância,
+                     values_fill = 0) |>
+  tidyr::pivot_longer(names_to = "Espécie",
+                      values_to = "Abundância",
+                      cols = 3:8) |>
+  dplyr::summarise(Abundância = Abundância |>
+                     stringr::str_c(collapse = ", "),
+                   .by = c(`Unidade Amostral`, Espécie)) |>
+  tidyr::pivot_wider(names_from = Espécie,
+                     values_from = Abundância)
+
+comp_trat
+
 ## Tabela flextable ----
 
 comp |>
