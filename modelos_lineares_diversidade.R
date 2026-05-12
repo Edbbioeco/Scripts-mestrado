@@ -422,6 +422,9 @@ cor_df |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
+ggsave(filename = "correlacao_spearman_beta.png",
+       height = 10, width = 12)
+
 ## Criar o modelo ----
 
 modelo_beta <- glmmTMB::glmmTMB(Composition ~ `Leaf-litter depth` +
