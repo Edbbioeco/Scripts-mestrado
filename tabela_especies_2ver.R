@@ -65,3 +65,7 @@ comp_flex <- comp_trat |>
                      ))
 
 comp_flex
+
+## Salvar a tabela ----
+
+comp_flex |> flextable::save_as_docx(path = "tabela_abundancia_cap2_2ver.docx")
