@@ -1,4 +1,4 @@
-# PAcotes ----
+# Pacotes ----
 
 library(readxl)
 
@@ -17,3 +17,4 @@ comp <- readxl::read_xlsx("matriz_composicao.xlsx")
 comp
 
 comp |> dplyr::glimpse()
+
