@@ -376,6 +376,20 @@ beta_cor <- df_beta |>
 
 beta_cor
 
+#### Transformar a matriz em data frame ----
+
+beta_cor[upper.tri(beta_cor)] <- NA
+
+beta_cor
+
+cor_df <- beta_cor |>
+  reshape2::melt() |>
+  tidyr::drop_na() |>
+  dplyr::filter(Var1 != Var2) |>
+  dplyr::rename("Spearman Correlation Index" = value)
+
+cor_df
+
 #### Data frame dos valores de correlação ----
 
 ### Criando o modelo ----
