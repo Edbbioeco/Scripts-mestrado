@@ -10,7 +10,7 @@ library(flextable)
 
 ## Importar ----
 
-comp <- readxl::read_xlsx("matriz_composicao.xlsx")
+comp <- readxl::read_xlsx("levantamento_anuros.xlsx")
 
 ## Visualizar ----
 
@@ -18,3 +18,9 @@ comp
 
 comp |> dplyr::glimpse()
 
+# Tabela ----
+
+## Tabela flextable ----
+
+comp |>
+  flextable::flextable()
