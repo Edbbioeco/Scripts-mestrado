@@ -14,6 +14,8 @@ library(ggview)
 
 library(reshape2)
 
+library(viridis)
+
 library(glmmTMB)
 
 library(DHARMa)
