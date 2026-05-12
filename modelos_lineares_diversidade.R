@@ -12,9 +12,9 @@ library(flextable)
 
 library(ggview)
 
-library(DHARMa)
-
 library(glmmTMB)
+
+library(DHARMa)
 
 # Dados ----
 
