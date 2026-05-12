@@ -93,18 +93,9 @@ graficos
 
 ## Unindo os gráficos ----
 
-design <- c(patchwork::area(1, 1),
-            patchwork::area(1, 2),
-            patchwork::area(2, 1),
-            patchwork::area(2, 2),
-            patchwork::area(3, 1))
-
-(`gg_Leaf-litter depth` +
-    `gg_Canopy openness` +
-    `gg_Edge distance` +
-    `gg_Elevation` +
-    `gg_Hydric stream distance`) +
-  patchwork::plot_layout(design = design) +
+graficos |>
+  patchwork::wrap_plots() +
+  patchwork::plot_layout(ncol = 2) +
   ggview::canvas(height = 10, width = 12)
 
 ggsave("grafico_composicao_especies.png",
