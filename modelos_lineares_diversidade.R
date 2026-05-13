@@ -255,7 +255,7 @@ df_q1_flex <- resultados_modelos |>
   dplyr::select(!dplyr::contains("df")) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
-  flextable::width(j = 2, width = 2) |>
+  flextable::width(j = 2, width = 1.5) |>
   flextable::fontsize(size = 12, part = "all") |>
   flextable::bg(part = "all", bg = "white") |>
   flextable::compose(j = "pt",
