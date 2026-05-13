@@ -262,10 +262,10 @@ df_q1_flex <- resultados_modelos |>
                      part = "header",
                      value = flextable::as_paragraph("F",
                                                      flextable::as_sub("1, 9"))) |>
-  flextable::compose(j = "pF",
+  flextable::compose(j = "pglobal",
                      part = "header",
                      value = flextable::as_paragraph("p",
-                                                     flextable::as_sub("F")))
+                                                     flextable::as_sub("global")))
 
 df_q1_flex
 
