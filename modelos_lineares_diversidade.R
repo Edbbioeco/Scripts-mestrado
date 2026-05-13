@@ -201,7 +201,14 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
     dplyr::filter(term != "(Intercept)") |>
     dplyr::rename("Predictor" = term,
                   "t" = statistic,
-                  "t p_value" = p.value)
+                  "t p_value" = p.value,
+                  "β1" = estimate,
+                  "SE" = std.error) |>
+    dplyr::mutate(β1 = β1 |> round(4),
+                  Se = SE |> round(4)) |>
+    tidyr::unite(β1:SE,
+               sep = " ± ",
+               col = "β1 ± SE")
 
   summary <- modelo |>
     summary()
@@ -226,27 +233,6 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
 resultados_modelos
 
 ## Tabela das estatísticas ----
-
-### Dataframe ----
-
-df_q1_estatisticas <- resultados_modelos |>
-  dplyr::mutate(Estimate = Estimate |> round(4),
-                `Std. Error` = `Std. Error` |> round(4),
-                `t value` = `t value` |> round(3),
-                `Pr(>|t|)` = `Pr(>|t|)` |> round(2)) |>
-  dplyr::relocate(rowname, .before = Estimate) |>
-  dplyr::filter(!rowname |> stringr::str_detect("\\(")) |>
-  dplyr::rename("Predictor" = 1,
-                "β1" = Estimate,
-                "SE" = `Std. Error`,
-                "t" = `t value`,
-                "p" = `Pr(>|t|)`,
-                `Global p` = `p global`) |>
-  tidyr::unite(β1:SE,
-               sep = " ± ",
-               col = "β1 ± SE")
-
-df_q1_estatisticas
 
 ### Estatísticas críticas ----
 
