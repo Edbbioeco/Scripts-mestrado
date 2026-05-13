@@ -205,10 +205,10 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
                   "β1" = estimate,
                   "SE" = std.error) |>
     dplyr::mutate(β1 = β1 |> round(4),
-                  Se = SE |> round(4)) |>
+                  SE = SE |> round(4)) |>
     tidyr::unite(β1:SE,
-               sep = " ± ",
-               col = "β1 ± SE")
+                 sep = " ± ",
+                 col = "β1 ± SE")
 
   summary <- modelo |>
     summary()
@@ -246,10 +246,8 @@ q_f
 
 ### Tabela flextable ----
 
-df_q1_flex <- df_q1_estatisticas |>
-  dplyr::rename("pt" = p,
-                "pF" = `Global p`,
-                "F1, 9" = `F`) |>
+df_q1_flex <- resultados_modelos |>
+  dplyr::rename("F1, 9" = `F`) |>
   dplyr::select(!dplyr::contains("df")) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
