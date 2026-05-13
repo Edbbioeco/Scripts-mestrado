@@ -8,6 +8,8 @@ library(vegan)
 
 library(performance)
 
+library(broom)
+
 library(flextable)
 
 library(ggview)
