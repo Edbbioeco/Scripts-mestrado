@@ -201,7 +201,7 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
     dplyr::filter(term != "(Intercept)") |>
     dplyr::rename("Predictor" = term,
                   "t" = statistic,
-                  "t p_value" = p.value,
+                  "pt" = p.value,
                   "β1" = estimate,
                   "SE" = std.error) |>
     dplyr::mutate(β1 = β1 |> round(4),
@@ -216,7 +216,7 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
   resultados_summary <- tibble::tibble(`F` = summary$fstatistic[1] |> round(2),
                                        df1 = summary$fstatistic[2],
                                        df2 = summary$fstatistic[3],
-                                       `p global` = pf(q = summary$fstatistic[1],
+                                       `pglobal` = pf(q = summary$fstatistic[1],
                                               df1 = summary$fstatistic[2],
                                               df2 = summary$fstatistic[3],
                                               lower.tail = FALSE) |>
