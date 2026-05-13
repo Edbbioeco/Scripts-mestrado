@@ -197,14 +197,11 @@ purrr::map2(c(4, 6, 8:10), modelos, \(id, modelo){
 resultados_modelos <- purrr::map(modelos, \(modelo){
 
   resultados <- modelo |>
-    summary() %>%
-    .$coefficient |>
-    as.data.frame() |>
-    tibble::rownames_to_column() |>
-    dplyr::mutate(rowname = rowname |>
-                    stringr::str_remove_all("`")) |>
-    dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::rename()
+    broom::tidy() |>
+    dplyr::filter(term != "(Intercept)") |>
+    dplyr::rename("Predictor" = term,
+                  "t" = statistic,
+                  "t p_value" = p.value)
 
   summary <- modelo |>
     summary()
