@@ -232,7 +232,12 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
     dplyr::bind_cols(resultados_summary)
 
   }) |>
-  dplyr::bind_rows()
+  dplyr::bind_rows() |>
+  dplyr::arrange(Predictor |> forcats::fct_relevel(c("Leaf-litter depth",
+                                                     "Canopy openness",
+                                                     "Edge distance",
+                                                     "Elevation",
+                                                     "Water stream distance")))
 
 resultados_modelos
 
