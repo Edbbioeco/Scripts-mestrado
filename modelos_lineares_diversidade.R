@@ -205,7 +205,9 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
                   "β1" = estimate,
                   "SE" = std.error) |>
     dplyr::mutate(β1 = β1 |> round(4),
-                  SE = SE |> round(4)) |>
+                  SE = SE |> round(4),
+                  Predictor = Predictor |>
+                    stringr::str_remove_all("`")) |>
     tidyr::unite(β1:SE,
                  sep = " ± ",
                  col = "β1 ± SE")
