@@ -204,10 +204,12 @@ resultados_modelos <- purrr::map(modelos, \(modelo){
                   "pt" = p.value,
                   "β1" = estimate,
                   "SE" = std.error) |>
-    dplyr::mutate(β1 = β1 |> round(4),
+    dplyr::mutate(Predictor = Predictor |>
+                    stringr::str_remove_all("`"),
+                  β1 = β1 |> round(4),
                   SE = SE |> round(4),
-                  Predictor = Predictor |>
-                    stringr::str_remove_all("`")) |>
+                  t = t |> round(2),
+                  pt = pt |> round(3)) |>
     tidyr::unite(β1:SE,
                  sep = " ± ",
                  col = "β1 ± SE")
