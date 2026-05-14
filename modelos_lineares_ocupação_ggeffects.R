@@ -334,8 +334,8 @@ sts_df <- ls(pattern = "^resultados_") |>
                                           "Edge distance",
                                           "Elevation",
                                           "Hydric stream distance"))) |>
-  dplyr::rename("β1" = Estimate,
-                "SE" = `Std. Error`) |>
+  dplyr::rename("β1" = estimate,
+                "SE" = std.error) |>
   dplyr::mutate("β1 ± EP" = paste0(β1 |> round(4),
                                    " ± ",
                                    SE |> round(4)),
