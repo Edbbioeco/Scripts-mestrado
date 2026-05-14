@@ -339,9 +339,9 @@ sts_df <- ls(pattern = "^resultados_") |>
   dplyr::mutate("β1 ± SE" = paste0(β1 |> round(4),
                                    " ± ",
                                    SE |> round(4)),
-                Predictor = dplyr::case_when(
-                  Predictor == "Hydric stream distance" ~ "Water stream distance",
-                  .default = Predictor)) |>
+                Predictor = Predictor |>
+                  stringr::str_replace("Hydric", "Water") |>
+                  stringr::str_remove_all("`")) |>
   dplyr::select(-c(Model, β1, SE)) |>
   dplyr::relocate(`β1 ± SE`, .after = Predictor)
 
