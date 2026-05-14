@@ -12,6 +12,8 @@ library(DHARMa)
 
 library(performance)
 
+library(broom)
+
 library(flextable)
 
 library(ggeffects)
