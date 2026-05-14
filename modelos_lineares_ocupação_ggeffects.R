@@ -343,7 +343,7 @@ sts_df <- ls(pattern = "^resultados_") |>
                   Predictor == "Hydric stream distance" ~ "Water stream distance",
                   .default = Predictor)) |>
   dplyr::select(-c(Model, β1, SE)) |>
-  dplyr::relocate(`β1 ± EP`, .after = Predictor)
+  dplyr::relocate(`β1 ± SE`, .after = Predictor)
 
 sts_df
 
