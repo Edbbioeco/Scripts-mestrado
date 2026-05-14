@@ -336,7 +336,7 @@ sts_df <- ls(pattern = "^resultados_") |>
                                           "Hydric stream distance"))) |>
   dplyr::rename("β1" = estimate,
                 "SE" = std.error) |>
-  dplyr::mutate("β1 ± EP" = paste0(β1 |> round(4),
+  dplyr::mutate("β1 ± SE" = paste0(β1 |> round(4),
                                    " ± ",
                                    SE |> round(4)),
                 Predictor = dplyr::case_when(
