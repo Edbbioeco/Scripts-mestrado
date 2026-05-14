@@ -299,25 +299,17 @@ resultados_rhinella <- map2(c(6, 8, 10:12), modelos_rhinella, \(id, modelo){
     round(2)
 
   modelo |>
-    summary() %>%
-    .$coefficient |>
-    as.data.frame() |>
-    tibble::rownames_to_column() |>
+    broom::tidy() |>
+    dplyr::filter(term != "(Intercept)") |>
+    dplyr::rename("Predictor" = term,
+                  "z" = statistic,
+                  "p" = p.value) |>
     dplyr::mutate(Species = "Rhinella hoogmoedi",
-                  rowname = rowname |>
-                    stringr::str_remove_all("`")) |>
-    dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`pseudo-R²` = r2[2],
+                  `pseudo-R²` = r2[2],
                   Model = nome,
-                  `Pr(>|z|)` = dplyr::if_else(`Pr(>|z|)` < 0.01,
-                                              "< 0.01",
-                                              `Pr(>|z|)` |>
-                                                round(2) |>
-                                                as.character()),
-                  `z value` = `z value` |> round(2)) |>
-    dplyr::rename("z" = `z value`,
-                  "p" = `Pr(>|z|)`,
-                  "Predictor" = rowname) |>
+                  p = dplyr::if_else(p < 0.01,
+                                     "< 0.01",
+                                     p |> round(2) |> as.character())) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
 
   }) |>
