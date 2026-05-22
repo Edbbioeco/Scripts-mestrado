@@ -1,5 +1,7 @@
 # Pacotes ----
 
+library(tidyverse)
+
 library(coiR)
 
 library(writexl)
