@@ -79,7 +79,8 @@ df_dossel <- purrr::map(.x = imagens,
                             Pontos = ponto_dossel,
                             Índice = indice_dossel)
 
-           }) |>
+           },
+           .progress = TRUE) |>
   dplyr::bind_rows()
 
 ## Data frame final ----
