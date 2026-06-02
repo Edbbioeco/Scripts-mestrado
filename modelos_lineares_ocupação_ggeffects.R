@@ -343,7 +343,9 @@ sts_df <- ls(pattern = "^resultados_") |>
                   stringr::str_replace("Hydric", "Water") |>
                   stringr::str_remove_all("`")) |>
   dplyr::select(-c(Model, β1, SE)) |>
-  dplyr::relocate(`β1 ± SE`, .after = Predictor)
+  dplyr::relocate(`β1 ± SE`, .after = Predictor) |>
+  dplyr::mutate(Species = dplyr::case_when(Predictor == "Temperature" ~ NA,
+                                           .default = Species))
 
 sts_df
 
