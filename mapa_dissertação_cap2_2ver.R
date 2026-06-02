@@ -155,8 +155,6 @@ br_map
 pe_map <- ggplot() +
   geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.5) +
   geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.5) +
-  geom_sf(data = area_rebio, color = "darkred", fill = "red",
-          alpha = 0.5, linewidth = 0.5) +
   ggspatial::coord_sf(label_graticule = "NE",
                       xlim = c(-36.3, -34.8),
                       ylim = c(-8.9, -7.4)) +
