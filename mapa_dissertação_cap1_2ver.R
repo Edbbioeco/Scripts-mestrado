@@ -76,8 +76,8 @@ ggplot() +
 ### Tratando ----
 
 parcelas_trat <- parcelas |>
-  dplyr::mutate(tipo = c(rep("Uniform sample", 10),
-                         rep("Riparian sample", 2))) |>
+  dplyr::mutate(tipo = c(rep("Uniform sampling plot", 10),
+                         rep("Riparian sampling plot", 2))) |>
   dplyr::filter(!Trlh.Pr == "1-1") |>
   sf::st_centroid()
 
@@ -166,10 +166,10 @@ mapa_principal <- ggplot() +
                     breaks = c("Brazil", "Pernambuco")) +
   scale_color_manual(values = c("Native forest" = "gold3",
                                 "Water streams" = "royalblue",
-                                "Uniform sample" = "black",
-                                "Riparian sample" = "black"),
+                                "Uniform sampling plot" = "black",
+                                "Riparian sampling plot" = "black"),
                      breaks = c("Native forest", "Water streams",
-                                "Uniform sample", "Riparian sample")) +
+                                "Uniform sampling plot", "Riparian sampling plot")) +
   guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
          color = guide_legend(order = 2, nrow = 2)) +
   labs(fill = NULL,
@@ -177,9 +177,9 @@ mapa_principal <- ggplot() +
   ggnewscale::new_scale_fill() +
   geom_sf(data = parcelas_trat, aes(fill = tipo),
           color = "black", shape = 21, size = 5, stroke = 1) +
-  scale_fill_manual(values = c("Uniform sample" = "orange2",
-                               "Riparian sample" = "royalblue"),
-                    breaks = c("Uniform sample", "Riparian sample")) +
+  scale_fill_manual(values = c("Uniform sampling plot" = "orange2",
+                               "Riparian sampling plot" = "royalblue"),
+                    breaks = c("Uniform sampling plot", "Riparian sampling plot")) +
   guides(fill = guide_legend(order = 3, nrow = 2)) +
   labs(fill = NULL) +
   ggspatial::coord_sf(label_graticule = "NSW",
