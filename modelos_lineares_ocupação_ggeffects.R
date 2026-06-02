@@ -345,7 +345,9 @@ sts_df <- ls(pattern = "^resultados_") |>
   dplyr::select(-c(Model, β1, SE)) |>
   dplyr::relocate(`β1 ± SE`, .after = Predictor) |>
   dplyr::mutate(Species = dplyr::case_when(Predictor == "Temperature" ~ NA,
-                                           .default = Species))
+                                           .default = Species),
+                `pseudo-R²` = dplyr::case_when(Predictor == "Temperature" ~ NA,
+                                               .default = `pseudo-R²`))
 
 sts_df
 
