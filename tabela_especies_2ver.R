@@ -27,6 +27,19 @@ comp_trat <- comp |>
                   !Epípeto %in% c("natalensis", "mystaceus") &
                   Gênero != "Frostius" &
                   Família != "Hylidae") |>
+  dplyr::mutate(Espécie = dplyr::case_match(
+    Espécie,
+    "Pristimantis ramagii" ~ "PR",
+    "Adenomera hylaedactyla" ~ "AH",
+    "Rhinella hoogmoedi" ~ "RH",
+    "Rhinella granulosa" ~ "RG",
+    "Leptodactylus troglodytes" ~ "LT",
+    "Dryadobates alagoanus" ~ "DA",
+    "Adelophryne nordestina" ~ "AN",
+    "Physalaemus cuvieri" ~ "PC",
+    "Elachistocleis cesari" ~ "EC",
+    "Rhinella crucifer" ~ "RC"
+  )) |>
   dplyr::summarise(Abundância = Abundância |> sum(),
                    .by = c(`Unidade Amostral`, Espécie, Campanha)) |>
   tidyr::pivot_wider(names_from = `Unidade Amostral`,
@@ -45,8 +58,7 @@ comp_trat <- comp |>
                      stringr::str_c(collapse = ", "),
                    .by = c(`Unidade Amostral`, Espécie)) |>
   tidyr::pivot_wider(names_from = Espécie,
-                     values_from = Abundância) |>
-  dplyr::rename("Adenomera aff. hylaedactyla" = `Adenomera hylaedactyla`)
+                     values_from = Abundância)
 
 comp_trat
 
