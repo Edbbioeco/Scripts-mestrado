@@ -154,9 +154,6 @@ mapa_principal <- ggplot() +
           aes(fill = "Brazil"), linewidth = 0.5) +
   geom_sf(data = pe, color = "black",
           aes(fill = "Pernambuco"), linewidth = 0.75) +
-  geom_sf(data = area_rebio,
-          aes(color = "REBio area"),
-          linewidth = 1, fill = "red", alpha = 0.5) +
   tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
   geom_sf(data = borda,
           aes(color = "Native forest"),
@@ -168,11 +165,10 @@ mapa_principal <- ggplot() +
                                "Pernambuco" = "lightgoldenrod"),
                     breaks = c("Brazil", "Pernambuco")) +
   scale_color_manual(values = c("Native forest" = "gold3",
-                                "REBio area" = "darkred",
                                 "Water streams" = "royalblue",
                                 "Uniform sample" = "black",
                                 "Riparian sample" = "black"),
-                     breaks = c("Native forest", "Water streams", "REBio area",
+                     breaks = c("Native forest", "Water streams",
                                 "Uniform sample", "Riparian sample")) +
   guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
          color = guide_legend(order = 2, nrow = 2)) +
