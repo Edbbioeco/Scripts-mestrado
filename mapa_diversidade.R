@@ -117,7 +117,7 @@ parcelas_div
 ggplot() +
   tidyterra::geom_spatraster(data = alt) +
   geom_sf(data = borda,
-          aes(color = "Secundary forest"),
+          aes(color = "Forest environment"),
           linewidth = 1,
           fill = "transparent") +
   geom_sf(data = corpos_hid,
@@ -141,9 +141,9 @@ ggplot() +
                                                           frame.linewidth = 1,
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
-  scale_color_manual(values = c("Secundary forest" = "darkgreen",
+  scale_color_manual(values = c("Forest environment" = "darkgreen",
                                 "Hydric Streams" = "blue"),
-                     breaks = c("Secundary forest",
+                     breaks = c("Forest environment",
                                 "Hydric Streams"),
                      guide = guide_legend(order = 2)) +
   scale_size_continuous(breaks = seq(4, 6, 1),
@@ -174,7 +174,7 @@ ggplot() +
 ggplot() +
   tidyterra::geom_spatraster(data = alt) +
   geom_sf(data = borda,
-          aes(color = "Secundary forest"),
+          aes(color = "Forest environment"),
           linewidth = 1,
           fill = "transparent") +
   geom_sf(data = corpos_hid,
@@ -198,9 +198,9 @@ ggplot() +
                                                           frame.linewidth = 1,
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
-  scale_color_manual(values = c("Secundary forest" = "darkgreen",
+  scale_color_manual(values = c("Forest environment" = "darkgreen",
                                 "Water streams" = "blue"),
-                     breaks = c("Secundary forest",
+                     breaks = c("Forest environment",
                                 "Water streams"),
                      guide = guide_legend(order = 2)) +
   scale_size_continuous(breaks = seq(2.5, 4.5, 0.25),
