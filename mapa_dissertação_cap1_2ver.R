@@ -156,7 +156,7 @@ mapa_principal <- ggplot() +
           aes(fill = "Pernambuco"), linewidth = 0.75) +
   tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
   geom_sf(data = borda,
-          aes(color = "Secundary forest"),
+          aes(color = "Forest environment"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = corpos_hid,
           aes(color = "Water streams"),
@@ -164,11 +164,11 @@ mapa_principal <- ggplot() +
   scale_fill_manual(values = c("Brazil" = "lightgray",
                                "Pernambuco" = "lightgoldenrod"),
                     breaks = c("Brazil", "Pernambuco")) +
-  scale_color_manual(values = c("Secundary forest" = "gold3",
+  scale_color_manual(values = c("Forest environment" = "gold3",
                                 "Water streams" = "royalblue",
                                 "Uniform sampling plot" = "black",
                                 "Riparian sampling plot" = "black"),
-                     breaks = c("Secundary forest", "Water streams",
+                     breaks = c("Forest environment", "Water streams",
                                 "Uniform sampling plot", "Riparian sampling plot")) +
   guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
          color = guide_legend(order = 2, nrow = 2)) +
