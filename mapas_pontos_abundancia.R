@@ -200,14 +200,14 @@ abundancia_coord |>
                      breaks = seq(-35.19509, -35.15463, 0.03)) +
   scale_y_continuous(expand = c(0, 0)) +
   ggnewscale::new_scale_fill() +
-  geom_sf(data = borda, aes(color = "Native Vegetation"),
+  geom_sf(data = borda, aes(color = "Secundary forest"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = saltinho, aes(color = "REBio Saltinho"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = parcelas, aes(color = "Samples"),
           linewidth = 1) +
   scale_color_manual(values = c("REBio Saltinho" = "black",
-                                "Native Vegetation" = "darkgreen",
+                                "Secundary forest" = "darkgreen",
                                 "Samples" = "royalblue4")) +
   geom_point(aes(Longitude, Latitude, fill = Abundância),
                  shape = 21, size = 5, stroke = 1, color = "black", width = 0.1) +
@@ -288,11 +288,11 @@ df_pontos_abu |>
   geom_sf(data = hid, aes(color = "Water streams"),
           fill = "blue",
           linewidth = 1) +
-  geom_sf(data = borda, aes(color = "Forest Vegetation"),
+  geom_sf(data = borda, aes(color = "Secundary forest"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = parcelas, aes(color = "Samples"),
           linewidth = 1) +
-  scale_color_manual(values = c("Forest Vegetation" = "darkgreen",
+  scale_color_manual(values = c("Secundary forest" = "darkgreen",
                                 "Samples" = "royalblue4",
                                 "Water streams" = "blue")) +
   geom_point(aes(Longitude, Latitude, size = Abundância),
