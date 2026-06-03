@@ -204,11 +204,11 @@ abundancia_coord |>
           linewidth = 1, fill = "transparent") +
   geom_sf(data = saltinho, aes(color = "REBio Saltinho"),
           linewidth = 1, fill = "transparent") +
-  geom_sf(data = parcelas, aes(color = "Samples"),
+  geom_sf(data = parcelas, aes(color = "Sampling plots"),
           linewidth = 1) +
   scale_color_manual(values = c("REBio Saltinho" = "black",
                                 "Secundary forest" = "darkgreen",
-                                "Samples" = "royalblue4")) +
+                                "Sampling plots" = "royalblue4")) +
   geom_point(aes(Longitude, Latitude, fill = Abundância),
                  shape = 21, size = 5, stroke = 1, color = "black", width = 0.1) +
   scale_fill_viridis_c(name = "Species abundance",
@@ -290,10 +290,10 @@ df_pontos_abu |>
           linewidth = 1) +
   geom_sf(data = borda, aes(color = "Secundary forest"),
           linewidth = 1, fill = "transparent") +
-  geom_sf(data = parcelas, aes(color = "Samples"),
+  geom_sf(data = parcelas, aes(color = "Sampling plots"),
           linewidth = 1) +
   scale_color_manual(values = c("Secundary forest" = "darkgreen",
-                                "Samples" = "royalblue4",
+                                "Sampling plots" = "royalblue4",
                                 "Water streams" = "blue")) +
   geom_point(aes(Longitude, Latitude, size = Abundância),
              shape = 21, stroke = 1, color = "black", fill = "green4", width = 0.1) +
