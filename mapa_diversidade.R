@@ -117,7 +117,7 @@ parcelas_div
 ggplot() +
   tidyterra::geom_spatraster(data = alt) +
   geom_sf(data = borda,
-          aes(color = "Native vegetation"),
+          aes(color = "Secundary forest"),
           linewidth = 1,
           fill = "transparent") +
   geom_sf(data = corpos_hid,
@@ -141,9 +141,9 @@ ggplot() +
                                                           frame.linewidth = 1,
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
-  scale_color_manual(values = c("Native vegetation" = "darkgreen",
+  scale_color_manual(values = c("Secundary forest" = "darkgreen",
                                 "Hydric Streams" = "blue"),
-                     breaks = c("Native vegetation",
+                     breaks = c("Secundary forest",
                                 "Hydric Streams"),
                      guide = guide_legend(order = 2)) +
   scale_size_continuous(breaks = seq(4, 6, 1),
@@ -174,7 +174,7 @@ ggplot() +
 ggplot() +
   tidyterra::geom_spatraster(data = alt) +
   geom_sf(data = borda,
-          aes(color = "Native vegetation"),
+          aes(color = "Secundary forest"),
           linewidth = 1,
           fill = "transparent") +
   geom_sf(data = corpos_hid,
@@ -198,9 +198,9 @@ ggplot() +
                                                           frame.linewidth = 1,
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
-  scale_color_manual(values = c("Native vegetation" = "darkgreen",
+  scale_color_manual(values = c("Secundary forest" = "darkgreen",
                                 "Water streams" = "blue"),
-                     breaks = c("Native vegetation",
+                     breaks = c("Secundary forest",
                                 "Water streams"),
                      guide = guide_legend(order = 2)) +
   scale_size_continuous(breaks = seq(2.5, 4.5, 0.25),
