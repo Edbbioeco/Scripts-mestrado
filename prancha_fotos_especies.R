@@ -34,7 +34,14 @@ importar_fotos <- function(foto){
 
 }
 
-purrr::map(foto, importar_fotos)
+fotos_unidas <- purrr::map(foto,
+           purrr::in_parallel(~terra::rast(.x) |>
+                                terra::flip(direction = "vertical")),
+           .progress = TRUE) |>
+  setNames(foto |>
+             stringr::str_replace_all("_", " ") |>
+             stringr::str_remove(".jpg|.jpeg|.JPG") |>
+             stringr::str_extract("\\w+$"))
 
 ## Visualizando ----
 
