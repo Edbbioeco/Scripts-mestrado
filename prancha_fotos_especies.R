@@ -31,19 +31,14 @@ fotos_unidas <- purrr::map(foto,
 
 fotos_unidas
 
-visualizar_fotos <- function(fotos_unidas){
-
-  ggplt <- ggplot() +
-    tidyterra::geom_spatraster_rgb(data = fotos_unidas) +
-    coord_sf(expand = FALSE) +
-    coord_equal() +
-    theme_void()
-
-  print(ggplt)
-
-}
-
-purrr::map(fotos_unidas, visualizar_fotos)
+purrr::map(fotos_unidas,
+           purrr::in_parallel(
+            ~ggplot() +
+              tidyterra::geom_spatraster_rgb(data = .x) +
+              coord_sf(expand = FALSE) +
+              coord_equal() +
+              theme_void()),
+           .progress = TRUE)
 
 # Prancha ----
 
