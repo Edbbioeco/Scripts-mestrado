@@ -66,7 +66,7 @@ graficos <- purrr::map(c("Leaf-litter depth",
                          "Edge distance",
                          "Elevation",
                          "Water stream distance"),
-                       \(var){
+                       purrr::in_parallel(\(var){
 
   grafico <- especies |>
     dplyr::left_join(ambientais,
@@ -87,7 +87,8 @@ graficos <- purrr::map(c("Leaf-litter depth",
          grafico,
          envir = globalenv())
 
-  })
+  }),
+  .progress = TRUE)
 
 graficos
 
