@@ -37,43 +37,47 @@ df_dossel <- purrr::map(.x = imagens,
                                    plot = FALSE) |>
                coiR::coir_index(round = 5)
 
-             trilha_dossel <- dplyr::case_when(imagens |>
-                                                 stringr::str_detect("/T1") ~ "1",
-                                               imagens |>
-                                                 stringr::str_detect("/T2") ~ "2",
-                                               imagens |>
-                                                 stringr::str_detect("/T3") ~ "3",
-                                               imagens |>
-                                                 stringr::str_detect("/R") ~ "Ripária")
+             trilha_dossel <- dplyr::case_when(
+               imagens |>
+                 stringr::str_detect("/T1") ~ "1",
+               imagens |>
+                 stringr::str_detect("/T2") ~ "2",
+               imagens |>
+                 stringr::str_detect("/T3") ~ "3",
+               imagens |>
+                 stringr::str_detect("/R") ~ "Ripária")
 
-             parcela_dossel <- dplyr::case_when(imagens |>
-                                                  stringr::str_detect("P1|R1") ~ "1",
-                                                imagens |>
-                                                  stringr::str_detect("P2|R2") ~ "2",
-                                                imagens |>
-                                                  stringr::str_detect("P3") ~ "3",
-                                                imagens |>
-                                                  stringr::str_detect("P4") ~ "4")
+             parcela_dossel <- dplyr::case_when(
+               imagens |>
+                 stringr::str_detect("P1|R1") ~ "1",
+               imagens |>
+                 stringr::str_detect("P2|R2") ~ "2",
+               imagens |>
+                 stringr::str_detect("P3") ~ "3",
+               imagens |>
+                 stringr::str_detect("P4") ~ "4")
 
-             campanha_dossel <- dplyr::case_when(imagens |>
-                                                   stringr::str_detect("C1") ~ "1",
-                                                 imagens |>
-                                                   stringr::str_detect("C2") ~ "2",
-                                                 imagens |>
-                                                   stringr::str_detect("C3") ~ "3")
+             campanha_dossel <- dplyr::case_when(
+               imagens |>
+                 stringr::str_detect("C1") ~ "1",
+               imagens |>
+                 stringr::str_detect("C2") ~ "2",
+               imagens |>
+                 stringr::str_detect("C3") ~ "3")
 
-             ponto_dossel <- dplyr::case_when(imagens |>
-                                                stringr::str_detect("P000") ~ "P000",
-                                              imagens |>
-                                                stringr::str_detect("P050") ~ "P050",
-                                              imagens |>
-                                                stringr::str_detect("P100") ~ "P100",
-                                              imagens |>
-                                                stringr::str_detect("P150") ~ "P150",
-                                              imagens |>
-                                                stringr::str_detect("P200") ~ "P200",
-                                              imagens |>
-                                                stringr::str_detect("P250") ~ "P250")
+             ponto_dossel <- dplyr::case_when(
+               imagens |>
+                 stringr::str_detect("P000") ~ "P000",
+               imagens |>
+                 stringr::str_detect("P050") ~ "P050",
+               imagens |>
+                 stringr::str_detect("P100") ~ "P100",
+               imagens |>
+                 stringr::str_detect("P150") ~ "P150",
+               imagens |>
+                 stringr::str_detect("P200") ~ "P200",
+               imagens |>
+                 stringr::str_detect("P250") ~ "P250")
 
              tibble::tibble(Trilha = trilha_dossel,
                             Parcela = parcela_dossel,
