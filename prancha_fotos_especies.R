@@ -52,36 +52,26 @@ nome_especies
 
 ## Posição das letras nas fotos ----
 
-extencao <- function(fotos){
+id_letras <- purrr::pmap(list(fotos_unidas[c(2, 1, 3)],
+                              nome_especies,
+                              LETTERS[1:3]),
 
-  extenc <- fotos |> terra::ext()
+                         \(fotos_unidas, nome_especies, letras){
 
-  x_pos <- extenc[2]/8
+                             extenc <- fotos_unidas |> terra::ext()
 
-  y_pos <- (extenc[2]/8)*7
+                             x_pos <- extenc[2]/8
 
-  x_vetor <<- c(x_vetor, x_pos)
+                             y_pos <- (extenc[2]/8)*7
 
-  y_vetor <<- c(y_vetor, y_pos)
+                             tibble::tibble(x = x_pos,
+                                            y = y_pos,
+                                            letra = letras,
+                                            id = nome_especies)
 
-}
-
-x_vetor <- c()
-
-y_vetor <- c()
-
-purrr::map(fotos_unidas, extencao)
-
-x_vetor
-
-y_vetor
-
-## Data frame da posiçõa das letras nos gráficos ----
-
-id_letras <- tibble::tibble(x = x_vetor,
-                            y = y_vetor,
-                            letra = LETTERS[1:3],
-                            id = nome_especies)
+                             },
+                         .progress = TRUE) |>
+  dplyr::bind_rows()
 
 id_letras
 
