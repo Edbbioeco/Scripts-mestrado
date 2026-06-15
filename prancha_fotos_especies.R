@@ -77,33 +77,25 @@ id_letras
 
 ## Criando os ggplots ----
 
-criando_ggplots <- function(fotos_unidas, nome_especies){
+lista_ggplots <- purrr::map2(fotos_unidas[c(2, 1, 3)],
+                             nome_especies,
+                             purrr::in_parallel(
 
-  ggplt <- ggplot() +
-    tidyterra::geom_spatraster_rgb(data = fotos_unidas) +
-    coord_sf(expand = FALSE) +
-    coord_equal() +
-    geom_text(data = id_letras |>
-                dplyr::filter(id == nome_especies),
-              aes(x, y, label = letra),
-              size = 10,
-              color = "white",
-              fontface = "bold") +
-    theme_void()
+                               ~ggplot() +
+                                 tidyterra::geom_spatraster_rgb(data = .x) +
+                                 coord_sf(expand = FALSE) +
+                                 coord_equal() +
+                                 geom_text(data = id_letras |>
+                                             dplyr::filter(id == .y),
+                                           aes(x, y, label = letra),
+                                           size = 10,
+                                           color = "white",
+                                           fontface = "bold") +
+                                 theme_void()
 
-  assign(paste0("ggplot_", nome_especies),
-         ggplt,
-         envir = globalenv())
-
-}
-
-purrr::map2(fotos_unidas, nome_especies, criando_ggplots)
-
-## Lista dos ggplots ----
-
-lista_ggplots <- ls(pattern = "^ggplot_") |>
-  rev() |>
-  mget(envir = globalenv())
+                               ),
+                             .progress = TRUE) |>
+  setNames(paste0("ggplot_", nome_especies))
 
 lista_ggplots
 
