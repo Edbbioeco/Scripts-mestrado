@@ -82,3 +82,5 @@ comp_flex
 ## Salvar a tabela ----
 
 comp_flex |> flextable::save_as_docx(path = "tabela_abundancia_cap2_2ver.docx")
+
+comp_flex |> flextable::save_as_image(path = "tabela_abundancia_cap2_2ver.png")
