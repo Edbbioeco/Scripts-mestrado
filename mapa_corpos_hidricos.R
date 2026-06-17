@@ -40,21 +40,7 @@ parcelas_trat
 ggplot() +
   geom_sf(data = parcelas_trat, aes(color = tipo), linewidth = 1)
 
-## Shapefile Saltinho ----
-
-### Importnado ----
-
-saltinho <- sf::st_read("Saltinho.shp")
-
-### Visualizando ----
-
-saltinho
-
-ggplot() +
-  geom_sf(data = saltinho, color = "red", linewidth = 1) +
-  geom_sf(data = parcelas_trat, aes(color = tipo), linewidth = 1)
-
-## Mata ----
+## borda ----
 
 ### Importando ----
 
@@ -67,7 +53,7 @@ borda
 ggplot() +
   geom_sf(data = borda, color = "black", linewidth = 1)
 
-## Hidric bodies ----
+## Corpos hídricos ----
 
 ### Importando ----
 
