@@ -72,3 +72,6 @@ ggplot() +
   theme(axis.text = element_text(color = "black", size = 20),
         panel.border = element_rect(color = "black", size = 1)) +
   ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "mapa_distancia_borda.png",
+       height = 10, width = 12)
