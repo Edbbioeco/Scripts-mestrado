@@ -98,7 +98,9 @@ ggplot() +
 ggplot() +
   geom_sf(data = borda, color = "green4", linewidth = 1, fill = "transparent") +
   geom_sf(data = corpos_hid, color = "blue", linewidth = 1) +
-  geom_sf(data = dist_hid, color = "red", linewidth = 1) +
+  geom_sf(data = dist_hid |>
+            dplyr::filter(Trlh.Pr != "1-1"),
+          color = "red", linewidth = 1) +
   geom_sf(data = parcelas |>
             dplyr::filter(Trlh.Pr != "1-1"),
           color = "black", linewidth = 1) +
