@@ -81,7 +81,9 @@ corpos_hid_ref <- c(corpos_hid |>
 corpos_hid_ref
 
 dist_hid <- parcelas |>
-  sf::st_nearest_points(corpos_hid_ref)
+  sf::st_nearest_points(corpos_hid_ref) |>
+  sf::st_as_sf() |>
+  dplyr::mutate(Trlh.Pr = parcelas$Trlh.Pr)
 
 dist_hid
 
