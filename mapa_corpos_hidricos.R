@@ -63,13 +63,23 @@ corpos_hid <- sf::st_read("corpos_hidricos_saltinho.gpkg")
 
 corpos_hid
 
-# Carregando o tema ----
+# Shaepfile de distância das parcelas para os corpos hídricos ----
 
-source("C:/Users/LENOVO/OneDrive/Documentos/funções/tema.R")
+dist_hid <- parcelas |>
+  dplyr::filter(Trlh.Pr != "1-1") |>
+  sf::st_centroid() |>
+  sf::st_nearest_points(corpos_hid |>
+                          sf::st_boundary() |>
+                          sf::st_cast("LINESTRING") |>
+                          sf::st_union())
 
-# Shapefile de distância dos corpos hídricos ----
+dist_hid
 
-source("distancia_corpos_hidricos_especies.R")
+ggplot() +
+  geom_sf(data = borda) +
+  geom_sf(data = corpos_hid, color = "blue") +
+  geom_sf(data = dist_hid, color = "red") +
+  geom_sf(data = parcelas, color = "black")
 
 # Mapa ----
 
