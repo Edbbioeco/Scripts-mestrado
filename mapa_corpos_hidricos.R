@@ -84,6 +84,25 @@ ggplot() +
 # Mapa ----
 
 ggplot() +
+  geom_sf(data = borda, color = "green4", linewidth = 1, fill = "transparent") +
+  geom_sf(data = corpos_hid, color = "blue", linewidth = 1) +
+  geom_sf(data = dist_hid, color = "red", linewidth = 1) +
+  geom_sf(data = parcelas |>
+            dplyr::filter(Trlh.Pr != "1-1"),
+          color = "black", linewidth = 1) +
+  coord_sf(label_graticule = "NSWE") +
+  ggspatial::annotation_scale(location = "tr",
+                              text_face = "bold",
+                              text_cex = 2,
+                              text_col = "black",
+                              unit_category = "metric",
+                              bar_cols = c("black", "gold")) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 20),
+        panel.border = element_rect(color = "black", size = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
+ggplot() +
   geom_sf(data = borda, aes(color = "Borda da Mata"),
           linewidth = 1, fill = "transparent") +
   geom_sf(data = corpos_hid, aes(color = "Corpos Hídricos"),
