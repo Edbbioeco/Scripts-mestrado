@@ -65,13 +65,23 @@ corpos_hid
 
 # Shaepfile de distância das parcelas para os corpos hídricos ----
 
+corpos_hid_ref <- c(corpos_hid |>
+                      dplyr::filter(geom |>
+                                      sf::st_geometry_type() |>
+                                      stringr::str_detect("POLYGON")) |>
+                      sf::st_geometry() |>
+                      sf::st_boundary(),
+                    corpos_hid |>
+                      dplyr::filter(geom |>
+                                      sf::st_geometry_type() |>
+                                      stringr::str_detect("LINESTRING")) |>
+                      sf::st_geometry()) |>
+  sf::st_union()
+
+corpos_hid_ref
+
 dist_hid <- parcelas |>
-  dplyr::filter(Trlh.Pr != "1-1") |>
-  sf::st_centroid() |>
-  sf::st_nearest_points(corpos_hid |>
-                          sf::st_boundary() |>
-                          sf::st_cast("LINESTRING") |>
-                          sf::st_union())
+  sf::st_nearest_points(corpos_hid_ref)
 
 dist_hid
 
