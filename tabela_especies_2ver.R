@@ -67,8 +67,10 @@ comp_trat
 comp_flex <- comp_trat |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
-  flextable::italic(part = "header", j = c(2, 4:11)) |>
-  flextable::fontsize(size = 10, part = "all")
+  flextable::width(width = 1, j = 2) |>
+  flextable::italic(part = "header", j = 2:11) |>
+  flextable::fontsize(size = 10, part = "all") |>
+  flextable::color(color = "black", part = "all")
 
 comp_flex
 
