@@ -103,8 +103,6 @@ ggplot() +
   geom_sf(data = hidrico, color = "blue", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "black", linewidth = 1)
 
-### Exportando ----
-
 # Extraindo os valores ----
 
 ## Diversidade de espécies
@@ -163,7 +161,9 @@ dist_acude <- sf::st_distance(parcelas |>
                                 dplyr::filter(Trlh.Pr != "1-1"),
                               borda_hidrico) |>
   tibble::as_tibble() |>
-  dplyr::mutate(`Unidade Amostral` = nomes_linhas) |>
+  dplyr::mutate(`Unidade Amostral` = parcelas |>
+                  dplyr::filter(Trlh.Pr != "1-1") |>
+                  dplyr::pull(Trlh.Pr)) |>
   tidyr::pivot_longer(cols = dplyr::contains("V"),
                       values_to = "Distância",
                       names_to = "Tipo") |>
@@ -180,7 +180,9 @@ dist_rios <- sf::st_distance(parcelas |>
                                dplyr::filter(Trlh.Pr != "1-1"),
                              hidrico[c(3:5), ]) |>
   tibble::as_tibble() |>
-  dplyr::mutate(`Unidade Amostral` = nomes_linhas) |>
+  dplyr::mutate(`Unidade Amostral` = parcelas |>
+                  dplyr::filter(Trlh.Pr != "1-1") |>
+                  dplyr::pull(Trlh.Pr)) |>
   tidyr::pivot_longer(cols = dplyr::contains("V"),
                       values_to = "Distância",
                       names_to = "Tipo") |>
