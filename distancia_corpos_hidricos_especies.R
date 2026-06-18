@@ -245,7 +245,7 @@ dist_hid
 
 ggplot() +
   geom_sf(data = borda) +
-  geom_sf(data = corpos_hid, color = "blue") +
+  geom_sf(data = hidrico, color = "blue") +
   geom_sf(data = dist_hid, color = "red") +
   geom_sf(data = parcelas, color = "black")
 
