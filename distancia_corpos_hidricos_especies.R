@@ -251,62 +251,13 @@ ggplot() +
 
 #### Coordenadas das menores distâncias ----
 
-corpo_proximo_acude <- sf::st_nearest_feature(parcelas |>
-                                                dplyr::filter(Trlh.Pr != "1-1"),
-                                              borda_hidrico)
-
-corpo_proximo_acude
-
-corpo_proximo_rios <- sf::st_nearest_feature(parcelas |>
-                                               dplyr::filter(Trlh.Pr != "1-1"),
-                                             hidrico[c(3:5), ])
-
-corpo_proximo_rios
-
-corpo_proximo <- c(4, 2, 2, 4, 4, 4, 1, 4, 5, 5, 4)
-
-corpo_proximo
-
-linhas_conexao_acude <- sf::st_nearest_points(parcelas |>
-                                                dplyr::filter(Trlh.Pr != "1-1"),
-                                              borda_hidrico)
-
-linhas_conexao_acude <- linhas_conexao_acude[c(4, 6, 13), ] |>
-  sf::st_as_sf()
-
-linhas_conexao_acude
-
-linhas_conexao_rios <- sf::st_nearest_points(parcelas |>
-                                               dplyr::filter(Trlh.Pr != "1-1"),
-                                             hidrico[c(3:5), ])
-
-linhas_conexao_rios <- linhas_conexao_rios[c(2, 11, 14, 17, 23, 27, 30, 32), ] |>
-  sf::st_as_sf()
-
-linhas_conexao_rios
-
-linhas_conexao <- dplyr::bind_rows(linhas_conexao_acude, linhas_conexao_rios) |>
-  dplyr::mutate(`Unidade Amostral` = nomes_linhas) |>
-  sf::st_cast("LINESTRING")
-
-linhas_conexao
-
-string <- hidrico$Name[corpo_proximo]
-
-string
-
-tbl <- tibble::tibble(`Unidade Amostral` = nomes_linhas,
-                      string)
-
-tbl
-
-shp_pontos <- linhas_conexao |>
-  dplyr::left_join(tbl,
-                   by = "Unidade Amostral") |>
+shp_pontos <- dist_hid |>
   sf::st_coordinates() |>
-  as.data.frame() |>
-  dplyr::slice_tail(n = 1,
-                    by = L1) |>
+  tibble::as_tibble() |>
+  dplyr::mutate(`Unidade Amostral` = parcelas$Trlh.Pr |>
+                  rep(each = 2)) |>
+  dplyr::group_by(`Unidade Amostral`) |>
+  dplyr::slice_tail(n = 1) |>
   sf::st_as_sf(coords = c("X", "Y"),
                crs = 4674)
 
@@ -317,7 +268,7 @@ ggplot() +
   geom_sf(data = hidrico, color = "blue", fill = "blue",
           alpha = 0.5, linewidth = 1) +
   geom_sf(data = parcelas, color = "black", linewidth = 1) +
-  geom_sf(data = linhas_conexao, color = "red", linewidth = 1) +
+  geom_sf(data = dist_hid, color = "red", linewidth = 1) +
   geom_sf(data = shp_pontos, color = "green4", size = 5)
 
 ### Extraindo os valores de altitude ----
