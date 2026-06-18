@@ -18,10 +18,6 @@ library(performance)
 
 library(writexl)
 
-# Setando o tema dos gráficos ----
-
-source("C:/Users/LENOVO/OneDrive/Documentos/Funções/tema.R")
-
 # Dados ----
 
 ### Importando ----
