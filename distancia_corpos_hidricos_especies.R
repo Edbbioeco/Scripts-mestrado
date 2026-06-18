@@ -307,7 +307,7 @@ distancia_real
 ## Unindo os dados ----
 
 dados_hidrico_div <- diversidade |>
-  dplyr::mutate(Distância = distancia_real)
+  dplyr::mutate(Distância = distancia_real[-1])
 
 dados_hidrico_div
 
