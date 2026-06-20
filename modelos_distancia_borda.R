@@ -326,7 +326,17 @@ modelo <- ls(pattern = "abund_borda_modelo_") |>
 
 modelo
 
-purrr::map2(modelo, especie |> sort(), pres_abund_borda)
+purrr::imap(modelos,
+            \(modelo, especie){
+
+              stringr::str_glue("Pressupostos para o modelo de {especie}") |>
+                crayon::green() |>
+                message()
+
+              modelo |> DHARMa::simulateResiduals(plot = TRUE)
+
+            },
+            .progress = TRUE)
 
 ## Estatísticas do modelo ----
 
