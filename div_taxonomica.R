@@ -389,6 +389,7 @@ dados_nmds |>
         panel.border = element_rect(color = "black"),
         legend.position = "bottom",
         title = element_text(color = "black", size = 15),
-        panel.background = element_rect(color = "black", linewidth = 1))
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "nmds.png", height = 10, width = 12)
