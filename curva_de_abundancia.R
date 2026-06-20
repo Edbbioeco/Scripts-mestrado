@@ -6,6 +6,8 @@ library(tidyverse)
 
 library(vegan)
 
+library(ggview)
+
 # Dados ----
 
 ## Espécies -----
