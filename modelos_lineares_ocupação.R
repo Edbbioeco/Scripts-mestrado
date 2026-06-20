@@ -94,7 +94,7 @@ df_ocupacao |>
 
 ## Pristimantis ramagii ----
 
-resultrados_pristimantis <- purrr::map(c(6, 8, 10:12),
+resultados_pristimantis <- purrr::map(c(6, 8, 10:12),
                                        \(id){
 
              nome <- df_ocupacao[, id] |> names()
@@ -160,7 +160,7 @@ resultrados_pristimantis <- purrr::map(c(6, 8, 10:12),
            .progress = TRUE) |>
   dplyr::bind_rows()
 
-resultrados_pristimantis
+resultados_pristimantis
 
 ## Adenomera Hylaedactyla ----
 
