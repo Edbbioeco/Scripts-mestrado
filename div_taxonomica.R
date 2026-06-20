@@ -233,8 +233,7 @@ beta_df_gg <- purrr::map2(1:3,
                                indice = paste0(nome,
                                                ": ",
                                                indices_beta[[id]] |> round(2))) |>
-                 dplyr::filter(Igual == "Não") |>
-                 dplyr::select(-Igual) |>
+                 dplyr::filter(Var1 != Var2) |>
                  tidyr::drop_na()
 
                },
