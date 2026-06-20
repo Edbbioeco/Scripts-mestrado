@@ -164,85 +164,73 @@ resultrados_pristimantis
 
 ## Adenomera Hylaedactyla ----
 
-rodando_modelos_adenomera <- function(id){
+resultados_adenomera <- purrr::map(c(6, 8, 10:12),
+                                   \(id){
 
-  nome <- df_ocupacao[, id] |> names()
+             nome <- df_ocupacao[, id] |> names()
 
-  paste0("Criando o modelo de Adenomera para: ",
-         nome) |>
-    crayon::green() |>
-    message()
+             paste0("Criando o modelo de Adenomera para: ",
+                    nome) |>
+               crayon::green() |>
+               message()
 
-  modelo <- glm(`Adenomera hylaedactyla` ~ .,
-                data = df_ocupacao[, c(3, id)],
-                family = poisson(link = "log"))
+             modelo <- glm(`Adenomera hylaedactyla` ~ .,
+                           data = df_ocupacao[, c(3, id)],
+                           family = poisson(link = "log"))
 
-  nome <- df_ocupacao[, id] |>
-    names() |>
-    stringr::word(1)
+             nome <- df_ocupacao[, id] |>
+               names() |>
+               stringr::word(1)
 
-  assign(paste0("modelo_adenomera_", nome),
-         modelo,
-         envir = globalenv())
+             paste0("pressupostos do modelo de Adenomera para: ",
+                    nome) |>
+               crayon::green() |>
+               message()
 
-  paste0("pressupostos do modelo de Adenomera para: ",
-         nome) |>
-    crayon::green() |>
-    message()
+             avaliacao <- modelo |>
+               DHARMa::simulateResiduals(plot = TRUE)
 
-  avaliacao <- modelo |>
-    DHARMa::simulateResiduals(plot = TRUE)
+             print(avaliacao)
 
-  print(avaliacao)
+             r2 <- modelo |>
+               performance::r2_mcfadden() |>
+               as.numeric() |>
+               round(2)
 
-  r2 <- modelo |>
-    performance::r2_mcfadden() |>
-    as.numeric() |>
-    round(2)
+             paste0("pseudo-R²: ",
+                    r2) |>
+               crayon::green() |>
+               message()
 
-  paste0("pseudo-R²: ",
-         r2) |>
-    crayon::green() |>
-    message()
+             nome <- df_ocupacao[, id] |> names()
 
-  nome <- df_ocupacao[, id] |> names()
+             modelo |>
+               summary() %>%
+               .$coefficient |>
+               as.data.frame() |>
+               tibble::rownames_to_column() |>
+               dplyr::mutate(Species = "Adenomera aff. hylaedactyla",
+                             rowname = rowname |>
+                               stringr::str_remove_all("`")) |>
+               dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
+               dplyr::mutate(`pseudo-R²` = r2[2],
+                             Model = nome,
+                             `Pr(>|z|)` = dplyr::if_else(`Pr(>|z|)` < 0.01,
+                                                         "< 0.01",
+                                                         `Pr(>|z|)` |>
+                                                           round(2) |>
+                                                           as.character()),
+                             `z value` = `z value` |> round(2)) |>
+               dplyr::rename("z" = `z value`,
+                             "p" = `Pr(>|z|)`,
+                             "Predictor" = rowname) |>
+               dplyr::relocate(c(Species, Model), .before = Predictor)
 
-  resultados <- modelo |>
-    summary() %>%
-    .$coefficient |>
-    as.data.frame() |>
-    tibble::rownames_to_column() |>
-    dplyr::mutate(Species = "Adenomera aff. hylaedactyla",
-                  rowname = rowname |>
-                    stringr::str_remove_all("`")) |>
-    dplyr::filter(!rowname |> stringr::str_detect("Intercept")) |>
-    dplyr::mutate(`pseudo-R²` = r2[2],
-                  Model = nome,
-                  `Pr(>|z|)` = dplyr::if_else(`Pr(>|z|)` < 0.01,
-                                              "< 0.01",
-                                              `Pr(>|z|)` |>
-                                                round(2) |>
-                                                as.character()),
-                  `z value` = `z value` |> round(2)) |>
-    dplyr::rename("z" = `z value`,
-                  "p" = `Pr(>|z|)`,
-                  "Predictor" = rowname) |>
-    dplyr::relocate(c(Species, Model), .before = Predictor)
-
-  assign(paste0("resultados_adenomera_", nome),
-         resultados,
-         envir = globalenv())
-
-}
-
-purrr::map(c(6, 8, 10:12), rodando_modelos_adenomera)
-
-ls(pattern = "modelo_adenomera_") |>
-  mget(envir = globalenv())
-
-ls(pattern = "resultados_adenomera_") |>
-  mget(envir = globalenv()) |>
+           },
+           .progress = TRUE) |>
   dplyr::bind_rows()
+
+resultados_adenomera
 
 ## Rhinella hoogmoedi ----
 
