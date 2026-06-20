@@ -10,17 +10,19 @@ library(janitor)
 
 library(performance)
 
-library(ggtext)
-
-library(ggview)
-
 library(glmmTMB)
 
 library(DHARMa)
 
 library(ordenaR)
 
+library(broom)
+
 library(crayon)
+
+library(ggtext)
+
+library(ggview)
 
 # Dados ----
 
