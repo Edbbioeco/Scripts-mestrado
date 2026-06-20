@@ -81,29 +81,21 @@ parcelas
 
 ## Loop ----
 
-curva_comunidades <- function(parcelas){
+modelos_df_curva <- purrr::map(modelos_curva |> names(),
+                               \(parcelas){
 
-  curva_df <- modelos_curva[[parcelas]] |>
-    AIC() |>
-    data.frame() |>
-    tibble::rownames_to_column() |>
-    dplyr::rename("Modelo" = 1,
-                  "AIC" = 2) |>
-    dplyr::mutate(`Unidade Amostral` = parcelas) |>
-    dplyr::slice_min(AIC,
-                     n = 1)
+             modelos_curva[[parcelas]] |>
+               AIC() |>
+               data.frame() |>
+               tibble::rownames_to_column() |>
+               dplyr::rename("Modelo" = 1,
+                             "AIC" = 2) |>
+               dplyr::mutate(`Unidade Amostral` = parcelas) |>
+               dplyr::slice_min(AIC,
+                                n = 1)
 
-  assign(paste0("df_curva_", parcelas),
-         curva_df,
-         envir = globalenv())
-
-}
-
-purrr::walk(modelos_curva |> names(),
-            curva_comunidades)
-
-modelos_df_curva <- ls(pattern = "df_curva_") |>
-  mget(envir = globalenv()) |>
+           },
+           .progress = TRUE) |>
   dplyr::bind_rows()
 
 modelos_df_curva
