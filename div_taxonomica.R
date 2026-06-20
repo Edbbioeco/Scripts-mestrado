@@ -81,7 +81,8 @@ div_alfa |>
         strip.text = element_text(color = "black", size = 15),
         panel.border = element_rect(color = "black"),
         legend.position = "bottom",
-        panel.background = element_rect(color = "black", linewidth = 1))
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "grafico_diversidades.png", height = 10, width = 12)
 
@@ -270,7 +271,8 @@ beta_df_gg |>
         legend.text = element_text(color = "black", size = 15),
         legend.position = "bottom",
         title = element_text(color = "black", size = 15),
-        panel.background = element_rect(color = "black", linewidth = 1))
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "grafico_calor_beta.png", height = 12, width = 12)
 
