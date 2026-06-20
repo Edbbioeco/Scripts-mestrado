@@ -214,48 +214,34 @@ matriz_beta
 
 ### Separando por tipo de componente ----
 
-separar_comp <- function(id, nome){
+beta_df_gg <- purrr::map2(1:3,
+            c("Variação Balanciada",
+              "Gradiente de Variação",
+              "Bray-Curtis"),
+             \(id, nome){
 
-  matriz_beta_trat <- matriz_beta[[id]] |>
-    as.matrix()
+               matriz_beta_trat <- matriz_beta[[id]] |>
+                 as.matrix()
 
-  matriz_beta_trat[upper.tri(matriz_beta_trat)] <- NA
+               matriz_beta_trat[upper.tri(matriz_beta_trat)] <- NA
 
-  matriz_beta_trat_df <- matriz_beta_trat |>
-    as.matrix() |>
-    reshape2::melt() |>
-    tibble::as_tibble() |>
-    dplyr::mutate(Igual = dplyr::case_when(Var1 == Var2 ~ "Sim",
-                                           .default = "Não"),
-                  value = value |> round(2),
-                  indice = paste0(nome,
-                                  ": ",
-                                  indices_beta[[id]] |> round(2))) |>
-    dplyr::filter(Igual == "Não") |>
-    dplyr::select(-Igual) |>
-    tidyr::drop_na()
+               matriz_beta_trat_df <- matriz_beta_trat |>
+                 as.matrix() |>
+                 reshape2::melt() |>
+                 tibble::as_tibble() |>
+                 dplyr::mutate(Igual = dplyr::case_when(Var1 == Var2 ~ "Sim",
+                                                        .default = "Não"),
+                               value = value |> round(2),
+                               indice = paste0(nome,
+                                               ": ",
+                                               indices_beta[[id]] |> round(2))) |>
+                 dplyr::filter(Igual == "Não") |>
+                 dplyr::select(-Igual) |>
+                 tidyr::drop_na()
 
-  assign(paste0("beta_df_", nome |>
-                  stringr::str_replace(" ",
-                                       "_")),
-         matriz_beta_trat_df,
-         envir = globalenv())
-
-}
-
-purrr::walk2(1:3,
-             c("Variação Balanciada",
-               "Gradiente de Variação",
-               "Bray-Curtis"),
-             separar_comp)
-
-beta_df_gg <- ls(pattern = "beta_df_") |>
-  mget(envir = globalenv()) |>
-  dplyr::bind_rows() |>
-  dplyr::mutate(indice = indice |>
-                  forcats::fct_relevel(c("Bray-Curtis: 0.69",
-                                         "Variação Balanciada: 0.43",
-                                         "Gradiente de Variação: 0.26")))
+               },
+            .progress = TRUE) |>
+  dplyr::bind_rows()
 
 beta_df_gg
 
