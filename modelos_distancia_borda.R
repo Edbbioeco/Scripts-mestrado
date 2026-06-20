@@ -300,7 +300,8 @@ modelos <- purrr::map(especie,
                                       family = poisson(link = "log"))
 
              },
-             .progress = TRUE)
+             .progress = TRUE) |>
+  setNames(especie)
 
 modelos
 
