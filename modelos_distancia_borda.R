@@ -345,8 +345,24 @@ purrr::imap(modelos,
 
               modelo |>
                 broom::tidy() |>
-                dplyr::mutate(`pseudo-R2` =  modelo |>
-                                performance::r2_mcfadden() %>% .[[1]],
+                dplyr::mutate(estimate = dplyr::if_else(estimate > 0.001,
+                                                        estimate |>
+                                                          round(3),
+                                                        estimate |> round(4)),
+                              std.error = dplyr::if_else(std.error > 0.001,
+                                                         std.error |>
+                                                           round(3),
+                                                         std.error |> round(4)),
+                              statistic = statistic |> round(2),
+                              p.value = dplyr::if_else(p.value < 0.01,
+                                                       "< 0.01",
+                                                       p.value |>
+                                                         round(2) |>
+                                                         as.character()),
+                              `pseudo-R2` =  modelo |>
+                                performance::r2_mcfadden() %>%
+                                .[[1]] |>
+                                round(2),
                               distancia_da_borda = 250,
                               Espécie = especie |>
                                 stringr::str_to_title() |>
@@ -354,7 +370,8 @@ purrr::imap(modelos,
 
             },
             .progress = TRUE) |>
-  dplyr::bind_rows()
+  dplyr::bind_rows() |>
+  dplyr::filter(term != "(Intercept)")
 
 ## Dataframe das estatísticas do modelo ----
 
