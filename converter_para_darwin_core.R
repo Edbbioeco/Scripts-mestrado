@@ -104,23 +104,26 @@ taxon <- anuros |>
 
 taxon
 
-taxonid <- c()
+taxonid <- purrr::map_dbl(taxon,
+                          \(taxon){
 
-testar_id <- function(taxon){
+             paste0("Testando para: ", taxon) |>
+               crayon::green() |>
+               message()
 
-  paste0("Testando para: ", taxon) |>
-    crayon::green() |>
-    message()
+             tryCatch(
 
-  idtaxon <- taxon |>
-    rgbif::name_backbone_checklist(sleep = 1, bucket_size = 10) |>
-    dplyr::pull(1)
+               taxon |>
+                 rgbif::name_backbone_checklist(sleep = 1,
+                                                bucket_size = 10) |>
+                 dplyr::pull(1) |>
+                 as.numeric(),
+               error = \(e) NULL
 
-  taxonid <<- c(taxonid, idtaxon)
+               )
 
-}
-
-purrr::map(taxon, testar_id)
+           },
+           .progress = TRUE)
 
 taxonid
 
