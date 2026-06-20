@@ -158,7 +158,7 @@ modelos <- purrr::map(c(4, 6, 8:10), \(id){
      data = df_alfa |>
        dplyr::select(2, id))
 
-})
+  })
 
 modelos
 
