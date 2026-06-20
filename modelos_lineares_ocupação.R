@@ -252,10 +252,6 @@ resultados_rhinella <- purrr::map(c(6, 8, 10:12),
                names() |>
                stringr::word(1)
 
-             assign(paste0("modelo_rhinella_", nome),
-                    modelo,
-                    envir = globalenv())
-
              paste0("pressupostos do modelo de Rhinella para: ",
                     nome) |>
                crayon::green() |>
@@ -278,7 +274,7 @@ resultados_rhinella <- purrr::map(c(6, 8, 10:12),
 
              nome <- df_ocupacao[, id] |> names()
 
-             resultados <- modelo |>
+             modelo |>
                summary() %>%
                .$coefficient |>
                as.data.frame() |>
@@ -299,10 +295,6 @@ resultados_rhinella <- purrr::map(c(6, 8, 10:12),
                              "p" = `Pr(>|z|)`,
                              "Predictor" = rowname) |>
                dplyr::relocate(c(Species, Model), .before = Predictor)
-
-             assign(paste0("resultados_rhinella_", nome),
-                    resultados,
-                    envir = globalenv())
 
            },
            .progress = TRUE) |>
