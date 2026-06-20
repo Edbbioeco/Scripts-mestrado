@@ -340,37 +340,25 @@ purrr::imap(modelos,
 
 ## Estatísticas do modelo ----
 
-sts_abund_borda <- function(modelo, especie){
+purrr::imap(modelos,
+            \(modelo, especie){
 
-  sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(1)
+              sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(1)
 
-  stringr::str_glue("Estatísticas o modelo de {sps}") |>
-    crayon::green() |>
-    message()
+              stringr::str_glue("Estatísticas o modelo de {sps}") |>
+                crayon::green() |>
+                message()
 
-  smry_plot <- modelo |> summary()
+              modelo |> summary() |> print()
 
-  print(smry_plot)
+              stringr::str_glue("pseudo-R² do modelo de {sps}") |>
+                crayon::yellow() |>
+                message()
 
-  assign(paste0("sts_modelo_", sps),
-         smry_plot,
-         envir = globalenv())
+              modelo |> performance::r2_mcfadden() |> print()
 
-  stringr::str_glue("pseudo-R² do modelo de {sps}") |>
-    crayon::yellow() |>
-    message()
-
-  pseudo_r2 <- modelo |> performance::r2_mcfadden()
-
-  print(pseudo_r2)
-
-  assign(paste0("pseudor2_", sps),
-         pseudo_r2,
-         envir = globalenv())
-
-}
-
-purrr::map2(modelo, especie |> sort(), sts_abund_borda)
+            },
+            .progress = TRUE)
 
 ## Dataframe das estatísticas do modelo ----
 
