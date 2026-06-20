@@ -387,3 +387,42 @@ sps_df_stats <- purrr::imap(modelos,
   as.data.frame()
 
 sps_df_stats
+
+# Gráfico ----
+
+df_abund |>
+  tidyr::pivot_longer(cols = 3:5,
+                      values_to = "Abundância",
+                      names_to = "Espécie") |>
+  dplyr::mutate(Espécie = Espécie |>
+                  stringr::str_to_title() |>
+                  stringr::str_replace("_", " "),
+                sps = dplyr::case_when(
+                  Espécie == "Pristimantis ramagii" ~ paste0("<i>",
+                                                             Espécie,
+                                                             "</i>"),
+                  Espécie == "Rhinella hoogmoedi" ~ paste0("<i>",
+                                                           Espécie,
+                                                           "</i>"),
+                  .default = "<i>Adenomera</i> aff. <i>hylaedactyla</i>") |>
+                  forcats::fct_relevel(
+                    c("<i>Pristimantis ramagii</i>",
+                      "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
+                      "<i>Rhinella hoogmoedi</i>"))) |>
+  ggplot(aes(distancia_da_borda, Abundância)) +
+  geom_point(size = 5) +
+  geom_smooth(data = . %>%
+                dplyr::filter(Espécie %in% (sps_df_stats |>
+                                dplyr::filter(statistic >= 1.96) |>
+                                dplyr::pull(Espécie))),
+              se = FALSE,
+              method = "lm") +
+  labs(x = "Distâbncia da borda (m)") +
+  facet_wrap(~sps, scales = "free_y", ncol = 2) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 20),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        strip.text = ggtext::element_markdown(color = "black", size = 20),
+        panel.border = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
