@@ -340,8 +340,8 @@ purrr::imap(modelos,
 
 ## Estatísticas do modelo ----
 
-purrr::imap(modelos,
-            \(modelo, especie){
+sps_df_stats <- purrr::imap(modelos,
+                            \(modelo, especie){
 
               modelo |>
                 broom::tidy() |>
@@ -371,7 +371,22 @@ purrr::imap(modelos,
             },
             .progress = TRUE) |>
   dplyr::bind_rows() |>
-  dplyr::filter(term != "(Intercept)")
+  dplyr::filter(term != "(Intercept)") |>
+  dplyr::select(-1) |>
+  dplyr::mutate(Abundância = c(33, 17, 11),
+                stats = paste0("β1 ± EP = ",
+                               estimate,
+                               " ± ",
+                               std.error,
+                               "<br>z = ",
+                               statistic,
+                               ", p = ",
+                               p.value,
+                               ", pseudo-R² = ",
+                               `pseudo-R2`)) |>
+  as.data.frame()
+
+sps_df_stats
 
 ## Dataframe das estatísticas do modelo ----
 
