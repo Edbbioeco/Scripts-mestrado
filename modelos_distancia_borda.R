@@ -343,22 +343,18 @@ purrr::imap(modelos,
 purrr::imap(modelos,
             \(modelo, especie){
 
-              sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(1)
-
-              stringr::str_glue("Estatísticas o modelo de {sps}") |>
-                crayon::green() |>
-                message()
-
-              modelo |> summary() |> print()
-
-              stringr::str_glue("pseudo-R² do modelo de {sps}") |>
-                crayon::yellow() |>
-                message()
-
-              modelo |> performance::r2_mcfadden() |> print()
+              modelo |>
+                broom::tidy() |>
+                dplyr::mutate(`pseudo-R2` =  modelo |>
+                                performance::r2_mcfadden() %>% .[[1]],
+                              distancia_da_borda = 250,
+                              Espécie = especie |>
+                                stringr::str_to_title() |>
+                                stringr::str_replace("_", " "))
 
             },
-            .progress = TRUE)
+            .progress = TRUE) |>
+  dplyr::bind_rows()
 
 ## Dataframe das estatísticas do modelo ----
 
