@@ -229,9 +229,7 @@ beta_df_gg <- purrr::map2(1:3,
                  as.matrix() |>
                  reshape2::melt() |>
                  tibble::as_tibble() |>
-                 dplyr::mutate(Igual = dplyr::case_when(Var1 == Var2 ~ "Sim",
-                                                        .default = "Não"),
-                               value = value |> round(2),
+                 dplyr::mutate(value = value |> round(2),
                                indice = paste0(nome,
                                                ": ",
                                                indices_beta[[id]] |> round(2))) |>
