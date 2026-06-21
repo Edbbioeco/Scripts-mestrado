@@ -149,9 +149,9 @@ ggplot() +
        colour = NULL) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
-        legend.text = element_text(color = "black", size = 15),
-        legend.title = element_text(color = "black", size = 15),
-        strip.text = ggtext::element_markdown(color = "black", size = 15),
+        legend.text = element_text(color = "black", size = 20),
+        legend.title = element_text(color = "black", size = 20),
+        strip.text = ggtext::element_markdown(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = c(1, -0.05),
         legend.direction = "horizontal",
