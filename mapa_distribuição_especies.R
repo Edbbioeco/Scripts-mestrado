@@ -95,7 +95,15 @@ parcela_abund <- parcelas[-1, ] |>
   dplyr::bind_cols(comp[, -1]) |>
   tidyr::pivot_longer(cols = 2:11,
                       names_to = "Espécie",
-                      values_to = "Abundância")
+                      values_to = "Abundância") |>
+  dplyr::mutate(Espécie = dplyr::case_when(
+
+    Espécie |> stringr::str_detect("Adenomera") ~ "<i>Adenomera</i> aff <i>hylaedactyla</i>",
+    .default = paste0("<i>", Espécie, "</i>")
+  )) %>%
+  dplyr::mutate(Espécie = Espécie |> forcats::fct_relevel(. |>
+                                                            dplyr::pull(Espécie) |>
+                                                            unique()))
 
 parcela_abund
 
