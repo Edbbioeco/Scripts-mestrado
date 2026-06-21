@@ -153,7 +153,7 @@ ggplot() +
         legend.title = element_text(color = "black", size = 20),
         strip.text = ggtext::element_markdown(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
-        legend.position = c(1, -0.05),
+        legend.position = c(0.9, -0.05),
         legend.direction = "horizontal",
         legend.box = "vertical",
         legend.justification = c("right", "bottom"),
