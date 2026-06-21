@@ -137,7 +137,7 @@ ggplot() +
           linewidth = 1) +
   scale_color_manual(values = c("Forest environment" = "darkgreen",
                                 "Water streams" = "blue")) +
-  scale_size_continuous(breaks = seq(0, 35, 5),
+  scale_size_continuous(breaks = seq(1, 35, 5),
                         guide = guide_legend(order = 2,
                                              title = "Abundance",
                                              title.position = "top",
