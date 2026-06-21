@@ -144,9 +144,9 @@ ggplot() +
         legend.title = element_text(color = "black", size = 15),
         strip.text = ggtext::element_markdown(color = "black", size = 15),
         strip.background = element_rect(color = "black", linewidth = 1),
-        legend.position = c(1, 0.08),
+        legend.position = c(1, -0.05),
         legend.direction = "horizontal",
         legend.box = "vertical",
         legend.justification = c("right", "bottom"),
         legend.background = element_blank()) +
-  ggview::canvas(height = 14, width = 16)
+  ggview::canvas(height = 12, width = 16)
