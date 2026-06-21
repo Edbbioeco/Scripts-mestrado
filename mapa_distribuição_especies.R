@@ -27,3 +27,16 @@ comp <- readxl::read_xlsx("matriz_composicao.xlsx")
 comp
 
 comp |> dplyr::glimpse()
+
+## Shapefile da borda da Mata de Saltinho ----
+
+### Importar ----
+
+borda <- sf::st_read("borda_saltinho.shp")
+
+### Visualizar ----
+
+borda
+
+ggplot() +
+  geom_sf(data = borda, color = "black")
