@@ -10,7 +10,7 @@ library(terra)
 
 library(terra)
 
-library(ggspatial)
+library(ggtext)
 
 library(ggview)
 
