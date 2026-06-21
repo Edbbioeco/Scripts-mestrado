@@ -159,3 +159,6 @@ ggplot() +
         legend.justification = c("right", "bottom"),
         legend.background = element_blank()) +
   ggview::canvas(height = 12, width = 16)
+
+ggsave(filename = "mapa_distribuição_especies.png",
+       height = 12, width = 16)
