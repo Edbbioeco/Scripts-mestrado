@@ -69,3 +69,16 @@ ggplot() +
   tidyterra::geom_spatraster(data = alt) +
   geom_sf(data = borda, color = "gold", fill = "transparent") +
   geom_sf(data = parcelas, color = "gold", fill = "transparent")
+
+# Mapa ----
+
+## AbundÂncia por parcela ----
+
+parcela_abund <- parcelas[-1, ] |>
+  sf::st_centroid() |>
+  dplyr::bind_cols(comp[, -1]) |>
+  tidyr::pivot_longer(cols = 2:11,
+                      names_to = "Espécie",
+                      values_to = "Abundância")
+
+parcela_abund
