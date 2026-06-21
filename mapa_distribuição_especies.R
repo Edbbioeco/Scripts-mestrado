@@ -83,6 +83,7 @@ alt
 ggplot() +
   tidyterra::geom_spatraster(data = alt) +
   geom_sf(data = borda, color = "gold", fill = "transparent") +
+  geom_sf(data = hid, color = "red", fill = "transparent") +
   geom_sf(data = parcelas, color = "gold", fill = "transparent")
 
 # Mapa ----
