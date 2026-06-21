@@ -40,3 +40,17 @@ borda
 
 ggplot() +
   geom_sf(data = borda, color = "black")
+
+## Shapefile das parcelas ----
+
+### Importar ----
+
+parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
+
+### Visualizar ----
+
+parcelas
+
+ggplot() +
+  geom_sf(data = borda, color = "black") +
+  geom_sf(data = parcelas, color = "black")
