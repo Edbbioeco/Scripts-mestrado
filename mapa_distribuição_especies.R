@@ -10,6 +10,8 @@ library(terra)
 
 library(terra)
 
+library(ggnewscale)
+
 library(ggtext)
 
 library(ggview)
