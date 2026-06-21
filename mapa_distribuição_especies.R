@@ -100,7 +100,7 @@ parcela_abund <- parcelas[-1, ] |>
                       values_to = "Abundância") |>
   dplyr::filter(Abundância > 0) |>
   dplyr::mutate(Espécie = dplyr::case_when(
-    Espécie |> stringr::str_detect("Adenomera") ~ "<i>Adenomera</i> aff <i>hylaedactyla</i>",
+    Espécie |> stringr::str_detect("Adenomera") ~ "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
     .default = paste0("<i>", Espécie, "</i>")
   )) %>%
   dplyr::mutate(Espécie = Espécie |>
