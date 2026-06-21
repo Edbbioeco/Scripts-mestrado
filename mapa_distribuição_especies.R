@@ -67,6 +67,7 @@ parcelas
 
 ggplot() +
   geom_sf(data = borda, color = "black") +
+  geom_sf(data = hid, color = "blue") +
   geom_sf(data = parcelas, color = "black")
 
 ## Raster de altitude ----
