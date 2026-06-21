@@ -100,13 +100,13 @@ parcela_abund <- parcelas[-1, ] |>
                       values_to = "Abundância") |>
   dplyr::filter(Abundância > 0) |>
   dplyr::mutate(Espécie = dplyr::case_when(
-
     Espécie |> stringr::str_detect("Adenomera") ~ "<i>Adenomera</i> aff <i>hylaedactyla</i>",
     .default = paste0("<i>", Espécie, "</i>")
   )) %>%
-  dplyr::mutate(Espécie = Espécie |> forcats::fct_relevel(. |>
-                                                            dplyr::pull(Espécie) |>
-                                                            unique()))
+  dplyr::mutate(Espécie = Espécie |>
+                  forcats::fct_relevel(. |>
+                                         dplyr::pull(Espécie) |>
+                                         unique()))
 
 parcela_abund
 
@@ -117,23 +117,25 @@ ggplot() +
   tidyterra::scale_fill_whitebox_c(palette = "arid",
                                    direction = -1,
                                    name = "Altitude",
-                                   guide = guide_colorbar(order = 1,
-                                                          title.position = "top",
-                                                          title.hjust = 0.5,
-                                                          barwidth = 15,
-                                                          frame.colour = "black",
-                                                          frame.linewidth = 1,
-                                                          ticks.colour = "black",
-                                                          ticks.linewidth = 1)) +
+                                   guide = guide_colorbar(
+                                     order = 1,
+                                     title.position = "top",
+                                     title.hjust = 0.5,
+                                     barwidth = 15,
+                                     frame.colour = "black",
+                                     frame.linewidth = 1,
+                                     ticks.colour = "black",
+                                     ticks.linewidth = 1)
+                                   ) +
   scale_x_continuous(expand = c(0, 0),
                      breaks = seq(-35.19509, -35.15463, 0.03)) +
   scale_y_continuous(expand = c(0, 0)) +
   ggnewscale::new_scale_fill() +
-  geom_sf(data = hid, aes(color = "Water streams"),
-          fill = "blue",
-          linewidth = 1) +
   geom_sf(data = borda, aes(color = "Forest environment"),
           linewidth = 1, fill = "transparent") +
+  geom_sf(data = hid, aes(color = "Water streams"),
+          fill = "transparent",
+          linewidth = 1) +
   geom_sf(data = parcela_abund, aes(size = Abundância),
           color = "black",
           linewidth = 1) +
