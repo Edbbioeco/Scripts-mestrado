@@ -606,7 +606,7 @@ sts_df_2 <- sts_df |>
   ),
   sts = paste0("β1 ± SE = ",
                `β1 ± SE`,
-               ", z = ",
+               "<br>z = ",
                z |> round(2),
                ", p ",
                p,
