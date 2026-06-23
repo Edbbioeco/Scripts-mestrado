@@ -589,9 +589,7 @@ ggsave(filename = "modelo_abundancia_rhinella_multiplo_ggeffect.png",
 
 # Gráficos com as estatísticas ----
 
-## Pristimantis ramagii ----
-
-### Estatísticas ----
+## Estatísticas ----
 
 sts_df_2 <- sts_df |>
   tidyr::drop_na() |>
@@ -629,3 +627,7 @@ sts_df_2 <- sts_df |>
   as.data.frame()
 
 sts_df_2
+
+## Pristimantis ramagii ----
+
+
