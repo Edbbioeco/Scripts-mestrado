@@ -612,13 +612,19 @@ sts_df_2 <- sts_df |>
                p,
                ", pseudo-R² = ",
                `pseudo-R²`)) |>
+  rename("Preditor" = Predictor) |>
   dplyr::left_join(df_ocupacao |>
                      tidyr::pivot_longer(cols = c(6, 8, 10:12),
                                          names_to = "Preditor",
                                          values_to = "Valor preditor") |>
                      dplyr::summarise(`Valor preditor` = `Valor preditor` |>
                                         mean(),
-                                      .by = Preditor),
+                                      .by = Preditor) |>
+                     dplyr::mutate(
+                       Preditor = dplyr::case_when(
+                         Preditor == "Hydric stream distance" ~ "Water stream distance",
+                         .default = Preditor
+                       )),
                    by = "Preditor") |>
   as.data.frame()
 
