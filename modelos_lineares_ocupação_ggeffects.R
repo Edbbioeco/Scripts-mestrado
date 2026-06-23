@@ -586,3 +586,17 @@ df_ocupacao |>
 ggsave(filename = "modelo_abundancia_rhinella_multiplo_ggeffect.png",
        height = 10, width = 12)
 
+
+# Gráficos com as estatísticas ----
+
+## Pristimantis ramagii ----
+
+### Estatísticas ----
+
+sts_df_2 <- sts_df |>
+  tidyr::drop_na() |>
+  dplyr::mutate(Abundancia = dplyr::case_when(
+    Species == "Pristimantis ramagii" ~ 33,
+    Species == "Adenomera aff. hylaedactyla" ~ 17,
+    Species == "Rhinella hoogmoedi" ~ 11.5
+  ))
