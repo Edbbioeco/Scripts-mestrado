@@ -628,6 +628,27 @@ sts_df_2 <- sts_df |>
 
 sts_df_2
 
-## Pristimantis ramagii ----
+## Data frame traduzido ----
 
+### Dados de abundância ----
 
+df_ocupacao_traduzido <- df_ocupacao |>
+  tidyr::pivot_longer(cols = c(6, 8, 10:12),
+                      names_to = "Preditor",
+                      values_to = "Valor preditor") |>
+  dplyr::mutate(Preditor = paste0(Preditor, ""),
+                Preditor = dplyr::case_when(
+                  Preditor == "Leaf-litter depth" ~ "Altura da serrapilheira",
+                  Preditor == "Canopy opennes" ~ "Abertura do dossel",
+                  Preditor == "Edge distance" ~ "Distância da borda",
+                  Preditor == "Elevation" ~ "Elevação",
+                  Preditor == "Hydric stream distance" ~ "Distância dos corpos hídricos"),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Altura da serrapilheira",
+                                         "Abertura do dossel",
+                                         "Distância da borda",
+                                         "Elevação",
+                                         "Distância dos corpos hídricos"))) |>
+  as.data.frame()
+
+df_ocupacao_traduzido
