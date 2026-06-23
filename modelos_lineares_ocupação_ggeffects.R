@@ -599,4 +599,13 @@ sts_df_2 <- sts_df |>
     Species == "Pristimantis ramagii" ~ 33,
     Species == "Adenomera aff. hylaedactyla" ~ 17,
     Species == "Rhinella hoogmoedi" ~ 11.5
-  ))
+  ),
+  sts = paste0("β1 ± SE = ",
+               `β1 ± SE`,
+               ", z = ",
+               z |> round(2),
+               ", p ",
+               p,
+               ", pseudo-R² = ",
+               `pseudo-R²`)) |>
+  as.data.frame()
