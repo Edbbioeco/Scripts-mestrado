@@ -624,6 +624,19 @@ sts_df_2 <- sts_df |>
                          .default = Preditor
                        )),
                    by = "Preditor") |>
+  dplyr::mutate(Preditor = paste0(Preditor, ""),
+                Preditor = dplyr::case_when(
+                  Preditor == "Leaf-litter depth" ~ "Altura da serrapilheira",
+                  Preditor == "Canopy openness" ~ "Abertura do dossel",
+                  Preditor == "Edge distance" ~ "Distância da borda",
+                  Preditor == "Elevation" ~ "Elevação",
+                  Preditor == "Water stream distance" ~ "Distância dos corpos hídricos"),
+                Preditor = Preditor |>
+                  forcats::fct_relevel(c("Altura da serrapilheira",
+                                         "Abertura do dossel",
+                                         "Distância da borda",
+                                         "Elevação",
+                                         "Distância dos corpos hídricos"))) |>
   as.data.frame()
 
 sts_df_2
@@ -639,7 +652,7 @@ df_ocupacao_traduzido <- df_ocupacao |>
   dplyr::mutate(Preditor = paste0(Preditor, ""),
                 Preditor = dplyr::case_when(
                   Preditor == "Leaf-litter depth" ~ "Altura da serrapilheira",
-                  Preditor == "Canopy opennes" ~ "Abertura do dossel",
+                  Preditor == "Canopy openness" ~ "Abertura do dossel",
                   Preditor == "Edge distance" ~ "Distância da borda",
                   Preditor == "Elevation" ~ "Elevação",
                   Preditor == "Hydric stream distance" ~ "Distância dos corpos hídricos"),
