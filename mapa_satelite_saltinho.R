@@ -1,10 +1,8 @@
 # PAcotes ----
 
-library(sf)
+library(terra)
 
 library(tidyverse)
-
-library(terra)
 
 library(tidyterra)
 
