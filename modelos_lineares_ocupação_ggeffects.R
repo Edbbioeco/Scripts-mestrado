@@ -600,6 +600,10 @@ sts_df_2 <- sts_df |>
     Species == "Adenomera aff. hylaedactyla" ~ 17,
     Species == "Rhinella hoogmoedi" ~ 11.5
   ),
+  p = dplyr::case_when(
+    !p |> stringr::str_detect("<") ~ paste0("= ", p),
+    .default = p
+  ),
   sts = paste0("β1 ± SE = ",
                `β1 ± SE`,
                ", z = ",
