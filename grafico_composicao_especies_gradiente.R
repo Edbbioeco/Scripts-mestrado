@@ -101,3 +101,13 @@ graficos |>
 
 ggsave("grafico_composicao_especies.png",
        height = 10, width = 12)
+
+# Gráfico traduzido ----
+
+## Importar e visualizar dados ambientais originais ----
+
+ambientais <-readxl::read_xlsx("matriz_ambientais.xlsx")
+
+ambientais
+
+ambientais |> dplyr::glimpse()
