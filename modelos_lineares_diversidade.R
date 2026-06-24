@@ -549,7 +549,7 @@ ggsave(filename = "grafico_pontos_beta.png", height = 10, width = 12)
 ## Estatísticas com os valores de referências e traduzidas ----
 
 resultados_modelos_traduzido <- resultados_modelos |>
-  dplyr::mutate(diversidade = 4.35,
+  dplyr::mutate(diversidade = 4.3,
                 Predictor = paste0(Predictor, ""),
                 Predictor = dplyr::case_when(
                   Predictor == "Leaf-litter depth" ~ "Altura da serrapilheira",
@@ -575,7 +575,7 @@ resultados_modelos_traduzido <- resultados_modelos |>
                              `F`,
                              ", p<sub>global</sub> = ",
                              pglobal,
-                             ", adj. R² = ",
+                             "<br>adj. R² = ",
                              `Adj. R²`)) |>
   dplyr::rename("Preditor" = Predictor) |>
   dplyr::left_join(df_alfa |>
@@ -616,7 +616,7 @@ df_alfa_traduzido <- df_alfa |>
 
 df_alfa_traduzido
 
-## Pristimantis ramagii ----
+## Diversidade ----
 
 df_alfa_traduzido |>
   ggplot(aes(`Valor Preditor`,`Q = 1`)) +
