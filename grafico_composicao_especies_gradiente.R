@@ -112,3 +112,37 @@ ambientais <- readxl::read_xlsx("matriz_ambientais.xlsx") |>
 ambientais
 
 ambientais |> dplyr::glimpse()
+
+## Gerar múltiplos gráficos ----
+
+graficos <- purrr::map(
+  c("Altura da serrapilheira",
+    "Abertura do dossel",
+    "Distância da borda",
+    "Elevação",
+    "Distância dos corpos hídricos"),
+  purrr::in_parallel(\(var){
+
+    especies |>
+      dplyr::left_join(ambientais,
+                       by = "Unidade Amostral") |>
+      dplyr::rename("Adenomera aff. hylaedactyla" = `Adenomera hylaedactyla`) |>
+      ordenaR::order_circle(gradient = var,
+                            species = 2:11,
+                            range = 5) +
+      labs(title = var) +
+      theme(plot.title = element_text(hjust = 0.5,
+                                      face = "bold",
+                                      size = 20)) +
+      ggview::canvas(height = 10, width = 12)
+
+    }
+    ),
+  .progress = TRUE) |>
+  setNames(c("Altura da serrapilheira",
+             "Abertura do dossel",
+             "Distância da borda",
+             "Elevação",
+             "Distância dos corpos hídricos"))
+
+graficos
