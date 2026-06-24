@@ -243,3 +243,21 @@ br_map_ap <- ggplot() +
   ggview::canvas(height = 10, width = 12)
 
 br_map_ap
+
+## Mapa de Pernambuco ----
+
+pe_map_ap <- ggplot() +
+  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.5) +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.5) +
+  geom_label(aes(x = -35.18123, y = -8.723923, label = "Saltinho"),
+             color = "black",
+             fill = "tomato",
+             size = 7.5) +
+  ggspatial::coord_sf(label_graticule = "NES",
+                      xlim = c(-36.3, -34.8),
+                      ylim = c(-8.9, -7.4)) +
+  scale_x_continuous(breaks = seq(-36.2, -34.8, 0.4)) +
+  theme(axis.text = element_text(size = 20)) +
+  ggview::canvas(height = 10, width = 12)
+
+pe_map_ap
