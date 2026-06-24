@@ -155,5 +155,5 @@ graficos |>
   patchwork::plot_layout(ncol = 2) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave("grafico_composicao_especies.png",
+ggsave("./apresentação/grafico_composicao_especies.png",
        height = 10, width = 12)
