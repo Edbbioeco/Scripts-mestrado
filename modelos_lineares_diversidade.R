@@ -577,4 +577,22 @@ resultados_modelos |>
                              pglobal,
                              ", adj. R² = ",
                              `Adj. R²`)) |>
+  dplyr::rename("Preditor" = Predictor) |>
+  dplyr::left_join(df_alfa |>
+                     tidyr::pivot_longer(cols = c(4, 6, 8:10),
+                                         names_to = "Preditor",
+                                         values_to = "Valor Preditor") |>
+                     dplyr::mutate(
+                       Preditor = dplyr::case_when(
+                         Preditor == "Leaf-litter depth" ~ "Altura da serrapilheira",
+                         Preditor == "Canopy openness" ~ "Abertura do dossel",
+                         Preditor == "Edge distance" ~ "Distância da borda",
+                         Preditor == "Elevation" ~ "Elevação",
+                         Preditor == "Water stream distance" ~ "Distância dos corpos hídricos")) |>
+                     dplyr::summarise(
+                       `Valor Preditor` = `Valor Preditor` |>
+                         range() |>
+                         mean(),
+                       .by = Preditor),
+                   by = "Preditor") |>
   as.data.frame()
