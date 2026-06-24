@@ -147,3 +147,13 @@ graficos <- purrr::map(
              "Distância dos corpos hídricos"))
 
 graficos
+
+## Unindo os gráficos ----
+
+graficos |>
+  patchwork::wrap_plots() +
+  patchwork::plot_layout(ncol = 2) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave("grafico_composicao_especies.png",
+       height = 10, width = 12)
