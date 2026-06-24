@@ -598,3 +598,20 @@ resultados_modelos_traduzido <- resultados_modelos |>
   as.data.frame()
 
 resultados_modelos_traduzido
+
+## Data frame de abundância traduzido ----
+
+df_alfa_traduzido <- df_alfa |>
+  tidyr::pivot_longer(cols = c(4, 6, 8:10),
+                      names_to = "Preditor",
+                      values_to = "Valor Preditor") |>
+  dplyr::mutate(
+    Preditor = dplyr::case_when(
+      Preditor == "Leaf-litter depth" ~ "Altura da serrapilheira",
+      Preditor == "Canopy openness" ~ "Abertura do dossel",
+      Preditor == "Edge distance" ~ "Distância da borda",
+      Preditor == "Elevation" ~ "Elevação",
+      Preditor == "Water stream distance" ~ "Distância dos corpos hídricos")) |>
+  as.data.frame()
+
+df_alfa_traduzido
