@@ -548,6 +548,8 @@ ggsave(filename = "grafico_pontos_beta.png", height = 10, width = 12)
 
 ## Estatísticas com os valores de referências e traduzidas ----
 
+### Diversidade alfa ----
+
 resultados_modelos_traduzido <- resultados_modelos |>
   dplyr::mutate(diversidade = 4.3,
                 Predictor = paste0(Predictor, ""),
@@ -604,6 +606,60 @@ resultados_modelos_traduzido <- resultados_modelos |>
   as.data.frame()
 
 resultados_modelos_traduzido
+
+### Diversidade beta ----
+
+df_sts_beta_traduzido <- df_sts_beta |>
+  dplyr::mutate(composicao = 0.6,
+                Predictor = paste0(Predictor, ""),
+                Predictor = dplyr::case_when(
+                  Predictor == "Leaf-litter depth" ~ "Altura da serrapilheira",
+                  Predictor == "Canopy openness" ~ "Abertura do dossel",
+                  Predictor == "Edge distance" ~ "Distância da borda",
+                  Predictor == "Elevation" ~ "Elevação",
+                  Predictor == "Water stream distance" ~ "Distância dos corpos hídricos"),
+                Predictor = Predictor |>
+                  forcats::fct_relevel(c("Altura da serrapilheira",
+                                         "Abertura do dossel",
+                                         "Distância da borda",
+                                         "Elevação",
+                                         "Distância dos corpos hídricos")),
+                sts = paste0("β1 ± SE = ",
+                             `β1 ± EP`,
+                             ", z<sub>",
+                             DF,
+                             "</sub> = ",
+                             z,
+                             ", = =",
+                             p)) |>
+  dplyr::rename("Preditor" = Predictor) |>
+  as.data.frame() |>
+  dplyr::left_join(df_beta |>
+                     tidyr::pivot_longer(cols = 2:6,
+                                         names_to = "Preditor",
+                                         values_to = "Valor Preditor") |>
+                     dplyr::mutate(
+                       Preditor = dplyr::case_when(
+                         Preditor == "Leaf-litter depth" ~ "Altura da serrapilheira",
+                         Preditor == "Canopy openness" ~ "Abertura do dossel",
+                         Preditor == "Edge distance" ~ "Distância da borda",
+                         Preditor == "Elevation" ~ "Elevação",
+                         Preditor == "Water stream distance" ~ "Distância dos corpos hídricos"),
+                       Preditor = Preditor |>
+                         forcats::fct_relevel(c("Altura da serrapilheira",
+                                                "Abertura do dossel",
+                                                "Distância da borda",
+                                                "Elevação",
+                                                "Distância dos corpos hídricos"))) |>
+                     dplyr::summarise(
+                       `Valor Preditor` = `Valor Preditor` |>
+                         range() |>
+                         mean(),
+                       .by = Preditor),
+                   by = "Preditor") |>
+  as.data.frame()
+
+df_sts_beta_traduzido
 
 ## Data frame de abundância traduzido ----
 
