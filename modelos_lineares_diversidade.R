@@ -661,3 +661,6 @@ df_alfa_traduzido |>
         title = element_text(color = "black", size = 20),
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "./apresentação/modelo_diversidade_q1.png",
+       height = 10, width = 12)
