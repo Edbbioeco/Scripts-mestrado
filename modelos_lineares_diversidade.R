@@ -709,7 +709,9 @@ df_beta_traduzido <- df_beta |>
 
 df_beta_traduzido
 
-## Diversidade ----
+## Gráficos ----
+
+### Diversidade alfa ----
 
 df_alfa_traduzido |>
   ggplot(aes(`Valor Preditor`,`Q = 1`)) +
@@ -745,3 +747,37 @@ df_alfa_traduzido |>
 
 ggsave(filename = "./apresentação/modelo_diversidade_q1.png",
        height = 10, width = 12)
+
+### Diversidade beta ----
+
+df_beta_traduzido |>
+  ggplot(aes(`Valor Preditor`, Composition)) +
+  geom_point(color = "black",
+             size = 3.5,
+             stroke = 1) +
+  geom_smooth(data = . %>%
+                dplyr::filter(Preditor == "Elevação"),
+              method = "lm",
+              se = FALSE) +
+  ggtext::geom_richtext(data = df_sts_beta_traduzido,
+                        aes(`Valor Preditor`, composicao, label = sts),
+                        color = "black",
+                        fill = "transparent",
+                        label.colour = "transparent",
+                        fontface = "bold",
+                        size = 5) +
+  facet_wrap(~Preditor, scales = "free_x") +
+  facet_wrap(~Preditor, scales = "free_x") +
+  labs(x = "Distância preditora",
+       y = "Distância da composição") +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 15),
+        axis.title = element_text(color = "black", size = 15),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(color = "black", size = 20),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.position = "none",
+        title = element_text(color = "black", size = 15),
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
