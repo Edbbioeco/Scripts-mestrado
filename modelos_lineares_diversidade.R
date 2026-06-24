@@ -562,4 +562,19 @@ resultados_modelos |>
                                          "Abertura do dossel",
                                          "Distância da borda",
                                          "Elevação",
-                                         "Distância dos corpos hídricos")))
+                                         "Distância dos corpos hídricos")),
+                sts = paste0("β1 ± SE = ",
+                             `β1 ± SE`,
+                             ", p<sub>t</sub> = ",
+                             pt,
+                             "<br>F<sub>",
+                             df1,
+                             ", ",
+                             df2,
+                             "</sub> = ",
+                             `F`,
+                             ", p<sub>global</sub> = ",
+                             pglobal,
+                             ", adj. R² = ",
+                             `Adj. R²`)) |>
+  as.data.frame()
