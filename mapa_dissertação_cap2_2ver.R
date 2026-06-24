@@ -230,3 +230,16 @@ mapa_final + ggview::canvas(width = 12.5, height = 12.5)
 ggsave(filename = "mapa_cap2_2ver.png",
        height = 12.5, width = 12.5)
 
+# Mapa da apresentação ----
+
+## Mapa do Brasil ----
+
+br_map_ap <- ggplot() +
+  geom_sf(data = br, color = "black", fill = "lightgray") +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod") +
+  ggspatial::coord_sf(expand = FALSE,
+                      label_graticule = "NWS") +
+  theme(axis.text = element_text(size = 20)) +
+  ggview::canvas(height = 10, width = 12)
+
+br_map_ap
