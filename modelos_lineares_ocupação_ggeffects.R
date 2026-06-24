@@ -742,18 +742,18 @@ df_ocupacao_traduzido |>
                         fontface = "bold",
                         size = 5) +
   facet_wrap(~Preditor, scales = "free_x") +
-  labs(x = "Predictor value",
+  labs(x = "Valor preditor",
        y = "Abundância de <i>Adenomera</i> aff. <i>hylaedactyla</i>") +
   scale_y_continuous(limits = c(5, 17.65)) +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 15),
-        axis.title = element_text(color = "black", size = 15),
-        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 20),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 20),
         panel.border = element_rect(color = "black", linewidth = 1),
         strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
-        title = element_text(color = "black", size = 15),
+        title = element_text(color = "black", size = 20),
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10,
                  width = 12)
