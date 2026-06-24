@@ -663,6 +663,8 @@ df_sts_beta_traduzido
 
 ## Data frame de abundância traduzido ----
 
+### Diversidade alfa ----
+
 df_alfa_traduzido <- df_alfa |>
   tidyr::pivot_longer(cols = c(4, 6, 8:10),
                       names_to = "Preditor",
@@ -683,6 +685,29 @@ df_alfa_traduzido <- df_alfa |>
   as.data.frame()
 
 df_alfa_traduzido
+
+### Diversidade beta ----
+
+df_beta_traduzido <- df_beta |>
+  tidyr::pivot_longer(cols = 2:6,
+                      names_to = "Preditor",
+                      values_to = "Valor Preditor") |>
+  dplyr::mutate(
+    Preditor = dplyr::case_when(
+      Preditor == "Leaf-litter depth" ~ "Altura da serrapilheira",
+      Preditor == "Canopy openness" ~ "Abertura do dossel",
+      Preditor == "Edge distance" ~ "Distância da borda",
+      Preditor == "Elevation" ~ "Elevação",
+      Preditor == "Water stream distance" ~ "Distância dos corpos hídricos"),
+    Preditor = Preditor |>
+      forcats::fct_relevel(c("Altura da serrapilheira",
+                             "Abertura do dossel",
+                             "Distância da borda",
+                             "Elevação",
+                             "Distância dos corpos hídricos"))) |>
+  as.data.frame()
+
+df_beta_traduzido
 
 ## Diversidade ----
 
