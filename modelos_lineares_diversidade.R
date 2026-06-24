@@ -543,3 +543,23 @@ df_beta |>
   ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "grafico_pontos_beta.png", height = 10, width = 12)
+
+# Gráficos com as estatísticas ----
+
+## Estatísticas com os valores de referências e traduzidas ----
+
+resultados_modelos |>
+  dplyr::mutate(diversidade = 4.35,
+                Predictor = paste0(Predictor, ""),
+                Predictor = dplyr::case_when(
+                  Predictor == "Leaf-litter depth" ~ "Altura da serrapilheira",
+                  Predictor == "Canopy openness" ~ "Abertura do dossel",
+                  Predictor == "Edge distance" ~ "Distância da borda",
+                  Predictor == "Elevation" ~ "Elevação",
+                  Predictor == "Water stream distance" ~ "Distância dos corpos hídricos"),
+                Predictor = Predictor |>
+                  forcats::fct_relevel(c("Altura da serrapilheira",
+                                         "Abertura do dossel",
+                                         "Distância da borda",
+                                         "Elevação",
+                                         "Distância dos corpos hídricos")))
