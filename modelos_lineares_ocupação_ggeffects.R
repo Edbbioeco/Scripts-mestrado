@@ -726,3 +726,38 @@ df_ocupacao_traduzido |>
 ggsave(filename = "./apresentação/modelo_abundancia_pristimantis_ramagii.png",
        height = 10,
        width = 12)
+
+## Adenomera aff. hylaedactyla ----
+
+df_ocupacao_traduzido |>
+  ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`)) +
+  geom_point(color = "black",
+             size = 3.5) +
+  ggtext::geom_richtext(data = sts_df_2 |>
+                          dplyr::filter(Species == "Adenomera aff. hylaedactyla"),
+                        aes(`Valor preditor`, Abundancia, label = sts),
+                        color = "black",
+                        fill = "transparent",
+                        label.colour = "transparent",
+                        fontface = "bold",
+                        size = 5) +
+  facet_wrap(~Preditor, scales = "free_x") +
+  labs(x = "Predictor value",
+       y = "Abundância de <i>Adenomera</i> aff. <i>hylaedactyla</i>") +
+  scale_y_continuous(limits = c(5, 17.65)) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 15),
+        axis.title = element_text(color = "black", size = 15),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(color = "black", size = 20),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.position = "none",
+        title = element_text(color = "black", size = 15),
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10,
+                 width = 12)
+
+ggsave(filename = "./apresentação/modelo_abundancia_adenomera_hylaedactyla.png",
+       height = 10,
+       width = 12)
