@@ -588,7 +588,13 @@ resultados_modelos_traduzido <- resultados_modelos |>
                          Preditor == "Canopy openness" ~ "Abertura do dossel",
                          Preditor == "Edge distance" ~ "Distância da borda",
                          Preditor == "Elevation" ~ "Elevação",
-                         Preditor == "Water stream distance" ~ "Distância dos corpos hídricos")) |>
+                         Preditor == "Water stream distance" ~ "Distância dos corpos hídricos"),
+                       Preditor = Preditor |>
+                         forcats::fct_relevel(c("Altura da serrapilheira",
+                                                "Abertura do dossel",
+                                                "Distância da borda",
+                                                "Elevação",
+                                                "Distância dos corpos hídricos"))) |>
                      dplyr::summarise(
                        `Valor Preditor` = `Valor Preditor` |>
                          range() |>
@@ -611,7 +617,13 @@ df_alfa_traduzido <- df_alfa |>
       Preditor == "Canopy openness" ~ "Abertura do dossel",
       Preditor == "Edge distance" ~ "Distância da borda",
       Preditor == "Elevation" ~ "Elevação",
-      Preditor == "Water stream distance" ~ "Distância dos corpos hídricos")) |>
+      Preditor == "Water stream distance" ~ "Distância dos corpos hídricos"),
+    Preditor = Preditor |>
+      forcats::fct_relevel(c("Altura da serrapilheira",
+                             "Abertura do dossel",
+                             "Distância da borda",
+                             "Elevação",
+                             "Distância dos corpos hídricos"))) |>
   as.data.frame()
 
 df_alfa_traduzido
