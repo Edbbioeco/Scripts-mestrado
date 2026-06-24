@@ -783,12 +783,12 @@ df_ocupacao_traduzido |>
                                               "Distância da borda",
                                               "Elevação")),
             aes(`Valor preditor`, Predicted), color = "blue", linewidth = 1) +
-  labs(x = "Predictor value",
+  labs(x = "Valor preditor",
        y = "Abundância de <i>Rhinella hoogmoedi</i>") +
   theme_bw() +
-  theme(axis.text = element_text(color = "black", size = 15),
-        axis.title = element_text(color = "black", size = 15),
-        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 20),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 20),
         panel.border = element_rect(color = "black", linewidth = 1),
         strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
