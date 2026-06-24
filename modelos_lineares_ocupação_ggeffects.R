@@ -594,7 +594,7 @@ ggsave(filename = "modelo_abundancia_rhinella_multiplo_ggeffect.png",
 sts_df_2 <- sts_df |>
   tidyr::drop_na() |>
   dplyr::mutate(Abundancia = dplyr::case_when(
-    Species == "Pristimantis ramagii" ~ 33,
+    Species == "Pristimantis ramagii" ~ 30,
     Species == "Adenomera aff. hylaedactyla" ~ 17,
     Species == "Rhinella hoogmoedi" ~ 11.5
   ),
@@ -616,6 +616,7 @@ sts_df_2 <- sts_df |>
                                          names_to = "Preditor",
                                          values_to = "Valor preditor") |>
                      dplyr::summarise(`Valor preditor` = `Valor preditor` |>
+                                        range() |>
                                         mean(),
                                       .by = Preditor) |>
                      dplyr::mutate(
