@@ -685,3 +685,37 @@ df_tendencia_traduzido <- df_tendencia |>
   as.data.frame()
 
 df_tendencia_traduzido
+
+## Pristimantis ramagii ----
+
+df_ocupacao_traduzido |>
+  ggplot(aes(`Valor preditor`, `Pristimantis ramagii`)) +
+  geom_point(color = "black",
+             size = 3.5) +
+  ggtext::geom_richtext(data = sts_df_2 |>
+                          dplyr::filter(Species == "Pristimantis ramagii"),
+                        aes(`Valor preditor`, Abundancia, label = sts),
+                        color = "black",
+                        fill = "transparent",
+                        label.colour = "transparent") +
+  facet_wrap(~Preditor, scales = "free_x") +
+  geom_line(data = df_tendencia_traduzido |>
+              dplyr::filter(Species == "Pristimantis ramagii" &
+                              Preditor %in% c("Altura da serrapilheira",
+                                              "Abertura do dossel",
+                                              "Distância dos corpos hídricos")),
+            aes(`Valor preditor`, Predicted), color = "blue", linewidth = 1) +
+  labs(x = "Predictor value",
+       y = "Abundância de <i>Pristimantis ramagii</i>") +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 15),
+        axis.title = element_text(color = "black", size = 15),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 15),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(color = "black", size = 20),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.position = "none",
+        title = element_text(color = "black", size = 15),
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10,
+                 width = 12)
