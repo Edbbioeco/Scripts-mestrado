@@ -610,7 +610,7 @@ resultados_modelos_traduzido
 ### Diversidade beta ----
 
 df_sts_beta_traduzido <- df_sts_beta |>
-  dplyr::mutate(composicao = 0.6,
+  dplyr::mutate(composicao = 0.525,
                 Predictor = paste0(Predictor, ""),
                 Predictor = dplyr::case_when(
                   Predictor == "Leaf-litter depth" ~ "Altura da serrapilheira",
@@ -626,11 +626,11 @@ df_sts_beta_traduzido <- df_sts_beta |>
                                          "Distância dos corpos hídricos")),
                 sts = paste0("β1 ± SE = ",
                              `β1 ± EP`,
-                             ", z<sub>",
+                             "<br>z<sub>",
                              DF,
                              "</sub> = ",
                              z,
-                             ", = =",
+                             ", p =",
                              p)) |>
   dplyr::rename("Preditor" = Predictor) |>
   as.data.frame() |>
