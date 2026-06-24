@@ -770,6 +770,7 @@ df_beta_traduzido |>
   facet_wrap(~Preditor, scales = "free_x") +
   labs(x = "Distância preditora",
        y = "Distância da composição") +
+  scale_y_continuous(limits = c(0.1, 0.545)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
