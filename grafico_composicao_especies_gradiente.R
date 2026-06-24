@@ -106,7 +106,8 @@ ggsave("grafico_composicao_especies.png",
 
 ## Importar e visualizar dados ambientais originais ----
 
-ambientais <-readxl::read_xlsx("matriz_ambientais.xlsx")
+ambientais <- readxl::read_xlsx("matriz_ambientais.xlsx") |>
+  rename("Elevação" = 9)
 
 ambientais
 
