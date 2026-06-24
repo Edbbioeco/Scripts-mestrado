@@ -548,7 +548,7 @@ ggsave(filename = "grafico_pontos_beta.png", height = 10, width = 12)
 
 ## Estatísticas com os valores de referências e traduzidas ----
 
-resultados_modelos |>
+resultados_modelos_traduzido <- resultados_modelos |>
   dplyr::mutate(diversidade = 4.35,
                 Predictor = paste0(Predictor, ""),
                 Predictor = dplyr::case_when(
@@ -596,3 +596,5 @@ resultados_modelos |>
                        .by = Preditor),
                    by = "Preditor") |>
   as.data.frame()
+
+resultados_modelos_traduzido
