@@ -253,6 +253,8 @@ pe_map_ap <- ggplot() +
              color = "black",
              fill = "tomato",
              size = 7.5) +
+  labs(x = NULL,
+       y = NULL) +
   ggspatial::coord_sf(label_graticule = "NES",
                       xlim = c(-36.3, -34.8),
                       ylim = c(-8.9, -7.4)) +
@@ -261,3 +263,5 @@ pe_map_ap <- ggplot() +
   ggview::canvas(height = 10, width = 12)
 
 pe_map_ap
+
+## Mapa principal ----
