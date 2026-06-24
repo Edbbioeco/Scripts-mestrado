@@ -630,7 +630,7 @@ df_sts_beta_traduzido <- df_sts_beta |>
                              DF,
                              "</sub> = ",
                              z,
-                             ", p =",
+                             ", p = ",
                              p)) |>
   dplyr::rename("Preditor" = Predictor) |>
   as.data.frame() |>
