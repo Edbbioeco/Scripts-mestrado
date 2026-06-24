@@ -675,7 +675,7 @@ df_tendencia_traduzido <- df_tendencia |>
                   Preditor == "Canopy openness" ~ "Abertura do dossel",
                   Preditor == "Edge distance" ~ "Distância da borda",
                   Preditor == "Elevation" ~ "Elevação",
-                  Preditor == "Hydric stream distance" ~ "Distância dos corpos hídricos"),
+                  Preditor == "Water stream distance" ~ "Distância dos corpos hídricos"),
                 Preditor = Preditor |>
                   forcats::fct_relevel(c("Altura da serrapilheira",
                                          "Abertura do dossel",
