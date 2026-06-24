@@ -698,7 +698,9 @@ df_ocupacao_traduzido |>
                         aes(`Valor preditor`, Abundancia, label = sts),
                         color = "black",
                         fill = "transparent",
-                        label.colour = "transparent") +
+                        label.colour = "transparent",
+                        fontface = "bold",
+                        size = 5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_line(data = df_tendencia_traduzido |>
               dplyr::filter(Species == "Pristimantis ramagii" &
@@ -720,3 +722,7 @@ df_ocupacao_traduzido |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10,
                  width = 12)
+
+ggsave(filename = "./apresentação/modelo_abundancia_pristimantis_ramagii.png",
+       height = 10,
+       width = 12)
