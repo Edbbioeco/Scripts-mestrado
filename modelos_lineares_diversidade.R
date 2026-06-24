@@ -615,3 +615,37 @@ df_alfa_traduzido <- df_alfa |>
   as.data.frame()
 
 df_alfa_traduzido
+
+## Pristimantis ramagii ----
+
+df_alfa_traduzido |>
+  ggplot(aes(`Valor Preditor`,`Q = 1`)) +
+  geom_point(color = "black",
+             size = 3.5,
+             stroke = 1) +
+  ggtext::geom_richtext(data = resultados_modelos_traduzido,
+                        aes(`Valor Preditor`, diversidade, label = sts),
+                        color = "black",
+                        fill = "transparent",
+                        label.colour = "transparent",
+                        fontface = "bold",
+                        size = 5) +
+  facet_wrap(~Preditor, scales = "free_x") +
+  geom_smooth(data = . %>%
+                dplyr::filter(Preditor == "Distância da borda"),
+              method = "lm",
+              se = FALSE) +
+  labs(x = "Valor preditor",
+       y = "Diversidade (Q = 1)") +
+  scale_y_continuous(limits = c(2.5, 4.45)) +
+  theme_bw() +
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 20),
+        axis.title.y = ggtext::element_markdown(color = "black", size = 20),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(color = "black", size = 20),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        legend.position = "none",
+        title = element_text(color = "black", size = 20),
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
