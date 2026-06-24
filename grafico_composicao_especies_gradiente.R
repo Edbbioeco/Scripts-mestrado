@@ -131,7 +131,8 @@ graficos <- purrr::map(
       ordenaR::order_circle(gradient = var,
                             species = 2:11,
                             range = 5) +
-      labs(title = var) +
+      labs(title = var,
+           y = "Abundância") +
       theme(plot.title = element_text(hjust = 0.5,
                                       face = "bold",
                                       size = 20)) +
