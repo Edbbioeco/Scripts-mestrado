@@ -265,3 +265,56 @@ pe_map_ap <- ggplot() +
 pe_map_ap
 
 ## Mapa principal ----
+
+
+
+mapa_principal_ap <- ggplot() +
+  geom_sf(data = br, color = "black",
+          aes(fill = "Brazil"), linewidth = 0.5) +
+  geom_sf(data = pe, color = "black",
+          aes(fill = "Pernambuco"), linewidth = 0.75) +
+  tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
+  geom_sf(data = borda,
+          aes(color = "Forest environment"),
+          linewidth = 1, fill = "transparent") +
+  geom_sf(data = corpos_hid,
+          aes(color = "Water streams"),
+          linewidth = 1, fill = "transparent") +
+  scale_fill_manual(values = c("Brazil" = "lightgray",
+                               "Pernambuco" = "lightgoldenrod"),
+                    breaks = c("Brazil", "Pernambuco")) +
+  scale_color_manual(values = c("Forest environment" = "gold3",
+                                "Water streams" = "royalblue",
+                                "Uniform sampling plot" = "black",
+                                "Riparian sampling plot" = "black"),
+                     breaks = c("Forest environment", "Water streams",
+                                "Uniform sampling plot", "Riparian sampling plot")) +
+  guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
+         color = guide_legend(order = 2, nrow = 2)) +
+  labs(fill = NULL,
+       color = NULL) +
+  ggnewscale::new_scale_fill() +
+  geom_sf_label(data = parcelas_trat,
+                aes(fill = tipo, label = `Unidade Amostral`),
+                color = "black", shape = 21, size = 5, stroke = 1) +
+  scale_fill_manual(values = c("Uniform sampling plot" = "orange2",
+                               "Riparian sampling plot" = "royalblue"),
+                    breaks = c("Uniform sampling plot", "Riparian sampling plot")) +
+  guides(fill = guide_legend(order = 3, nrow = 2)) +
+  labs(fill = NULL,
+       x = NULL,
+       y = NULL) +
+  ggspatial::coord_sf(label_graticule = "NS",
+                      xlim = c(-35.20319, -35.15696),
+                      ylim = c(-8.7442, -8.710025),
+                      expand = FALSE) +
+  ggspatial::annotation_scale(location = "br",
+                              text_face = "bold",
+                              text_cex = 2,
+                              text_col = "white",
+                              unit_category = "metric",
+                              bar_cols = c("black", "white"),
+                              width_hint = 0.35) +
+  ggview::canvas(height = 10, width = 12)
+
+mapa_principal_ap
