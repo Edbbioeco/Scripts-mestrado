@@ -252,7 +252,7 @@ pe_map_ap <- ggplot() +
   geom_label(aes(x = -35.18123, y = -8.723923, label = "Saltinho"),
              color = "black",
              fill = "tomato",
-             size = 7.5) +
+             size = 3.5) +
   labs(x = NULL,
        y = NULL) +
   ggspatial::coord_sf(label_graticule = "NES",
@@ -265,8 +265,6 @@ pe_map_ap <- ggplot() +
 pe_map_ap
 
 ## Mapa principal ----
-
-
 
 mapa_principal_ap <- ggplot() +
   geom_sf(data = br, color = "black",
@@ -296,7 +294,7 @@ mapa_principal_ap <- ggplot() +
   ggnewscale::new_scale_fill() +
   geom_sf_label(data = parcelas_trat,
                 aes(fill = tipo, label = `Unidade Amostral`),
-                color = "black", shape = 21, size = 5, stroke = 1) +
+                color = "black", shape = 21, size = 3.5, stroke = 1) +
   scale_fill_manual(values = c("Uniform sampling plot" = "orange2",
                                "Riparian sampling plot" = "royalblue"),
                     breaks = c("Uniform sampling plot", "Riparian sampling plot")) +
