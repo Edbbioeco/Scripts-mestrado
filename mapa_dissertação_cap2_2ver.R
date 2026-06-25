@@ -318,3 +318,11 @@ mapa_principal_ap <- ggplot() +
   ggview::canvas(height = 10, width = 12)
 
 mapa_principal_ap
+
+## Unir mapas ----
+
+(br_map_ap + mapa_principal_ap + pe_map_ap) +
+  ggview::canvas(width = 16.5, height = 5.5)
+
+ggsave(filename = "./apresentação/mapa_saltinho.png",
+       width = 16.5, height = 5.5)
