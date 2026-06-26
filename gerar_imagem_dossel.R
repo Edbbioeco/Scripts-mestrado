@@ -17,7 +17,7 @@ ggsave(filename = "./apresentação/imagem_dossel.png",
        height = 12,
        width = 12)
 
-## Imagem binária ----
+## Imagem binarizada ----
 
 img[[4]] |>
   coiR::coir_crop(plot = FALSE) |>
