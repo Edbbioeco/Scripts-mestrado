@@ -6,7 +6,7 @@ library(coiR)
 
 img <- coiR::data_coir()
 
-# Imagens ----
+# Imagem de dossel ----
 
 ## Imagem normal ----
 
