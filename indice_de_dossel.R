@@ -10,8 +10,8 @@ library(writexl)
 
 ## Diretorios ----
 
-diretorios <- paste0("./imagens de dossel/",
-                     list.files(path = "./imagens de dossel"))
+diretorios <- paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens de dossel/",
+                     list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens de dossel"))
 
 diretorios
 
@@ -103,4 +103,4 @@ df_dossel |>
 # Exportando os dados ----
 
 df_dossel |>
-  writexl::write_xlsx("dados_indice_dossel_coir.xlsx")
+  writexl::write_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/dados_indice_dossel_coir.xlsx")
