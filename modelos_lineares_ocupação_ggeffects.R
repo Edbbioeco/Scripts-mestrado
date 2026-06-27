@@ -28,7 +28,7 @@ library(ggview)
 
 ### Importando ----
 
-especies <- readxl::read_xlsx("levantamento_anuros.xlsx")
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_anuros.xlsx")
 
 ### Visualizando ----
 
@@ -48,7 +48,7 @@ especies |> dplyr::glimpse()
 
 ### Importando ----
 
-ambientais <-readxl::read_xlsx("matriz_ambientais.xlsx")
+ambientais <-readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx")
 
 ### Visualizando ----
 
@@ -762,7 +762,7 @@ df_ocupacao_traduzido |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "./apresentação/modelo_abundancia_adenomera_hylaedactyla.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/apresentação/modelo_abundancia_adenomera_hylaedactyla.png",
        height = 10,
        width = 12)
 
@@ -802,6 +802,6 @@ df_ocupacao_traduzido |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "./apresentação/modelo_abundancia_rhinella_hoogmoedi.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/apresentação/modelo_abundancia_rhinella_hoogmoedi.png",
        height = 10,
        width = 12)
