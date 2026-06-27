@@ -18,6 +18,10 @@ library(flextable)
 
 library(ggeffects)
 
+library(ggtext)
+
+library(ggview)
+
 # Dados ----
 
 ## Abundância de espécies -----
