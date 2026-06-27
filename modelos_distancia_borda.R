@@ -309,25 +309,6 @@ modelos
 
 ## Pressupostos do modelo ----
 
-pres_abund_borda <- function(modelo, especie){
-
-  sps <- especie |> stringr::str_replace("_", " ") |> stringr::word(1)
-
-  stringr::str_glue("Pressupostos para o modelo de {especie}") |>
-    crayon::green() |>
-    message()
-
-  pressupost_plot <- modelo |> DHARMa::simulateResiduals(plot = TRUE)
-
-  print(pressupost_plot)
-
-}
-
-modelo <- ls(pattern = "abund_borda_modelo_") |>
-  mget(envir = globalenv())
-
-modelo
-
 purrr::imap(modelos,
             \(modelo, especie){
 
