@@ -30,7 +30,7 @@ library(ggview)
 
 ### Importando ----
 
-especies <- readxl::read_xlsx("matriz_composicao.xlsx")
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_composicao.xlsx")
 
 ### Visualizando ----
 
@@ -42,7 +42,7 @@ especies |> dplyr::glimpse()
 
 ### Importando ----
 
-ambientais <-readxl::read_xlsx("matriz_ambientais.xlsx")
+ambientais <-readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx")
 
 ### Visualizando ----
 
@@ -197,7 +197,7 @@ df_alfa |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "grafico_pontos_q1_distancia_borda.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/grafico_pontos_q1_distancia_borda.png",
        height = 10, width = 12)
 
 # Modelos lineares de diversidade beta ----
@@ -264,7 +264,7 @@ df_beta |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "grafico_pontos_beta_distancia_borda.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/grafico_pontos_beta_distancia_borda.png",
        height = 10, width = 12)
 
 # Ordenação das espécies ----
@@ -278,7 +278,7 @@ especies |>
                         range = 15) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "grafico_ordenacao_especies_distancia_borda.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/grafico_ordenacao_especies_distancia_borda.png",
        height = 10, width = 12)
 
 # Modelos lineares abundância -----
