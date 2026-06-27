@@ -28,7 +28,7 @@ library(DHARMa)
 
 ### Importando ----
 
-especies <- readxl::read_xlsx("matriz_composicao.xlsx")
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_composicao.xlsx")
 
 ### Visualizando ----
 
@@ -40,7 +40,7 @@ especies |> dplyr::glimpse()
 
 ### Importando ----
 
-ambientais <-readxl::read_xlsx("matriz_ambientais.xlsx")
+ambientais <-readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx")
 
 ### Visualizando ----
 
@@ -283,7 +283,7 @@ df_q1_flex
 ### Exportando a tabela ----
 
 df_q1_flex |>
-  flextable::save_as_docx(path = "tabela_estatisticas_modelos_lineares_diversidade_alfa.docx")
+  flextable::save_as_docx(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_estatisticas_modelos_lineares_diversidade_alfa.docx")
 
 ## Preditores significativos ----
 
@@ -329,7 +329,8 @@ df_alfa |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "grafico_pontos_q1.png", height = 10, width = 12)
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/grafico_pontos_q1.png",
+       height = 10, width = 12)
 
 # Modelos lineares da diversidade beta -----
 
@@ -390,7 +391,7 @@ cor_df |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "correlacao_spearman_beta.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/correlacao_spearman_beta.png",
        height = 10, width = 12)
 
 ## Criar o modelo ----
@@ -497,7 +498,7 @@ df_beta_flex_destacado
 ### Exportando a tabela ----
 
 df_beta_flex |>
-  flextable::save_as_docx(path = "tabela_estatisticas_modelos_lineares_diversidade_beta.docx")
+  flextable::save_as_docx(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_estatisticas_modelos_lineares_diversidade_beta.docx")
 
 ## Preditores significativos ----
 
@@ -542,7 +543,7 @@ df_beta |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "grafico_pontos_beta.png", height = 10, width = 12)
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/grafico_pontos_beta.png", height = 10, width = 12)
 
 # Gráficos com as estatísticas ----
 
@@ -745,7 +746,7 @@ df_alfa_traduzido |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "./apresentação/modelo_diversidade_q1.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/apresentação/modelo_diversidade_q1.png",
        height = 10, width = 12)
 
 ### Diversidade beta ----
@@ -783,5 +784,5 @@ df_beta_traduzido |>
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "./apresentação/modelo_diversidade_beta.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/apresentação/modelo_diversidade_beta.png",
        height = 10, width = 12)
