@@ -155,10 +155,27 @@ br_map
 pe_map <- ggplot() +
   geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.5) +
   geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.5) +
+  geom_segment(aes(x = -35.1806, y = -8.726943,
+                   xend = -35.4, yend = -8.55),
+               arrow = arrow(length = unit(0.4, "cm"),
+                             ends = "first",
+                             type = "closed"),
+               linewidth = 1.2,
+               color = "black") +
+  geom_label(aes(x = -35.4, y = -8.55,
+                 label = "REBio Saltinho"),
+             color = "black",
+             fill = "tomato",
+             size = 5,
+             vjust = 0,
+             label.padding = unit(0.3, "lines"),
+             linewidth = 1) +
   ggspatial::coord_sf(label_graticule = "NE",
                       xlim = c(-36.3, -34.8),
                       ylim = c(-8.9, -7.4)) +
   scale_x_continuous(breaks = seq(-36.2, -34.8, 0.4)) +
+  labs(x = NULL,
+       y = NULL) +
   theme(axis.text = element_text(size = 20)) +
   ggview::canvas(height = 10, width = 12)
 
