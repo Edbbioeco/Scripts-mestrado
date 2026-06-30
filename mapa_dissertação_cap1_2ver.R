@@ -183,8 +183,8 @@ mapa_principal <- ggplot() +
   guides(fill = guide_legend(order = 3, nrow = 2)) +
   labs(fill = NULL) +
   ggspatial::coord_sf(label_graticule = "NSW",
-                      xlim = c(-35.20319, -35.15696),
-                      ylim = c(-8.7442, -8.710025),
+                      xlim = c(-35.20179, -35.1561),
+                      ylim = c(-8.745536, -8.71112),
                       expand = FALSE) +
   ggspatial::annotation_scale(location = "br",
                               text_face = "bold",
