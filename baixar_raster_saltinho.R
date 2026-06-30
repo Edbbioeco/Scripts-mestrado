@@ -66,3 +66,12 @@ CDSE::GetImage(bbox = saltinho |> sf::st_bbox(),
                mask = TRUE,
                buffer = 100,
                client = cliente)
+
+## Visualizar raster ----
+
+saltinho_raster <- terra::rast("saltinhocdse_rgb.tif")
+
+saltinho_raster
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho_raster)
