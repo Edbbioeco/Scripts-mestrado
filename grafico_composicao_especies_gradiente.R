@@ -76,7 +76,9 @@ graficos <- purrr::map(c("Leaf-litter depth",
                           species = 2:11,
                           range = 5) +
     labs(title = var) +
-    theme(plot.title = element_text(hjust = 0.5,
+    theme(axis.text = element_text(color = "black", size = 20),
+          axis.title = element_text(color = "black", size = 20),
+          plot.title = element_text(hjust = 0.5,
                                     face = "bold",
                                     size = 20)) +
     ggview::canvas(height = 10, width = 12)
@@ -127,7 +129,9 @@ graficos <- purrr::map(
                             range = 5) +
       labs(title = var,
            y = "Abundância") +
-      theme(plot.title = element_text(hjust = 0.5,
+      theme(axis.text = element_text(color = "black", size = 20),
+            axis.title = element_text(color = "black", size = 20),
+            plot.title = element_text(hjust = 0.5,
                                       face = "bold",
                                       size = 20)) +
       ggview::canvas(height = 10, width = 12)
