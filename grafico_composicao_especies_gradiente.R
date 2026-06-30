@@ -68,7 +68,7 @@ graficos <- purrr::map(c("Leaf-litter depth",
                          "Water stream distance"),
                        purrr::in_parallel(\(var){
 
-  grafico <- especies |>
+  especies |>
     dplyr::left_join(ambientais,
                      by = "Unidade Amostral") |>
     dplyr::rename("Adenomera aff. hylaedactyla" = `Adenomera hylaedactyla`) |>
@@ -80,12 +80,6 @@ graficos <- purrr::map(c("Leaf-litter depth",
                                     face = "bold",
                                     size = 20)) +
     ggview::canvas(height = 10, width = 12)
-
-  print(grafico)
-
-  assign(paste0("gg_", var),
-         grafico,
-         envir = globalenv())
 
   }),
   .progress = TRUE)
