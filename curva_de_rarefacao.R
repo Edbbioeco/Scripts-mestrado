@@ -12,7 +12,7 @@ library(ggview)
 
 ## Importar ----
 
-comp <- readxl::read_xlsx("levantamento_anuros.xlsx")
+comp <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_anuros.xlsx")
 
 ## Visualizar ----
 
@@ -91,6 +91,6 @@ chao_df |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "curva_de_rarefacao.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/curva_de_rarefacao.png",
        height = 10,
        width = 12)
