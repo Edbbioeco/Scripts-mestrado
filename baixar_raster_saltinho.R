@@ -24,15 +24,9 @@ saltinho |>
 
 # Imgem de satélite ----
 
-## Importando ----
+## Autenticar cliente CDSE ----
 
-saltinho_tif <- maptiles::get_tiles(x = saltinho,
-                                    provider = "Esri.WorldImagery",
-                                    zoom = 15,
-                                    retina = TRUE)
+cliente <- CDSE::GetOAuthClient(id = Sys.getenv("CDSE_ID"),
+                                secret = Sys.getenv("CDSE_SECRET"))
 
-## Visualizando ----
-
-ggplot() +
-  tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
-  geom_sf(data = saltinho, color = "yellow", linewidth = 1, fill = "transparent")
+cliente
