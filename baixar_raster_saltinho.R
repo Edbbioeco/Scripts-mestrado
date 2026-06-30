@@ -58,7 +58,7 @@ evalscript
 CDSE::GetImage(bbox = saltinho |> sf::st_bbox(),
                time_range = "2025-04-16",
                script = evalscript,
-               file = "saltinhocdse_rgb.tif",
+               file = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinhocdse_rgb.tif",
                collection = "sentinel-2-l2a",
                format = "image/tiff",
                mosaicking_order = "leastRecent",
@@ -69,7 +69,7 @@ CDSE::GetImage(bbox = saltinho |> sf::st_bbox(),
 
 ## Visualizar raster ----
 
-saltinho_raster <- terra::rast("saltinhocdse_rgb.tif")
+saltinho_raster <- terra::rast("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinhocdse_rgb.tif")
 
 saltinho_raster
 
