@@ -14,7 +14,7 @@ library(terra)
 
 ## Importando ----
 
-saltinho <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/Saltinho.shp")
+saltinho <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho.shp")
 
 ## Visualizando ----
 
