@@ -12,7 +12,7 @@ library(geosphere)
 
 ## Importando ----
 
-coords <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/parcelas_saltinho.xlsx")
+coords <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/parcelas_saltinho.xlsx")
 
 ## tratando ----
 
