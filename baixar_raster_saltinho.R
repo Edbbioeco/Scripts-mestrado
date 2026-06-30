@@ -44,3 +44,11 @@ catalogo <- CDSE::SearchCatalog(aoi = saltinho,
 catalogo
 
 catalogo |> dplyr::glimpse()
+
+## Evalscript ----
+
+evalscript <- system.file("scripts",
+                          "TrueColor.js",
+                          package = "CDSE")
+
+evalscript
