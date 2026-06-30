@@ -16,7 +16,7 @@ library(patchwork)
 
 ### Importando ----
 
-especies <- readxl::read_xlsx("matriz_composicao.xlsx")
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_composicao.xlsx")
 
 ### Visualizando ----
 
@@ -28,7 +28,7 @@ especies |> dplyr::glimpse()
 
 ### Importando ----
 
-ambientais <-readxl::read_xlsx("matriz_ambientais.xlsx")
+ambientais <-readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx")
 
 ### Visualizando ----
 
@@ -156,5 +156,5 @@ graficos |>
   patchwork::plot_layout(ncol = 2) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave("./apresentação/grafico_composicao_especies.png",
+ggsave("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/grafico_composicao_especies.png",
        height = 10, width = 12)
