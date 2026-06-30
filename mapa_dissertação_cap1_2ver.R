@@ -107,7 +107,7 @@ ggplot() +
 
 ### Importando ----
 
-saltinho_tif <- terra::rast("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinho.tif")
+saltinho_tif <- terra::rast("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinhocdse_rgb.tif")
 
 ### Visualizando ----
 
