@@ -20,7 +20,7 @@ library(patchwork)
 
 ### Importando ----
 
-br <- sf::st_read("br.shp")
+br <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/br.shp")
 
 ### Visualizando ----
 
@@ -48,7 +48,7 @@ ggplot() +
 
 ### Importando ----
 
-borda <- sf::st_read("borda_saltinho.shp")
+borda <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho.shp")
 
 ### Visualizando ----
 
@@ -61,7 +61,7 @@ ggplot() +
 
 ### Importando ----
 
-parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
+parcelas <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinho_ppbio_parcelas.shp")
 
 ### Visualizando ----
 
@@ -109,7 +109,7 @@ ggplot() +
 
 ### Importando ----
 
-corpos_hid <- sf::st_read("corpos_hidricos_saltinho.gpkg")
+corpos_hid <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/corpos_hidricos_saltinho.gpkg")
 
 ### Visualizando ----
 
@@ -124,7 +124,7 @@ ggplot() +
 
 ### Importando ----
 
-saltinho_tif <- terra::rast("saltinho.tif")
+saltinho_tif <- terra::rast("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinhocdse_rgb.tif")
 
 ### Visualizando ----
 
