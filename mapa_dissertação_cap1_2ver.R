@@ -207,5 +207,5 @@ mapa_final <- mapa_principal + (pe_map / br_map) +
 mapa_final +
   ggview::canvas(height = 7.5, width = 12)
 
-ggsave(filename = "mapa_cap1_2ver.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/mapa_cap1_2ver.png",
        height = 7.5, width = 12)
