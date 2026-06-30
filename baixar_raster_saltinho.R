@@ -52,3 +52,17 @@ evalscript <- system.file("scripts",
                           package = "CDSE")
 
 evalscript
+
+## Baixar raster ----
+
+CDSE::GetImage(bbox = saltinho |> sf::st_bbox(),
+               time_range = "2025-04-16",
+               script = evalscript,
+               file = "saltinhocdse_rgb.tif",
+               collection = "sentinel-2-l2a",
+               format = "image/tiff",
+               mosaicking_order = "leastRecent",
+               resolution = 5,
+               mask = TRUE,
+               buffer = 100,
+               client = cliente)
