@@ -60,3 +60,7 @@ mapa_editado
 ggplot() +
   geom_sf(data = borda, color = "black") +
   geom_sf(data = mapa_editado, color = "black")
+
+### Exportar o shapefile ----
+
+mapa_editado |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp")
