@@ -73,5 +73,13 @@ mapa_editado |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestra
 
 ## Recortar o shapefile ----
 
-borda |>
-  sf::st_intersection(mapa_editado)
+borda_recortado <- borda |>
+  lwgeom::st_split(mapa_editado) |>
+  sf::st_collection_extract("POLYGON") |>
+  dplyr::mutate(id = paste0("Fragmento ", 1:3))
+
+borda_recortado
+
+ggplot() +
+  geom_sf(data = borda_recortado, color = "black", aes(fill = id))
+
