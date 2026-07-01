@@ -61,6 +61,10 @@ mapa <- leaflet::leaflet() |>
   leafem::addMouseCoordinates() |>
   leaflet::addPolygons(data = borda,
                        color = "red",
+                       fillOpacity = 0) |>
+  leaflet::addPolylines(data = parcelas,
+                       color = "gold",
+                       stroke = 0.1,
                        fillOpacity = 0)
 
 mapa
