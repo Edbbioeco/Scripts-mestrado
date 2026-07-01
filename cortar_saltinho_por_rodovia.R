@@ -43,6 +43,21 @@ ggplot() +
   geom_sf(data = borda, color = "black") +
   geom_sf(data = parcelas, color = "black")
 
+## Corpos hídricos ----
+
+### Importar ----
+
+hid <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/corpos_hidricos_saltinho.gpkg")
+
+### Visualizar ----
+
+hid
+
+ggplot() +
+  geom_sf(data = borda, color = "black") +
+  geom_sf(data = parcelas, color = "red") +
+  geom_sf(data = hid, color = "blue")
+
 ## Rodovias ----
 
 ### Criar mapa interativo ----
