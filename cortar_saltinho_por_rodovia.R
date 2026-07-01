@@ -29,6 +29,20 @@ borda
 ggplot() +
   geom_sf(data = borda, color = "black")
 
+## Parcelas ----
+
+### Importar ----
+
+parcelas <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinho_ppbio_parcelas.shp")
+
+### Visualizar ----
+
+parcelas
+
+ggplot() +
+  geom_sf(data = borda, color = "black") +
+  geom_sf(data = parcelas, color = "black")
+
 ## Rodovias ----
 
 ### Criar mapa interativo ----
