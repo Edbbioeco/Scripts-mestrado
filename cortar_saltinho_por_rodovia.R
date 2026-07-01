@@ -31,7 +31,7 @@ ggplot() +
 
 ### Criar mapa interativo ----
 
-leaflet::leaflet() |>
+mapa <- leaflet::leaflet() |>
   leaflet::addProviderTiles(providers$Esri.WorldImagery) |>
   leaflet.extras::addDrawToolbar(
     editOptions = leaflet.extras::editToolbarOptions()) |>
@@ -39,3 +39,5 @@ leaflet::leaflet() |>
   leaflet::addPolygons(data = borda,
                        color = "red",
                        fillOpacity = 0)
+
+mapa
