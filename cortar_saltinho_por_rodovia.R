@@ -66,25 +66,28 @@ mapa <- leaflet::leaflet() |>
   leaflet::addProviderTiles(providers$Esri.WorldImagery) |>
   leaflet.extras::addDrawToolbar(
     targetGroup = "Draw",
-    polylineOptions = TRUE,
-    polygonOptions = TRUE,
-    circleOptions = TRUE,
-    rectangleOptions = TRUE,
-    markerOptions = TRUE,
-    circleMarkerOptions = TRUE,
+    polylineOptions = leaflet.extras::drawPolylineOptions(),
+    polygonOptions = leaflet.extras::drawPolygonOptions(),
+    circleOptions = leaflet.extras::drawCircleOptions(),
+    rectangleOptions = leaflet.extras::drawRectangleOptions(),
+    markerOptions = leaflet.extras::drawMarkerOptions(),
+    circleMarkerOptions = leaflet.extras::drawCircleMarkerOptions(),
     editOptions = leaflet.extras::editToolbarOptions()) |>
   leafem::addMouseCoordinates() |>
-  leaflet::addPolygons(data = borda,
+  leaflet::addPolygons(data = borda |>
+                         sf::st_transform(crs = 4326),
                        color = "red",
                        fillOpacity = 0) |>
-  leaflet::addPolylines(data = parcelas,
+  leaflet::addPolylines(data = parcelas |>
+                          sf::st_transform(crs = 4326),
                         color = "gold",
-                        stroke = 0.1,
                         fillOpacity = 0) |>
-  leaflet::addPolygons(data = hid,
-                       color = "blue",
-                       stroke = 0.1,
-                       fillOpacity = 0)
+  leaflet::addPolylines(data = hid |>
+                          sf::st_as_sf() |>
+                          sf::st_cast("LINESTRING") |>
+                          sf::st_transform(4326) |>
+                          sf::st_zm(drop = TRUE, what = "ZM"),
+                       color = "blue")
 
 mapa
 
