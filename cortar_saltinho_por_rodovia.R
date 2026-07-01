@@ -77,10 +77,14 @@ mapa_editado |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestra
 borda_recortado <- borda |>
   lwgeom::st_split(mapa_editado) |>
   sf::st_collection_extract("POLYGON") |>
-  dplyr::mutate(id = paste0("Fragmento ", 1:3))
+  dplyr::mutate(id = paste0("Fragmento ", 1:dplyr::n()))
 
 borda_recortado
 
 ggplot() +
   geom_sf(data = borda_recortado, color = "black", aes(fill = id))
+
+ggplot() +
+  geom_sf(data = borda_recortado, color = "black", aes(fill = id)) +
+  facet_wrap(~id)
 
