@@ -34,6 +34,13 @@ ggplot() +
 mapa <- leaflet::leaflet() |>
   leaflet::addProviderTiles(providers$Esri.WorldImagery) |>
   leaflet.extras::addDrawToolbar(
+    targetGroup = "Draw",
+    polylineOptions = TRUE,
+    polygonOptions = TRUE,
+    circleOptions = TRUE,
+    rectangleOptions = TRUE,
+    markerOptions = TRUE,
+    circleMarkerOptions = TRUE,
     editOptions = leaflet.extras::editToolbarOptions()) |>
   leafem::addMouseCoordinates() |>
   leaflet::addPolygons(data = borda,
@@ -41,3 +48,7 @@ mapa <- leaflet::leaflet() |>
                        fillOpacity = 0)
 
 mapa
+
+### Editar o mapa ----
+
+mapa_editado <- mapa |> mapedit::editMap()
