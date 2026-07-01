@@ -111,3 +111,6 @@ ggplot() +
   geom_sf(data = parcelas, color = "black") +
   facet_wrap(~id)
 
+## Exportar ----
+
+borda_recortado |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho_recortado.shp")
