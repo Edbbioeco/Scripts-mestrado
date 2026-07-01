@@ -67,7 +67,8 @@ sf::st_crs(mapa_editado) <- 4674
 
 ### Exportar o shapefile ----
 
-mapa_editado |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp")
+mapa_editado |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp",
+                             append = TRUE)
 
 # Recortar ----
 
