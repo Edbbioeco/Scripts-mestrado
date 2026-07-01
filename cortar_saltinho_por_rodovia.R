@@ -78,7 +78,11 @@ mapa <- leaflet::leaflet() |>
                        color = "red",
                        fillOpacity = 0) |>
   leaflet::addPolylines(data = parcelas,
-                       color = "gold",
+                        color = "gold",
+                        stroke = 0.1,
+                        fillOpacity = 0) |>
+  leaflet::addPolygons(data = hid,
+                       color = "blue",
                        stroke = 0.1,
                        fillOpacity = 0)
 
