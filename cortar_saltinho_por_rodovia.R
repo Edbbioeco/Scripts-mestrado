@@ -104,11 +104,11 @@ borda_recortado
 
 ggplot() +
   geom_sf(data = borda_recortado, color = "black", aes(fill = id)) +
-  geom_sf(data = parcelas, color = "black")
+  geom_sf(data = parcelas, color = "red")
 
 ggplot() +
   geom_sf(data = borda_recortado, color = "black", aes(fill = id)) +
-  geom_sf(data = parcelas, color = "black") +
+  geom_sf(data = parcelas, color = "red") +
   facet_wrap(~id)
 
 ## Exportar ----
