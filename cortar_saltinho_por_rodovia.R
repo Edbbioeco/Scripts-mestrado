@@ -75,6 +75,7 @@ mapa_editado
 
 ggplot() +
   geom_sf(data = borda, color = "black") +
+  geom_sf(data = parcelas, color = "black") +
   geom_sf(data = mapa_editado, color = "black")
 
 ### Tratar ----
@@ -98,9 +99,11 @@ borda_recortado <- borda |>
 borda_recortado
 
 ggplot() +
-  geom_sf(data = borda_recortado, color = "black", aes(fill = id))
+  geom_sf(data = borda_recortado, color = "black", aes(fill = id)) +
+  geom_sf(data = parcelas, color = "black")
 
 ggplot() +
   geom_sf(data = borda_recortado, color = "black", aes(fill = id)) +
+  geom_sf(data = parcelas, color = "black") +
   facet_wrap(~id)
 
