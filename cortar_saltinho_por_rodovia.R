@@ -61,6 +61,17 @@ ggplot() +
   geom_sf(data = borda, color = "black") +
   geom_sf(data = mapa_editado, color = "black")
 
+### Tratar ----
+
+sf::st_crs(mapa_editado) <- 4674
+
 ### Exportar o shapefile ----
 
 mapa_editado |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp")
+
+# Recortar ----
+
+## Recortar o shapefile ----
+
+borda |>
+  sf::st_intersection(mapa_editado)
