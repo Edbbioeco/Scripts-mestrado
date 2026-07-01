@@ -43,11 +43,3 @@ ggplot() +
   geom_sf(data = borda, color = "red", fill = "transparent") +
   coord_sf(xlim = c(-35.20064, -35.15706),
            ylim = c(-8.744357, -8.712321))
-
-# Recortar a mata de Saltinho ----
-
-## Cortar ----
-
-borda |>
-  lwgeom::st_split(rodovias) |>
-  plot()
