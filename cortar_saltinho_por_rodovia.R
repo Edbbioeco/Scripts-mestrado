@@ -52,3 +52,11 @@ mapa
 ### Editar o mapa ----
 
 mapa_editado <- mapa |> mapedit::editMap()
+
+mapa_editado <- mapa_editado$drawn
+
+mapa_editado
+
+ggplot() +
+  geom_sf(data = borda, color = "black") +
+  geom_sf(data = mapa_editado, color = "black")
