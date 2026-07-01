@@ -12,6 +12,8 @@ library(leafem)
 
 library(mapedit)
 
+library(lwgeom)
+
 # Dados ----
 
 ## Borda ----
