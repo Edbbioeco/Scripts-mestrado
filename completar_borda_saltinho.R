@@ -81,3 +81,23 @@ ggplot() +
   tidyterra::geom_spatraster_rgb(data = saltinho) +
   geom_sf(data = borda, color = "red", fill = "transparent") +
   geom_sf(data = shp, color = "gold", fill = "transparent")
+
+## Completar o raster ----
+
+sf::sf_use_s2(FALSE)
+
+borda_completo <- sf::st_union(borda |>
+                                 sf::st_make_valid(),
+                               shp |>
+                                 sf::st_make_valid()) |>
+  sf::st_union() |>
+  sf::st_as_sf() |>
+  sf::st_cast("POLYGON")
+
+sf::sf_use_s2(TRUE)
+
+borda_completo
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho) +
+  geom_sf(data = borda_completo, color = "red", fill = "transparent")
