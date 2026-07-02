@@ -58,6 +58,22 @@ ggplot() +
   geom_sf(data = parcelas, color = "red") +
   geom_sf(data = hid, color = "blue")
 
+## Raster RGB de Saltinho ----
+
+### Importar ----
+
+saltinho <- terra::rast("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinhocdse_rgb.tif")
+
+### Visualizar ----
+
+saltinho
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho) +
+  geom_sf(data = borda, color = "black", fill = "Transparent") +
+  geom_sf(data = parcelas, color = "red") +
+  geom_sf(data = hid, color = "blue", fill = "blue", alpha = 0.3)
+
 ## Rodovias ----
 
 ### Criar mapa interativo ----
