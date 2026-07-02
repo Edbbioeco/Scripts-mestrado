@@ -104,6 +104,7 @@ valores_altitude_borda <- alt |>
                    dplyr::group_by(Parcela) |>
                    dplyr::slice(2) |>
                    sf::st_as_sf(coords = c(1:2),
-                                crs = 4674))
+                                crs = 4674)) |>
+  dplyr::pull(2)
 
 valores_altitude_borda
