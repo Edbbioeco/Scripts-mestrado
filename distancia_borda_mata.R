@@ -92,3 +92,18 @@ valores_altitude_centroides <- alt |>
   dplyr::pull(2)
 
 valores_altitude_centroides
+
+### Ponto da borda mais próxima ----
+
+valores_altitude_borda <- alt |>
+  terra::extract(ponto_geodesica_borda |>
+                   sf::st_coordinates() |>
+                   as.data.frame() |>
+                   dplyr::mutate(Parcela = parcelas$Trlh.Pr |>
+                                   rep(each = 2)) |>
+                   dplyr::group_by(Parcela) |>
+                   dplyr::slice(2) |>
+                   sf::st_as_sf(coords = c(1:2),
+                                crs = 4674))
+
+valores_altitude_borda
