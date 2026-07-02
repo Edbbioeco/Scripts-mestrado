@@ -118,7 +118,7 @@ mapa_trajeto |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestra
 ## Recortar o shapefile ----
 
 borda_recortado <- borda |>
-  lwgeom::st_split(mapa_editado) |>
+  lwgeom::st_split(mapa_trajeto) |>
   sf::st_collection_extract("POLYGON") |>
   dplyr::mutate(id = paste0("Fragmento ", 1:dplyr::n()))
 
