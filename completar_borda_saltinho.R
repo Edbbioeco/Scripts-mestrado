@@ -4,11 +4,17 @@ library(sf)
 
 library(tidyverse)
 
+library(terra)
+
+library(tidyterra)
+
 library(leaflet)
 
 library(leaflet.extras)
 
 library(leafem)
+
+library(mapedit)
 
 # Dados ----
 
