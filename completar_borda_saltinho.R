@@ -72,7 +72,8 @@ mapa_editavel
 
 shp_comp <- mapa_editavel |> mapedit::editMap()
 
-shp <- shp_comp$drawn
+shp <- shp_comp$drawn |>
+  sf::st_transform(crs = borda |> sf::st_crs())
 
 shp
 
