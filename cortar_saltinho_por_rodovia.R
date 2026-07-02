@@ -95,22 +95,22 @@ mapa
 
 mapa_editado <- mapa |> mapedit::editMap()
 
-mapa_editado <- mapa_editado$drawn
+mapa_trajeto <- mapa_editado$drawn
 
-mapa_editado
+mapa_trajeto
 
 ggplot() +
   geom_sf(data = borda, color = "black") +
   geom_sf(data = parcelas, color = "black") +
-  geom_sf(data = mapa_editado, color = "black")
+  geom_sf(data = mapa_trajeto, color = "black")
 
 ### Tratar ----
 
-sf::st_crs(mapa_editado) <- 4674
+sf::st_crs(mapa_trajeto) <- 4674
 
 ### Exportar o shapefile ----
 
-mapa_editado |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp",
+mapa_trajeto |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp",
                              append = TRUE)
 
 # Recortar ----
