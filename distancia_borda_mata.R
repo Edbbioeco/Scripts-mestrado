@@ -61,7 +61,8 @@ ggplot() +
 ## Distância geodésica simples da borda ----
 
 distancia_geodesica_borda <- parcelas |>
-  sf::st_distance(borda[3, ] |>
+  sf::st_centroid() |>
+  sf::st_distance(borda[2, ] |>
                     sf::st_boundary())
 
 distancia_geodesica_borda
@@ -69,7 +70,8 @@ distancia_geodesica_borda
 ## Ponto mais próximo da borda ----
 
 ponto_geodesica_borda <- parcelas |>
-  sf::st_nearest_points(borda[3, ] |>
+  sf::st_centroid() |>
+  sf::st_nearest_points(borda[2, ] |>
                           sf::st_boundary()) |>
   sf::st_as_sf(crs = 4674)
 
@@ -80,3 +82,13 @@ ggplot() +
   geom_sf(data = parcelas, color = "red") +
   geom_sf(data = ponto_geodesica_borda, color = "blue")
 
+## Valores de altitude ----
+
+### Centróides das parcelas ----
+
+valores_altitude_centroides <- alt |>
+  terra::extract(parcelas |>
+                   sf::st_centroid()) |>
+  dplyr::pull(2)
+
+valores_altitude_centroides
