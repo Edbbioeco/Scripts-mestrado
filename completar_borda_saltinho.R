@@ -93,7 +93,7 @@ borda_completo <- sf::st_union(borda |>
   sf::st_union() |>
   sf::st_as_sf() |>
   sf::st_cast("POLYGON") |>
-  sf::st_union()
+  dplyr::slice(1)
 
 sf::sf_use_s2(TRUE)
 
