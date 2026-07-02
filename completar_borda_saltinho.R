@@ -44,3 +44,26 @@ saltinho
 ggplot() +
   tidyterra::geom_spatraster_rgb(data = saltinho) +
   geom_sf(data = borda, color = "red", fill = "transparent")
+
+# Completar o shapefile ----
+
+## Criar mapa editável ----
+
+mapa_editavel <- leaflet::leaflet() |>
+  leafem::addRasterRGB(saltinho) |>
+  leaflet.extras::addDrawToolbar(
+    targetGroup = "Draw",
+    polylineOptions = leaflet.extras::drawPolylineOptions(),
+    polygonOptions = leaflet.extras::drawPolygonOptions(),
+    circleOptions = leaflet.extras::drawCircleOptions(),
+    rectangleOptions = leaflet.extras::drawRectangleOptions(),
+    markerOptions = leaflet.extras::drawMarkerOptions(),
+    circleMarkerOptions = leaflet.extras::drawCircleMarkerOptions(),
+    editOptions = leaflet.extras::editToolbarOptions()) |>
+  leafem::addMouseCoordinates() |>
+  leaflet::addPolygons(data = borda |>
+                         sf::st_transform(crs = 4326),
+                       color = "red",
+                       fillOpacity = 0)
+
+mapa_editavel
