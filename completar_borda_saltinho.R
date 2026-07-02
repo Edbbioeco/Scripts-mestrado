@@ -67,3 +67,16 @@ mapa_editavel <- leaflet::leaflet() |>
                        fillOpacity = 0)
 
 mapa_editavel
+
+## Criar o shapefile de complemento ----
+
+shp_comp <- mapa_editavel |> mapedit::editMap()
+
+shp <- shp_comp$drawn
+
+shp
+
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = saltinho) +
+  geom_sf(data = borda, color = "red", fill = "transparent") +
+  geom_sf(data = shp, color = "gold", fill = "transparent")
