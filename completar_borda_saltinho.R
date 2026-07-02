@@ -101,3 +101,8 @@ borda_completo
 ggplot() +
   tidyterra::geom_spatraster_rgb(data = saltinho) +
   geom_sf(data = borda_completo, color = "red", fill = "transparent")
+
+## Exportat ----
+
+borda_completo |> sf::st_write("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho_completo.shp",
+                               append = TRUE)
