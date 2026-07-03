@@ -171,15 +171,6 @@ alt_valores <- alt |>
 
 alt_valores
 
-## Extraindo os valores de distância da borda ----
-
-borda_valores <- centroides |>
-  sf::st_distance(borda |>
-                    sf::st_boundary()) |>
-  as.numeric()
-
-borda_valores
-
 ## Função de cáçculo de área de poças ----
 
 area_pocas <- function(comprimento, largura){
