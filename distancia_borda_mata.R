@@ -116,3 +116,12 @@ dist_comp <- sqrt(distancia_geodesica_borda^2 +
                     (valores_altitude_centroides - valores_altitude_borda)^2)
 
 dist_comp
+
+## Criar o data frame dos valores ----
+
+df_dist_borda <- tibble::tibble(Parcela = parcelas$Trlh.Pr,
+                                `Distância da borda` = dist_comp)
+
+df_dist_borda
+
+df_dist_borda |> dplyr::glimpse()
