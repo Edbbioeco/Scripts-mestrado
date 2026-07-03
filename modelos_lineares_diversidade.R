@@ -157,8 +157,9 @@ modelos <- purrr::map(c(3, 5, 7:9), \(id){
   lm(`Q = 1` ~ .,
      data = df_alfa |>
        dplyr::select(2, id))
-
-  })
+  }
+  ) |>
+  setNames(df_alfa[c(3, 5, 7:9)] |> names())
 
 modelos
 
