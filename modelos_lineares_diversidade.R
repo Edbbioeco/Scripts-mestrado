@@ -296,7 +296,7 @@ q1_predictor
 ## Gráfico -----
 
 df_alfa |>
-  tidyr::pivot_longer(cols = c(4, 6, 8:10),
+  tidyr::pivot_longer(cols = c(3, 5, 7:9),
                       names_to = "Preditor",
                       values_to = "Valor Preditor") |>
   dplyr::mutate(Preditor = Preditor |>
