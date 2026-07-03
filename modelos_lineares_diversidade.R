@@ -152,7 +152,7 @@ df_beta |> dplyr::glimpse()
 
 ## Múltiplos modelos ----
 
-modelos <- purrr::map(c(4, 6, 8:10), \(id){
+modelos <- purrr::map(c(3, 5, 7:9), \(id){
 
   lm(`Q = 1` ~ .,
      data = df_alfa |>
