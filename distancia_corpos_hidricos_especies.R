@@ -191,7 +191,9 @@ dist_acude
 
 dist_rios <- sf::st_distance(parcelas |>
                                dplyr::filter(Trlh.Pr != "1-1"),
-                             hidrico[c(3:5), ]) |>
+                             hidrico[c(3:5), ] |>
+                               sf::st_intersection(borda[2, ]) |>
+                               dplyr::select(1)) |>
   tibble::as_tibble() |>
   dplyr::mutate(`Unidade Amostral` = parcelas |>
                   dplyr::filter(Trlh.Pr != "1-1") |>
