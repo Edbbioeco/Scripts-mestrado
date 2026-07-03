@@ -528,7 +528,7 @@ df_ocupacao |>
   geom_line(data = df_tendencia |>
               dplyr::filter(Species == "Adenomera hylaedactyla" &
                               Preditor %in% prediotores_adenomera),
-            aes(`Valor preditor`, Preditor)) +
+            aes(`Valor preditor`, Predicted)) +
   labs(x = "Predictor value",
        y = "<i>Adenomera</i> aff. <i>hylaedactyla</i> abundance") +
   scale_y_continuous(limits = c(5, 17.5)) +
