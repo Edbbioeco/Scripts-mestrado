@@ -503,7 +503,7 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_pristimantis_multiplo_ggeffects.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/modelo_abundancia_pristimantis_multiplo_ggeffects.png",
        height = 10, width = 12)
 
 ## Adenomera hylaedactyla ----
@@ -545,7 +545,7 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_adenomera_multiplo_ggeffect.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/modelo_abundancia_adenomera_multiplo_ggeffect.png",
        height = 10, width = 12)
 
 ## Rhinella hoogmoedi ----
@@ -587,9 +587,8 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_rhinella_multiplo_ggeffect.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/modelo_abundancia_rhinella_multiplo_ggeffect.png",
        height = 10, width = 12)
-
 
 # Gráficos com as estatísticas ----
 
@@ -727,7 +726,7 @@ df_ocupacao_traduzido |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "./apresentação/modelo_abundancia_pristimantis_ramagii.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/apresentação/modelo_abundancia_pristimantis_ramagii.png",
        height = 10,
        width = 12)
 
