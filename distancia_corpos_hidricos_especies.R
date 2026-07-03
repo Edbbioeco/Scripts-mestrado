@@ -22,7 +22,7 @@ library(writexl)
 
 ### Importando ----
 
-especies <- readxl::read_xlsx("levantamento_anuros.xlsx")
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_anuros.xlsx")
 
 ## Visualizando ----
 
@@ -34,7 +34,7 @@ especies |> dplyr::glimpse()
 
 ### Importando ----
 
-saltinho <- sf::st_read("Saltinho.shp")
+saltinho <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/Saltinho.shp")
 
 ### Visualizando ----
 
@@ -47,7 +47,7 @@ ggplot() +
 
 ### Importnado ----
 
-parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
+parcelas <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinho_ppbio_parcelas.shp")
 
 ### Visualizando ----
 
@@ -74,7 +74,7 @@ ggplot() +
 
 ### Importando ----
 
-hidrico <- sf::st_read("corpos_hidricos_saltinho.gpkg")
+hidrico <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/corpos_hidricos_saltinho.gpkg")
 
 ### Visualizando ----
 
@@ -90,7 +90,7 @@ ggplot() +
 
 ### Importando ----
 
-alt <- terra::rast("altitude.tif")
+alt <- terra::rast("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/altitude.tif")
 
 ### Visualizando ----
 
@@ -364,4 +364,4 @@ dados_hidrico_div |>
 ## Exportando os dados ----
 
 dados_hidrico_div |>
-  writexl::write_xlsx("dados_hidrico.xlsx")
+  writexl::write_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/dados_hidrico.xlsx")
