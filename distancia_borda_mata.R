@@ -63,7 +63,8 @@ ggplot() +
 distancia_geodesica_borda <- parcelas |>
   sf::st_centroid() |>
   sf::st_distance(borda[2, ] |>
-                    sf::st_boundary())
+                    sf::st_boundary()) |>
+  as.numeric()
 
 distancia_geodesica_borda
 
