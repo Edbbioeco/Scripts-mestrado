@@ -150,6 +150,18 @@ temp
 
 temp |> dplyr::glimpse()
 
+## Distância da borda ----
+
+### Importar ----
+
+borda_valores <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/valores_distancia_borda.xlsx")
+
+### Visualizar ----
+
+borda_valores
+
+borda_valores |> dplyr::glimpse()
+
 # Dataframe de variáveis ambientais ----
 
 ## Extraindo valores de Altitude ----
