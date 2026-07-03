@@ -12,7 +12,7 @@ library(writexl)
 
 ## Importando ----
 
-especies <- readxl::read_xlsx("levantamento_anuros.xlsx")
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_anuros.xlsx")
 
 ## Visualizando ----
 
@@ -50,5 +50,5 @@ especies_alfa
 ## Exportando ----
 
 especies_alfa |>
-  writexl::write_xlsx("matriz_composicao.xlsx")
+  writexl::write_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_composicao.xlsx")
 
