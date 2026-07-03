@@ -108,13 +108,11 @@ ggplot() +
                                                           frame.linewidth = 1,
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
-  scale_x_continuous(limits = c(-35.2, -35.164),
-                     expand = c(0, 0)) +
-  scale_y_continuous(limits = c(-8.74, -8.711),
-                     expand = c(0, 0)) +
-  geom_sf(data = saltinho, color = "black", linewidth = 1, fill = "transparent") +
+  geom_sf(data = borda, color = "black", linewidth = 1, fill = "transparent") +
   geom_sf(data = hidrico, color = "blue", fill = "transparent", linewidth = 1) +
-  geom_sf(data = parcelas, color = "black", linewidth = 1)
+  geom_sf(data = parcelas, color = "black", linewidth = 1) +
+  theme_bw() +
+  theme(legend.position = "bottom")
 
 # Extraindo os valores ----
 
