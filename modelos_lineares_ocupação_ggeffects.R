@@ -91,7 +91,7 @@ df_ocupacao
 df_ocupacao |> glimpse()
 
 df_ocupacao |>
-  dplyr::select(c(5, 7:11)) |>
+  dplyr::select(c(5, 7, 9:11)) |>
   glimpse()
 
 # Modelos lineares ----
