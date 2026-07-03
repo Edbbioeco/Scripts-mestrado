@@ -233,6 +233,8 @@ corpos_hid_ref <- c(hidrico |>
                       dplyr::filter(geom |>
                                       sf::st_geometry_type() |>
                                       stringr::str_detect("LINESTRING")) |>
+                      sf::st_intersection(borda[2, ]) |>
+                      dplyr::select(1) |>
                       sf::st_geometry()) |>
   sf::st_union()
 
@@ -266,7 +268,7 @@ shp_pontos <- dist_hid |>
 shp_pontos
 
 ggplot() +
-  geom_sf(data = saltinho, color = "black", linewidth = 1) +
+  geom_sf(data = borda, color = "black", linewidth = 1) +
   geom_sf(data = hidrico, color = "blue", fill = "blue",
           alpha = 0.5, linewidth = 1) +
   geom_sf(data = parcelas, color = "black", linewidth = 1) +
