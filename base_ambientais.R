@@ -171,35 +171,7 @@ alt_valores <- alt |>
 
 alt_valores
 
-## Função de cáçculo de área de poças ----
-
-area_pocas <- function(comprimento, largura){
-
-  area <- pi * (comprimento / 2) * (largura / 2)
-
-  area <- area / 10000
-
-  return(area)
-
-}
-
-area_pocas(comprimento = 4.5, largura = 3)
-
 ## Maiores valores das variáveis -----
-
-pocas <- var3 |>
-  dplyr::filter(`Unidade Amostral` != "T1P1") |>
-  dplyr::summarise(area = area_pocas(comprimento = Comprimento,
-                                     largura = Largura),
-                   .by = c(`Unidade Amostral`, Campanha)) |>
-  dplyr::mutate(area = dplyr::case_when(area |> is.na() ~ 0,
-                                        .default = area)) |>
-  dplyr::summarise(area = area |> sum(),
-                   .by = c(`Unidade Amostral`, Campanha)) |>
-  dplyr::summarise(area = area |> max(),
-                   .by = `Unidade Amostral`)
-
-pocas
 
 dossel <- var1 |>
   dplyr::summarise(dossel = `Índice de abertura de dossel` |> mean(),
