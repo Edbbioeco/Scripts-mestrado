@@ -162,7 +162,7 @@ modelos <- purrr::map(c(3, 5, 7:9), \(id){
 
 modelos
 
-purrr::map2(c(4, 6, 8:10), modelos, \(id, modelo){
+purrr::map2(c(3, 5, 7:9), modelos, \(id, modelo){
 
   nome <- df_alfa[id] |> names()
 
