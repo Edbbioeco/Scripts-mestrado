@@ -125,3 +125,7 @@ df_dist_borda <- tibble::tibble(Parcela = parcelas$Trlh.Pr,
 df_dist_borda
 
 df_dist_borda |> dplyr::glimpse()
+
+## Exportar o data frame ----
+
+df_dist_borda |> writexl::write_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/valores_distancia_borda.xlsx")
