@@ -22,7 +22,7 @@ library(writexl)
 
 ### Importando -----
 
-var1 <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx")
+var1 <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx")
 
 ### Visualizando -----
 
@@ -34,7 +34,7 @@ var1 |> dplyr::glimpse()
 
 ### Importando -----
 
-var2 <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx",
+var2 <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx",
                           sheet = 2)
 
 ### Visualizando -----
@@ -47,7 +47,7 @@ var2 |> dplyr::glimpse()
 
 ### Importando -----
 
-var3 <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx",
+var3 <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx",
                           sheet = 3)
 
 ### Visualizando -----
@@ -84,7 +84,7 @@ ggplot() +
 
 ### Importnado ----
 
-parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
+parcelas <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinho_ppbio_parcelas.shp")
 
 ### Visualizando ----
 
@@ -109,7 +109,7 @@ ggplot() +
 
 ### Importando ----
 
-hid <- readxl::read_xlsx("dados_hidrico.xlsx")
+hid <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/dados_hidrico.xlsx")
 
 ### Visualizando ----
 
@@ -141,7 +141,7 @@ ggplot() +
 
 ### Importando ----
 
-temp <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx",
+temp <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx",
                           sheet = 6)
 
 ### Visualizando ----
@@ -268,4 +268,4 @@ df_ambientais |> dplyr::glimpse()
 ## Exportando ----
 
 df_ambientais |>
-  writexl::write_xlsx("matriz_ambientais.xlsx")
+  writexl::write_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx")
