@@ -43,19 +43,6 @@ var2
 
 var2 |> dplyr::glimpse()
 
-## Área de poças d'água ----
-
-### Importando -----
-
-var3 <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx",
-                          sheet = 3)
-
-### Visualizando -----
-
-var3
-
-var3 |> dplyr::glimpse()
-
 ## Saltinho ----
 
 ### Importando ----
@@ -217,9 +204,7 @@ temp |> dplyr::glimpse()
 
 ## Dataframe dos valores ----
 
-df_ambientais <- pocas |>
-  dplyr::left_join(dossel,
-                   by = "Unidade Amostral") |>
+df_ambientais <- dossel |>
   dplyr::left_join(numero_pocas,
                    by = "Unidade Amostral") |>
   dplyr::left_join(altura,
@@ -228,10 +213,9 @@ df_ambientais <- pocas |>
                    by = "Unidade Amostral") |>
   dplyr::left_join(hid[, 3:4],
                    by = "Unidade Amostral") |>
-  dplyr::mutate(`Distância da Borda` = borda_valores[-1],
+  dplyr::mutate(`Distância da Borda` = borda_valores[-1, ]$`Distância da borda`,
                 Altitude = alt_valores[-1, 2]) |>
-  dplyr::rename("Área das poças" = area,
-                "Abertura do dossel" = dossel,
+  dplyr::rename("Abertura do dossel" = dossel,
                 "Número de poças" = numero,
                 "Altura da serrapilheira" = altura,
                 "Distância dos corpos hídricos" = Distância)
