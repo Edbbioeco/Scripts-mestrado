@@ -109,3 +109,10 @@ valores_altitude_borda <- alt |>
   dplyr::pull(2)
 
 valores_altitude_borda
+
+## Distância compensando a altitude ----
+
+dist_comp <- sqrt(distancia_geodesica_borda^2 +
+                    (valores_altitude_centroides - valores_altitude_borda)^2)
+
+dist_comp
