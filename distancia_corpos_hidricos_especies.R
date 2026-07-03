@@ -30,19 +30,6 @@ especies
 
 especies |> dplyr::glimpse()
 
-## Saltinho ----
-
-### Importando ----
-
-saltinho <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/Saltinho.shp")
-
-### Visualizando ----
-
-saltinho
-
-ggplot() +
-  geom_sf(data = saltinho, color = "black", linewidth = 1)
-
 ## Parcelas ----
 
 ### Importnado ----
