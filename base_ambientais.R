@@ -60,7 +60,7 @@ var3 |> dplyr::glimpse()
 
 ### Importando ----
 
-saltinho <- sf::st_read("Saltinho.shp")
+saltinho <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/Saltinho.shp")
 
 ### Visualizando ----
 
@@ -71,7 +71,7 @@ ggplot() +
 
 ### Importando ----
 
-borda <- sf::st_read("borda_saltinho.shp")
+borda <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho_recortado.shp")
 
 ### Visualizando ----
 
