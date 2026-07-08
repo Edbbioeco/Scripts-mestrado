@@ -105,14 +105,14 @@ distancia_geodesica_borda
 
 ponto_geodesica_borda <- parcelas |>
   sf::st_centroid() |>
-  sf::st_nearest_points(borda[2, ] |>
+  sf::st_nearest_points(borda_trat[3, ] |>
                           sf::st_boundary()) |>
   sf::st_as_sf(crs = 4674)
 
 ponto_geodesica_borda
 
 ggplot() +
-  geom_sf(data = borda, color = "black") +
+  geom_sf(data = borda_trat, color = "black") +
   geom_sf(data = parcelas, color = "red") +
   geom_sf(data = ponto_geodesica_borda, color = "blue")
 
