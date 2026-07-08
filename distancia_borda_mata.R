@@ -54,6 +54,19 @@ ggplot() +
   geom_sf(data = parcelas, color = "red") +
   geom_sf(data = rodovias, color = "blue")
 
+### Tratar o shapefile da borda ----
+
+borda_trat <- borda |>
+  lwgeom::st_split(rodovias) |>
+  sf::st_collection_extract("POLYGON") |>
+  dplyr::mutate(id = paste0("Fragmento ", 1:dplyr::n()))
+
+borda_trat
+
+ggplot() +
+  geom_sf(data = borda_trat, color = "black") +
+  geom_sf(data = parcelas, color = "red")
+
 ## Altitude de Saltinho ----
 
 ### Importar ----
