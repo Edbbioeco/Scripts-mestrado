@@ -39,6 +39,21 @@ ggplot() +
   geom_sf(data = borda, color = "black") +
   geom_sf(data = parcelas, color = "red")
 
+## Rodovias ----
+
+### Importar ----
+
+rodovias <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp")
+
+### Visualizar ----
+
+rodovias
+
+ggplot() +
+  geom_sf(data = borda, color = "black") +
+  geom_sf(data = parcelas, color = "red") +
+  geom_sf(data = rodovias, color = "blue")
+
 ## Altitude de Saltinho ----
 
 ### Importar ----
