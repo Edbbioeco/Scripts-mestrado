@@ -67,6 +67,11 @@ ggplot() +
   geom_sf(data = borda_trat, color = "black") +
   geom_sf(data = parcelas, color = "red")
 
+ggplot() +
+  geom_sf(data = borda_trat, color = "black") +
+  geom_sf(data = parcelas, color = "red") +
+  facet_wrap(~id)
+
 ## Altitude de Saltinho ----
 
 ### Importar ----
