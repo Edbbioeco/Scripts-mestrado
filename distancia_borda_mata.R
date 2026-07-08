@@ -95,7 +95,7 @@ ggplot() +
 
 distancia_geodesica_borda <- parcelas |>
   sf::st_centroid() |>
-  sf::st_distance(borda_trat[3, ] |>
+  sf::st_distance(borda[2, ] |>
                     sf::st_boundary()) |>
   as.numeric()
 
@@ -105,7 +105,7 @@ distancia_geodesica_borda
 
 ponto_geodesica_borda <- parcelas |>
   sf::st_centroid() |>
-  sf::st_nearest_points(borda_trat[3, ] |>
+  sf::st_nearest_points(borda[2, ] |>
                           sf::st_boundary()) |>
   sf::st_as_sf(crs = 4674)
 
