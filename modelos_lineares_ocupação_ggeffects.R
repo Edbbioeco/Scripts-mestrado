@@ -79,36 +79,36 @@ especies_ocup
 df_ocupacao <- especies_ocup |>
   dplyr::left_join(ambientais,
                    by = "Unidade Amostral") |>
-  dplyr::rename("Canopy openness" = 6,
-                "Leaf-litter depth" = 8,
-                "Temperature" = 9,
-                "Hydric stream distance" = 10,
-                "Edge distance" = 11,
-                "Elevation" = 12)
+  dplyr::rename("Canopy openness" = 5,
+                "Leaf-litter depth" = 7,
+                "Temperature" = 8,
+                "Hydric stream distance" = 9,
+                "Edge distance" = 10,
+                "Elevation" = 11)
 
 df_ocupacao
 
 df_ocupacao |> glimpse()
 
 df_ocupacao |>
-  dplyr::select(c(6, 8, 10:12)) |>
+  dplyr::select(c(5, 7, 9:11)) |>
   glimpse()
 
 # Modelos lineares ----
 
 ## Pristimantis ramagii ----
 
-modelos_pristimantis <- purrr::map(c(6, 8, 10:12), \(id){
+modelos_pristimantis <- purrr::map(c(5, 7, 9:11), \(id){
 
   modelo <- glm(`Pristimantis ramagii` ~ .,
-                data = df_ocupacao[, c(2, id, 9)],
+                data = df_ocupacao[, c(2, id, 8)],
                 family = poisson(link = "log"))
 
   })
 
 modelos_pristimantis
 
-purrr::map2(c(6, 8, 10:12), modelos_pristimantis, \(id, modelo){
+purrr::map2(c(5, 7, 9:11), modelos_pristimantis, \(id, modelo){
 
   nome <- df_ocupacao[, id] |> names()
 
@@ -142,7 +142,7 @@ purrr::map2(c(6, 8, 10:12), modelos_pristimantis, \(id, modelo){
 
   })
 
-resultados_pristimantis <- map2(c(6, 8, 10:12), modelos_pristimantis, \(id, modelo){
+resultados_pristimantis <- map2(c(5, 7, 9:11), modelos_pristimantis, \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
     names()
@@ -173,17 +173,17 @@ resultados_pristimantis
 
 ## Adenomera Hylaedactyla ----
 
-modelos_adenomera <- purrr::map(c(6, 8, 10:12), \(id){
+modelos_adenomera <- purrr::map(c(5, 7, 9:11), \(id){
 
   modelo <- glm(`Adenomera hylaedactyla` ~ .,
-                data = df_ocupacao[, c(3, id, 9)],
+                data = df_ocupacao[, c(3, id, 8)],
                 family = poisson(link = "log"))
 
 })
 
 modelos_adenomera
 
-purrr::map2(c(6, 8, 10:12), modelos_adenomera, \(id, modelo){
+purrr::map2(c(5, 7, 9:11), modelos_adenomera, \(id, modelo){
 
   nome <- df_ocupacao[, id] |> names()
 
@@ -217,7 +217,7 @@ purrr::map2(c(6, 8, 10:12), modelos_adenomera, \(id, modelo){
 
 })
 
-resultados_adenomera <- map2(c(6, 8, 10:12), modelos_adenomera, \(id, modelo){
+resultados_adenomera <- map2(c(5, 7, 9:11), modelos_adenomera, \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
     names()
@@ -248,17 +248,17 @@ resultados_adenomera
 
 ## Rhinella hoogmoedi ----
 
-modelos_rhinella <- purrr::map(c(6, 8, 10:12), \(id){
+modelos_rhinella <- purrr::map(c(5, 7, 9:11), \(id){
 
   modelo <- glm(`Rhinella hoogmoedi` ~ .,
-                data = df_ocupacao[, c(4, id, 9)],
+                data = df_ocupacao[, c(4, id, 8)],
                 family = poisson(link = "log"))
 
 })
 
 modelos_rhinella
 
-purrr::map2(c(6, 8, 10:12), modelos_rhinella, \(id, modelo){
+purrr::map2(c(5, 7, 9:11), modelos_rhinella, \(id, modelo){
 
   nome <- df_ocupacao[, id] |> names()
 
@@ -292,7 +292,7 @@ purrr::map2(c(6, 8, 10:12), modelos_rhinella, \(id, modelo){
 
 })
 
-resultados_rhinella <- map2(c(6, 8, 10:12), modelos_rhinella, \(id, modelo){
+resultados_rhinella <- map2(c(5, 7, 9:11), modelos_rhinella, \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
     names()
@@ -431,7 +431,7 @@ sps <- c("Pristimantis ramagii",
 sps
 
 variavel <- df_ocupacao |>
-  dplyr::select(c(6, 8, 10:12)) |>
+  dplyr::select(c(5, 7, 9:11)) |>
   names() |>
   rep(3)
 
@@ -468,7 +468,7 @@ df_tendencia
 ## Pristimantis ramagii ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(6, 8, 10:12),
+  tidyr::pivot_longer(cols = c(5, 7, 9:11),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = dplyr::case_when(
@@ -503,13 +503,13 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_pristimantis_multiplo_ggeffects.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/modelo_abundancia_pristimantis_multiplo_ggeffects.png",
        height = 10, width = 12)
 
 ## Adenomera hylaedactyla ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(6, 8, 10:12),
+  tidyr::pivot_longer(cols = c(5, 7, 9:11),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = dplyr::case_when(
@@ -528,7 +528,7 @@ df_ocupacao |>
   geom_line(data = df_tendencia |>
               dplyr::filter(Species == "Adenomera hylaedactyla" &
                               Preditor %in% prediotores_adenomera),
-            aes(`Valor preditor`, Preditor)) +
+            aes(`Valor preditor`, Predicted)) +
   labs(x = "Predictor value",
        y = "<i>Adenomera</i> aff. <i>hylaedactyla</i> abundance") +
   scale_y_continuous(limits = c(5, 17.5)) +
@@ -545,13 +545,13 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_adenomera_multiplo_ggeffect.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/modelo_abundancia_adenomera_multiplo_ggeffect.png",
        height = 10, width = 12)
 
 ## Rhinella hoogmoedi ----
 
 df_ocupacao |>
-  tidyr::pivot_longer(cols = c(6, 8, 10:12),
+  tidyr::pivot_longer(cols = c(5, 7, 9:11),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = paste0(Preditor, ""),
@@ -587,9 +587,8 @@ df_ocupacao |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "modelo_abundancia_rhinella_multiplo_ggeffect.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/modelo_abundancia_rhinella_multiplo_ggeffect.png",
        height = 10, width = 12)
-
 
 # Gráficos com as estatísticas ----
 
@@ -616,7 +615,7 @@ sts_df_2 <- sts_df |>
                `pseudo-R²`)) |>
   rename("Preditor" = Predictor) |>
   dplyr::left_join(df_ocupacao |>
-                     tidyr::pivot_longer(cols = c(6, 8, 10:12),
+                     tidyr::pivot_longer(cols = c(5, 7, 9:11),
                                          names_to = "Preditor",
                                          values_to = "Valor preditor") |>
                      dplyr::summarise(`Valor preditor` = `Valor preditor` |>
@@ -651,7 +650,7 @@ sts_df_2
 ### Dados de abundância ----
 
 df_ocupacao_traduzido <- df_ocupacao |>
-  tidyr::pivot_longer(cols = c(6, 8, 10:12),
+  tidyr::pivot_longer(cols = c(5, 7, 9:11),
                       names_to = "Preditor",
                       values_to = "Valor preditor") |>
   dplyr::mutate(Preditor = paste0(Preditor, ""),
@@ -727,7 +726,7 @@ df_ocupacao_traduzido |>
   ggview::canvas(height = 10,
                  width = 12)
 
-ggsave(filename = "./apresentação/modelo_abundancia_pristimantis_ramagii.png",
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/apresentação/modelo_abundancia_pristimantis_ramagii.png",
        height = 10,
        width = 12)
 

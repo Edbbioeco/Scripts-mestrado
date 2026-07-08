@@ -22,7 +22,7 @@ library(writexl)
 
 ### Importando -----
 
-var1 <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx")
+var1 <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx")
 
 ### Visualizando -----
 
@@ -34,7 +34,7 @@ var1 |> dplyr::glimpse()
 
 ### Importando -----
 
-var2 <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx",
+var2 <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx",
                           sheet = 2)
 
 ### Visualizando -----
@@ -43,24 +43,11 @@ var2
 
 var2 |> dplyr::glimpse()
 
-## Área de poças d'água ----
-
-### Importando -----
-
-var3 <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx",
-                          sheet = 3)
-
-### Visualizando -----
-
-var3
-
-var3 |> dplyr::glimpse()
-
 ## Saltinho ----
 
 ### Importando ----
 
-saltinho <- sf::st_read("Saltinho.shp")
+saltinho <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/Saltinho.shp")
 
 ### Visualizando ----
 
@@ -71,7 +58,7 @@ ggplot() +
 
 ### Importando ----
 
-borda <- sf::st_read("borda_saltinho.shp")
+borda <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho_recortado.shp")
 
 ### Visualizando ----
 
@@ -84,7 +71,7 @@ ggplot() +
 
 ### Importnado ----
 
-parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
+parcelas <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinho_ppbio_parcelas.shp")
 
 ### Visualizando ----
 
@@ -109,7 +96,7 @@ ggplot() +
 
 ### Importando ----
 
-hid <- readxl::read_xlsx("dados_hidrico.xlsx")
+hid <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/dados_hidrico.xlsx")
 
 ### Visualizando ----
 
@@ -141,7 +128,7 @@ ggplot() +
 
 ### Importando ----
 
-temp <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx",
+temp <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx",
                           sheet = 6)
 
 ### Visualizando ----
@@ -149,6 +136,18 @@ temp <- readxl::read_xlsx("levantamento_variáveis_ambientais.xlsx",
 temp
 
 temp |> dplyr::glimpse()
+
+## Distância da borda ----
+
+### Importar ----
+
+borda_valores <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/valores_distancia_borda.xlsx")
+
+### Visualizar ----
+
+borda_valores
+
+borda_valores |> dplyr::glimpse()
 
 # Dataframe de variáveis ambientais ----
 
@@ -159,44 +158,7 @@ alt_valores <- alt |>
 
 alt_valores
 
-## Extraindo os valores de distância da borda ----
-
-borda_valores <- centroides |>
-  sf::st_distance(borda |>
-                    sf::st_boundary()) |>
-  as.numeric()
-
-borda_valores
-
-## Função de cáçculo de área de poças ----
-
-area_pocas <- function(comprimento, largura){
-
-  area <- pi * (comprimento / 2) * (largura / 2)
-
-  area <- area / 10000
-
-  return(area)
-
-}
-
-area_pocas(comprimento = 4.5, largura = 3)
-
 ## Maiores valores das variáveis -----
-
-pocas <- var3 |>
-  dplyr::filter(`Unidade Amostral` != "T1P1") |>
-  dplyr::summarise(area = area_pocas(comprimento = Comprimento,
-                                     largura = Largura),
-                   .by = c(`Unidade Amostral`, Campanha)) |>
-  dplyr::mutate(area = dplyr::case_when(area |> is.na() ~ 0,
-                                        .default = area)) |>
-  dplyr::summarise(area = area |> sum(),
-                   .by = c(`Unidade Amostral`, Campanha)) |>
-  dplyr::summarise(area = area |> max(),
-                   .by = `Unidade Amostral`)
-
-pocas
 
 dossel <- var1 |>
   dplyr::summarise(dossel = `Índice de abertura de dossel` |> mean(),
@@ -242,9 +204,7 @@ temp |> dplyr::glimpse()
 
 ## Dataframe dos valores ----
 
-df_ambientais <- pocas |>
-  dplyr::left_join(dossel,
-                   by = "Unidade Amostral") |>
+df_ambientais <- dossel |>
   dplyr::left_join(numero_pocas,
                    by = "Unidade Amostral") |>
   dplyr::left_join(altura,
@@ -253,10 +213,9 @@ df_ambientais <- pocas |>
                    by = "Unidade Amostral") |>
   dplyr::left_join(hid[, 3:4],
                    by = "Unidade Amostral") |>
-  dplyr::mutate(`Distância da Borda` = borda_valores[-1],
+  dplyr::mutate(`Distância da Borda` = borda_valores[-1, ]$`Distância da borda`,
                 Altitude = alt_valores[-1, 2]) |>
-  dplyr::rename("Área das poças" = area,
-                "Abertura do dossel" = dossel,
+  dplyr::rename("Abertura do dossel" = dossel,
                 "Número de poças" = numero,
                 "Altura da serrapilheira" = altura,
                 "Distância dos corpos hídricos" = Distância)
@@ -268,4 +227,4 @@ df_ambientais |> dplyr::glimpse()
 ## Exportando ----
 
 df_ambientais |>
-  writexl::write_xlsx("matriz_ambientais.xlsx")
+  writexl::write_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx")

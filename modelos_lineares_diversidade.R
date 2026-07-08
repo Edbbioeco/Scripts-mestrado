@@ -152,17 +152,18 @@ df_beta |> dplyr::glimpse()
 
 ## Múltiplos modelos ----
 
-modelos <- purrr::map(c(4, 6, 8:10), \(id){
+modelos <- purrr::map(c(3, 5, 7:9), \(id){
 
   lm(`Q = 1` ~ .,
      data = df_alfa |>
        dplyr::select(2, id))
-
-  })
+  }
+  ) |>
+  setNames(df_alfa[c(3, 5, 7:9)] |> names())
 
 modelos
 
-purrr::map2(c(4, 6, 8:10), modelos, \(id, modelo){
+purrr::map2(c(3, 5, 7:9), modelos, \(id, modelo){
 
   nome <- df_alfa[id] |> names()
 
@@ -296,7 +297,7 @@ q1_predictor
 ## Gráfico -----
 
 df_alfa |>
-  tidyr::pivot_longer(cols = c(4, 6, 8:10),
+  tidyr::pivot_longer(cols = c(3, 5, 7:9),
                       names_to = "Preditor",
                       values_to = "Valor Preditor") |>
   dplyr::mutate(Preditor = Preditor |>

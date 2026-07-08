@@ -22,7 +22,7 @@ library(writexl)
 
 ### Importando ----
 
-especies <- readxl::read_xlsx("levantamento_anuros.xlsx")
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_anuros.xlsx")
 
 ## Visualizando ----
 
@@ -30,24 +30,11 @@ especies
 
 especies |> dplyr::glimpse()
 
-## Saltinho ----
-
-### Importando ----
-
-saltinho <- sf::st_read("Saltinho.shp")
-
-### Visualizando ----
-
-saltinho
-
-ggplot() +
-  geom_sf(data = saltinho, color = "black", linewidth = 1)
-
 ## Parcelas ----
 
 ### Importnado ----
 
-parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
+parcelas <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinho_ppbio_parcelas.shp")
 
 ### Visualizando ----
 
@@ -61,7 +48,7 @@ ggplot() +
 
 ### Importando ----
 
-borda <- sf::st_read("borda_saltinho.shp")
+borda <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho_recortado.shp")
 
 ### Visualizando ----
 
@@ -74,7 +61,7 @@ ggplot() +
 
 ### Importando ----
 
-hidrico <- sf::st_read("corpos_hidricos_saltinho.gpkg")
+hidrico <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/corpos_hidricos_saltinho.gpkg")
 
 ### Visualizando ----
 
@@ -90,7 +77,7 @@ ggplot() +
 
 ### Importando ----
 
-alt <- terra::rast("altitude.tif")
+alt <- terra::rast("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/altitude.tif")
 
 ### Visualizando ----
 
@@ -108,13 +95,11 @@ ggplot() +
                                                           frame.linewidth = 1,
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
-  scale_x_continuous(limits = c(-35.2, -35.164),
-                     expand = c(0, 0)) +
-  scale_y_continuous(limits = c(-8.74, -8.711),
-                     expand = c(0, 0)) +
-  geom_sf(data = saltinho, color = "black", linewidth = 1, fill = "transparent") +
+  geom_sf(data = borda, color = "black", linewidth = 1, fill = "transparent") +
   geom_sf(data = hidrico, color = "blue", fill = "transparent", linewidth = 1) +
-  geom_sf(data = parcelas, color = "black", linewidth = 1)
+  geom_sf(data = parcelas, color = "black", linewidth = 1) +
+  theme_bw() +
+  theme(legend.position = "bottom")
 
 # Extraindo os valores ----
 
@@ -191,7 +176,9 @@ dist_acude
 
 dist_rios <- sf::st_distance(parcelas |>
                                dplyr::filter(Trlh.Pr != "1-1"),
-                             hidrico[c(3:5), ]) |>
+                             hidrico[c(3:5), ] |>
+                               sf::st_intersection(borda[2, ]) |>
+                               dplyr::select(1)) |>
   tibble::as_tibble() |>
   dplyr::mutate(`Unidade Amostral` = parcelas |>
                   dplyr::filter(Trlh.Pr != "1-1") |>
@@ -231,6 +218,8 @@ corpos_hid_ref <- c(hidrico |>
                       dplyr::filter(geom |>
                                       sf::st_geometry_type() |>
                                       stringr::str_detect("LINESTRING")) |>
+                      sf::st_intersection(borda[2, ]) |>
+                      dplyr::select(1) |>
                       sf::st_geometry()) |>
   sf::st_union()
 
@@ -264,7 +253,7 @@ shp_pontos <- dist_hid |>
 shp_pontos
 
 ggplot() +
-  geom_sf(data = saltinho, color = "black", linewidth = 1) +
+  geom_sf(data = borda, color = "black", linewidth = 1) +
   geom_sf(data = hidrico, color = "blue", fill = "blue",
           alpha = 0.5, linewidth = 1) +
   geom_sf(data = parcelas, color = "black", linewidth = 1) +
@@ -364,4 +353,4 @@ dados_hidrico_div |>
 ## Exportando os dados ----
 
 dados_hidrico_div |>
-  writexl::write_xlsx("dados_hidrico.xlsx")
+  writexl::write_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/dados_hidrico.xlsx")
