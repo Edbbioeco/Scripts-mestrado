@@ -29,7 +29,7 @@ ggplot() +
 
 ### Importar ----
 
-borda <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho_recortado.shp")
+borda <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho.shp")
 
 ### Visualizar ----
 
