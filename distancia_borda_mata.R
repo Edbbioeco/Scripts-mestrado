@@ -112,7 +112,7 @@ ponto_geodesica_borda <- parcelas |>
 ponto_geodesica_borda
 
 ggplot() +
-  geom_sf(data = borda_trat, color = "black") +
+  geom_sf(data = borda, color = "black") +
   geom_sf(data = parcelas, color = "red") +
   geom_sf(data = ponto_geodesica_borda, color = "blue")
 
