@@ -103,8 +103,8 @@ ggsave("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/grafico_compo
 ## Importar e visualizar dados ambientais originais ----
 
 ambientais <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx") |>
-  rename("Distância da borda" = 8,
-         "Elevação" = 9)
+  rename("Distância da borda" = 7,
+         "Elevação" = 8)
 
 ambientais
 
