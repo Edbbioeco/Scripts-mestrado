@@ -133,6 +133,9 @@ ggplot() +
   tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
   geom_sf(data = borda, color = "green4", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
+  geom_sf(data = corpos_hid, color = "royalblue", fill = "transparent",
+          linewidth = 1) +
+  geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
   coord_sf(expand = FALSE)
 
 # Setando tema ----
