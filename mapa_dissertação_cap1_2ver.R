@@ -22,7 +22,7 @@ library(patchwork)
 
 ### Importando ----
 
-br <- geobr::read_state(year = 2019)
+br <- geobr::read_state(year = 2025)
 
 ### Visualizando ----
 
