@@ -59,6 +59,20 @@ borda
 ggplot() +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1)
 
+## Rodovias ----
+
+### Importar ----
+
+rodovias <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp")
+
+### Visualizar ----
+
+rodovias
+
+ggplot() +
+  geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = rodovias, color = "gold4", linewidth = 1)
+
 ## Parcelas de amostragem ----
 
 ### Importando ----
