@@ -100,6 +100,7 @@ parcelas_trat
 
 ggplot() +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
   geom_sf(data = parcelas_trat, aes(fill = tipo),
           color = "black", shape = 21, size = 3, linewidth = 1)
 
