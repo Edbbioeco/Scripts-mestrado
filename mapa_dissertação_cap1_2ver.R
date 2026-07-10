@@ -52,7 +52,7 @@ ggplot() +
 
 borda <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho.shp")
 
-borda |> ### Visualizando ----
+### Visualizando ----
 
 borda
 
