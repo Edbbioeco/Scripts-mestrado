@@ -39,11 +39,11 @@ ambientais |> dplyr::glimpse()
 ### Tratando ----
 
 ambientais <- ambientais |>
-  dplyr::rename("Canopy openness" = 3,
-                "Leaf-litter depth" = 5,
-                "Water stream distance" = 7,
-                "Edge distance" = 8,
-                "Elevation" = 9)
+  dplyr::rename("Canopy openness" = 2,
+                "Leaf-litter depth" = 4,
+                "Water stream distance" = 6,
+                "Edge distance" = 7,
+                "Elevation" = 8)
 
 ambientais
 
