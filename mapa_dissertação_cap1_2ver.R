@@ -202,14 +202,18 @@ mapa_principal <- ggplot() +
   geom_sf(data = corpos_hid,
           aes(color = "Water streams"),
           linewidth = 1, fill = "transparent") +
+  geom_sf(data = rodovias,
+          aes(color = "Highway"),
+          linewidth = 1, fill = "transparent") +
   scale_fill_manual(values = c("Brazil" = "lightgray",
                                "Pernambuco" = "lightgoldenrod"),
                     breaks = c("Brazil", "Pernambuco")) +
   scale_color_manual(values = c("Forest environment" = "gold3",
                                 "Water streams" = "royalblue",
+                                "Highway" = "brown4",
                                 "Uniform sampling plot" = "black",
                                 "Riparian sampling plot" = "black"),
-                     breaks = c("Forest environment", "Water streams",
+                     breaks = c("Forest environment", "Water streams", "Highway",
                                 "Uniform sampling plot", "Riparian sampling plot")) +
   guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
          color = guide_legend(order = 2, nrow = 2)) +
