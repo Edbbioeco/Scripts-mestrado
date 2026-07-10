@@ -129,6 +129,8 @@ saltinho_tif <- terra::rast("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrad
 
 ### Visualizando ----
 
+saltinho_tif
+
 ggplot() +
   tidyterra::geom_spatraster_rgb(data = saltinho_tif) +
   geom_sf(data = borda, color = "green4", fill = "transparent", linewidth = 1) +
