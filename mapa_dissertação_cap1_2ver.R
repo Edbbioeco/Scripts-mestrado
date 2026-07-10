@@ -85,6 +85,7 @@ parcelas
 
 ggplot() +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1)
 
 ### Tratando ----
