@@ -99,7 +99,9 @@ comp_trat <- comp |>
 
 comp_trat
 
-## Tabela flextable ----
+## Imagens originais ----
+
+### Criar a tabela ----
 
 comp_flex <- comp_trat |>
   flextable::flextable() |>
@@ -123,7 +125,7 @@ comp_flex <- comp_trat |>
 
 comp_flex
 
-## Salvar a tabela ----
+### Salvar a tabela ----
 
 comp_flex |> flextable::save_as_docx(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_abundancia_cap2_2ver.docx")
 
