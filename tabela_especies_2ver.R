@@ -38,7 +38,8 @@ imagens <- paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/im
                   sps,
                   ".",
                   list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/") |>
-                    tools::file_ext())
+                    tools::file_ext() |>
+                    stringr::str_to_lower())
 
 imagens
 
