@@ -32,6 +32,16 @@ sps <- comp |>
 
 sps
 
+## Arquivos ----
+
+imagens <- paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
+                  sps,
+                  ".",
+                  list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/") |>
+                    tools::file_ext())
+
+imagens
+
 # Tabela ----
 
 ## Tratar ----
