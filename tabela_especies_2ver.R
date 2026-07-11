@@ -10,7 +10,7 @@ library(flextable)
 
 ## Importar ----
 
-comp <- readxl::read_xlsx("levantamento_anuros.xlsx")
+comp <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_anuros.xlsx")
 
 ## Visualizar ----
 
@@ -76,6 +76,6 @@ comp_flex
 
 ## Salvar a tabela ----
 
-comp_flex |> flextable::save_as_docx(path = "tabela_abundancia_cap2_2ver.docx")
+comp_flex |> flextable::save_as_docx(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_abundancia_cap2_2ver.docx")
 
-comp_flex |> flextable::save_as_image(path = "tabela_abundancia_cap2_2ver.png")
+comp_flex |> flextable::save_as_image(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_abundancia_cap2_2ver.png")
