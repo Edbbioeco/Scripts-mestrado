@@ -20,10 +20,17 @@ comp |> dplyr::glimpse()
 
 # Imagens das espécies ----
 
-imagens <- list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
-                      full.names = TRUE)
+## Lista das espécies ----
 
-imagens
+sps <- comp |>
+  dplyr::filter(Ordem == "Anura" &
+                  !Epípeto %in% c("natalensis", "mystaceus") &
+                  Gênero != "Frostius" &
+                  Família != "Hylidae") |>
+  dplyr::pull(Espécie) |>
+  unique()
+
+sps
 
 # Tabela ----
 
@@ -68,15 +75,6 @@ comp_trat <- comp |>
                      values_from = Abundância)
 
 comp_trat
-
-## Ordem das espécies ----
-
-### Lista das espécies ----
-
-sps <- list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/") |>
-  stringr::str_remove_all(".jpeg|.JPG")
-
-sps
 
 ## Tabela flextable ----
 
