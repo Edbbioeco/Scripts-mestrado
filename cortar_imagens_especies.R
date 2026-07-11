@@ -47,3 +47,16 @@ imagens_cortadas <- purrr::map(imagens,
                                .progress = TRUE)
 
 imagens_cortadas
+
+### Exportar ----
+
+purrr::imap(imagens_cortadas,
+            purrr::in_parallel(
+
+              ~terra::writeRaster(.x,
+                                  filename = paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
+                                                    .y,
+                                                    ".tif"))
+
+              ),
+            .progress = TRUE)
