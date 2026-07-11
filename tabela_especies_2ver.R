@@ -69,6 +69,15 @@ comp_trat <- comp |>
 
 comp_trat
 
+## Ordem das espécies ----
+
+### Lista das espécies ----
+
+sps <- list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/") |>
+  stringr::str_remove_all(".jpeg|.JPG")
+
+sps
+
 ## Tabela flextable ----
 
 comp_flex <- comp_trat |>
