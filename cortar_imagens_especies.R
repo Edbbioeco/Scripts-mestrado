@@ -14,9 +14,10 @@ library(coiR)
 
 imagens <- purrr::map(list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies",
                       full.names = TRUE),
-                      terra::rast) |>
+                      ~terra::rast(.x) |>
+                        terra::flip()) |>
   setNames(list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies") |>
-             stringr::str_remove_all(".jppeg|.JPG"))
+             stringr::str_remove_all(".jpeg|.JPG"))
 
 imagens
 
