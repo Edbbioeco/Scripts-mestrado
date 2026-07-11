@@ -50,7 +50,7 @@ imagens
 ## Imagens cortadas ----
 
 imagens_cortadas <- list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
-                               pattern = ".tif$",
+                               pattern = ".png$",
                                full.names = TRUE)
 
 imagens_cortadas
