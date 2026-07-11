@@ -100,9 +100,13 @@ comp_flex <- comp_trat |>
                             top = TRUE) |>
   flextable::compose(i = 1,
                      j = 2:11,
+                     part = "header",
                      value = flextable::as_paragraph(
 
-                       flextable::as_image(src = imagens)
+                       flextable::as_image(src = imagens,
+                                           width = 0.45,
+                                           height = 0.45)
+
                      ))
 
 comp_flex
