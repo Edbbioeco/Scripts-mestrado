@@ -8,6 +8,8 @@ library(tidyterra)
 
 library(coiR)
 
+library(magick)
+
 # Imagens ----
 
 ## Importar ----
