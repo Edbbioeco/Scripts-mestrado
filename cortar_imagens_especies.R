@@ -28,7 +28,8 @@ purrr::map(imagens,
 
              ~ggplot() +
                tidyterra::geom_spatraster_rgb(data = .x) +
-               coord_sf(expand = FALSE)
+               coord_sf(expand = FALSE) +
+               coord_equal()
 
            ),
            .progress = TRUE)
