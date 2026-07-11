@@ -34,12 +34,15 @@ sps <- comp |>
 
 sps
 
-## Arquivos ----
+## Imagens originais ----
+
+### Arquivos ----
 
 imagens <- paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
                   sps,
                   ".",
-                  list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/") |>
+                  list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
+                             pattern = ".jpeg|.JPG") |>
                     tools::file_ext() |>
                     stringr::str_to_lower())
 
