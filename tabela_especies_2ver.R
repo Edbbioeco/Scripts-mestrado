@@ -18,6 +18,13 @@ comp
 
 comp |> dplyr::glimpse()
 
+# Imagens das espécies ----
+
+imagens <- list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
+                      full.names = TRUE)
+
+imagens
+
 # Tabela ----
 
 ## Tratar ----
