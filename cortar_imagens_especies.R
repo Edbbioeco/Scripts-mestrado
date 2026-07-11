@@ -33,3 +33,17 @@ purrr::map(imagens,
 
            ),
            .progress = TRUE)
+
+# Recortar as imagens para circular ----
+
+## Recortar ----
+
+imagens_cortadas <- purrr::map(imagens,
+                               purrr::in_parallel(
+
+                                 ~coiR::coir_crop(data = .x)
+
+                               ),
+                               .progress = TRUE)
+
+imagens_cortadas
