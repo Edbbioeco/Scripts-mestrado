@@ -19,3 +19,15 @@ imagens <- purrr::map(list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/pro
              stringr::str_remove_all(".jppeg|.JPG"))
 
 imagens
+
+### Visualizar ----
+
+purrr::map(imagens,
+           purrr::in_parallel(
+
+             ~ggplot() +
+               tidyterra::geom_spatraster_rgb(data = .x) +
+               coord_sf(expand = FALSE)
+
+           ),
+           .progress = TRUE)
