@@ -36,7 +36,6 @@ sps
 
 ## Imagens originais ----
 
-### Arquivos ----
 
 imagens <- paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
                   sps,
@@ -47,6 +46,14 @@ imagens <- paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/im
                     stringr::str_to_lower())
 
 imagens
+
+## Imagens cortadas ----
+
+imagens_cortadas <- list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
+                               pattern = ".tif$",
+                               full.names = TRUE)
+
+imagens_cortadas
 
 # Tabela ----
 
