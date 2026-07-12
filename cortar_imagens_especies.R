@@ -52,16 +52,22 @@ imagens_cortadas
 
 ### Exportar ----
 
-purrr::imap(imagens_cortadas,
-            purrr::in_parallel(
+purrr::iwalk(imagens_cortadas,
+             ~{
 
-              ~.x |>
-                terra::as.raster() |>
-                magick::image_read() |>
-                magick::image_write(
-                  paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
-                         .y,
-                         "_cortada.png"))
+               alfa <- terra::app(.x[[1]],
+                                  \(x) ifelse(is.na(x), 0, 255))
 
-              ),
-            .progress = TRUE)
+               rgba <- c(.x, alfa)
+
+               terra::RGB(rgba, alpha = 4) <- 1:4
+
+               rgba |> terra::writeRaster(
+                 paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
+                        .y,
+                        "_cortada.png"),
+                 overwrite = TRUE,
+                 filetype = "PNG")
+
+               },
+             .progress = TRUE)
