@@ -49,9 +49,9 @@ imagens
 
 ## Imagens cortadas ----
 
-imagens_cortadas <- list.files(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
-                               pattern = ".png$",
-                               full.names = TRUE)
+imagens_cortadas <- paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
+                           sps,
+                           ".png")
 
 imagens_cortadas
 
@@ -130,3 +130,4 @@ comp_flex
 comp_flex |> flextable::save_as_docx(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_abundancia_cap2_2ver.docx")
 
 comp_flex |> flextable::save_as_image(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_abundancia_cap2_2ver.png")
+
