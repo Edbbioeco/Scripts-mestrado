@@ -131,3 +131,29 @@ comp_flex |> flextable::save_as_docx(path = "C:/Users/LENOVO/OneDrive/Documentos
 
 comp_flex |> flextable::save_as_image(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_abundancia_cap2_2ver.png")
 
+## Imagens cortadas ----
+
+### Criar tabelas ----
+
+comp_flex_cortadas <- comp_trat |>
+  flextable::flextable() |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::width(width = 1, j = 2) |>
+  flextable::italic(part = "header", j = 2:11) |>
+  flextable::fontsize(size = 10, part = "all") |>
+  flextable::color(color = "black", part = "all") |>
+  flextable::add_header_row(values = rep(NA, 11),
+                            top = TRUE) |>
+  flextable::compose(i = 1,
+                     j = 2:11,
+                     part = "header",
+                     value = flextable::as_paragraph(
+
+                       flextable::as_image(src = imagens_cortadas,
+                                           width = 0.45,
+                                           height = 0.45)
+
+                     ))
+
+comp_flex_cortadas
+
