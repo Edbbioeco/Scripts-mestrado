@@ -51,7 +51,7 @@ imagens
 
 imagens_cortadas <- paste0("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/imagens_especies/",
                            sps,
-                           ".png")
+                           "_cortada.png")
 
 imagens_cortadas
 
