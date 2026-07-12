@@ -157,3 +157,9 @@ comp_flex_cortadas <- comp_trat |>
 
 comp_flex_cortadas
 
+### Salvar a tabela ----
+
+comp_flex |> flextable::save_as_docx(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_abundancia_cap2_2ver_cortada.docx")
+
+comp_flex |> flextable::save_as_image(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_abundancia_cap2_2ver_cortada.png")
+
