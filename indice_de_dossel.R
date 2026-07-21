@@ -26,8 +26,9 @@ imagens
 
 ## Loop ----
 
-df_dossel <- purrr::map(.x = imagens,
-                        purrr::in_parallel(.f = \(imagens){
+df_dossel <- purrr::map_dfr(
+  .x = imagens,
+  purrr::in_parallel(.f = \(imagens){
 
              raster <- terra::rast(imagens)
 
@@ -86,8 +87,7 @@ df_dossel <- purrr::map(.x = imagens,
                             Índice = indice_dossel)
 
            }),
-           .progress = TRUE) |>
-  dplyr::bind_rows()
+           .progress = TRUE)
 
 ## Data frame final ----
 
