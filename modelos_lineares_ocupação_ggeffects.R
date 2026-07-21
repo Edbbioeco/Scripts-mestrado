@@ -446,7 +446,10 @@ variavel <- df_ocupacao |>
 
 variavel
 
-df_tendencia <- purrr::pmap(list(modelos, variavel, sps), \(modelos, variavel, sps){
+df_tendencia <- purrr::pmap_dfr(
+  list(modelos,
+       variavel, sps),
+  \(modelos, variavel, sps){
 
   ggeffects::ggpredict(model = modelos,
                        terms = variavel) |>
@@ -457,8 +460,8 @@ df_tendencia <- purrr::pmap(list(modelos, variavel, sps), \(modelos, variavel, s
     dplyr::rename("Valor preditor" = 1,
                   "Predicted" = 2)
 
-  }) |>
-  dplyr::bind_rows() |>
+    },
+  .progress = TRUE) |>
   dplyr::mutate(Preditor = dplyr::case_when(
                   Preditor == "Hydric stream distance" ~ "Water stream distance",
                   .default = Preditor),
