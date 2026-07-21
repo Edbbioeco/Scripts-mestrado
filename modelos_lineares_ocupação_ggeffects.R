@@ -392,7 +392,7 @@ sts_df_flex_destacado
 ## Exportando a tabela ----
 
 sts_df_flex |>
-  flextable::save_as_docx(path = "tabela_estatisticas_modelos_ocupacao.docx")
+  flextable::save_as_docx(path = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/tabela_estatisticas_modelos_ocupacao.docx")
 
 # Gráficos ----
 
