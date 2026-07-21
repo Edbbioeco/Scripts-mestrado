@@ -220,7 +220,10 @@ purrr::map2(c(5, 7, 9:11), modelos_adenomera, \(id, modelo){
 
 })
 
-resultados_adenomera <- map2(c(5, 7, 9:11), modelos_adenomera, \(id, modelo){
+resultados_adenomera <- map2_dfr(
+  c(5, 7, 9:11),
+  modelos_adenomera,
+  \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
     names()
@@ -244,8 +247,8 @@ resultados_adenomera <- map2(c(5, 7, 9:11), modelos_adenomera, \(id, modelo){
                                      p |> round(2) |> as.character())) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
 
-}) |>
-  dplyr::bind_rows()
+  },
+  .progress = TRUE)
 
 resultados_adenomera
 
