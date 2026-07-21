@@ -298,7 +298,10 @@ purrr::map2(c(5, 7, 9:11), modelos_rhinella, \(id, modelo){
 
 })
 
-resultados_rhinella <- map2(c(5, 7, 9:11), modelos_rhinella, \(id, modelo){
+resultados_rhinella <- map2_dfr(
+  c(5, 7, 9:11),
+  modelos_rhinella,
+  \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
     names()
@@ -322,8 +325,8 @@ resultados_rhinella <- map2(c(5, 7, 9:11), modelos_rhinella, \(id, modelo){
                                      p |> round(2) |> as.character())) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
 
-  }) |>
-  dplyr::bind_rows()
+  },
+  .progress = TRUE)
 
 resultados_rhinella
 
