@@ -142,7 +142,10 @@ purrr::map2(c(5, 7, 9:11), modelos_pristimantis, \(id, modelo){
 
   })
 
-resultados_pristimantis <- map2(c(5, 7, 9:11), modelos_pristimantis, \(id, modelo){
+resultados_pristimantis <- map2_dfr(
+  c(5, 7, 9:11),
+  modelos_pristimantis,
+  \(id, modelo){
 
   nome <- df_ocupacao[, id] |>
     names()
@@ -166,8 +169,8 @@ resultados_pristimantis <- map2(c(5, 7, 9:11), modelos_pristimantis, \(id, model
                                      p |> round(2) |> as.character())) |>
     dplyr::relocate(c(Species, Model), .before = Predictor)
 
-  }) |>
-  dplyr::bind_rows()
+  },
+  .progress = TRUE)
 
 resultados_pristimantis
 
