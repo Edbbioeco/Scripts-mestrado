@@ -54,13 +54,14 @@ borda
 
 ggplot() +
   geom_sf(data = borda, color = "red", linewidth = 1) +
-  geom_sf(data = saltinho, color = "black", linewidth = 1, fill = "transparent")
+  geom_sf(data = saltinho, color = "black", linewidth = 1,
+          fill = "transparent")
 
 ## Shapefile das parcelas -----
 
 ### Importnado ----
 
-parcelas <- sf::st_read("saltinho_ppbio_parcelas.shp")
+parcelas <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/saltinho_ppbio_parcelas.shp")
 
 ### Visualizando ----
 
