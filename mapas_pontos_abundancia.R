@@ -312,9 +312,12 @@ df_pontos_abu |>
           linewidth = 1, fill = "transparent") +
   geom_sf(data = parcelas, aes(color = "Sampling plots"),
           linewidth = 1) +
+  geom_sf(data = rodovias, aes(color = "Higways"),
+          linewidth = 1) +
   scale_color_manual(values = c("Forest environment" = "darkgreen",
                                 "Sampling plots" = "royalblue4",
-                                "Water streams" = "blue")) +
+                                "Water streams" = "blue",
+                                "Higways" = "black")) +
   geom_point(aes(Longitude, Latitude, size = Abundância),
              shape = 21, stroke = 1, color = "black", fill = "green4", width = 0.1) +
   scale_size_continuous(breaks = seq(1, 35, 5),
@@ -333,7 +336,7 @@ df_pontos_abu |>
         legend.title = element_text(color = "black", size = 15),
         strip.text = ggtext::element_markdown(color = "black", size = 15),
         strip.background = element_rect(color = "black", linewidth = 1),
-        legend.position = c(1, 0.08),
+        legend.position = c(1.085, 0.08),
         legend.direction = "horizontal",
         legend.box = "vertical",
         legend.justification = c("right", "bottom"),
