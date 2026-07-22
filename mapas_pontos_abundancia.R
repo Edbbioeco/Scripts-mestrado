@@ -32,7 +32,7 @@ especies |> dplyr::glimpse()
 
 ### Importando ----
 
-saltinho <- sf::st_read("Saltinho.shp")
+saltinho <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/Saltinho.shp")
 
 ### Visualizando ----
 
