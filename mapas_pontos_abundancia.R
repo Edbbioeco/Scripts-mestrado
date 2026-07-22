@@ -321,5 +321,5 @@ df_pontos_abu |>
         legend.background = element_blank()) +
   ggview::canvas(height = 10, width = 15)
 
-ggsave(filename = "mapa_especies_abundancia_2.png", height = 10, width = 15)
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/mapa_especies_abundancia_2.png", height = 10, width = 15)
 
