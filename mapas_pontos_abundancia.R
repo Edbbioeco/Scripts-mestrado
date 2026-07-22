@@ -330,6 +330,8 @@ df_pontos_abu |>
   labs(x = NULL,
        y = NULL,
        colour = NULL) +
+  coord_sf(xlim = c(-35.2051, -35.15463),
+           ylim = c(-8.745107, -8.710418)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         legend.text = element_text(color = "black", size = 15),
