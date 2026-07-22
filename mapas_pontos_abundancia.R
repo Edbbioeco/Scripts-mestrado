@@ -20,7 +20,7 @@ library(ggtext)
 
 ### Importando ----
 
-especies <- readxl::read_xlsx("levantamento_anuros.xlsx")
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_anuros.xlsx")
 
 ## Visualizando ----
 
