@@ -237,7 +237,7 @@ abundancia_coord |>
         legend.justification = c("right", "bottom"),
         legend.background = element_blank())
 
-ggsave(filename = "mapa_especies_abundancia.png", height = 10, width = 12)
+ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/mapa_especies_abundancia.png", height = 10, width = 12)
 
 ## Versão com pontos com tamanhos diferentes ----
 
