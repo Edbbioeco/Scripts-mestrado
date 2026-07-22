@@ -122,7 +122,7 @@ ggplot() +
 
 ### Importando ----
 
-hid <- sf::st_read("corpos_hidricos_saltinho.gpkg")
+hid <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/corpos_hidricos_saltinho.gpkg")
 
 ### Visualizando ----
 
