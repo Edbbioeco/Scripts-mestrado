@@ -150,6 +150,25 @@ abundancia <- especies |>
 
 abundancia
 
+## Rodovias ----
+
+### Importar ----
+
+rodovias <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp")
+
+### Visualizar ----
+
+rodovias
+
+ggplot() +
+  tidyterra::geom_spatraster(data = alt) +
+  geom_sf(data = borda, color = "red", linewidth = 1, fill = "transparent") +
+  geom_sf(data = saltinho, color = "black", linewidth = 1, fill = "transparent") +
+  geom_sf(data = parcelas, color = "black", linewidth = 1) +
+  geom_sf(data = hid, color = "blue", linewidth = 1) +
+  geom_sf(data = rodovias, color = "black", linewidth = 1) +
+  tidyterra::scale_fill_terrain_c()
+
 # Centróides das parcelas ----
 
 ## Nome das parcelas ----
