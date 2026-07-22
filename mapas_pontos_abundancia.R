@@ -254,7 +254,8 @@ abundancia_coord |>
         legend.direction = "horizontal",
         legend.box = "vertical",
         legend.justification = c("right", "bottom"),
-        legend.background = element_blank())
+        legend.background = element_blank()) +
+  ggview::canvas(height = 10, width = 15)
 
 ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/mapa_especies_abundancia.png", height = 10, width = 12)
 
