@@ -227,5 +227,5 @@ ggplot() +
         legend.background = element_blank()) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "mapa_valores_diversidade_cap2.png",
+ggsave(filename = "c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/mapa_valores_diversidade_cap2.png",
        height = 10, width = 12)
