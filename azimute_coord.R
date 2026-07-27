@@ -16,13 +16,13 @@ coords <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrad
 
 ## tratando ----
 
-coords_trat <- coords %>%
-  dplyr::filter(!Latitude %>% is.na) %>%
+coords_trat <- coords |>
+  dplyr::filter(!Latitude |> is.na) |>
   dplyr::mutate(`Trilha-Parcela` = paste0(paste0("Trilha ", Trilha),
                                           "-",
                                           paste0("Parcela ", Parcela)),
-                Latitude = Latitude %>% parzer::parse_lat(),
-                Longitude = Longitude %>% parzer::parse_lon())
+                Latitude = Latitude |> parzer::parse_lat(),
+                Longitude = Longitude |> parzer::parse_lon())
 
 ## Visualizando ----
 
@@ -36,7 +36,7 @@ azimute_coord <- function(dados, latitude, longitude, azimute, distancia, contin
 
   if(continuo == TRUE){
 
-    resultados <- dados %>% as.data.frame()
+    resultados <- dados |> as.data.frame()
 
     for(i in n:nrow(dados)) {
 
@@ -55,7 +55,7 @@ azimute_coord <- function(dados, latitude, longitude, azimute, distancia, contin
 
   } else {
 
-    resultados <- dados %>% as.data.frame()
+    resultados <- dados |> as.data.frame()
 
     for(i in n) {
 
@@ -80,15 +80,15 @@ azimute_coord <- function(dados, latitude, longitude, azimute, distancia, contin
 
 ### Criuando um data frame fictício ----
 
-coords_trat2 <- coords_trat %>%
-  dplyr::filter(Trilha == 1 & Parcela == 1) %>%
-  dplyr::select(`Azimute (graus)`, Latitude:Longitude) %>%
-  dplyr::mutate(n = 1:nrow(coords_trat %>%
+coords_trat2 <- coords_trat |>
+  dplyr::filter(Trilha == 1 & Parcela == 1) |>
+  dplyr::select(`Azimute (graus)`, Latitude:Longitude) |>
+  dplyr::mutate(n = 1:nrow(coords_trat |>
                              dplyr::filter(Trilha == 1 & Parcela == 1)),
                 Latitude = dplyr::case_when(n > 1 ~ NA,
                                             .default = Latitude),
                 Longitude = dplyr::case_when(n > 1 ~ NA,
-                                            .default = Longitude)) %>%
+                                            .default = Longitude)) |>
   dplyr::select(-n)
 
 coords_trat2
@@ -111,25 +111,25 @@ coords_unidos <- azimute_coord(dados = coords_trat2,
               longitude = "Longitude",
               azimute = "Azimute (graus)",
               distancia = 10,
-              n = 2) %>%
-  dplyr::bind_cols(coords_trat %>%
-                     dplyr::filter(Trilha == 1 & Parcela == 1) %>%
-                     dplyr::select(Latitude:Longitude) %>%
+              n = 2) |>
+  dplyr::bind_cols(coords_trat |>
+                     dplyr::filter(Trilha == 1 & Parcela == 1) |>
+                     dplyr::select(Latitude:Longitude) |>
                      dplyr::rename("lat" = Latitude,
-                                   "lon" = Longitude) %>%
-                     dplyr::mutate(n = 1:nrow(coords_trat %>%
+                                   "lon" = Longitude) |>
+                     dplyr::mutate(n = 1:nrow(coords_trat |>
                                                 dplyr::filter(Trilha == 1 & Parcela == 1))))
 
 coords_unidos
 
 ## Calculando a distância ----
 
-distancias_coord <- coords_unidos %>%
+distancias_coord <- coords_unidos |>
   dplyr::mutate(distancia = geosphere::distGeo(p1 = coords_unidos[, c("lat", "lon")],
                                                p2 = coords_unidos[, c("Latitude", "Longitude")]
                                                )
-                ) %>%
-  dplyr::arrange(distancia %>% dplyr::desc())
+                ) |>
+  dplyr::arrange(distancia |> dplyr::desc())
 
 distancias_coord
 
@@ -139,15 +139,15 @@ distancias_coord
 
 #### Pressupostso ----
 
-distancias_coord$Latitude %>% shapiro.test()
+distancias_coord$Latitude |> shapiro.test()
 
-distancias_coord %>%
+distancias_coord |>
   ggplot(aes(Latitude)) +
   geom_histogram()
 
-distancias_coord$lat %>% shapiro.test()
+distancias_coord$lat |> shapiro.test()
 
-distancias_coord %>%
+distancias_coord |>
   ggplot(aes(lat)) +
   geom_histogram()
 
@@ -155,19 +155,19 @@ distancias_coord %>%
 
 cor.test(distancias_coord$Latitude, distancias_coord$lat, method = "spearman")
 
-distancias_coord %>%
-  dplyr::arrange(n) %>%
-  dplyr::mutate(Segmento = coords_trat %>%
-                  dplyr::filter(Trilha == 1 & Parcela == 1) %>%
+distancias_coord |>
+  dplyr::arrange(n) |>
+  dplyr::mutate(Segmento = coords_trat |>
+                  dplyr::filter(Trilha == 1 & Parcela == 1) |>
                   dplyr::pull(Segmento),
-                Segmento = Segmento %>% forcats::fct_relevel(coords_trat %>%
-                                                               dplyr::filter(Trilha == 1 & Parcela == 1) %>%
-                                                               dplyr::pull(Segmento))) %>%
+                Segmento = Segmento |> forcats::fct_relevel(coords_trat |>
+                                                               dplyr::filter(Trilha == 1 & Parcela == 1) |>
+                                                               dplyr::pull(Segmento))) |>
   tidyr::pivot_longer(cols = c(Latitude, lat),
                       names_to = "Tipo de latitude",
-                      values_to = "Latitude") %>%
+                      values_to = "Latitude") |>
   dplyr::mutate(`Tipo de latitude` = dplyr::case_when(`Tipo de latitude` == "lat" ~ "Original",
-                                                      `Tipo de latitude` == "Latitude" ~ "Função")) %>%
+                                                      `Tipo de latitude` == "Latitude" ~ "Função")) |>
   ggplot(aes(Segmento, Latitude, fill = `Tipo de latitude`)) +
   geom_point(shape = 21, color = "black", size = 5) +
   scale_fill_manual(values = c("gold", "cyan4")) +
@@ -185,15 +185,15 @@ distancias_coord %>%
 
 #### Pressupostoo ----
 
-distancias_coord$Longitude %>% shapiro.test()
+distancias_coord$Longitude |> shapiro.test()
 
-distancias_coord %>%
+distancias_coord |>
   ggplot(aes(Longitude)) +
   geom_histogram()
 
-distancias_coord$lon %>% shapiro.test()
+distancias_coord$lon |> shapiro.test()
 
-distancias_coord %>%
+distancias_coord |>
   ggplot(aes(lon)) +
   geom_histogram()
 
@@ -201,19 +201,19 @@ distancias_coord %>%
 
 cor.test(distancias_coord$Longitude, distancias_coord$lon, method = "spearman")
 
-distancias_coord %>%
-  dplyr::arrange(n) %>%
-  dplyr::mutate(Segmento = coords_trat %>%
-                  dplyr::filter(Trilha == 1 & Parcela == 1) %>%
+distancias_coord |>
+  dplyr::arrange(n) |>
+  dplyr::mutate(Segmento = coords_trat |>
+                  dplyr::filter(Trilha == 1 & Parcela == 1) |>
                   dplyr::pull(Segmento),
-                Segmento = Segmento %>% forcats::fct_relevel(coords_trat %>%
-                                                               dplyr::filter(Trilha == 1 & Parcela == 1) %>%
-                                                               dplyr::pull(Segmento))) %>%
+                Segmento = Segmento |> forcats::fct_relevel(coords_trat |>
+                                                               dplyr::filter(Trilha == 1 & Parcela == 1) |>
+                                                               dplyr::pull(Segmento))) |>
   tidyr::pivot_longer(cols = c(Longitude, lon),
                       names_to = "Tipo de longitude",
-                      values_to = "Longitude") %>%
+                      values_to = "Longitude") |>
   dplyr::mutate(`Tipo de longitude` = dplyr::case_when(`Tipo de longitude` == "lon" ~ "Original",
-                                                      `Tipo de longitude` == "Longitude" ~ "Função")) %>%
+                                                      `Tipo de longitude` == "Longitude" ~ "Função")) |>
   ggplot(aes(Segmento, Longitude, fill = `Tipo de longitude`)) +
   geom_point(shape = 21, color = "black", size = 5) +
   scale_fill_manual(values = c("gold", "cyan4")) +
@@ -231,15 +231,15 @@ distancias_coord %>%
 
 ### Presupostos ----
 
-distancias_coord$n %>% shapiro.test()
+distancias_coord$n |> shapiro.test()
 
-distancias_coord %>%
+distancias_coord |>
   ggplot(aes(n)) +
   geom_histogram()
 
-distancias_coord$distancia %>% shapiro.test()
+distancias_coord$distancia |> shapiro.test()
 
-distancias_coord %>%
+distancias_coord |>
   ggplot(aes(distancia)) +
   geom_histogram()
 
@@ -247,14 +247,14 @@ distancias_coord %>%
 
 cor.test(distancias_coord$n, distancias_coord$distancia)
 
-distancias_coord %>%
-  dplyr::arrange(n) %>%
-  dplyr::mutate(Segmento = coords_trat %>%
-                  dplyr::filter(Trilha == 1 & Parcela == 1) %>%
+distancias_coord |>
+  dplyr::arrange(n) |>
+  dplyr::mutate(Segmento = coords_trat |>
+                  dplyr::filter(Trilha == 1 & Parcela == 1) |>
                   dplyr::pull(Segmento),
-                Segmento = Segmento %>% forcats::fct_relevel(coords_trat %>%
-                                                               dplyr::filter(Trilha == 1 & Parcela == 1) %>%
-                                                               dplyr::pull(Segmento))) %>%
+                Segmento = Segmento |> forcats::fct_relevel(coords_trat |>
+                                                               dplyr::filter(Trilha == 1 & Parcela == 1) |>
+                                                               dplyr::pull(Segmento))) |>
   ggplot(aes(Segmento, distancia)) +
   geom_point(shape = 21, color = "black", size = 5, fill = "gold") +
   theme_bw() +
