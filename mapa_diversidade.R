@@ -76,7 +76,7 @@ ggplot() +
 
 ### Importar ----
 
-alt <- terra::rast("altitude.tif")
+alt <- terra::rast("c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/altitude.tif")
 
 ### Visualizar ----
 
