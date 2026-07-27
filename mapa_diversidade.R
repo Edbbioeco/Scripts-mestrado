@@ -238,7 +238,9 @@ ggplot() +
   labs(x = NULL,
        y = NULL,
        colour = NULL) +
-  coord_sf(label_graticule = "NSWE") +
+  coord_sf(label_graticule = "NSWE",
+           xlim = c(-35.2051, -35.15463),
+           ylim = c(-8.745107, -8.710418)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 17.5),
         legend.text = element_text(color = "black", size = 17.5),
@@ -249,4 +251,4 @@ ggplot() +
   ggview::canvas(height = 10, width = 14)
 
 ggsave(filename = "c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/mapa_valores_diversidade_cap2.png",
-       height = 10, width = 12)
+       height = 10, width = 14)
