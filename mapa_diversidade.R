@@ -197,6 +197,9 @@ ggplot() +
           aes(color = "Water streams"),
           linewidth = 1,
           fill = "transparent") +
+  geom_sf(data = rodovias,
+          aes(color = "Highways"),
+          linewidth = 1) +
   geom_sf(data = parcelas_div,
           aes(size = `Alpha Diversity`),
           fill = "forestgreen",
@@ -215,9 +218,11 @@ ggplot() +
                                                           ticks.colour = "black",
                                                           ticks.linewidth = 1)) +
   scale_color_manual(values = c("Forest environment" = "darkgreen",
-                                "Water streams" = "blue"),
+                                "Water streams" = "blue",
+                                "Highways" = "black"),
                      breaks = c("Forest environment",
-                                "Water streams"),
+                                "Water streams",
+                                "Highways"),
                      guide = guide_legend(order = 2)) +
   scale_size_continuous(breaks = seq(2.5, 4.5, 0.25),
                         guide = guide_legend(order = 3,
@@ -241,7 +246,7 @@ ggplot() +
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "bottom",
         legend.background = element_blank()) +
-  ggview::canvas(height = 10, width = 12)
+  ggview::canvas(height = 10, width = 14)
 
 ggsave(filename = "c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/mapa_valores_diversidade_cap2.png",
        height = 10, width = 12)
