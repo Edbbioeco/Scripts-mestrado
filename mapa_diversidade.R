@@ -22,7 +22,7 @@ library(ggview)
 
 ### Importar ----
 
-comp <- readxl::read_xlsx("matriz_composicao.xlsx")
+comp <- readxl::read_xlsx("c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_composicao.xlsx")
 
 ### Visualizar ----
 
