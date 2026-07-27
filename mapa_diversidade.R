@@ -34,7 +34,7 @@ comp |> dplyr::glimpse()
 
 ### Importar ----
 
-borda <- sf::st_read("borda_saltinho.shp")
+borda <- sf::st_read("c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/borda_saltinho.shp")
 
 ### Visualizar ----
 
