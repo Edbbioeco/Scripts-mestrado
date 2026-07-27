@@ -72,6 +72,22 @@ ggplot() +
   geom_sf(data = corpos_hid, color = "black", linewidth = 1) +
   geom_sf(data = parcelas, color = "black", linewidth = 1)
 
+## Rodovias ----
+
+### Importar ----
+
+rodovias <- sf::st_read("c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp")
+
+### Título ----
+
+rodovias
+
+ggplot() +
+  geom_sf(data = borda, color = "black", linewidth = 1) +
+  geom_sf(data = corpos_hid, color = "black", linewidth = 1) +
+  geom_sf(data = rodovias, color = "black", linewidth = 1) +
+  geom_sf(data = parcelas, color = "black", linewidth = 1)
+
 ## Altitude ----
 
 ### Importar ----
