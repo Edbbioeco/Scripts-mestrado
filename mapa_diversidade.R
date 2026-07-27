@@ -47,7 +47,7 @@ ggplot() +
 
 ### Importar ----
 
-parcelas <- sf::st_read("coordenadas_parcelas_saltinho.shp")
+parcelas <- sf::st_read("c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/coordenadas_parcelas_saltinho.shp")
 
 ### Visualizar ----
 
