@@ -584,16 +584,16 @@ df_ocupacao |>
                                          "Edge distance",
                                          "Elevation",
                                          "Water stream distance"))) |>
-  ggplot(aes(`Valor preditor`, `Rhinella hoogmoedi`)) +
+  ggplot(aes(`Valor preditor`, `Rhinella gr. margaritifera`)) +
   geom_point(color = "black",
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_line(data = df_tendencia |>
-              dplyr::filter(Species == "Rhinella hoogmoedi" &
+              dplyr::filter(Species == "Rhinella gr. margaritifera" &
                               Preditor %in% prediotores_rhinella),
             aes(`Valor preditor`, Predicted), color = "blue", linewidth = 1) +
   labs(x = "Predictor value",
-       y = "<i>Rhinella hoogmoedi</i> abundance") +
+       y = "<i>Rhinella</i> gr. <i>margaritifera</i> abundance") +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
