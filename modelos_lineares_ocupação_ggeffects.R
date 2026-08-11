@@ -594,6 +594,7 @@ df_ocupacao |>
             aes(`Valor preditor`, Predicted), color = "blue", linewidth = 1) +
   labs(x = "Predictor value",
        y = "<i>Rhinella</i> gr. <i>margaritifera</i> abundance") +
+  scale_y_continuous(breaks = seq(0, 12, 2)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
