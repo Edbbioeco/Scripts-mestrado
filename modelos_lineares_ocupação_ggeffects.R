@@ -342,7 +342,7 @@ sts_df <- ls(pattern = "^resultados_") |>
   dplyr::arrange(Species = Species |>
                    forcats::fct_relevel(c("Pristimantis ramagii",
                                           "Adenomera aff. hylaedactyla",
-                                          "Rhinella hoogmoedi")),
+                                          "Rhinella gr. margaritifera")),
                  Model = Model |>
                    forcats::fct_relevel(c("Leaf-litter depth",
                                           "Canopy openness",
