@@ -514,6 +514,8 @@ df_ocupacao |>
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
         title = element_text(color = "black", size = 15),
+        panel.grid = element_line(color = "gray60"),
+        panel.grid.minor = element_blank(),
         panel.background = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10,
                  width = 12)
