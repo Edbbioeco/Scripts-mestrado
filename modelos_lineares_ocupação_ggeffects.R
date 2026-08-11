@@ -180,7 +180,7 @@ resultados_pristimantis
 
 modelos_adenomera <- purrr::map(c(5, 7, 9:11), \(id){
 
-  modelo <- glm(`Adenomera hylaedactyla` ~ .,
+  modelo <- glm(`Adenomera aff. hylaedactyla` ~ .,
                 data = df_ocupacao[, c(3, id, 8)],
                 family = poisson(link = "log"))
 
