@@ -537,13 +537,13 @@ df_ocupacao |>
                                          "Canopy openness",
                                          "Edge distance",
                                          "Elevation",
-                                         "Hydric stream distance"))) |>
-  ggplot(aes(`Valor preditor`, `Adenomera hylaedactyla`)) +
+                                         "Water stream distance"))) |>
+  ggplot(aes(`Valor preditor`, `Adenomera aff. hylaedactyla`)) +
   geom_point(color = "black",
              size = 3.5) +
   facet_wrap(~Preditor, scales = "free_x") +
   geom_line(data = df_tendencia |>
-              dplyr::filter(Species == "Adenomera hylaedactyla" &
+              dplyr::filter(Species == "Adenomera aff. hylaedactyla" &
                               Preditor %in% prediotores_adenomera),
             aes(`Valor preditor`, Predicted),
             color = "blue", linewidth = 1) +
