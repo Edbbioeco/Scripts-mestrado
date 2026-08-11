@@ -319,7 +319,7 @@ resultados_rhinella <- map2_dfr(
     dplyr::rename("Predictor" = term,
                   "z" = statistic,
                   "p" = p.value) |>
-    dplyr::mutate(Species = "Rhinella hoogmoedi",
+    dplyr::mutate(Species = "Rhinella gr. margaritifera",
                   `pseudo-R²` = r2[2],
                   Model = nome,
                   p = dplyr::if_else(p < 0.01,
