@@ -70,7 +70,9 @@ especies_ocup <- especies |>
                    .by = c(`Unidade Amostral`, Espécie)) |>
   tidyr::pivot_wider(names_from = Espécie,
                      values_from = Abundância,
-                     values_fill = 0)
+                     values_fill = 0) |>
+  dplyr::rename("Adenomera aff. hylaedactyla" = 3,
+                "Rhinella gr. margaritifera" = 4)
 
 especies_ocup
 
