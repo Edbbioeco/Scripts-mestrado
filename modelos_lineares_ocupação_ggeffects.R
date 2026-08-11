@@ -436,7 +436,7 @@ modelos
 
 sps <- c("Pristimantis ramagii",
          "Adenomera aff. hylaedactyla",
-                    "Rhinella hoogmoedi") |>
+         "Rhinella gr. margaritifera") |>
   rep(each = 5)
 
 sps
