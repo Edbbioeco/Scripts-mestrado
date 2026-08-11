@@ -417,7 +417,7 @@ prediotores_adenomera <- sts_df |>
 prediotores_adenomera
 
 prediotores_rhinella <- sts_df |>
-  dplyr::filter(Species == "Rhinella hoogmoedi" &
+  dplyr::filter(Species == "Rhinella gr. margaritifera" &
                   abs(z) > 1.96 &
                   Predictor != "Temperature") |>
   dplyr::pull(Predictor)
