@@ -258,7 +258,7 @@ resultados_adenomera
 
 modelos_rhinella <- purrr::map(c(5, 7, 9:11), \(id){
 
-  modelo <- glm(`Rhinella hoogmoedi` ~ .,
+  modelo <- glm(`Rhinella gr. margaritifera` ~ .,
                 data = df_ocupacao[, c(4, id, 8)],
                 family = poisson(link = "log"))
 
