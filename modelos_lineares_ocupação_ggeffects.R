@@ -549,7 +549,7 @@ df_ocupacao |>
             color = "blue", linewidth = 1) +
   labs(x = "Predictor value",
        y = "<i>Adenomera</i> aff. <i>hylaedactyla</i> abundance") +
-  scale_y_continuous(limits = c(5, 17.5)) +
+  scale_y_continuous(breaks = seq(5, 17, 2)) +
   theme_bw() +
   theme(axis.text = element_text(color = "black", size = 15),
         axis.title = element_text(color = "black", size = 15),
