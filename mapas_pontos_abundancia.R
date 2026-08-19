@@ -146,7 +146,10 @@ abundancia <- especies |>
   dplyr::summarise(Abundância = Abundância |> sum(),
                    .by = c(`Unidade Amostral`, Espécie, Campanha)) |>
   dplyr::summarise(Abundância = Abundância |> max(),
-                   .by = c(`Unidade Amostral`, Espécie))
+                   .by = c(`Unidade Amostral`, Espécie)) |>
+  dplyr::mutate(Espécie = dplyr::case_when(
+    Espécie == "Rhinella hoogmoedi" ~"Rhinella gr. margaritifera",
+    .default = Espécie))
 
 abundancia
 
