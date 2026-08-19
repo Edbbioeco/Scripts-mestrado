@@ -270,22 +270,25 @@ df_pontos_abu <- abundancia_coord |>
   dplyr::filter(Espécie %in% c("Pristimantis ramagii",
                                "Adenomera hylaedactyla",
                                "Rhinella gr. margaritifera")) |>
-  dplyr::mutate(Espécie = dplyr::case_when(Espécie == "Adenomera hylaedactyla" ~ "Adenomera aff. hylaedactyla",
-                                           .default = Espécie),
+  dplyr::mutate(Espécie = dplyr::case_when(
+    Espécie == "Adenomera hylaedactyla" ~ "Adenomera aff. hylaedactyla",
+    .default = Espécie),
                 Espécie = paste0("<i>", Espécie, "</i>"),
-                Espécie = dplyr::if_else(Espécie |> stringr::str_detect("aff.|gr.|cf.|aff|gr|cf"),
-                                         Espécie |>
-                                           stringr::str_replace_all(c(" aff " = "</i> aff. <i>",
-                                                                      " aff. " = "</i> aff. <i>",
-                                                                      " gr " = "</i> gr. <i>",
-                                                                      " gr. " = "</i> gr. <i>",
-                                                                      " cf " = "</i> cf. <i>",
-                                                                      " cf. " = "</i> cf. <i>")),
-                                         Espécie),
+                Espécie = dplyr::if_else(
+                  Espécie |>
+                    stringr::str_detect("aff.|gr.|cf.|aff|gr|cf"),
+                  Espécie |>
+                    stringr::str_replace_all(c(" aff " = "</i> aff. <i>",
+                                               " aff. " = "</i> aff. <i>",
+                                               " gr " = "</i> gr. <i>",
+                                               " gr. " = "</i> gr. <i>",
+                                               " cf " = "</i> cf. <i>",
+                                               " cf. " = "</i> cf. <i>")),
+                  Espécie),
                 Espécie = Espécie |>
                   forcats::fct_relevel(c("<i>Pristimantis ramagii</i>",
                                          "<i>Adenomera</i> aff. <i>hylaedactyla</i>",
-                                         "<i>Rhinella hoogmoedi</i>")))
+                                         "<i>Rhinella</i> gr. <i>margaritifera</i>")))
 
 df_pontos_abu
 
