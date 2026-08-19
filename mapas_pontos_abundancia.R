@@ -269,7 +269,7 @@ ggsave(filename = "C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/ma
 df_pontos_abu <- abundancia_coord |>
   dplyr::filter(Espécie %in% c("Pristimantis ramagii",
                                "Adenomera hylaedactyla",
-                               "Rhinella hoogmoedi")) |>
+                               "Rhinella gr. margaritifera")) |>
   dplyr::mutate(Espécie = dplyr::case_when(Espécie == "Adenomera hylaedactyla" ~ "Adenomera aff. hylaedactyla",
                                            .default = Espécie),
                 Espécie = paste0("<i>", Espécie, "</i>"),
