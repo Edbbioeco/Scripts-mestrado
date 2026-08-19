@@ -27,7 +27,7 @@ especies %>% dplyr::glimpse()
 ### Importando ----
 
 var <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/levantamento_variáveis_ambientais.xlsx",
-                         sheet = 5)
+                         sheet = 6)
 
 ### Visualizando ----
 
