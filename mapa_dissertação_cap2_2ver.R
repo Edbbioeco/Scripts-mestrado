@@ -134,10 +134,13 @@ corpos_hid <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/
 corpos_hid
 
 ggplot() +
-  geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = borda, color = "darkgreen", fill = "transparent",
+          linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
   geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
-  geom_sf(data = corpos_hid, color = "royalblue", fill = "transparent", linewidth = 1)
+  geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
+  geom_sf(data = corpos_hid, color = "royalblue", fill = "transparent",
+          linewidth = 1)
 
 ## Imagem de satélite ----
 
