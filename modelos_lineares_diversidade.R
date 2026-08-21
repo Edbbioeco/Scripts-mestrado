@@ -150,6 +150,11 @@ df_beta |> dplyr::glimpse()
 
 # Modelos lineares da diversidade alfa ----
 
+## Multicolinearidade ----
+
+df_alfa[, c(3, 5, 7:9)] |>
+  cor(method = "spearman")
+
 ## Múltiplos modelos ----
 
 modelos <- purrr::map(c(3, 5, 7:9), \(id){
