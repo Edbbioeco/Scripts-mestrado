@@ -115,7 +115,8 @@ parcelas_trat <- parcelas |>
 parcelas_trat
 
 ggplot() +
-  geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = borda, color = "darkgreen", fill = "transparent",
+          linewidth = 1) +
   geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
   geom_sf_label(data = parcelas_trat,
                 aes(fill = tipo,
@@ -135,6 +136,7 @@ corpos_hid
 ggplot() +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
   geom_sf(data = parcelas, color = "red", linewidth = 1) +
+  geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
   geom_sf(data = corpos_hid, color = "royalblue", fill = "transparent", linewidth = 1)
 
 ## Imagem de satélite ----
