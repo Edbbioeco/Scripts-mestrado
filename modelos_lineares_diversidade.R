@@ -332,6 +332,8 @@ df_alfa |>
         axis.title = element_text(color = "black", size = 15),
         axis.title.y = ggtext::element_markdown(color = "black", size = 15),
         panel.border = element_rect(color = "black", linewidth = 1),
+        panel.grid = element_line(color = "gray60"),
+        panel.grid.minor = element_blank(),
         strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "none",
