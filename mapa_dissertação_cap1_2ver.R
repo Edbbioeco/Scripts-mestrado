@@ -159,9 +159,12 @@ br_map
 # Mapa de Pernambuco ----
 
 pe_map <- ggplot() +
-  geom_sf(data = br, color = "black", fill = "lightgray", linewidth = 0.5) +
-  geom_sf(data = pe, color = "black", fill = "lightgoldenrod", linewidth = 0.5) +
-  geom_sf(data = borda, color = "tomato4", fill = "transparent", linewidth = 1) +
+  geom_sf(data = br, color = "black", fill = "lightgray",
+          linewidth = 0.5) +
+  geom_sf(data = pe, color = "black", fill = "lightgoldenrod",
+          linewidth = 0.5) +
+  geom_sf(data = borda, color = "tomato4", fill = "transparent",
+          linewidth = 1) +
   geom_segment(aes(x = -35.1806, y = -8.726943,
                    xend = -35.4, yend = -8.55),
                arrow = arrow(length = unit(0.4, "cm"),
