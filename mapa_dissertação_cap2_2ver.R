@@ -219,30 +219,31 @@ mapa_principal <- ggplot() +
   geom_sf(data = corpos_hid,
           aes(color = "Water streams"),
           linewidth = 1, fill = "transparent") +
+  geom_sf(data = rodovias,
+          aes(color = "Highway"),
+          linewidth = 1, fill = "transparent") +
   scale_fill_manual(values = c("Brazil" = "lightgray",
                                "Pernambuco" = "lightgoldenrod"),
                     breaks = c("Brazil", "Pernambuco")) +
   scale_color_manual(values = c("Forest environment" = "gold3",
                                 "Water streams" = "royalblue",
+                                "Highway" = "brown4",
                                 "Uniform sampling plot" = "black",
                                 "Riparian sampling plot" = "black"),
-                     breaks = c("Forest environment", "Water streams",
+                     breaks = c("Forest environment", "Water streams", "Highway",
                                 "Uniform sampling plot", "Riparian sampling plot")) +
   guides(fill = guide_legend(order = 1, nrow = 2, title = NULL),
          color = guide_legend(order = 2, nrow = 2)) +
   labs(fill = NULL,
        color = NULL) +
   ggnewscale::new_scale_fill() +
-  geom_sf_label(data = parcelas_trat,
-                aes(fill = tipo, label = `Unidade Amostral`),
-                color = "black", shape = 21, size = 5, stroke = 1) +
+  geom_sf(data = parcelas_trat, aes(fill = tipo),
+          color = "black", shape = 21, size = 5, stroke = 1) +
   scale_fill_manual(values = c("Uniform sampling plot" = "orange2",
                                "Riparian sampling plot" = "royalblue"),
                     breaks = c("Uniform sampling plot", "Riparian sampling plot")) +
   guides(fill = guide_legend(order = 3, nrow = 2)) +
-  labs(fill = NULL,
-       x = NULL,
-       y = NULL) +
+  labs(fill = NULL) +
   ggspatial::coord_sf(label_graticule = "SEW",
                       xlim = c(-35.20179, -35.1561),
                       ylim = c(-8.745536, -8.71112),
