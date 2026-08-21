@@ -200,7 +200,8 @@ purrr::map2(c(3, 5, 7:9), modelos, \(id, modelo){
                                        "normality",
                                        "homogeneity"))
 
-  })
+  },
+  .progress = TRUE)
 
 resultados_modelos <- purrr::map_dfr(
   modelos,
