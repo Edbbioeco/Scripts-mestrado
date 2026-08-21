@@ -140,6 +140,12 @@ ggplot() +
   geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
   coord_sf(expand = FALSE)
 
+## Rodovias ----
+
+### Importar ----
+
+rodovias <- sf::st_read("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/rodovias_saltinho.shp")
+
 # Setando tema ----
 
 source("C:/Users/LENOVO/OneDrive/Documentos/funções/tema.R")
