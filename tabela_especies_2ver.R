@@ -68,7 +68,7 @@ comp_trat <- comp |>
     Espécie,
     "Pristimantis ramagii" ~ "PR",
     "Adenomera hylaedactyla" ~ "AH",
-    "Rhinella hoogmoedi" ~ "RH",
+    "Rhinella hoogmoedi" ~ "RM",
     "Rhinella granulosa" ~ "RG",
     "Leptodactylus troglodytes" ~ "LT",
     "Dryadobates alagoanus" ~ "DA",
