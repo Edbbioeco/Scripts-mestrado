@@ -25,3 +25,4 @@
 *.html
 *.zip
 .positai
+.posit/assistant
