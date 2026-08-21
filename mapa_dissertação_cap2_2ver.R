@@ -116,6 +116,7 @@ parcelas_trat
 
 ggplot() +
   geom_sf(data = borda, color = "darkgreen", fill = "transparent", linewidth = 1) +
+  geom_sf(data = rodovias, color = "gold4", linewidth = 1) +
   geom_sf_label(data = parcelas_trat,
                 aes(fill = tipo,
                     label = `Unidade Amostral`),
