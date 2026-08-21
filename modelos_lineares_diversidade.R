@@ -297,7 +297,7 @@ df_q1_flex |>
 ## Preditores significativos ----
 
 q1_predictor <- resultados_modelos |>
-  dplyr::filter(abs(t) > 1.96 & `F` > q_f) |>
+  dplyr::filter(abs(t) > q_t & `F` > q_f) |>
   dplyr::pull(Predictor)
 
 q1_predictor
