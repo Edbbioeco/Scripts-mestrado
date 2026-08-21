@@ -202,50 +202,53 @@ purrr::map2(c(3, 5, 7:9), modelos, \(id, modelo){
 
   })
 
-resultados_modelos <- purrr::map(modelos, \(modelo){
+resultados_modelos <- purrr::map_dfr(
+  modelos,
+  \(modelo){
 
-  resultados <- modelo |>
-    broom::tidy() |>
-    dplyr::filter(term != "(Intercept)") |>
-    dplyr::rename("Predictor" = term,
-                  "t" = statistic,
-                  "pt" = p.value,
-                  "β1" = estimate,
-                  "SE" = std.error) |>
-    dplyr::mutate(Predictor = Predictor |>
-                    stringr::str_remove_all("`"),
-                  β1 = β1 |> round(4),
-                  SE = SE |> round(4),
-                  t = t |> round(2),
-                  pt = pt |> round(3)) |>
-    tidyr::unite(β1:SE,
-                 sep = " ± ",
-                 col = "β1 ± SE")
+    resultados <- modelo |>
+      broom::tidy() |>
+      dplyr::filter(term != "(Intercept)") |>
+      dplyr::rename("Predictor" = term,
+                    "t" = statistic,
+                    "pt" = p.value,
+                    "β1" = estimate,
+                    "SE" = std.error) |>
+      dplyr::mutate(Predictor = Predictor |>
+                      stringr::str_remove_all("`"),
+                    β1 = β1 |> round(4),
+                    SE = SE |> round(4),
+                    t = t |> round(2),
+                    pt = pt |> round(3)) |>
+      tidyr::unite(β1:SE,
+                   sep = " ± ",
+                   col = "β1 ± SE")
 
-  summary <- modelo |>
-    summary()
+    summary <- modelo |>
+      summary()
 
-  resultados_summary <- tibble::tibble(`F` = summary$fstatistic[1] |> round(2),
-                                       df1 = summary$fstatistic[2],
-                                       df2 = summary$fstatistic[3],
-                                       `pglobal` = pf(q = summary$fstatistic[1],
-                                              df1 = summary$fstatistic[2],
-                                              df2 = summary$fstatistic[3],
-                                              lower.tail = FALSE) |>
-                                         round(2),
-                                       `Adj. R²` = summary$adj.r.squared |>
-                                         round(2))
+    resultados_summary <- tibble::tibble(
+      `F` = summary$fstatistic[1] |> round(2),
+      df1 = summary$fstatistic[2],
+      df2 = summary$fstatistic[3],
+      `pglobal` = pf(q = summary$fstatistic[1],
+                     df1 = summary$fstatistic[2],
+                     df2 = summary$fstatistic[3],
+                     lower.tail = FALSE) |> round(2),
+      `Adj. R²` = summary$adj.r.squared |>
+        round(2))
 
-  resultados <- resultados |>
-    dplyr::bind_cols(resultados_summary)
+    resultados <- resultados |>
+      dplyr::bind_cols(resultados_summary)
 
-  }) |>
-  dplyr::bind_rows() |>
-  dplyr::arrange(Predictor |> forcats::fct_relevel(c("Leaf-litter depth",
-                                                     "Canopy openness",
-                                                     "Edge distance",
-                                                     "Elevation",
-                                                     "Water stream distance")))
+    },
+  .progress = TRUE) |>
+  dplyr::arrange(Predictor |> forcats::fct_relevel(
+    c("Leaf-litter depth",
+      "Canopy openness",
+      "Edge distance",
+      "Elevation",
+      "Water stream distance")))
 
 resultados_modelos
 
