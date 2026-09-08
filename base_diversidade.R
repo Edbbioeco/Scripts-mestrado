@@ -34,7 +34,6 @@ especies |> dplyr::glimpse()
 
 especies_alfa <- especies |>
   dplyr::filter(Ordem == "Anura" &
-                  !Epípeto == "natalensis" &
                   Gênero != "Frostius" &
                   Família != "Hylidae") |>
   dplyr::summarise(Abundância = Abundância |> sum(),
