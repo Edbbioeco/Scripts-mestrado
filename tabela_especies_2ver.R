@@ -26,7 +26,7 @@ comp |> dplyr::glimpse()
 
 sps <- comp |>
   dplyr::filter(Ordem == "Anura" &
-                  !Epípeto %in% c("natalensis", "mystaceus") &
+                  !Epípeto %in% c("mystaceus") &
                   Gênero != "Frostius" &
                   Família != "Hylidae") |>
   dplyr::pull(Espécie) |>
@@ -71,6 +71,7 @@ comp_trat <- comp |>
     "Rhinella hoogmoedi" ~ "RM",
     "Rhinella granulosa" ~ "RG",
     "Leptodactylus troglodytes" ~ "LT",
+    "Leptodactylus natalensis" ~ "LN",
     "Dryadobates alagoanus" ~ "DA",
     "Adelophryne nordestina" ~ "AN",
     "Physalaemus cuvieri" ~ "PC",
@@ -111,17 +112,7 @@ comp_flex <- comp_trat |>
   flextable::fontsize(size = 10, part = "all") |>
   flextable::color(color = "black", part = "all") |>
   flextable::add_header_row(values = rep(NA, 11),
-                            top = TRUE) |>
-  flextable::compose(i = 1,
-                     j = 2:11,
-                     part = "header",
-                     value = flextable::as_paragraph(
-
-                       flextable::as_image(src = imagens,
-                                           width = 0.45,
-                                           height = 0.45)
-
-                     ))
+                            top = TRUE)
 
 comp_flex
 
