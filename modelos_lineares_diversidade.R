@@ -81,6 +81,13 @@ df_alfa |> dplyr::glimpse()
 
 ## Diversidade beta -----
 
+### Valores de diversidade beta por Bray-Curtis ----
+
+especies |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
+  vegan::decostand(method = "hellinger") |>
+  betapart::beta.multi.abund()
+
 ### Matriz de composição ----
 
 matriz_comp <- especies |>
