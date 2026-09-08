@@ -61,7 +61,7 @@ imagens_cortadas
 
 comp_trat <- comp |>
   dplyr::filter(Ordem == "Anura" &
-                  !Epípeto %in% c("natalensis", "mystaceus") &
+                  !Epípeto %in% c("mystaceus") &
                   Gênero != "Frostius" &
                   Família != "Hylidae") |>
   dplyr::mutate(Espécie = dplyr::case_match(
