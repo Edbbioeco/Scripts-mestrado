@@ -237,7 +237,8 @@ mapa_principal <- ggplot() +
   labs(fill = NULL,
        color = NULL) +
   ggnewscale::new_scale_fill() +
-  geom_sf(data = parcelas_trat, aes(fill = tipo),
+  geom_sf_label(data = parcelas_trat,
+                aes(fill = tipo, label = `Unidade Amostral`),
           color = "black", shape = 21, size = 5, stroke = 1) +
   scale_fill_manual(values = c("Uniform sampling plot" = "orange2",
                                "Riparian sampling plot" = "royalblue"),
