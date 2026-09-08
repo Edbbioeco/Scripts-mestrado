@@ -91,7 +91,7 @@ comp_trat <- comp |>
                      values_fill = 0) |>
   tidyr::pivot_longer(names_to = "Espécie",
                       values_to = "Abundância",
-                      cols = 3:12) |>
+                      cols = 3:14) |>
   dplyr::summarise(Abundância = Abundância |>
                      stringr::str_c(collapse = ", "),
                    .by = c(`Unidade Amostral`, Espécie)) |>
