@@ -95,6 +95,7 @@ comp_trat <- comp |>
   dplyr::summarise(Abundância = Abundância |>
                      stringr::str_c(collapse = ", "),
                    .by = c(`Unidade Amostral`, Espécie)) |>
+  dplyr::filter(Espécie != "NA") |>
   tidyr::pivot_wider(names_from = Espécie,
                      values_from = Abundância)
 
@@ -108,10 +109,10 @@ comp_flex <- comp_trat |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
   flextable::width(width = 1, j = 2) |>
-  flextable::italic(part = "header", j = 2:11) |>
+  flextable::italic(part = "header", j = 2:12) |>
   flextable::fontsize(size = 10, part = "all") |>
   flextable::color(color = "black", part = "all") |>
-  flextable::add_header_row(values = rep(NA, 11),
+  flextable::add_header_row(values = rep(NA, 12),
                             top = TRUE) |>
   flextable::compose(i = 1,
                      j = 2:11,
