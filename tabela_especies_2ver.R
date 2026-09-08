@@ -112,7 +112,17 @@ comp_flex <- comp_trat |>
   flextable::fontsize(size = 10, part = "all") |>
   flextable::color(color = "black", part = "all") |>
   flextable::add_header_row(values = rep(NA, 11),
-                            top = TRUE)
+                            top = TRUE) |>
+  flextable::compose(i = 1,
+                     j = 2:11,
+                     part = "header",
+                     value = flextable::as_paragraph(
+
+                       flextable::as_image(src = imagens,
+                                           width = 0.45,
+                                           height = 0.45)
+
+                     ))
 
 comp_flex
 
