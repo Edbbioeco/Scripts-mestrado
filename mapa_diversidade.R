@@ -118,6 +118,12 @@ div_tax <- comp |>
 
 div_tax
 
+## Calcular estatísticas descritivas para a diversidade taxonômica ----
+
+div_tax |>
+  dplyr::summarise(media = `Alpha Diversity` |> mean() |> round(2),
+                   sd = `Alpha Diversity` |> sd() |> round(2))
+
 ## Atribuindo estes valores ao shapefile das coordenadas ----
 
 parcelas_div <- parcelas |>
