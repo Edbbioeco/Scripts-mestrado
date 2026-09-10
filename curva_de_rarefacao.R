@@ -24,7 +24,6 @@ comp |> dplyr::glimpse()
 
 comp_trat <- comp |>
   dplyr::filter(Ordem == "Anura" &
-                  !Epípeto == "natalensis" &
                   Gênero != "Frostius" &
                   Família != "Hylidae" &
                   `Unidade Amostral` != "T1P1") |>
