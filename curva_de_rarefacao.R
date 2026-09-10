@@ -74,8 +74,8 @@ chao_df |>
   labs(fill = NULL,
        color = NULL) +
   scale_x_continuous(breaks = seq(0, 32, 2)) +
-  scale_y_continuous(breaks = seq(0, 14, 1),
-                     limits = c(0, 14)) +
+  scale_y_continuous(breaks = seq(0, 16, 2),
+                     limits = c(0, 16)) +
   scale_color_manual(values = c("royalblue", "orange")) +
   scale_fill_manual(values = c("royalblue", "orange")) +
   theme_bw() +
