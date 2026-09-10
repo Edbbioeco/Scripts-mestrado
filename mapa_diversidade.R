@@ -254,7 +254,7 @@ ggplot() +
         strip.background = element_rect(color = "black", linewidth = 1),
         legend.position = "bottom",
         legend.background = element_blank()) +
-  ggview::canvas(height = 10, width = 14)
+  ggview::canvas(height = 10, width = 15)
 
 ggsave(filename = "c:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/mapa_valores_diversidade_cap2.png",
-       height = 10, width = 14)
+       height = 10, width = 15)
