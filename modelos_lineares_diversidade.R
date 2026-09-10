@@ -465,6 +465,9 @@ df_sts_beta <- df_sts |>
                 `Std. Error` = `Std. Error` |> round(4),
                 `z value` = `z value` |> round(2),
                 `Pr(>|z|)` = `Pr(>|z|)` |> round(2),
+                `Pr(>|z|)` = dplyr::case_when(
+                  `Pr(>|z|)` < 0.01 ~"< 0.01",
+                  .default = `Pr(>|z|)` |> as.character()),
                 DF = 51) |>
   dplyr::relocate(Predictor, .before = Estimate) |>
   dplyr::filter(!Predictor |> stringr::str_detect("\\(")) |>
