@@ -118,6 +118,10 @@ div_tax <- comp |>
 
 div_tax
 
+## Ordenar da menos diversa para a mais diversa ----
+
+div_tax |> dplyr::arrange(`Alpha Diversity` |> dplyr::desc())
+
 ## Calcular estatísticas descritivas para a diversidade taxonômica ----
 
 div_tax |>
