@@ -183,3 +183,19 @@ rug.dis <- purrr::map(
   .progress = TRUE)
 
 rug.dis
+
+# Calcular endemismo pondrado ----
+
+endem <- purrr::map(
+  ls(pattern = "comm") |>
+    mget(envir = globalenv()),
+  \(comunidade){
+
+    phyloregion::weighted_endemism(comunidade |>
+                                     as.matrix() |>
+                                     phyloregion::dense2sparse())
+
+  },
+  .progress = TRUE)
+
+endem
