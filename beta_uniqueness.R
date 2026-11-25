@@ -107,7 +107,7 @@ comm2 <- tibble::tibble(B1 = c(1,1,1,1,1,1,1,1,1,1),
 
 comm2
 
-## Compute uniqueness ----
+## Compute LCBD ----
 
 ### Sorensen ----
 
@@ -136,3 +136,4 @@ hell.LCBD <- purrr::map(
   .progress = TRUE)
 
 hell.LCBD
+
