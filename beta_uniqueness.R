@@ -240,3 +240,11 @@ endem_df <- endem |>
 
 endem_df
 
+## Unite data frames ----
+
+uni_end_df <- dis_df |>
+  dplyr::left_join(endem_df,
+                   by = c("Community", "Local"))
+
+uni_end_df
+
