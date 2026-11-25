@@ -206,6 +206,8 @@ endem
 
 # Visualization ----
 
+## Create data frame with indeces ----
+
 dis_df <- purrr::map2_dfr(
   ls(pattern = ".dis$") |>
     c("endem") |>
