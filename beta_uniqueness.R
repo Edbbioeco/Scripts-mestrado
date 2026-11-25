@@ -222,6 +222,9 @@ dis_df <- purrr::map2_dfr(
                     Local = 1:dplyr::n())
 
     },
-  .progress = TRUE)
+  .progress = TRUE) |>
+  tidyr::pivot_longer(cols = 1:2,
+                      names_to = "Community",
+                      values_to = "Uniqueness")
 
 dis_df
