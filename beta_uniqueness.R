@@ -210,12 +210,10 @@ endem
 
 dis_df <- purrr::map2_dfr(
   ls(pattern = ".dis$") |>
-    c("endem") |>
     mget(envir = globalenv()),
   c("Ruggiero",
     "Simpson",
-    "Sorensen",
-    "Weightd endemism"),
+    "Sorensen"),
   \(dis, name){
 
     dis |>
