@@ -153,3 +153,18 @@ sor.dis <- purrr::map(
   .progress = TRUE)
 
 sor.dis
+
+### Sorensen ----
+
+sim.dis <- purrr::map(
+  ls(pattern = "comm") |>
+    mget(envir = globalenv()),
+  \(comunidade){
+
+    betapart::beta.pair(comunidade)$beta.sim |>
+      uniqueness()
+
+  },
+  .progress = TRUE)
+
+sim.dis
