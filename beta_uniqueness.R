@@ -168,3 +168,18 @@ sim.dis <- purrr::map(
   .progress = TRUE)
 
 sim.dis
+
+### Ruggiero ----
+
+rug.dis <- purrr::map(
+  ls(pattern = "comm") |>
+    mget(envir = globalenv()),
+  \(comunidade){
+
+    beta.rug(comunidade) |>
+      uniqueness()
+
+  },
+  .progress = TRUE)
+
+rug.dis
