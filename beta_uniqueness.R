@@ -86,3 +86,22 @@ uniqueness <- function(x, method = "arithmetic"){
   res
 
   }
+
+# Effect of the dissimilarity index on uniqueness measures ----
+
+## Scenarios ----
+
+comm1 <- tibble::tibble(A1 = c(1,1,1,1,1,0,0,0,0,0),
+                        A2 = c(0,0,0,0,0,1,1,1,1,0),
+                        A3 = c(0,0,0,0,0,0,0,0,1,1),
+                        A4 = c(1,0,0,0,0,0,0,0,0,0))
+
+comm1
+
+comm2 <- tibble::tibble(B1 = c(1,1,1,1,1,1,1,1,1,1),
+                        B2 = c(1,1,1,1,1,1,0,0,0,0),
+                        B3 = c(1,1,0,0,0,0,1,1,0,0),
+                        B4 = c(1,1,0,0,0,0,0,0,1,0))
+
+comm2
+
