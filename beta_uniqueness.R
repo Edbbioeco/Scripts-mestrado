@@ -107,3 +107,19 @@ comm2 <- tibble::tibble(B1 = c(1,1,1,1,1,1,1,1,1,1),
 
 comm2
 
+## Compute uniqueness ----
+
+### Sorensen ----
+
+sor.LCBD <- purrr::map(
+  ls(pattern = "comm") |>
+    mget(envir = globalenv()),
+  \(comunidade){
+
+     adespatial::beta.div(comunidade, method = "sorensen")$LCBD
+
+    },
+  .progress = TRUE)
+
+sor.LCBD
+
