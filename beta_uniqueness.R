@@ -199,3 +199,25 @@ endem <- purrr::map(
   .progress = TRUE)
 
 endem
+
+# Visualization ----
+
+dis_df <- purrr::map2_dfr(
+  ls(pattern = ".dis$") |>
+    c("endem") |>
+    mget(envir = globalenv()),
+  c("Ruggiero",
+    "Simpson",
+    "Sorensen",
+    "Weightd endemism"),
+  \(dis, name){
+
+    dis |>
+      dplyr::bind_cols() |>
+      dplyr::mutate(Index = name,
+                    Local = 1:dplyr::n())
+
+    },
+  .progress = TRUE)
+
+dis_df
