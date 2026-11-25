@@ -228,3 +228,15 @@ dis_df <- purrr::map2_dfr(
                       values_to = "Uniqueness")
 
 dis_df
+
+## Create data frame with indeces weighted endemism values ----
+
+endem_df <- endem |>
+  dplyr::bind_cols() |>
+  dplyr::mutate(Index = "Weighted endemism",
+                Local = 1:4) |>
+  tidyr::pivot_longer(cols = 1:2,
+                      names_to = "Community",
+                      values_to = "Weighted endemism")
+
+endem_df
