@@ -137,3 +137,19 @@ hell.LCBD <- purrr::map(
 
 hell.LCBD
 
+## Compute U ----
+
+### Sorensen ----
+
+sor.dis <- purrr::map(
+  ls(pattern = "comm") |>
+    mget(envir = globalenv()),
+  \(comunidade){
+
+    betapart::beta.pair(comunidade)$beta.sor |>
+      uniqueness()
+
+  },
+  .progress = TRUE)
+
+sor.dis
