@@ -248,3 +248,29 @@ uni_end_df <- dis_df |>
 
 uni_end_df
 
+## Graphic ----
+
+uni_end_df |>
+  ggplot(aes(`Weighted endemism`, Uniqueness, color = Index, fill = Index,
+             label = Local)) +
+  geom_line(linewidth = 2) +
+  geom_point(shape = 21, color = "black", size = 5, stroke = 2) +
+  ggrepel::geom_text_repel(size = 7,
+                           bg.color = "black",
+                           bg.r = 0.15,
+                           nudge_y = 0.06,
+                           direction = "y",
+                           segment.color = NA,
+                           box.padding = 0.2,
+                           point.padding = 0.3,
+                           min.segment.length = Inf) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
+  facet_wrap(~Community, ncol = 1) +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 20),
+        legend.text = element_text(color = "black", size = 20),
+        legend.title = element_text(color = "black", size = 20),
+        strip.text = element_text(color = "black", size = 20),
+        strip.background = element_rect(color = "black", fill = "gray"))
