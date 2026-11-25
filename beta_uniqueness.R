@@ -123,3 +123,16 @@ sor.LCBD <- purrr::map(
 
 sor.LCBD
 
+### Hellinger ----
+
+hell.LCBD <- purrr::map(
+  ls(pattern = "comm") |>
+    mget(envir = globalenv()),
+  \(comunidade){
+
+    adespatial::beta.div(comunidade, method = "hellinger")$LCBD
+
+  },
+  .progress = TRUE)
+
+hell.LCBD
