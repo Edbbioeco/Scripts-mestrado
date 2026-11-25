@@ -1,5 +1,7 @@
 # List of packages ----
 
+library(tidyverse)
+
 library(betapart)
 
 library(adespatial)
