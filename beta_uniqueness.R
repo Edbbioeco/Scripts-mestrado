@@ -56,3 +56,33 @@ beta.rug <- function(x){
   return(res)
 
   }
+
+## Uniqueness as average dissimilarity ----
+
+uniqueness <- function(x, method = "arithmetic"){
+
+  if(!is.matrix(x)){
+
+    x <- as.matrix(x)
+
+    }
+
+  diag(x) <- NA
+
+  method <- match.arg(method, c("arithmetic", "geometric"))
+
+  switch(method,
+         arithmetic = {
+    res <- rowMeans(x, na.rm = TRUE)
+
+    },
+    geometric = {
+    res <- exp(rowMeans(log(x + 0.01), na.rm = TRUE))
+
+    })
+
+  names(res) <- rownames(x)
+
+  res
+
+  }
