@@ -306,3 +306,18 @@ uni_end_df |>
 ggsave(filename = "plot_uniqueness.png",
        height = 12,
        width = 16)
+
+# Simulation-based ----
+
+## Create matrix ----
+
+cor.results.1 <- matrix(nrow = 1000, ncol = 6)
+
+colnames(cor.results.1) <- c("lcbd.hel.end",
+                             "lcbd.sor.end",
+                             "sim.end",
+                             "sor.end",
+                             "rug.end",
+                             "S.var")
+
+cor.results.1
