@@ -380,3 +380,26 @@ cor.results.1 <- purrr::map(
   purrr::list_rbind()
 
 cor.results.1
+
+## Visualize ----
+
+### Make data frame fot correlation indeces ----
+
+data.cor <- data.frame(methods = rep(c("LCBD.hell",
+                                       "LCBD.sor",
+                                       "Simpson",
+                                       "Sorensen",
+                                       "Ruggiero"),
+                                     each = 1000),
+                       c(cor.results.1[, 1],
+                         cor.results.1[, 2],
+                         cor.results.1[, 3],
+                         cor.results.1[, 4],
+                         cor.results.1[, 5]),
+                       c(cor.results.1[, 6],
+                         cor.results.1[, 6],
+                         cor.results.1[, 6],
+                         cor.results.1[, 6],
+                         cor.results.1[, 6]))
+
+data.cor
