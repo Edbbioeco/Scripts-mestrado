@@ -274,3 +274,7 @@ uni_end_df |>
         legend.title = element_text(color = "black", size = 20),
         strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", fill = "gray"))
+
+ggsave(filename = "plot_uniqueness.png",
+       height = 12,
+       width = 16)
