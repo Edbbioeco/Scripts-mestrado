@@ -563,3 +563,19 @@ data.cor.2 |>
     .names = "{.col}_{.fn}"
   ),
   .by = Index)
+
+## Calculate correlations between indeces and species variance ----
+
+purrr::map(
+  cor.results.2[1:5] |> names(),
+  \(indice){
+
+    stringr::str_glue("Correlation between {indice} and Species Variance") |>
+      message()
+
+    cor.test(cor.results.2 |> dplyr::pull(indice),
+             cor.results.2 |> dplyr::pull("S.var"))
+
+  },
+  .progress = TRUE) |>
+  purrr::set_names(cor.results.2[1:5] |> names())
