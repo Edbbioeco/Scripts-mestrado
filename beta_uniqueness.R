@@ -6,6 +6,8 @@ library(betapart)
 
 library(adespatial)
 
+library(ggrepel)
+
 library(vegan)
 
 library(terra)
