@@ -509,3 +509,33 @@ cor.results.2 <- purrr::map(
   purrr::list_rbind()
 
 cor.results.2
+
+## Visualize ----
+
+### Make data frame fot correlation indeces ----
+
+data.cor.2 <- data.frame(Index = rep(c("LCBD.hell",
+                                       "LCBD.sor",
+                                       "Simpson",
+                                       "Sorensen",
+                                       "Ruggiero"),
+                                     each = 1000),
+                         correlation = purrr::map(
+                           1:5,
+                           \(id){
+
+                             cor.results.2 |> dplyr::pull(id)
+
+                             }) |>
+                           unlist(),
+                         S.var = purrr::map(
+                           1:5,
+                           \(times){
+
+                             cor.results.2 |> dplyr::pull(6)
+
+                             }) |>
+                           unlist()
+                         )
+
+data.cor.2
