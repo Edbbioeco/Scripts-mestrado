@@ -385,21 +385,29 @@ cor.results.1
 
 ### Make data frame fot correlation indeces ----
 
-data.cor <- data.frame(methods = rep(c("LCBD.hell",
+data.cor <- data.frame(Index = rep(c("LCBD.hell",
                                        "LCBD.sor",
                                        "Simpson",
                                        "Sorensen",
                                        "Ruggiero"),
                                      each = 1000),
-                       c(cor.results.1[, 1],
-                         cor.results.1[, 2],
-                         cor.results.1[, 3],
-                         cor.results.1[, 4],
-                         cor.results.1[, 5]),
-                       c(cor.results.1[, 6],
-                         cor.results.1[, 6],
-                         cor.results.1[, 6],
-                         cor.results.1[, 6],
-                         cor.results.1[, 6]))
+                       correlation = purrr::map(
+                         1:5,
+                         \(id){
+
+                           cor.results.1 |> dplyr::pull(id)
+
+                         }) |>
+                         unlist(),
+                       S.var = purrr::map(
+                         1:5,
+                         \(times){
+
+                           cor.results.1 |> dplyr::pull(6)
+
+                           }) |>
+                         unlist()
+                       )
 
 data.cor
+
