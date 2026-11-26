@@ -6,6 +6,8 @@ library(betapart)
 
 library(adespatial)
 
+library(ggnewscale)
+
 library(ggrepel)
 
 library(vegan)
