@@ -256,15 +256,6 @@ uni_end_df |>
   ggplot(aes(`Weighted endemism`, Uniqueness, color = Index, fill = Index,
              label = Local)) +
   geom_point(shape = 21, color = "black", size = 5, stroke = 2) +
-  ggrepel::geom_text_repel(size = 7,
-                           bg.color = "black",
-                           bg.r = 0.15,
-                           nudge_y = 0.06,
-                           direction = "y",
-                           segment.color = NA,
-                           box.padding = 0.2,
-                           point.padding = 0.3,
-                           min.segment.length = Inf) +
   geom_smooth(se = FALSE) +
   scale_color_manual(labels = c("Sorensen",
                                 "Simpson",
@@ -284,6 +275,23 @@ uni_end_df |>
                     values = c("orange",
                                "brown",
                                "royalblue")) +
+  ggnewscale::new_scale_color() +
+  ggrepel::geom_text_repel(ggplot2::aes(`Weighted endemism`, Uniqueness, label = Local,
+                                        color = Index),
+                           inherit.aes = FALSE,
+                           size = 7,
+                           bg.color = "black",
+                           bg.r = 0.15,
+                           nudge_y = 0.06,
+                           direction = "y",
+                           segment.color = NA,
+                           box.padding = 0.2,
+                           point.padding = 0.3,
+                           min.segment.length = Inf,
+                           show.legend = FALSE) +
+  ggplot2::scale_color_manual(breaks = c("Sorensen", "Simpson", "Ruggiero"),
+                              values = c("orange", "brown", "royalblue"),
+                              guide = "none") +
   facet_wrap(~Community, ncol = 1) +
   theme_classic() +
   theme(axis.text = element_text(color = "black", size = 20),
