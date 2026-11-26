@@ -266,8 +266,24 @@ uni_end_df |>
                            point.padding = 0.3,
                            min.segment.length = Inf) +
   geom_smooth(se = FALSE) +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d() +
+  scale_color_manual(labels = c("Sorensen",
+                                "Simpson",
+                                "Ruggiero"),
+                     breaks = c("Sorensen",
+                                "Simpson",
+                                "Ruggiero"),
+                     values = c("orange",
+                                "brown",
+                                "royalblue")) +
+  scale_fill_manual(labels = c("Sorensen",
+                               "Simpson",
+                               "Ruggiero"),
+                    breaks = c("Sorensen",
+                               "Simpson",
+                               "Ruggiero"),
+                    values = c("orange",
+                               "brown",
+                               "royalblue")) +
   facet_wrap(~Community, ncol = 1) +
   theme_classic() +
   theme(axis.text = element_text(color = "black", size = 20),
