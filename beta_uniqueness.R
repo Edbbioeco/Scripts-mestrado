@@ -435,7 +435,7 @@ data.cor |>
   ),
   .by = Index)
 
-## Calculate correaltions between indeces and species variance ----
+## Calculate correlations between indeces and species variance ----
 
 purrr::map(
   cor.results.1[1:5] |> names(),
