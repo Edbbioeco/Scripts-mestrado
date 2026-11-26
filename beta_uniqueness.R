@@ -272,9 +272,9 @@ uni_end_df |>
                      breaks = c("Sorensen",
                                 "Simpson",
                                 "Ruggiero"),
-                     values = c("orange",
-                                "brown",
-                                "royalblue")) +
+                     values = c("orange4",
+                                "brown4",
+                                "royalblue4")) +
   scale_fill_manual(labels = c("Sorensen",
                                "Simpson",
                                "Ruggiero"),
