@@ -553,3 +553,13 @@ data.cor.2 |>
         legend.title = element_text(color = "black", size = 20),
         strip.text = element_text(color = "black", size = 20),
         strip.background = element_rect(color = "black", fill = "gray"))
+
+## Summarization ----
+
+data.cor.2 |>
+  dplyr::summarise(dplyr::across(
+    .cols = dplyr::where(is.numeric),
+    .fns = list(mean = mean, sd = sd),
+    .names = "{.col}_{.fn}"
+  ),
+  .by = Index)
