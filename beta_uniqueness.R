@@ -79,13 +79,15 @@ uniqueness <- function(x, method = "arithmetic"){
 
   switch(method,
          arithmetic = {
-    res <- rowMeans(x, na.rm = TRUE)
 
-    },
-    geometric = {
-    res <- exp(rowMeans(log(x + 0.01), na.rm = TRUE))
+           res <- rowMeans(x, na.rm = TRUE)
 
-    })
+           },
+         geometric = {
+
+           res <- exp(rowMeans(log(x + 0.01), na.rm = TRUE))
+
+           })
 
   names(res) <- rownames(x)
 
