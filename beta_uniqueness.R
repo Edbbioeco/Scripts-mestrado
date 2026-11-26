@@ -450,3 +450,62 @@ purrr::map(
     },
   .progress = TRUE) |>
   purrr::set_names(cor.results.1[1:5] |> names())
+
+# Uniform occupancy distribution ----
+
+## Loop to calculate uniqueness ----
+
+cor.results.2 <- purrr::map(
+  1:1000,
+  \(times){
+
+    occupancy <- runif(50, 0, 1)
+
+    occupancy.prob <- occupancy / max(occupancy)
+
+    table.j <- purrr::map(
+      1:50,
+      \(specie){
+
+        rbinom(50, 1, occupancy.prob[specie])
+
+      }) |>
+      purrr::set_names(paste0("species_", 1:50)) |>
+      dplyr::bind_cols() |>
+      as.matrix()
+
+    table.j[rowSums(table.j) == 0, sample(1:50, 1)] <- 1
+
+    beta.pair <- betapart::beta.pair(table.j)
+
+    d.sim <- beta.pair$beta.sim
+
+    d.sor <- beta.pair$beta.sor
+
+    d.rug <- beta.rug(table.j)
+
+    uniq.sim.i <- uniqueness(d.sim)
+
+    uniq.sor.i <- uniqueness(d.sor)
+
+    uniq.rug.i <- uniqueness(d.rug)
+
+    lcbd.hel <- adespatial::beta.div(table.j, method = "hellinger")$LCBD
+
+    lcbd.sor <- adespatial::beta.div(table.j, method = "sorensen")$LCBD
+
+    end.i <- weighted_endemism(table.j)
+
+    tibble::tibble(
+      lcbd.hel.end = cor(lcbd.hel, end.i, method = "spearman"),
+      lcbd.sor.end = cor(lcbd.sor, end.i, method = "spearman"),
+      sim.end = cor(uniq.sim.i, end.i, method = "spearman"),
+      sor.end = cor(uniq.sor.i, end.i, method = "spearman"),
+      rug.end = cor(uniq.rug.i, end.i, method = "spearman"),
+      S.var = var(rowSums(table.j)))
+
+  },
+  .progress = TRUE) |>
+  purrr::list_rbind()
+
+cor.results.2
