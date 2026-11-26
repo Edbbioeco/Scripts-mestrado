@@ -411,3 +411,16 @@ data.cor <- data.frame(Index = rep(c("LCBD.hell",
 
 data.cor
 
+### Graphic ----
+
+data.cor |>
+  ggplot(aes(Index, correlation, color = S.var)) +
+  ggbeeswarm::geom_quasirandom() +
+  scale_color_viridis_c() +
+  theme_classic() +
+  theme(axis.text = element_text(color = "black", size = 20),
+        axis.title = element_text(color = "black", size = 20),
+        legend.text = element_text(color = "black", size = 20),
+        legend.title = element_text(color = "black", size = 20),
+        strip.text = element_text(color = "black", size = 20),
+        strip.background = element_rect(color = "black", fill = "gray"))
