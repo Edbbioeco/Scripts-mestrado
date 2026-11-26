@@ -256,7 +256,7 @@ uni_end_df |>
   ggplot(aes(`Weighted endemism`, Uniqueness, color = Index, fill = Index,
              label = Local)) +
   geom_point(shape = 21, color = "black", size = 5, stroke = 2) +
-  geom_smooth(se = FALSE) +
+  geom_smooth(se = FALSE, linewidth = 1) +
   scale_color_manual(labels = c("Sorensen",
                                 "Simpson",
                                 "Ruggiero"),
