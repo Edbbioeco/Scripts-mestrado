@@ -33,6 +33,33 @@ beta.rug <- function(x){
 
 }
 
+## Ruggiero para abundância ----
+
+beta_rlb_ab <- function(comm){
+
+  comm <- as.matrix(comm)
+
+  sitios <- rownames(comm)
+
+  n <- nrow(comm)
+
+  tidyr::expand_grid(
+    j = seq_len(n),
+    k = seq_len(n)) |>
+    dplyr::filter(j != k) |>
+    dplyr::mutate(
+      beta = purrr::map2_dbl(
+        .x = j,
+        .y = k,
+        .f = ~ sum(comm[.x, ] - pmin(comm[.x, ], comm[.y, ])) / sum(comm[.x, ])
+        ),
+      focal = sitios[j],
+      outro = sitios[k]) |>
+    dplyr::select(focal, outro, beta)
+
+  }
+
+
 ## Uniqueness as average dissimilarity ----
 
 uniqueness <- function(x, method = "arithmetic"){
