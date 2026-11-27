@@ -67,3 +67,12 @@ unicidade_bray <- especies |>
   uniqueness()
 
 unicidade_bray
+
+#### Ruggiero ----
+
+unicade_rug <- especies |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
+  beta_rlb_ab() |>
+  uniqueness()
+
+unicade_rug
