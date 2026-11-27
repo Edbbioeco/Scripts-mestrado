@@ -88,3 +88,33 @@ df_modelos <- tibble::tibble(bray_uni = unicidade_bray,
                              elevation = ambientais$Altitude)
 
 df_modelos
+
+# Modelos lineares ----
+
+## Criar os modelos ----
+
+modelos_lm <- purrr::pmap(
+  tidyr::expand_grid(indices = df_modelos[1:2] |> names(),
+                     vars = df_modelos[3:7] |> names()),
+  \(indices, vars){
+
+    formula <- paste0(indices, " ~ ", vars) |>
+      as.formula()
+
+    lm(formula, data = df_modelos)
+
+    },
+  .progress = TRUE) |>
+  purrr::set_names(tidyr::expand_grid(indices = df_modelos[1:2] |> names(),
+                                      vars = df_modelos[3:7] |> names()) |>
+                     dplyr::mutate(id = purrr::map2(
+                       indices,
+                       vars,
+                       \(indices, vars){
+
+                         paste0(indices, "-", vars)
+                       }
+                       )) |>
+                     dplyr::pull(id))
+
+  modelos_lm
