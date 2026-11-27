@@ -41,3 +41,9 @@ especies |> dplyr::glimpse()
 ### Importar ----
 
 ambientais <-readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx")
+
+### Visualizar ----
+
+ambientais
+
+ambientais |> dplyr::glimpse()
