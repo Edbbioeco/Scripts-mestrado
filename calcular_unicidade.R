@@ -117,7 +117,7 @@ modelos_lm <- purrr::pmap(
                        )) |>
                      dplyr::pull(id))
 
-  modelos_lm
+modelos_lm
 
 ## Avaliar ajustes dos modelos ----
 
@@ -143,3 +143,21 @@ purrr::imap(
 
     },
   .progress = TRUE)
+
+## Estatísticas do modelo ----
+
+purrr::imap(
+  modelos_lm,
+  \(modelo, id){
+
+    paste0("modelo ", id) |>
+      crayon::blue() |>
+      message()
+
+    modelo |>
+      summary() |>
+      print()
+
+    },
+  .progress = TRUE)
+
