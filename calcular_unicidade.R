@@ -29,3 +29,9 @@ library(DHARMa)
 ### Importar ----
 
 especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_composicao.xlsx")
+
+### Visualizar ----
+
+especies
+
+especies |> dplyr::glimpse()
