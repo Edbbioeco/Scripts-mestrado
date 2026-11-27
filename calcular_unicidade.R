@@ -343,3 +343,34 @@ purrr::imap_dfr(
   tibble::rownames_to_column(var = "term") |>
   dplyr::filter(!term |> stringr::str_detect("\\(") &
                   abs(`z value`) >= 1.96)
+
+## Extrair preditores significativos ----
+
+vars_sig_glm <- purrr::imap_dfr(
+  modelos_glm,
+  \(modelo, id){
+
+    modelo |>
+      summary() |>
+      purrr::pluck("coefficients") |>
+      purrr::pluck("cond") |>
+      as.data.frame() |>
+      dplyr::mutate(R2 = modelo |>
+                      performance::r2_ferrari() |>
+                      as.numeric(),
+                    tipo = id)
+
+  },
+  .progress = TRUE) |>
+  tibble::rownames_to_column(var = "preditor") |>
+  dplyr::filter(!preditor |> stringr::str_detect("\\(") &
+                  abs(`z value`) >= 1.96) |>
+  dplyr::mutate(significativo = "sim",
+                preditor = preditor |>
+                  stringr::str_remove("\\.\\.\\.[0-9]+$")) |>
+  dplyr::select(tipo, significativo) |>
+  tidyr::separate(col = 1,
+                  into = c("tipo", "preditor"),
+                  sep = "-")
+
+vars_sig_glm
