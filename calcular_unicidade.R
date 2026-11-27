@@ -161,3 +161,17 @@ purrr::imap(
     },
   .progress = TRUE)
 
+## Extrair estatísticas como data frame ----
+
+purrr::imap_dfr(
+  modelos_lm,
+  \(modelo, id){
+
+    modelo |>
+      broom::tidy() |>
+      dplyr::mutate(modelo = id)
+
+    },
+  .progress = TRUE) |>
+  dplyr::filter(!term |> stringr::str_detect("\\(") &
+                  abs(statistic) >= qt(df = 10, p = 0.05, lower.tail = FALSE))
