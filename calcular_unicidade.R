@@ -52,4 +52,6 @@ ambientais |> dplyr::glimpse()
 
 ## Dissimilaridade da composição ----
 
+### Impportar funções ----
+
 source("https://raw.githubusercontent.com/Edbbioeco/Scripts-mestrado/main/ruggiero_indices.R")
