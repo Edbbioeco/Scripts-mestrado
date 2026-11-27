@@ -304,3 +304,20 @@ purrr::imap(
 
   },
   .progress = TRUE)
+
+## Estatísticas do modelo ----
+
+purrr::imap(
+  modelos_glm,
+  \(modelo, id){
+
+    paste0("modelo ", id) |>
+      crayon::blue() |>
+      message()
+
+    modelo |>
+      summary() |>
+      print()
+
+  },
+  .progress = TRUE)
