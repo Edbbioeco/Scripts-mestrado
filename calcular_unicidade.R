@@ -190,18 +190,22 @@ purrr::imap_dfr(
 
 ## Extrair preditores significativos ----
 
-vars_sig_lm <- purrr::map(
+vars_sig_lm <- purrr::imap_dfr(
   modelos_lm,
-  \(modelo){
+  \(modelo, id){
 
     modelo |>
       broom::tidy() |>
+      dplyr::mutate(indice = id) |>
       dplyr::filter(!term |> stringr::str_detect("\\(") &
-                      abs(statistic) >= qt(df = 10, p = 0.05, lower.tail = FALSE)) |>
-      dplyr::pull(term)
+                      abs(statistic) >= qt(df = 10, p = 0.05, lower.tail = FALSE))
 
   },
   .progress = TRUE) |>
-  purrr::compact()
+  dplyr::select(indice) |>
+  tidyr::separate(col = 1,
+                  into = c("tipo", "preditor"),
+                  sep = "-") |>
+  dplyr::mutate(signficativo = "sim")
 
 vars_sig_lm
