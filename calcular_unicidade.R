@@ -167,8 +167,22 @@ purrr::imap(
       message()
 
     modelo |>
-      summary() |>
-      print()
+      marginaleffects::avg_comparisons() |>
+      tibble::as_tibble() |>
+      dplyr::select(3:4) |>
+      dplyr::mutate(statistic =  modelo |>
+                      summary() |>
+                      broom::tidy() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("statistic"),
+                    p = modelo |>
+                      summary() |>
+                      broom::tidy() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("statistic"),
+                    R2 = modelo |>
+                      performance::r2() |>
+                      purrr::pluck(2))
 
     },
   .progress = TRUE)
