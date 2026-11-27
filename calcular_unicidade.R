@@ -209,3 +209,50 @@ vars_sig_lm <- purrr::imap_dfr(
   dplyr::mutate(signficativo = "sim")
 
 vars_sig_lm
+
+## Gráfico ----
+
+purrr::map2(
+    df_modelos[1:3] |> names(),
+    c("Bray-Curtis", "Hellinger", "Ruggiero"),
+    \(indice, titulo){
+
+      df_modelos |>
+        tidyr::pivot_longer(cols = 1:3,
+                            names_to = "tipo",
+                            values_to = "Uniqueness") |>
+        tidyr::pivot_longer(cols = 1:5,
+                            names_to = "preditor",
+                            values_to = "valor preditor") |>
+        dplyr::left_join(vars_sig_lm,
+                         by = c("tipo", "preditor")) |>
+        dplyr::mutate(signficativo = dplyr::case_when(
+
+          signficativo |> is.na() ~ "não",
+          .default = "sim"
+
+          )) |>
+        dplyr::filter(tipo == indice) |>
+        ggplot(aes(`valor preditor`, Uniqueness)) +
+        geom_point(size = 5) +
+        geom_smooth(data = . %>%
+                      dplyr::filter(signficativo == "sim"),
+                    method = "lm",
+                    linewidth = 1,
+                    se = FALSE) +
+        facet_wrap(~preditor, scales = "free_x") +
+        labs(x = "Predictor value",
+             y = "Uniqueness",
+             title = titulo) +
+        theme_classic() +
+        theme(axis.text = element_text(color = "black", size = 20),
+              axis.title = element_text(color = "black", size = 20),
+              axis.line = element_line(color = "black", linewidth = 1),
+              legend.text = element_text(color = "black", size = 20),
+              legend.title = element_text(color = "black", size = 20),
+              strip.text = element_text(color = "black", size = 20),
+              strip.background = element_rect(color = "black", fill = "gray"),
+              plot.title = element_text(color = "black", size = 30, hjust = 0.5))
+
+      },
+    .progress = TRUE)
