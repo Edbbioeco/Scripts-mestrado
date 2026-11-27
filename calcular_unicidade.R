@@ -55,3 +55,15 @@ ambientais |> dplyr::glimpse()
 ### Impportar funções ----
 
 source("https://raw.githubusercontent.com/Edbbioeco/Scripts-mestrado/main/ruggiero_indices.R")
+
+### Calcular unicidade ----
+
+#### Bray-Curtis ----
+
+unicidade_bray <- especies |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
+  betapart::beta.pair.abund() |>
+  purrr::pluck("beta.bray") |>
+  uniqueness()
+
+unicidade_bray
