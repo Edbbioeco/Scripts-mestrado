@@ -47,3 +47,9 @@ ambientais <-readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mest
 ambientais
 
 ambientais |> dplyr::glimpse()
+
+# Data frame dos dados do modelo ----
+
+## Dissimilaridade da composição ----
+
+source("https://raw.githubusercontent.com/Edbbioeco/Scripts-mestrado/main/ruggiero_indices.R")
