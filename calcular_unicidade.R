@@ -118,3 +118,28 @@ modelos_lm <- purrr::pmap(
                      dplyr::pull(id))
 
   modelos_lm
+
+## Avaliar ajustes dos modelos ----
+
+purrr::imap(
+  modelos_lm,
+  \(modelo, id){
+
+    paste0("modelo ", id) |>
+      crayon::blue() |>
+      message()
+
+    modelo |>
+      performance::check_normality() |> print()
+
+    modelo |>
+      performance::check_heteroscedasticity() |> print()
+
+    modelo |>
+      performance::check_model(check = c("homogeneity",
+                                         "qq",
+                                         "normality")) |>
+      print()
+
+    },
+  .progress = TRUE)
