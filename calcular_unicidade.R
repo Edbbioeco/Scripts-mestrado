@@ -321,3 +321,25 @@ purrr::imap(
 
   },
   .progress = TRUE)
+
+## Extrair estatísticas como data frame ----
+
+purrr::imap_dfr(
+  modelos_glm,
+  \(modelo, id){
+
+    modelo |>
+      summary() |>
+      purrr::pluck("coefficients") |>
+      purrr::pluck("cond") |>
+      as.data.frame() |>
+      dplyr::mutate(R2 = modelo |>
+                      performance::r2_ferrari() |>
+                      as.numeric(),
+                    modelo = id)
+
+  },
+  .progress = TRUE) |>
+  tibble::rownames_to_column(var = "term") |>
+  dplyr::filter(!term |> stringr::str_detect("\\(") &
+                  abs(`z value`) >= 1.96)
