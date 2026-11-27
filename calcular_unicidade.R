@@ -287,3 +287,20 @@ modelos_glm <- purrr::pmap(
                      dplyr::pull(id))
 
 modelos_glm
+
+## Avaliar ajustes dos modelos ----
+
+purrr::imap(
+  modelos_glm,
+  \(modelo, id){
+
+    paste0("modelo ", id) |>
+      crayon::blue() |>
+      message()
+
+    modelo |> DHARMa::simulateResiduals() |> print()
+
+    modelo |> DHARMa::simulateResiduals(plot = TRUE)
+
+  },
+  .progress = TRUE)
