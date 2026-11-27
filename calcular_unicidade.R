@@ -316,8 +316,26 @@ purrr::imap(
       message()
 
     modelo |>
-      summary() |>
-      print()
+      marginaleffects::avg_comparisons() |>
+      tibble::as_tibble() |>
+      dplyr::select(3:4) |>
+      dplyr::mutate(`z value` =  modelo |>
+                      summary() |>
+                      purrr::pluck("coefficients") |>
+                      purrr::pluck("cond") |>
+                      as.data.frame() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("z value"),
+                    p = modelo |>
+                      summary() |>
+                      purrr::pluck("coefficients") |>
+                      purrr::pluck("cond") |>
+                      as.data.frame() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("Pr(>|z|)"),
+                    R2 = modelo |>
+                      performance::r2_ferrari() |>
+                      as.numeric())
 
   },
   .progress = TRUE)
