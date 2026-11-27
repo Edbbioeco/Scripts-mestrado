@@ -180,13 +180,26 @@ purrr::imap_dfr(
   \(modelo, id){
 
     modelo |>
-      broom::tidy() |>
-      dplyr::mutate(modelo = id)
+      marginaleffects::avg_comparisons() |>
+      tibble::as_tibble() |>
+      dplyr::select(3:4) |>
+      dplyr::mutate(statistic =  modelo |>
+                      summary() |>
+                      broom::tidy() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("statistic"),
+                    p = modelo |>
+                      summary() |>
+                      broom::tidy() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("statistic"),
+                    R2 = modelo |>
+                      performance::r2() |>
+                      purrr::pluck(2))
 
     },
   .progress = TRUE) |>
-  dplyr::filter(!term |> stringr::str_detect("\\(") &
-                  abs(statistic) >= qt(df = 10, p = 0.05, lower.tail = FALSE))
+  dplyr::filter(abs(statistic) >= qt(df = 10, p = 0.05, lower.tail = FALSE))
 
 ## Extrair preditores significativos ----
 
