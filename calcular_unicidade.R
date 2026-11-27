@@ -253,9 +253,9 @@ purrr::map2(
                             values_to = "valor preditor") |>
         dplyr::left_join(vars_sig_lm,
                          by = c("tipo", "preditor")) |>
-        dplyr::mutate(signficativo = dplyr::case_when(
+        dplyr::mutate(significativo = dplyr::case_when(
 
-          signficativo |> is.na() ~ "não",
+          significativo |> is.na() ~ "não",
           .default = "sim"
 
           )) |>
@@ -263,7 +263,7 @@ purrr::map2(
         ggplot(aes(`valor preditor`, Uniqueness)) +
         geom_point(size = 5) +
         geom_smooth(data = . %>%
-                      dplyr::filter(signficativo == "sim"),
+                      dplyr::filter(significativo == "sim"),
                     method = "lm",
                     linewidth = 1,
                     se = FALSE) +
