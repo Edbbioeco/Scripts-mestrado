@@ -21,3 +21,11 @@ library(reshape2)
 library(glmmTMB)
 
 library(DHARMa)
+
+# Dados ----
+
+## Abundância de espécies ----
+
+### Importar ----
+
+especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_composicao.xlsx")
