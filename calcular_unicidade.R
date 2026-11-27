@@ -35,3 +35,9 @@ especies <- readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestr
 especies
 
 especies |> dplyr::glimpse()
+
+## Variáveis ambientais ----
+
+### Importar ----
+
+ambientais <-readxl::read_xlsx("C:/Users/LENOVO/OneDrive/Documentos/projeto mestrado/dados/matriz_ambientais.xlsx")
