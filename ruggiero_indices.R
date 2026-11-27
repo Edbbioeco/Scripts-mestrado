@@ -57,7 +57,8 @@ beta_rlb_ab <- function(comm){
     dplyr::select(focal, outro, beta) |>
     tidyr::pivot_wider(
       names_from = outro,
-      values_from = beta) |>
+      values_from = beta,
+      values_fill = 0) |>
     tibble::column_to_rownames(var = "focal") |>
     as.matrix()
 
