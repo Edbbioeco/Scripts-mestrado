@@ -76,3 +76,15 @@ unicade_rug <- especies |>
   uniqueness()
 
 unicade_rug
+
+## Unir os dados ----
+
+df_modelos <- tibble::tibble(bray_uni = unicidade_bray,
+                             rug_uni = unicade_rug,
+                             canopy = ambientais$`Abertura do dossel`,
+                             leaflitter = ambientais$`Altura da serrapilheira`,
+                             water = ambientais$`Distância dos corpos hídricos`,
+                             edge = ambientais$`Distância da Borda`,
+                             elevation = ambientais$Altitude)
+
+df_modelos
