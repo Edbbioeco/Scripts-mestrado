@@ -91,6 +91,7 @@ unicade_rug
 ## Unir os dados ----
 
 df_modelos <- tibble::tibble(bray_uni = unicidade_bray,
+                             hell_uni = unicidade_hell,
                              rug_uni = unicade_rug,
                              canopy = ambientais$`Abertura do dossel`,
                              leaflitter = ambientais$`Altura da serrapilheira`,
