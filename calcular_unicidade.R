@@ -363,24 +363,33 @@ vars_sig_glm <- purrr::imap_dfr(
   \(modelo, id){
 
     modelo |>
-      summary() |>
-      purrr::pluck("coefficients") |>
-      purrr::pluck("cond") |>
-      as.data.frame() |>
-      dplyr::mutate(R2 = modelo |>
+      marginaleffects::avg_comparisons() |>
+      tibble::as_tibble() |>
+      dplyr::select(3:4) |>
+      dplyr::mutate(`z value` =  modelo |>
+                      summary() |>
+                      purrr::pluck("coefficients") |>
+                      purrr::pluck("cond") |>
+                      as.data.frame() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("z value"),
+                    p = modelo |>
+                      summary() |>
+                      purrr::pluck("coefficients") |>
+                      purrr::pluck("cond") |>
+                      as.data.frame() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("Pr(>|z|)"),
+                    R2 = modelo |>
                       performance::r2_ferrari() |>
                       as.numeric(),
-                    tipo = id)
+                    modelo = id)
 
   },
   .progress = TRUE) |>
-  tibble::rownames_to_column(var = "preditor") |>
-  dplyr::filter(!preditor |> stringr::str_detect("\\(") &
-                  abs(`z value`) >= 1.96) |>
-  dplyr::mutate(significativo = "sim",
-                preditor = preditor |>
-                  stringr::str_remove("\\.\\.\\.[0-9]+$")) |>
-  dplyr::select(tipo, significativo) |>
+  dplyr::filter(abs(`z value`) >= 1.96) |>
+  dplyr::mutate(significativo = "sim") |>
+  dplyr::select(modelo, significativo) |>
   tidyr::separate(col = 1,
                   into = c("tipo", "preditor"),
                   sep = "-")
