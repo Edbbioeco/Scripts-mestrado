@@ -106,8 +106,8 @@ df_modelos
 ## Criar os modelos ----
 
 modelos_lm <- purrr::pmap(
-  tidyr::expand_grid(indices = df_modelos[1:2] |> names(),
-                     vars = df_modelos[3:7] |> names()),
+  tidyr::expand_grid(indices = df_modelos[1:3] |> names(),
+                     vars = df_modelos[4:8] |> names()),
   \(indices, vars){
 
     formula <- paste0(indices, " ~ ", vars) |>
@@ -117,8 +117,8 @@ modelos_lm <- purrr::pmap(
 
     },
   .progress = TRUE) |>
-  purrr::set_names(tidyr::expand_grid(indices = df_modelos[1:2] |> names(),
-                                      vars = df_modelos[3:7] |> names()) |>
+  purrr::set_names(tidyr::expand_grid(indices = df_modelos[1:3] |> names(),
+                                      vars = df_modelos[4:8] |> names()) |>
                      dplyr::mutate(id = purrr::map2(
                        indices,
                        vars,
