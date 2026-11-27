@@ -68,6 +68,17 @@ unicidade_bray <- especies |>
 
 unicidade_bray
 
+#### Hellinger ----
+
+unicidade_hell <- especies |>
+  tibble::column_to_rownames(var = "Unidade Amostral") |>
+  vegan::decostand(method = "hellinger") |>
+  betapart::beta.pair.abund() |>
+  purrr::pluck("beta.bray") |>
+  uniqueness()
+
+unicidade_hell
+
 #### Ruggiero ----
 
 unicade_rug <- especies |>
