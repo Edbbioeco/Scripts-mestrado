@@ -187,3 +187,21 @@ purrr::imap_dfr(
   .progress = TRUE) |>
   dplyr::filter(!term |> stringr::str_detect("\\(") &
                   abs(statistic) >= qt(df = 10, p = 0.05, lower.tail = FALSE))
+
+## Extrair preditores significativos ----
+
+vars_sig_lm <- purrr::map(
+  modelos_lm,
+  \(modelo){
+
+    modelo |>
+      broom::tidy() |>
+      dplyr::filter(!term |> stringr::str_detect("\\(") &
+                      abs(statistic) >= qt(df = 10, p = 0.05, lower.tail = FALSE)) |>
+      dplyr::pull(term)
+
+  },
+  .progress = TRUE) |>
+  purrr::compact()
+
+vars_sig_lm
