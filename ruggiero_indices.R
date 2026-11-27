@@ -52,14 +52,14 @@ beta_rlb_ab <- function(comm){
         .y = k,
         .f = ~ sum(comm[.x, ] - pmin(comm[.x, ], comm[.y, ])) / sum(comm[.x, ])
       ),
-      beta = dplyr::if_else(j == k, NA_real_, beta)) |>
-    dplyr::pull(beta) |>
-    matrix(
-      nrow = n,
-      ncol = n,
-      byrow = TRUE,
-      dimnames = list(sitios, sitios)
-    )
+      focal = factor(sitios[j], levels = sitios),
+      outro = factor(sitios[k], levels = sitios)) |>
+    dplyr::select(focal, outro, beta) |>
+    tidyr::pivot_wider(
+      names_from = outro,
+      values_from = beta) |>
+    tibble::column_to_rownames(var = "focal") |>
+    as.matrix()
 
   }
 
