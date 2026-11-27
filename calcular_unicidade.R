@@ -329,11 +329,24 @@ purrr::imap_dfr(
   \(modelo, id){
 
     modelo |>
-      summary() |>
-      purrr::pluck("coefficients") |>
-      purrr::pluck("cond") |>
-      as.data.frame() |>
-      dplyr::mutate(R2 = modelo |>
+      marginaleffects::avg_comparisons() |>
+      tibble::as_tibble() |>
+      dplyr::select(3:4) |>
+      dplyr::mutate(`z value` =  modelo |>
+                      summary() |>
+                      purrr::pluck("coefficients") |>
+                      purrr::pluck("cond") |>
+                      as.data.frame() |>
+                      dplyr::slice(2) |>
+                      dplyr::pull("z value"),
+                    p = modelo |>
+                      summary() |>
+                      purrr::pluck("coefficients") |>
+                      purrr::pluck("cond") |>
+                      as.data.frame() |>
+                        dplyr::slice(2) |>
+                      dplyr::pull("Pr(>|z|)"),
+                    R2 = modelo |>
                       performance::r2_ferrari() |>
                       as.numeric(),
                     modelo = id)
@@ -341,8 +354,7 @@ purrr::imap_dfr(
   },
   .progress = TRUE) |>
   tibble::rownames_to_column(var = "term") |>
-  dplyr::filter(!term |> stringr::str_detect("\\(") &
-                  abs(`z value`) >= 1.96)
+  dplyr::filter(abs(`z value`) >= 1.96)
 
 ## Extrair preditores significativos ----
 
