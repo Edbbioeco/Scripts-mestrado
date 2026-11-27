@@ -46,19 +46,22 @@ beta_rlb_ab <- function(comm){
   tidyr::expand_grid(
     j = seq_len(n),
     k = seq_len(n)) |>
-    dplyr::filter(j != k) |>
     dplyr::mutate(
       beta = purrr::map2_dbl(
         .x = j,
         .y = k,
         .f = ~ sum(comm[.x, ] - pmin(comm[.x, ], comm[.y, ])) / sum(comm[.x, ])
-        ),
-      focal = sitios[j],
-      outro = sitios[k]) |>
-    dplyr::select(focal, outro, beta)
+      ),
+      beta = dplyr::if_else(j == k, NA_real_, beta)) |>
+    dplyr::pull(beta) |>
+    matrix(
+      nrow = n,
+      ncol = n,
+      byrow = TRUE,
+      dimnames = list(sitios, sitios)
+    )
 
   }
-
 
 ## Uniqueness as average dissimilarity ----
 
