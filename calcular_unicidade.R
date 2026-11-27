@@ -256,3 +256,34 @@ purrr::map2(
 
       },
     .progress = TRUE)
+
+# Modelos lineares generalizados ----
+
+## Criar modelos ----
+
+modelos_glm <- purrr::pmap(
+  tidyr::expand_grid(indices = df_modelos[1:3] |> names(),
+                     vars = df_modelos[4:8] |> names()),
+  \(indices, vars){
+
+    formula <- paste0(indices, " ~ ", vars) |>
+      as.formula()
+
+    glmmTMB::glmmTMB(formula, data = df_modelos,
+                     family = glmmTMB::beta_family())
+
+  },
+  .progress = TRUE) |>
+  purrr::set_names(tidyr::expand_grid(indices = df_modelos[1:3] |> names(),
+                                      vars = df_modelos[4:8] |> names()) |>
+                     dplyr::mutate(id = purrr::map2(
+                       indices,
+                       vars,
+                       \(indices, vars){
+
+                         paste0(indices, "-", vars)
+                       }
+                     )) |>
+                     dplyr::pull(id))
+
+modelos_glm
